@@ -89,13 +89,6 @@ class ProductMetaExtension extends ExtensionHandler{
 					$pro_meta_fields['Barcode Value'] = '_ywbc_barcode_value';
 					$pro_meta_fields['Barcode Display Value'] = '_ywbc_barcode_display_value';
 				}
-				if(is_plugin_active('woocommerce-product-bundles/woocommerce-product-bundles.php')&& $import_type == 'WooCommerce'){
-					$pro_meta_fields['Bundle Sells'] = '_wc_pb_bundle_sell_ids';
-					$pro_meta_fields['Bundle Sells Title'] = '_wc_pb_bundle_sells_title';
-					$pro_meta_fields['Bundle Sells Discount'] = '_wc_pb_bundle_sells_discount';
-				}
-
-
                 if (is_plugin_active('variation-swatches-for-woocommerce/variation-swatches-for-woocommerce.php')) {
                         $pro_meta_fields['Product Attribute Type'] = 'product_attribute_type';
                 }
@@ -306,7 +299,19 @@ class ProductMetaExtension extends ExtensionHandler{
 		}
 
 		$pro_meta_fields_line = $this->convert_static_fields_to_array($pro_meta_fields);
-		$response['product_meta_fields'] = $pro_meta_fields_line;
+		
+		if($data == 'WooCommerce Orders'){
+			$response['order_meta_fields'] = $pro_meta_fields_line; 
+		}
+		if($data == 'WooCommerce Coupons'){
+			$response['coupon_meta_fields'] = $pro_meta_fields_line; 
+		}
+		if($data == 'WooCommerce Refunds'){
+			$response['refund_meta_fields'] = $pro_meta_fields_line; 
+		}
+		if($data !== 'WooCommerce Orders' && $data !== 'WooCommerce Coupons' && $data !== 'WooCommerce Refunds'){
+			$response['product_meta_fields'] = $pro_meta_fields_line; 
+		}    
 		return $response;		
 	}
 

@@ -30,6 +30,7 @@ class LangRU {
                         'AIOWooCommerceImportSuit' => 'AIO WooCommerce Import Suit',
                         'WPMLImporter' => 'Импортер WPML',
                         'Buynow' => 'Купить сейчас!',
+                        'CouponMetaFields' => 'Купонные мета-поля',
                         'Exportfiltereddata' => 'Экспорт отфильтрованных данных',
                         'Exportfiltereddatadesc' => 'Позволяет получать только необходимые данные с помощью различных расширенных фильтров.',
                         'Backupineditableformat' => 'Бэкап в редактируемом формате',

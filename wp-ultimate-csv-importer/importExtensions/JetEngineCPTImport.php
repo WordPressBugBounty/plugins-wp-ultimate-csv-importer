@@ -42,7 +42,6 @@ class JetEngineCPTImport {
 			$type = 'product';
 		}
 		$jet_data = $this->JetEngineCPTFields($type);
-		
 		foreach ($data_array as $dkey => $dvalue) {
 			if(array_key_exists($dkey,$jet_data['JECPT'])){
 				if($jet_data['JECPT'][$dkey]['type'] == 'datetime-local'){
@@ -183,6 +182,7 @@ class JetEngineCPTImport {
 		}
 
 		if($darray){
+
 			foreach($darray as $mkey => $mval){
 				update_post_meta($pID, $mkey, $mval);
 			}

@@ -56,6 +56,7 @@ class LangTR {
 		'ExistingItems' => 'Mevcut Öğeler',
 		'ImportEachRecordAs'=> 'Her Kaydı Farklı İçe Aktar',
 		'Continue' => 'Devam et',
+		'CouponMetaFields' => 'Kupon Meta Alanları',
 		'Search' => 'Arama',
 		'FromDate' => 'İtibaren',
 		'ToDate' => 'Bugüne kadar',

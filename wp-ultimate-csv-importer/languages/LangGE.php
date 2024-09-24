@@ -43,6 +43,7 @@ class LangGE {
                 'SEOPluginsDataImporterRankMathYoastandAllinOneSEO' => 'Datenimporteur für SEO-Plugins- RankMath, SEOPress, Yoast and All in One SEO',
                 'Dashboard' => 'Instrumententafel',
                 'Manager' => 'Manager',
+                'CouponMetaFields' => 'Coupon Meta Felder',
                 'Export' => 'Export',
                 'Settings' => 'die Einstellungen',
                 'Support' => 'Unterstützung',

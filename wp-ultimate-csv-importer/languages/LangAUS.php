@@ -62,6 +62,8 @@ class LangAUS {
                 'MODULE' => 'MODULE',
                 'CREATEDTIME' => 'CREATED TIME',
                 'ACTION' => 'ACTION',
+                'OrderMetaFields' => 'Order Meta Fields',
+                'CouponMetaFields' => 'Coupon Meta Fields',
                 'USETEMPLATE' => 'USE TEMPLATE',
                 'CREATENEWMAPPING' => 'CREATE NEW MAPPING',
                 'BACK' => 'BACK',

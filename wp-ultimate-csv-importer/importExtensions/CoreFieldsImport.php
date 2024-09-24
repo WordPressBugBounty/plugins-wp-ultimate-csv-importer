@@ -29,7 +29,7 @@ class CoreFieldsImport {
 		return CoreFieldsImport::$core_instance;
 	}
 
-	function set_core_values($header_array ,$value_array , $map , $type , $mode , $line_number , $check , $hash_key, $unmatched_row, $gmode, $templatekey, $wpml_array = null,$media_meta=null,$media_type=null){
+	function set_core_values($header_array ,$value_array , $map , $type , $mode , $line_number , $check , $hash_key, $unmatched_row, $gmode, $templatekey, $wpml_array = null,$media_meta=null,$media_type=null,$order_meta=null){
 		global $wpdb;
 		global $uci_woocomm_instance,$woocommerce_core_instance;
 		global $userimp_class;
@@ -91,7 +91,7 @@ class CoreFieldsImport {
 			}
 		}
 		
-		if(($type == 'WooCommerce Product') || ($type == 'WooCommerce Reviews') || ($type == 'WooCommerce Product Variations')|| ($type == 'Categories') || ($type == 'Tags') || ($type == 'Taxonomies') || ($type == 'Comments') || ($type == 'Users') || ($type == 'Customer Reviews') || ($type == 'lp_order') || ($type == 'nav_menu_item') || ($type == 'widgets') || ($type == 'Media')){
+		if(($type == 'WooCommerce Product') || ($type == 'WooCommerce Coupons') || ($type == 'WooCommerce Orders') || ($type == 'WooCommerce Reviews') || ($type == 'WooCommerce Product Variations')|| ($type == 'Categories') || ($type == 'Tags') || ($type == 'Taxonomies') || ($type == 'Comments') || ($type == 'Users') || ($type == 'Customer Reviews') || ($type == 'lp_order') || ($type == 'nav_menu_item') || ($type == 'widgets') || ($type == 'Media')){
 
 			$comments_instance = CommentsImport::getInstance();
 			$customer_reviews_instance = CustomerReviewsImport::getInstance();
@@ -109,13 +109,14 @@ class CoreFieldsImport {
 				$result = $media_core_instance->media_fields_import($post_values , $mode , $type , $media_type ,$unikey_value ,$unikey_name, $line_number,$hash_key,$header_array ,$value_array);
 			}
 			if($type == 'WooCommerce Orders'){
-				$result = $woocommerce_core_instance->woocommerce_orders_import($post_values , $mode , $check , $unikey_value ,$unikey_name, $line_number);
+				$order_meta_data = $helpers_instance->get_header_values($order_meta,$header_array,$value_array);
+				$result = $uci_woocomm_instance->woocommerce_orders_import($post_values , $mode , $check , $unikey_value ,$unikey_name, $line_number,$order_meta_data,'');
 			}
 			if($type == 'WooCommerce Product Variations'){
 				$result = $uci_woocomm_instance->woocommerce_variations_import($post_values , $mode , $check ,$unikey_value ,  $unikey_name, $line_number, $variation_count =null);
 			}
 			if($type == 'WooCommerce Coupons'){
-				$result = $woocommerce_core_instance->woocommerce_coupons_import($post_values , $mode , $check , $unikey_value , $unikey_name, $line_number);
+				$result = $uci_woocomm_instance->woocommerce_coupons_import($post_values , $mode , $check , $unikey_value , $unikey_name, $line_number);
 			}
 			if($type == 'WooCommerce Refunds'){
 				$result = $woocommerce_core_instance->woocommerce_refunds_import($post_values , $mode , $check , $unikey_value , $unikey_name, $line_number);
@@ -182,6 +183,11 @@ class CoreFieldsImport {
 						$this->detailed_log[$line_number]['post_title'] = get_the_title($post_id);
 					}
 				}
+				elseif($type == 'WooCommerce Coupons'){
+					$this->detailed_log[$line_number]['adminLink'] = get_edit_post_link( $post_id, true );
+					$this->detailed_log[$line_number]['post_type'] = get_post_type($post_id);
+					$this->detailed_log[$line_number]['post_title'] = get_the_title($post_id);
+				}
 				elseif( $type == 'Media'){
 					if (!empty($post_id)) {
 						$file_path = get_attached_file($post_id);
@@ -221,17 +227,15 @@ class CoreFieldsImport {
 					}
 				}
 				elseif($type=='WooCommerce Orders'){
-					if (!empty($post_id)) {
 					$this->detailed_log[$line_number]['adminLink'] = $this->get_order_url($post_id) ;
 					$this->detailed_log[$line_number]['post_type'] = get_post_type($post_id);
-					$this->detailed_log[$line_number]['id'] = $post_id ;
 					$order = wc_get_order($post_id);
 					if ($order) {
 						$order_key = $order->get_order_key();
 						$order_id = $order->get_id();
 						$customer_order_view_link = wc_get_endpoint_url('view-order', $order_id, wc_get_page_permalink('myaccount')) . '?key=' . $order_key;
 						$this->detailed_log[$line_number]['webLink'] = $customer_order_view_link;
-					}}
+					}
 				}
 				elseif($type == 'WooCommerce Product Variations' ){
 					if (!empty($post_id)) {
@@ -546,40 +550,54 @@ class CoreFieldsImport {
 					if($media_handle['media_settings']['media_handle_option'] == 'true' 
 					&& isset($media_handle['media_settings']['enable_postcontent_image'])
 					&& $media_handle['media_settings']['enable_postcontent_image'] == 'true'){
-						if(preg_match("/<img/", $post_values['post_content'])) {
-							$content = "<p>".$post_values['post_content']."</p>";
+						if (preg_match("/<img/", $post_values['post_content'])) {
+							// Wrap post content in a <p> tag if needed
+							$content = "<p>" . $post_values['post_content'] . "</p>";
 							$doc = new \DOMDocument();
-							if(function_exists('mb_convert_encoding')) {
-								@$doc->loadHTML( mb_convert_encoding( $content, 'HTML-ENTITIES', 'UTF-8' ), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
-							}else{
-								@$doc->loadHTML( $content);
+						
+							// Ensure proper encoding
+							if (function_exists('mb_convert_encoding')) {
+								@$doc->loadHTML(mb_convert_encoding($content, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+							} else {
+								@$doc->loadHTML($content);
 							}
+						
+							// Find all image elements with src attributes
 							$xpath = new \DOMXPath($doc);
 							$searchNode = $xpath->query('//img[@src]');
-							if ( ! empty( $searchNode ) ) {
-										foreach ( $searchNode as $searchNodes ) {
-											$orig_img_src[] = $searchNodes->getAttribute( 'src' ); 
-										}
-												
-								$media_dir = wp_get_upload_dir();
-								$names = $media_dir['url'];
-								if(isset($orig_img_src)){
-									$shortcode_table = $wpdb->prefix . "ultimate_csv_importer_shortcode_manager";
-									$indexs = 0;
-									foreach ($orig_img_src as $img_val){
-										$shortcode  = 'inline';
-										CoreFieldsImport::$media_instance->store_image_ids($i=1);
-										$attach_id = CoreFieldsImport::$media_instance->image_meta_table_entry($line_number,$post_values,$post_id ,'',$img_val, $hash_key ,$shortcode,$get_import_type,'','',$header_array,$value_array,'','',$indexs);
-										$indexs++;																				
+						
+							if (!empty($searchNode)) {
+								$media_dir = wp_get_upload_dir(); // Get the media directory
+								$attach_ids = [];
+								$index = 0;
+						
+								foreach ($searchNode as $searchNodes) {
+									$img_src = $searchNodes->getAttribute('src'); // Get external image URL
+						
+									// Download the external image to the media library
+									$attach_id = CoreFieldsImport::$media_instance->image_meta_table_entry(
+										$line_number, $post_values, $post_id, '', $img_src, $hash_key, 
+										'inline', $get_import_type, '', '', $header_array, $value_array, '', '', $index
+									);
+									if ($attach_id) {
+										$local_img_url = wp_get_attachment_url($attach_id);
+										$searchNodes->setAttribute('src', $local_img_url);
+										$index++;
 									}
 								}
-								$post_content              = $doc->saveHTML();
+						
+								// Save the updated content
+								$post_content = $doc->saveHTML();
+								// Update post content with local image URLs
 								$post_values['post_content'] = $post_content;
-								$update_content['ID']           = $post_id;
-								$update_content['post_content'] = $post_content;
-								wp_update_post( $update_content );
+								$update_content = [
+									'ID' => $post_id,
+									'post_content' => $post_content
+								];
+								wp_update_post($update_content); // Update the post in the database
 							}
 						}
+						
 					}
 					if($media_handle['media_settings']['media_handle_option'] == 'true' && !empty($post_values['post_content']) && $media_handle['media_settings']['enable_postcontent_image'] == 'false' && preg_match("/<img/", $post_values['post_content'])) {
 						$dom = new \DOMDocument();
@@ -889,7 +907,10 @@ class CoreFieldsImport {
 		}
 		return $array;
 	}
-
+	public function get_order_url($post_id){
+		$dir=site_url().'/wp-admin/admin.php?page=wc-orders&action=edit&id='.$post_id;
+		return  $dir;
+	}
 	public function postExpirator($post_id,$post_values){
 		if(!empty($post_values['post_expirator_status'])){
 			$post_values['post_expirator_status'] = array('expireType' => $post_values['post_expirator_status'],'id' => $post_id);

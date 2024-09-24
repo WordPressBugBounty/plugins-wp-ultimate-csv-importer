@@ -73,6 +73,7 @@ class LangFR {
                         'Support' => 'Soutien',
                         'ExportfeatureisdisabledInstallandactivatetheaddonpluginfirst'=>'Attention : la fonction d exportation est désactivée. Veuillez d abord installer et activer le plugin supplémentaire',
                         'Continue' => 'Continuer',
+                        'CouponMetaFields' => 'Champs de méta de coupon',
                         'CustomerReviews' => 'commentaires des clients',
                         'WooCommerceCoupons' => 'Coupons WooCommerce',
                         'WooCommerceRefunds' => 'Remboursements Woo-Commerce',

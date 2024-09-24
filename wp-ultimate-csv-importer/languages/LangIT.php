@@ -53,6 +53,7 @@ class LangIT {
 		'Drag&Dropyourfilesor' => 'Trascina e rilascia i tuoi file o',
 		'Browse' => 'Navigare',
 		'NewItem' => 'Nuovo oggetto',
+		'CouponMetaFields' => 'Campi meta coupon',
 		'ExistingItems' => 'Articoli esistenti',
 		'ImportEachRecordAs'=> 'Importa ogni record come',
 		'Continue' => 'Continua',

@@ -47,6 +47,8 @@ class LangEN_ZA {
                         'Export' => 'Export',
                         'Settings' => 'Settings',
                         'Support' => 'Support',
+                        'OrderMetaFields' => 'Order Meta Fields',
+                        'CouponMetaFields' => 'Coupon Meta Fields',
                         'UploadfromDesktop' => 'Upload from Desktop',
                         'UploadfromFTPSFTP' => 'Upload from FTP / SFTP',
                         'UploadfromFTP' => 'Upload from FTP',

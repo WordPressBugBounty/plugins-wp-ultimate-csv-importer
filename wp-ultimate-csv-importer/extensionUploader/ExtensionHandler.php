@@ -133,8 +133,8 @@ class ExtensionHandler{
 			$importas['WooCommerce Product'] ='WooCommerce';
 			$importas['WooCommerce Product Variations'] ='WooCommerceVariations';
 			$importas['WooCommerce Reviews'] ='WooCommerceReviews';
-			//$importas['WooCommerce Orders'] = 'WooCommerceOrders';
-			//$importas['WooCommerce Coupons'] = 'WooCommerceCoupons';
+			$importas['WooCommerce Orders'] = 'WooCommerceOrders';
+			$importas['WooCommerce Coupons'] = 'WooCommerceCoupons';
 			//$importas['WooCommerce Refunds'] = 'WooCommerceRefunds';
 		}
 

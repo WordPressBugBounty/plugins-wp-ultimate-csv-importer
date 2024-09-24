@@ -26,6 +26,7 @@ class LangPT {
                         'ChooseImagesToImport' => 'Escolha as imagens para importar. Utilize a caixa de seleção abaixo para selecionar todas as imagens.',
                         'FileName' => 'Nome do arquivo:',
                         'OK' => 'OK',
+                        'CouponMetaFields' => 'Metacampos de cupom',
                         'Updateolderpostsfromsingleimport' => 'Atualize postagens mais antigas de uma única importação',
                         'Exportfiltereddata' => 'Exportar dados filtrados',
                         'Exportfiltereddatadesc' => 'Permite obter apenas os dados necessários com os diferentes filtros avançados',

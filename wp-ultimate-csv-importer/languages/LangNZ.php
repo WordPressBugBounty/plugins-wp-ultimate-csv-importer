@@ -70,6 +70,7 @@ class LangNZ {
                 'WordpressFields' => 'Wordpress Fields',
                 'WPFIELDS' => 'WP Fields',
                 'CSVHEADER' => 'CSV Header',
+                'CouponMetaFields' => 'Coupon-metavelden',
                 'Action' => 'Action',
                 'Name' => 'Name',
                 'HINT' => 'HINT',

@@ -22,7 +22,7 @@ class ProductMetaImport {
 		return ProductMetaImport::$product_meta_instance;
     }
 
-    function set_product_meta_values($header_array ,$value_array , $map , $post_id ,$variation_id ,$type , $line_number , $mode,$hash_key){
+    function set_product_meta_values($header_array ,$value_array , $map , $post_id ,$variation_id ,$type , $line_number , $mode,$hash_key,$selected_type=null){
         global $wpdb;
 
         $woocommerce_meta_instance = WooCommerceMetaImport::getInstance();
