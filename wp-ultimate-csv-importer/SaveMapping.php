@@ -31,6 +31,7 @@ class SaveMapping
 		add_action('wp_ajax_ImportState', array($this, 'import_state_function'));
 		add_action('wp_ajax_ImportStop', array($this, 'import_stop_function'));
 		add_action('wp_ajax_checkmain_mode', array($this, 'checkmain_mode'));
+		add_action('wp_ajax_close_notification_action',array($this, 'handle_close_notification_action'));
 		add_action('wp_ajax_bulk_file_import', array($this, 'bulk_file_import_function'));
 		add_action('wp_ajax_bulk_import', array($this, 'bulk_import'));
 		add_action('wp_ajax_PauseImport', array($this, 'pause_import'));
@@ -49,7 +50,18 @@ class SaveMapping
 		return SaveMapping::$instance;
 	}
 
-	public static function checkmain_mode()
+	public function handle_close_notification_action() {
+		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+
+		$get_option = get_option('updateMessageDisplay');
+		if ($get_option === 'true') {
+			update_option('updateMessageDisplay', 'false');
+		}
+		$get_option = get_option('updateMessageDisplay');
+		echo wp_json_encode(array('success' => true));
+		wp_die();
+	}
+	public function checkmain_mode()
 	{
 		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
 		$ucisettings = get_option('sm_uci_pro_settings');
@@ -58,10 +70,43 @@ class SaveMapping
 		} else {
 			$result['success'] = false;
 		}
+		$get_option = get_option('updateMessageDisplay');
+		if ($get_option === false) {
+			$result['notice_message'] = $this->updateMessage();
+			$result['notice_display'] = true;
+			add_option('updateMessageDisplay', 'true');
+		}else {
+			// Option exists, check its value
+			if ($get_option === 'true') {
+				$result['notice_message'] = $this->updateMessage(); // Option is true
+				$result['notice_display'] = true;
+			}else{
+				$result['notice_message'] = $this->updateMessage();
+				$result['notice_display'] = false;
+			}
+		}
 		echo wp_json_encode($result);
 		wp_die();
 	}
 
+	public function updateMessage(){
+		
+		$message = '';
+		$response = wp_safe_remote_get('https://www.smackcoders.com/wp-versions/wp-ultimate-csv-importer-free.json');
+		
+		if ( is_wp_error( $response ) ) {
+			return $message;
+		}
+		$response = json_decode($response);
+		$current_plugin_version = '7.11.9';
+        if($current_plugin_version < $response->version[0]) {
+			
+            $message = $response->message[0];
+        }
+		return $message;
+	}
+
+	
 	/**
 	 * Save the mapped fields on using new mapping
 	 * @return boolean
@@ -1373,6 +1418,11 @@ class SaveMapping
 					$wpml_map = isset($map['WPML']) ? $map['WPML'] : '';
 					$woocom_image = isset($map['PRODUCTIMAGEMETA']) ? $map['PRODUCTIMAGEMETA'] : [];
 					$product_meta_instance->set_product_meta_values($header_array, $value_array, $map['ATTRMETA'], $post_id, $variation_id, $selected_type, $line_number, $get_mode, $hash_key);
+					break;
+
+				case 'JE':
+					$jet_engine_instance = JetEngineImport::getInstance();
+					$jet_engine_instance->set_jet_engine_values($header_array, $value_array, $map['JE'], $post_id, $selected_type, $get_mode, $hash_key, $line_number);
 					break;
 
 				case 'COUPONMETA':

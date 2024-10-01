@@ -48,6 +48,7 @@ $plugin_ajax_hooks = [
     'ImportState',
     'ImportStop',
     'checkmain_mode',
+    'close_notification_action',
     'bulk_file_import',
     'bulk_import',
     'check_export',

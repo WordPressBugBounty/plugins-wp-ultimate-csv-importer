@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) )
 	exit; // Exit if accessed directly
 
 class ACFImport {
-	private static $acf_instance = null,$media_instance;
+	private static $acf_instance = null;
 
 	public static function getInstance() {
 		if (ACFImport::$acf_instance == null) {
@@ -110,7 +110,7 @@ class ACFImport {
 		global $wpdb;
 
 		$helpers_instance = ImportHelpers::getInstance();
-		
+		$media_instance = MediaHandling::getInstance();
 
         $plugin = 'acf';
 		$get_acf_fields = $wpdb->get_results($wpdb->prepare("select post_content, post_name from {$wpdb->prefix}posts where post_type = %s and post_excerpt = %s", 'acf-field', $acf_wp_name ), ARRAY_A);
@@ -126,6 +126,27 @@ class ACFImport {
 			if($field_type == 'text' || $field_type == 'textarea' || $field_type == 'number' || $field_type == 'email' || $field_type == 'url' || $field_type == 'password' || $field_type == 'range' || $field_type == 'radio' || $field_type == 'true_false' || $field_type == 'time_picker' || $field_type == 'color_picker' || $field_type == 'button_group' || $field_type == 'oembed' || $field_type == 'wysiwyg'){
 				$map_acf_wp_element = $acf_wp_name;
 				$map_acf_csv_element = $acf_csv_name;	
+			}
+			if ($field_type == 'icon_picker') {
+				$acf_csv_element = explode(',',$acf_csv_element);
+				$icon_pic_type = !empty($acf_csv_element[0]) ? $acf_csv_element[0] : '';
+				$map_acf_wp_element = $acf_wp_name;
+				if($icon_pic_type == 'dashicons'){
+					$dash_icon_value = !empty($acf_csv_element[1]) ? $acf_csv_element[1] : '';
+				}
+				else if($icon_pic_type == 'media_library'){
+					$dash_media_value = !empty($acf_csv_element[1]) ? $acf_csv_element[1] : '';
+					$dash_icon_value = $media_instance->image_meta_table_entry($line_number ,'', $post_id ,'', $dash_media_value, $hash_key,'media_library',$importAs,'','','', '','','','');
+				}else if($icon_pic_type == 'url'){
+					$dash_icon_value = !empty($acf_csv_element[1]) ? $acf_csv_element[1] : '';
+				}
+				if(!empty($dash_icon_value)){
+					$serialized_value = array(
+						'type'  => $icon_pic_type,
+						'value' => esc_sql($dash_icon_value)
+					);
+					$map_acf_csv_element = $serialized_value; 
+				}
 			}
 			if($field_type == 'date_time_picker'){
 

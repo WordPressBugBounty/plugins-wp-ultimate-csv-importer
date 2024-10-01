@@ -33,10 +33,118 @@ class JetEngineImport {
 	{
 		global $wpdb;
 		$helpers_instance = ImportHelpers::getInstance();
+		$media_instance = MediaHandling::getInstance();
 		$jet_data = $this->JetEngineFields($type);
 		foreach ($data_array as $dkey => $dvalue) {
 			if(array_key_exists($dkey,$jet_data['JE'])){
-				if($jet_data['JE'][$dkey]['type'] == 'datetime-local'){					
+				if($jet_data['JE'][$dkey]['type'] == 'gallery' || $jet_data['JE'][$dkey]['type'] == 'media'){
+					$gallery_ids = $media_ids = '';
+					$exploded_gallery_items = explode( ',', $dvalue );
+					
+					$galleryvalue=array();
+					$shortcode_table = $wpdb->prefix . "ultimate_csv_importer_shortcode_manager";
+					$indexs = 0;				
+					foreach ( $exploded_gallery_items as $gallery ) {
+						$gallery = trim( $gallery );						
+						if ( preg_match_all( '/\b(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)[-A-Z0-9+&@#\/%=~_|$?!:,.]*[A-Z0-9+&@#\/%=~_|$]/i', $gallery ) ) {
+							$field_name = $jet_data['JE'][$dkey]['name'];
+							$field_type = $jet_data['JE'][$dkey]['type'];
+							$plugin = 'jetengine_'.$field_type;
+							$imgformat = $jet_data['JE'][$dkey]['value_format'];
+							$media_instance->store_image_ids($i=1);
+							$get_gallery_id = $media_instance->image_meta_table_entry($line_number,$data_array, $pID, $field_name,$gallery, $hash_key, $plugin,'','','',$header_array, $value_array,$imgformat,'',$indexs);						
+							if ( $get_gallery_id != '' ) {								
+								if($jet_data['JE'][$dkey]['type'] == 'media'){
+									$media_ids .= $get_gallery_id. ',';
+								}
+								elseif($jet_data['JE'][$dkey]['value_format'] == 'url'){
+									global $wpdb;									
+									$get_gallery_fields = $wpdb->get_results("select meta_value from {$wpdb->prefix}postmeta where post_id=$get_gallery_id and meta_key ='_wp_attached_file'");									
+									$dir = wp_upload_dir();
+									$gallery_ids .= $dir ['baseurl'] . '/' .$get_gallery_fields[0]->meta_value. ',';
+								}
+								elseif($jet_data['JE'][$dkey]['value_format'] == 'both'){
+									global $wpdb;
+									$gallery_id1 ['id']= $get_gallery_id;
+									
+									$get_gallery_fields = $wpdb->get_results("select meta_value from {$wpdb->prefix}postmeta where post_id=$get_gallery_id and meta_key ='_wp_attached_file'");
+									$dir = wp_upload_dir();
+									$gallery_id2['url']= $dir ['baseurl'] . '/' .$get_gallery_fields[0]->meta_value;
+									
+									$galleryvalue[] = array_merge($gallery_id1,$gallery_id2);
+									
+									$gallery_ids=$galleryvalue;
+								}
+								else{
+									$gallery_ids .= $get_gallery_id.',';
+								}
+							}
+						} else {
+							$galleryLen         = strlen( $gallery );
+							$checkgalleryid     = intval( $gallery );
+							$verifiedGalleryLen = strlen( $checkgalleryid );
+							if ( $galleryLen == $verifiedGalleryLen ) {
+								if($jet_data['JE'][$dkey]['type'] == 'media'){
+									$media_ids .= $gallery. ',';
+								}
+								else{
+									$gallery_ids .= $gallery. ',';
+								}
+
+							}
+						}
+						$indexs++;
+					}					
+					if(is_array($gallery_ids)){
+						$gallery_id  = $gallery_ids;
+					}
+					if (!is_array($gallery_ids)) {
+						$gallery_id = rtrim($gallery_ids,',');
+					}
+					
+					if($jet_data['JE'][$dkey]['value_format'] == 'url'){
+						global $wpdb;
+						$media_id = $media_instance->media_handling( $dvalue, $pID);						
+						$get_media_fields = $wpdb->get_results("select meta_value from {$wpdb->prefix}postmeta where post_id=$media_id and meta_key ='_wp_attached_file'");
+						$dir = wp_upload_dir();			
+						//$media_id = $dir ['baseurl'] . '/' .$get_media_fields[0]->meta_value;						
+						if(!empty($get_media_fields[0]->meta_value)){
+                            $media_id = $dir ['baseurl'] . '/' .$get_media_fields[0]->meta_value;
+                        }        
+                        else{
+                            $media_id='';
+                        }
+					}
+					elseif($jet_data['JE'][$dkey]['value_format'] == 'both'){
+						global $wpdb;
+						$media_id = $media_instance->media_handling( $dvalue, $pID);
+						$media_ids1['id']=$media_id;
+						$get_media_fields = $wpdb->get_results("select meta_value from {$wpdb->prefix}postmeta where post_id=$media_id and meta_key ='_wp_attached_file'");
+						$dir = wp_upload_dir();			
+						if(!empty($get_media_fields[0]->meta_value)){
+							$media_ids2['url'] = $dir ['baseurl'] . '/' .$get_media_fields[0]->meta_value;
+						}        
+						else{
+							$media_ids2['url']='';
+						}
+						$mediavalue= array_merge($media_ids1,$media_ids2);
+						$media_id=array($mediavalue);
+					}
+					
+					else{
+						if(is_string($dvalue)) //Find image url or id
+							$media_id = $media_instance->media_handling( $dvalue, $pID);
+						else
+							$media_id = $dvalue;
+					}
+					if($jet_data['JE'][$dkey]['type'] == 'media'){	
+						$darray[$jet_data['JE'][$dkey]['name']] = $media_id;
+					}
+					else{
+						$darray[$jet_data['JE'][$dkey]['name']] = $gallery_id;
+					}
+				}
+				elseif($jet_data['JE'][$dkey]['type'] == 'datetime-local'){					
 					$dateformat = 'Y-m-d\TH:m';
 					if(!empty($dvalue)){
 						$dt_var = trim($dvalue);						
@@ -81,10 +189,15 @@ class JetEngineImport {
 						$darray[$jet_data['JE'][$dkey]['name']] = '';
 					}
 				}
-				elseif($jet_data['JE'][$dkey]['type'] == 'time'){
+				elseif ($jet_data['JE'][$dkey]['type'] == 'time') {
 					$var = trim($dvalue);
 					$time = date('H:i', strtotime($var));
-					$darray[$jet_data['JE'][$dkey]['name']] = $time;
+				
+					if ($time == '00:00') {
+						$darray[$jet_data['JE'][$dkey]['name']] = ''; // Set empty value
+					} else {
+						$darray[$jet_data['JE'][$dkey]['name']] = $time;
+					}
 				}
 				elseif($jet_data['JE'][$dkey]['type'] == 'checkbox'){
 					
@@ -143,7 +256,7 @@ class JetEngineImport {
 				}
 				elseif($jet_data['JE'][$dkey]['type'] == 'select'){
 					$dselect = [];
-					if($jet_data['JE'][$dkey]['is_multiple'] == 0){
+					if($jet_data['JE'][$dkey]['is_multiple'] == 0 || empty($jet_data['JE'][$dkey]['is_multiple'])){
 						$darray[$jet_data['JE'][$dkey]['name']] = $dvalue;	
 					}
 					else{
@@ -155,7 +268,41 @@ class JetEngineImport {
 						$darray[$jet_data['JE'][$dkey]['name']] = $dselect;
 					}
 				}
-                else{
+				elseif($jet_data['JE'][$dkey]['type'] == 'posts'){
+					global $wpdb;
+					if($jet_data['JE'][$dkey]['is_multiple'] == 0){
+						$jet_posts = trim($dvalue);
+						//$jet_posts = $wpdb->_real_escape($jet_posts);
+						if(is_numeric($jet_posts)){
+							$jet_posts_field_value = $jet_posts;
+						}
+						else{
+							$query = "SELECT id FROM {$wpdb->prefix}posts WHERE post_title ='{$jet_posts}' AND post_status='publish'";
+							$name = $wpdb->get_results($query);
+							if (!empty($name)) {
+								$jet_posts_field_value = $name[0]->id;
+							}
+						}
+					}
+					else{
+						$jet_posts_exp = explode(',',trim($dvalue));
+						$jet_posts_value = array();
+						foreach($jet_posts_exp as $jet_posts_value){
+							$jet_posts_value = trim($jet_posts_value);
+							$query = "SELECT id FROM {$wpdb->prefix}posts WHERE post_title ='{$jet_posts_value}' AND post_status = 'publish' ORDER BY ID DESC";
+							$multiple_id = $wpdb->get_results($query);
+							$multiple_ids =$multiple_id[0];
+							if(!$multiple_id){
+								$jet_posts_field_value[]=$jet_posts_value;
+							}
+							else{
+								$jet_posts_field_value[]=trim($multiple_ids->id);
+							}
+						}
+					}
+					$darray[$jet_data['JE'][$dkey]['name']] = $jet_posts_field_value;
+				}
+				else{
 					if($jet_data['JE'][$dkey]['type'] != 'repeater'){
 						$darray[$jet_data['JE'][$dkey]['name']] = $dvalue;
 					}

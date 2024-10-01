@@ -84,6 +84,13 @@ class ProductMetaExtension extends ExtensionHandler{
 					'_subscription_trial_length' => '_subscription_trial_length',
 					'_subscription_price' => '_subscription_price',
                 );
+				if(is_plugin_active('yith-cost-of-goods-for-woocommerce-premium/init.php') && ($import_type == 'WooCommerce' ||$import_type == 'WooCommerceVariations')){
+					$pro_meta_fields['yith_cog_cost'] = 'yith_cog_cost';
+				}
+				if(is_plugin_active('woocommerce-min-max-quantities/woocommerce-min-max-quantities.php')){
+					$pro_meta_fields['minimum_allowed_quantity'] = 'minimum_allowed_quantity';
+					$pro_meta_fields['maximum_allowed_quantity'] = 'maximum_allowed_quantity';
+				}
 				if ( is_plugin_active( 'yith-woocommerce-barcodes-premium/init.php' ) && $import_type == 'WooCommerce') {
 					$pro_meta_fields['Barcode Protocol'] = '_ywbc_barcode_protocol';
 					$pro_meta_fields['Barcode Value'] = '_ywbc_barcode_value';
