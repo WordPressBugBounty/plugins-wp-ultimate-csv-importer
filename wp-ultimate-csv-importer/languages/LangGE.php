@@ -108,6 +108,8 @@ class LangGE {
                 'JetEngineRFFields' => 'Jet Engine Repeater Felder',
                 'JetEngineCPTFields' => 'Jet Engine CPT Felder',
                 'JetEngineCPTRFFields' => 'Jet Engine CPT  Repeater Felde',
+                'JetEngineCCTFields' => 'CCT-Felder für Jet-Triebwerke',
+                'JetEngineCCTRFFields' => 'Jet-Engine CCT-HF-Felder',
                 'JetEngineTaxonomyFields' => 'Jet Engine Taxonomiefelder',
                 'JetEngineTaxonomyRFFields' => 'Jet Engine Taxonomie Repeater felder',
                 'JetEngineRelationsFields' => 'Jet Engine Relations-Felder',

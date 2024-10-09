@@ -117,6 +117,8 @@ class LangTA
 						'JetEngineRFFields' => 'JetEngineRFFields',
 						'JetEngineCPTFields' => 'JetEngineCPTFields',
 						'JetEngineCPTRFFields' => 'JetEngineCPTRF புலங்கள்',
+						'JetEngineCCTFields' => 'Jet Engine CCT புலங்கள்',
+						'JetEngineCCTRFFields' => 'Jet Engine CCT மீண்டும் வரும் புலங்கள்',
 						'JetEngineTaxonomyFields' => 'JetEngineTaxonomyFields',
 						'JetEngineTaxonomyRFFields' => 'JetEngineTaxonomyRF புலங்கள்',
 						'JetEngineRelationsFields' => 'JetEngineRelationsFields',

@@ -48,7 +48,11 @@ class CoreFieldsImport {
 			$unikey_name = 'templatekey';
 			$unikey_value = ($templatekey != null) ? $templatekey : '';
 		}	
-		
+
+		$updated_row_counts = $helpers_instance->update_count($unikey_value,$unikey_name);
+		$created_count = $updated_row_counts['created'];
+		$skipped_count = $updated_row_counts['skipped'];
+
 		$taxonomies = get_taxonomies();
 		if (in_array($type, $taxonomies)) {
 			$get_import_type = 'term';
@@ -280,6 +284,69 @@ class CoreFieldsImport {
 			return $post_id;
 
 		}
+		global $wpdb;
+		$optional_type = '';
+		if(is_plugin_active('jet-engine/jet-engine.php')){
+			$get_slug_name = $wpdb->get_results("SELECT slug FROM {$wpdb->prefix}jet_post_types WHERE status = 'content-type'");
+			foreach($get_slug_name as $key=>$get_slug){
+				$value=$get_slug->slug;
+				$optionaltype=$value;						
+				if($optionaltype == $type){
+					$optional_type=$optionaltype;
+				}
+			}
+		}
+		if($optional_type == $type){
+			if($gmode != 'CLI'){
+			$current_user = wp_get_current_user();									
+			$author_id = $current_user->data->ID;
+			}
+			else { // else part is only used for set the author id
+				$post_values = [];				
+				$post_values = $this->import_core_fields($post_values);
+				$author_id = isset($post_values['post_author']) ? $post_values['post_author'] : "";
+			}
+			
+			if($mode == 'Insert'){
+				$post_values = [];
+				$post_values = $helpers_instance->get_header_values($map , $header_array , $value_array, $hash_key);
+				
+				$post_values = $this->import_core_fields($post_values);
+				
+				$table_name = 'jet_cct_'.$type;												
+				$value_status =  empty($post_values['cct_status']) ? "publish" : $post_values['cct_status'] ;
+				if($author_id)
+					$wpdb->get_results("INSERT INTO {$wpdb->prefix}$table_name(cct_status,cct_author_id) values('$value_status',$author_id)");       			
+				else 
+					$wpdb->get_results("INSERT INTO {$wpdb->prefix}$table_name(cct_status) values('$value_status')");       			
+				$get_result =  $wpdb->get_results("SELECT _ID FROM {$wpdb->prefix}$table_name WHERE  cct_status = '$value_status' order by _ID DESC ");			
+				$id = $get_result[0];				
+				$post_id = $id->_ID;
+		
+				$page = 'jet-cct-'.$type;
+				$dir=site_url().'/wp-admin';				
+				$wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
+				$cct_post_title = isset($post_values['post_title']) ? $post_values['post_title'] : '';
+
+				$this->detailed_log[$line_number]['Message'] = 'Inserted Custom Content Type '  . ' ID: ' . $post_id ;
+				//$this->detailed_log[$line_number]['VERIFY'] = "<b> Click here to verify</b> - <a href='$dir/admin.php?page=$page&cct_action=edit&item_id=$post_id' target='_blank' title='" . esc_attr( sprintf( __( 'View &#8220;%s&#8221;' ), $cct_post_title ) ) . "'rel='permalink'>Admin View</a>";	
+				$this->detailed_log[$line_number]['id'] = $post_id;
+				$this->detailed_log[$line_number]['state'] = 'Inserted';
+				$this->detailed_log[$line_number]['adminLink'] = "$dir/admin.php?page=$page&cct_action=edit&item_id=$post_id";
+				$this->detailed_log[$line_number]['webLink'] = get_permalink($post_id);
+				$this->detailed_log[$line_number]['status'] = $value_status;
+				if($unmatched_row == 'true'){
+					global $wpdb;
+					$type ='cct';
+					$post_entries_table = $wpdb->prefix ."ultimate_post_entries";
+					$file_table_name = $wpdb->prefix."smackcsv_file_events";
+					$get_id  = $wpdb->get_results( "SELECT file_name  FROM $file_table_name WHERE `hash_key` = '$hash_key'");	
+					$file_name = $get_id[0]->file_name;
+					$wpdb->get_results("INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Inserted')");
+				}			
+				return $post_id;
+			}
+		}
 		else{
 			$current_user = wp_get_current_user();
 		    $current_user_role = $current_user->roles[0];
@@ -462,11 +529,6 @@ class CoreFieldsImport {
 				}
 	
 			}
-
-			$updated_row_counts = $helpers_instance->update_count($unikey_value,$unikey_name);
-			$created_count = $updated_row_counts['created'];
-			$updated_count = $updated_row_counts['updated'];
-			$skipped_count = $updated_row_counts['skipped'];
 
 			if($this->generated_content){
 				$generated_content = $post_values['post_content'];

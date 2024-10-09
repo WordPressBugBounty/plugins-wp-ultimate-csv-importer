@@ -72,16 +72,16 @@ class SaveMapping
 		}
 		$get_option = get_option('updateMessageDisplay');
 		if ($get_option === false) {
-			$result['notice_message'] = $this->updateMessage();
+			//$result['notice_message'] = $this->updateMessage();
 			$result['notice_display'] = true;
 			add_option('updateMessageDisplay', 'true');
 		}else {
 			// Option exists, check its value
 			if ($get_option === 'true') {
-				$result['notice_message'] = $this->updateMessage(); // Option is true
+			//	$result['notice_message'] = $this->updateMessage(); // Option is true
 				$result['notice_display'] = true;
 			}else{
-				$result['notice_message'] = $this->updateMessage();
+			//	$result['notice_message'] = $this->updateMessage();
 				$result['notice_display'] = false;
 			}
 		}
@@ -98,7 +98,7 @@ class SaveMapping
 			return $message;
 		}
 		$response = json_decode($response);
-		$current_plugin_version = '7.11.9';
+		$current_plugin_version = '7.11.10';
         if($current_plugin_version < $response->version[0]) {
 			
             $message = $response->message[0];
@@ -382,6 +382,7 @@ class SaveMapping
 			$selected_type = $values->module;
 		}
 		$map = unserialize($mapped_fields_values);
+
 		if ($rollback_option == 'true') {
 			$tables = $import_config_instance->get_rollback_tables($selected_type);
 			$import_config_instance->set_backup_restore($tables, $hash_key, 'backup');
@@ -856,6 +857,7 @@ class SaveMapping
 
 			$post_entries_table = $wpdb->prefix . "ultimate_post_entries";
 			$post_entries_value = $wpdb->get_results("select ID from {$wpdb->prefix}ultimate_post_entries ", ARRAY_A);
+			$type = $wpdb->get_var("select type from {$wpdb->prefix}ultimate_post_entries ");
 			if (!empty($post_entries_value)) {
 				foreach ($post_entries_value as $post_entries) {
 					$entries_array[] = $post_entries['ID'];
@@ -865,27 +867,34 @@ class SaveMapping
 				$import_type = $unmatched_object->import_type_as($selected_type);
 				$import_type_value = $unmatched_object->import_post_types($import_type);
 				$import_name_as = $unmatched_object->import_name_as($import_type);
-
-
-				if ($import_type_value == 'category' || $import_type_value == 'post_tag' || $import_type_value == 'product_cat' || $import_type_value == 'product_tag') {
-
-					$get_total_row_count =  $wpdb->get_col("SELECT term_id FROM {$wpdb->prefix}term_taxonomy WHERE taxonomy = '$import_type_value'");
-					if (is_array($entries_array)) {
-						$unmatched_id = array_diff($get_total_row_count, $entries_array);
-					}
-
+				if ($type == 'cct') {
+					$jettable = $wpdb->prefix . 'jet_cct_' . $import_type;
+					$get_total_row_count =  $wpdb->get_col("SELECT DISTINCT _ID FROM $jettable WHERE cct_status != 'trash' ");
+					$unmatched_id = array_diff($get_total_row_count, $test);
 					foreach ($unmatched_id as $keys => $values) {
-						$wpdb->get_results("DELETE FROM {$wpdb->prefix}terms WHERE `term_id` = '$values' ");
+						$wpdb->get_results("DELETE FROM $jettable WHERE `_ID`='$values' ");
 					}
-				}
-				if ($import_type_value == 'post' || $import_type_value == 'product' || $import_type_value == 'page' || $import_name_as == 'CustomPosts') {
+				}else{
+					if ($import_type_value == 'category' || $import_type_value == 'post_tag' || $import_type_value == 'product_cat' || $import_type_value == 'product_tag') {
 
-					$get_total_row_count =  $wpdb->get_col("SELECT DISTINCT ID FROM {$wpdb->prefix}posts WHERE post_type = '{$import_type_value}' AND post_status != 'trash' ");
-					if (is_array($entries_array)) {
-						$unmatched_id = array_diff($get_total_row_count, $entries_array);
+						$get_total_row_count =  $wpdb->get_col("SELECT term_id FROM {$wpdb->prefix}term_taxonomy WHERE taxonomy = '$import_type_value'");
+						if (is_array($entries_array)) {
+							$unmatched_id = array_diff($get_total_row_count, $entries_array);
+						}
+	
+						foreach ($unmatched_id as $keys => $values) {
+							$wpdb->get_results("DELETE FROM {$wpdb->prefix}terms WHERE `term_id` = '$values' ");
+						}
 					}
-					foreach ($unmatched_id as $keys => $values) {
-						$wpdb->get_results("DELETE FROM {$wpdb->prefix}posts WHERE `ID` = '$values' ");
+					if ($import_type_value == 'post' || $import_type_value == 'product' || $import_type_value == 'page' || $import_name_as == 'CustomPosts') {
+	
+						$get_total_row_count =  $wpdb->get_col("SELECT DISTINCT ID FROM {$wpdb->prefix}posts WHERE post_type = '{$import_type_value}' AND post_status != 'trash' ");
+						if (is_array($entries_array)) {
+							$unmatched_id = array_diff($get_total_row_count, $entries_array);
+						}
+						foreach ($unmatched_id as $keys => $values) {
+							$wpdb->get_results("DELETE FROM {$wpdb->prefix}posts WHERE `ID` = '$values' ");
+						}
 					}
 				}
 				$wpdb->get_results("DELETE FROM {$wpdb->prefix}ultimate_post_entries");
@@ -1435,6 +1444,11 @@ class SaveMapping
 				case 'BUNDLEMETA':
 					$bundle_type = 'BUNDLEMETA';
 					$uci_woocomm_meta->set_product_meta_values($header_array, $value_array, $map['BUNDLEMETA'], $post_id, '', $bundle_type, $line_number, $get_mode, $hash_key);
+					break;
+
+				case 'JECCT':
+					$jet_engine_cct_instance = JetEngineCCTImport::getInstance();
+					$jet_engine_cct_instance->set_jet_engine_cct_values($header_array, $value_array, $map['JECCT'], $post_id, $selected_type, $get_mode, $hash_key, $line_number);
 					break;
 
 				case 'JECPT':

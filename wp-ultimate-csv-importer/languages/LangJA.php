@@ -158,6 +158,8 @@ class LangJA {
                         'JetEngineRFFields' => 'ジェット エンジン リピーター フィールド',
                         'JetEngineCPTFields' => 'ジェット エンジンの CPT フィールド',
                         'jetEngineCPTRFFields' => 'ジェット エンジン CPT リピーター フィールド',
+                        'JetEngineCCTFields' => 'ジェットエンジンCCTフィールド',
+                        'JetEngineCCTRFFields' => 'ジェットエンジンCCTRFフィールド',
                         'jetEngineTaxonomyFields' => 'ジェット エンジン分類フィールド',
                         'jetEngineTaxonomyRFFields' => 'Jet Engine タクソノミー リピーター フィールド',
                         'jetEngineRelationsFields' => 'ジェットエンジン関連分野',

@@ -97,6 +97,8 @@ class LangPT {
                         'JetEngineRFFields' => 'Campos do repetidor do motor a jato',
                         'JetEngineCPTFields' => 'Campos CPT do Motor a Jato',
                         'jetEngineCPTRFFields' => 'Campos do Repetidor CPT do Motor a Jato',
+                        'JetEngineCCTFields' => 'Campos Jet Engine CCT',
+                        'JetEngineCCTRFFields' => 'Campos Repetidores Jet Engine CCT',
                         'jetEngineTaxonomyFields' => 'Campos de taxonomia do motor a jato',
                         'jetEngineTaxonomyRFFields' => 'Campos do repetidor de taxonomia do motor a jato',
                         'jetEngineRelationsFields' => 'Campo de relações do motor a jato',

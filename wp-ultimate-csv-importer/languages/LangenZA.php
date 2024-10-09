@@ -118,6 +118,8 @@ class LangEN_ZA {
                         'JetEngineRFFields' => 'Jet Engine Repeater Fields',
                         'JetEngineCPTFields' => 'Jet Engine CPT Fields',
                         'JetEngineCPTRFFields' => 'Jet Engine CPT Repeater Fields',
+                        'JetEngineCCTFields' => 'Jet Engine CCT Fields',
+                        'JetEngineCCTRFFields' => 'Jet Engine CCT Repeater Fields',
                         'JetEngineTaxonomyFields' => 'Jet Engine Taxonomy Fields',
                         'JetEngineTaxonomyRFFields' => 'Jet Engine Taxonomy Repeater Fields',
                         'JetEngineRelationsFields' => 'Jet Engine Relations Fields',

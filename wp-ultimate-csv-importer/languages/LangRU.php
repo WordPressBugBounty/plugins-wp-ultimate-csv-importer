@@ -98,6 +98,8 @@ class LangRU {
                         'JetEngineRFFields' => 'Поля ретранслятора реактивного двигателя',
                         'JetEngineCPTFields' => 'Поля CPT для реактивных двигателей',
                         'jetEngineCPTRFFields' => 'Поля повторителя CPT реактивного двигателя',
+                        'JetEngineCCTFields' => 'Поля реактивного двигателя CCT',
+                        'JetEngineCCTRFFields' => 'Поля ретранслятора CCT реактивного двигателя',
                         'jetEngineTaxonomyFields'=> 'Поля таксономии реактивных двигателей',
                         'jetEngineTaxonomyRFFields' => 'Поля повторителя таксономии реактивного двигателя',
                         'jetEngineRelationsFields' => 'Поле отношений реактивного двигателя',

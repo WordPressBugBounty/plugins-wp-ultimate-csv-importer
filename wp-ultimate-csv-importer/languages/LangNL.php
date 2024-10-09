@@ -118,6 +118,8 @@ class LangNL {
                         'JetEngineRFFields' => 'Jet Engine Repeater-velden',
                         'JetEngineCPTFields' => 'Straalmotor CPT-velden',
                         'jetEngineCPTRFFields' => 'Straalmotor CPT-repeatervelden',
+                        'JetEngineCCTFields' => 'Straalmotor CCT-velden',
+                        'JetEngineCCTRFFields' => 'Straalmotor CCT RF-velden',
                         'jetEngineTaxonomyFields' => 'Taxonomievelden voor straalmotoren',
                         'jetEngineTaxonomyRFFields' => 'Jet Engine Taxonomy Repeater-velden',
                         'jetEngineRelationsFields' => 'Gebied Jet Engine Relations',                        

@@ -122,6 +122,23 @@ class DefaultExtension extends ExtensionHandler{
 				unset($wordpressfields['Track Options']);
 			}
 		}
+		if(is_plugin_active('jet-engine/jet-engine.php')){
+			global $wpdb;
+			$get_slug_name = $wpdb->get_results("SELECT slug FROM {$wpdb->prefix}jet_post_types WHERE status = 'content-type'");
+			
+			foreach($get_slug_name as $key=>$get_slug){
+				$value=$get_slug->slug;
+				if($import_type == $value){
+					$wordpressfields=array(
+						'_ID'=>'_ID',
+						'Status'=>'cct_status',			
+					);
+					if($mode == 'Insert'){
+						unset($wordpressfields['_ID']);
+					}
+				}
+			}
+		}
 		// if($import_type == 'Media') {
 		// 	$wordpressfields = array(
 		// 			'File Name' => 'file_name',

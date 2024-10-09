@@ -141,6 +141,8 @@ class LangES
                         'JetEngineRFFields' => 'Campos de repetidores de motores a reacción',
                         'JetEngineCPTFields' => 'Campos CPT de motores a reacción',
                         'JetEngineCPTRFFields' => 'Campos de repetidor CPT de motor a reacción',
+                        'JetEngineCCTFields' => 'Campos CCT de motores a reacción',
+                        'JetEngineCCTRFFields' => 'Campos de repetidor CCT de motor a reacción',
                         'JetEngineTaxonomyFields' => 'Campos de taxonomía de motores a reacción',
                         'JetEngineTaxonomyRFFields' => 'Campos de repetidor de taxonomía de motores a reacción',
                         'JetEngineRelationsFields' => 'Campos de relaciones con motores a reacción',                        

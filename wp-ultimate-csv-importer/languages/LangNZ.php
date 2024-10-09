@@ -93,6 +93,8 @@ class LangNZ {
                 'JetEngineRFFields' => 'Jet Engine Repeater Fields',
                 'JetEngineCPTFields' => 'Jet Engine CPT Fields',
                 'jetEngineCPTRFFields' => 'Jet Engine CPT RF Fields',
+                'JetEngineCCTFields' => 'Jet Engine CCT Fields',
+                'JetEngineCCTRFFields' => 'Jet Engine CCT Repeater Fields',
                 'jetEngineTaxonomyFields' => 'Jet Engine Taxonomy Fields',
                 'jetEngineTaxonomyRFFields' => 'Jet Engine Taxonomy Repeater Fields',
                 'JetEngineRelationsFields' => 'Jet Engine Relations Fields',

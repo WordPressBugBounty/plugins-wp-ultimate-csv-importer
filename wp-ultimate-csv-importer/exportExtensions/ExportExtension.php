@@ -131,6 +131,24 @@ class ExportExtension {
 			}
 			$module = $post_export_class->import_post_types($module,$optional_type);
 		}
+		if(is_plugin_active('jet-engine/jet-engine.php')){
+			$get_slug_name = $wpdb->get_results("SELECT slug FROM {$wpdb->prefix}jet_post_types WHERE status = 'content-type'");
+			foreach($get_slug_name as $key=>$get_slug){
+				$value=$get_slug->slug;
+				$optional_type=$value;	
+				if($optionalType == $optional_type){
+					$table_name='jet_cct_'.$optional_type;
+					$get_menu= $wpdb->get_results("SELECT * FROM {$wpdb->prefix}$table_name");
+					if(is_array($get_menu))
+					$total = count($get_menu);
+					else
+					$total = 0;
+
+						echo wp_json_encode($total);
+						wp_die();
+				}
+			}
+		}
 		$get_post_ids = "select DISTINCT ID from {$wpdb->prefix}posts";
 		$get_post_ids .= " where post_type = '$module'";
 

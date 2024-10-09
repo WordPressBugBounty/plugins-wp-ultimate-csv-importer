@@ -92,6 +92,8 @@ class LangPL {
                 'JetEngineRFFields' => 'Pola wzmacniacza silnika odrzutowego',
                 'JetEngineCPTFields' => 'Pola CPT silnika odrzutowego',
                 'jetEngineCPTRFFields' => 'Pola RF CPT silnika odrzutowego',
+                'JetEngineCCTFields' => 'Pola Jet Engine CCT',
+                'JetEngineCCTRFFields' => 'Pola powtarzalne Jet Engine CCT',
                 'jetEngineTaxonomyFields' => 'Pola taksonomii silników odrzutowych',
                 'jetEngineTaxonomyRFFields' => 'Pola powtarzalne taksonomii silników odrzutowych',
                 'JetEngineRelationsFields' => 'Pola relacji silników odrzutowych',

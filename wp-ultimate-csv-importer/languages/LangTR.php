@@ -97,6 +97,8 @@ class LangTR {
 		'JetEngineRFFields' => 'Jet Motoru Tekrarlayıcı Alanları',
 		'JetEngineCPTFields' => 'Jet Motoru CPT Alanları',
 		'jetEngineCPTRFFields' => 'Jet Engine CPT Tekrarlayıcı Alanları',
+		'JetEngineCCTFields' => 'Jet Engine CCT Alanları',
+		'JetEngineCCTRFFields' => 'Jet Engine CCT Tekrarlayıcı Alanları',
 		'jetEngineTaxonomyFields' => 'Jet Motoru Sınıflandırma Alanları',
 		'jetEngineTaxonomyRFFields' => 'Jet Motoru Taksonomisi Tekrarlayıcı Alanları',
 		'jetEngineRelationsFields' => 'Jet Motoru İlişkileri Alanı',

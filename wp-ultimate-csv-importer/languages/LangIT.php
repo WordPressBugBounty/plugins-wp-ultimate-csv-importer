@@ -108,6 +108,8 @@ class LangIT {
 		'JetEngineRFFields' => 'Campi ripetitori  Jet Engine',
 		'JetEngineCPTFields' => 'Campi CPT Jet Engine',
 		'JetEngineCPTRFFields' => 'Campi ripetitori CPT Jet Engine',
+		'JetEngineCCTFields' => 'Campi CCT per motori a reazione',
+		'JetEngineCCTRFFields' => 'Campi RF CCT del motore a reazione',
 		'JetEngineTaxonomyFields' => 'Campi della tassonomia dei motori a reazione',
 		'JetEngineTaxonomyRFFields' => 'Campi ripetitori della tassonomia dei motori a reazione',
 		'JetEngineRelationsFields' => 'Campi delle relazioni del motore a reazione',

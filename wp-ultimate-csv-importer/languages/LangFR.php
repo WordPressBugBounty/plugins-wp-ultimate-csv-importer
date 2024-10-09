@@ -147,6 +147,8 @@ class LangFR {
                         'JetEngineRFFields' => 'Champs de répéteur de moteur à réaction',
                         'JetEngineCPTFields' => 'Champs CPT Jet Engine',
                         'JetEngineCPTRFFields' => 'Champs de répéteur CPT Jet Engine',
+                        'JetEngineCCTFields' => 'Jet Engine CCT Fields',
+                        'JetEngineCCTRFFields' => 'Jet Engine CCT Repeater Fields',
                         'JetEngineTaxonomyFields' => 'Champs de taxonomie des moteurs à réaction',
                         'JetEngineTaxonomyRFFields' => 'Champs de répéteur de taxonomie des moteurs à réaction',
                         'JetEngineRelationsFields' => 'Domaine des relations avec les moteurs à réaction',

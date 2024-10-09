@@ -116,6 +116,8 @@ class LangFA
 					'JetEngineRFFields' => 'JetEngineRFFfields',
 					'JetEngineCPTFields' => 'JetEngineCPTFields',
 					'JetEngineCPTRFFields' => 'JetEngineCPTRFFfields',
+					'JetEngineCCTFields' => 'Jet Engine CCT Fields',
+					'JetEngineCCTRFFields' => 'Jet Engine CCT Repeater Fields',
 					'JetEngineTaxonomyFields' => 'JetEngineTaxonomyFields',
 					'JetEngineTaxonomyRFFields' => 'JetEngineTaxonomyRFFfields',
 					'JetEngineRelationsFields' => 'JetEngineRelationsFields',

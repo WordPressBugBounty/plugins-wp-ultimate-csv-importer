@@ -115,6 +115,8 @@ class LangZH
 					'JetEngineRFFields' => 'JetEngine 射频场',
 					'JetEngineCPTFields' => 'JetEngineCPT 字段',
 					'JetEngineCPTRFFields' => 'JetEngineCPTRF 字段',
+					'JetEngineCCTFields' => 'Jet Engine CCT 字段',
+					'JetEngineCCTRFFields' => 'Jet Engine CCT 重复字段',
 					'JetEngineTaxonomyFields' => 'JetEngine分类领域',
 					'JetEngineTaxonomyRFFields' => 'JetEngine 分类法RFFields',
 					'JetEngineRelationsFields' => 'JetEngine关系字段',
