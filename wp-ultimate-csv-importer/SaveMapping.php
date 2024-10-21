@@ -72,7 +72,7 @@ class SaveMapping
 		}
 		$get_option = get_option('updateMessageDisplay');
 		if ($get_option === false) {
-			//$result['notice_message'] = $this->updateMessage();
+		//	$result['notice_message'] = $this->updateMessage();
 			$result['notice_display'] = true;
 			add_option('updateMessageDisplay', 'true');
 		}else {
@@ -98,7 +98,7 @@ class SaveMapping
 			return $message;
 		}
 		$response = json_decode($response);
-		$current_plugin_version = '7.11.10';
+		$current_plugin_version = '7.12';
         if($current_plugin_version < $response->version[0]) {
 			
             $message = $response->message[0];
@@ -1439,6 +1439,11 @@ class SaveMapping
 					$product_meta_instance = ProductMetaImport::getInstance();
 					$poly_array = isset($map['POLYLANG']) ? $map['POLYLANG'] : [];
 					$uci_woocomm_meta->set_product_meta_values($header_array, $value_array, $map['COUPONMETA'], $post_id, $variation_id, $selected_type, $line_number, $get_mode, $hash_key);
+					break;
+
+				case 'PPOMMETA':
+					$meta_type = 'PPOMMETA';
+					$uci_woocomm_meta->set_product_meta_values($header_array, $value_array, $map['PPOMMETA'], $post_id, '', $meta_type, $line_number, $get_mode, $hash_key);
 					break;
 
 				case 'BUNDLEMETA':

@@ -138,6 +138,12 @@ class CommentsImport {
 					$fields = $wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
 				}
 			}
+			if(isset($data_array['comment_rating'])){
+				$rating_range = range(1,5);
+				if(in_array($data_array['comment_rating'], $rating_range)){
+					update_comment_meta($retID ,'rating', $data_array['comment_rating']);
+				}
+			}
 		}else {
 			$retID = $commentid;
 			$core_instance->detailed_log[$line_number]['Message'] = "Skipped, Due to unknown post ID.";
