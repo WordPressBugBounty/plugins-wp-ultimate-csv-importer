@@ -98,7 +98,7 @@ class SaveMapping
 			return $message;
 		}
 		$response = json_decode($response);
-		$current_plugin_version = '7.12';
+		$current_plugin_version = '7.12.1';
         if($current_plugin_version < $response->version[0]) {
 			
             $message = $response->message[0];
@@ -1415,6 +1415,11 @@ class SaveMapping
 				case 'AIOSEO':
 					$all_seo_instance = AllInOneSeoImport::getInstance();
 					$all_seo_instance->set_all_seo_values($header_array, $value_array, $map['AIOSEO'], $post_id, $selected_type, $get_mode);
+					break;
+
+				case 'RANKMATH':
+					$rankmath_instance = RankMathImport::getInstance();
+					$rankmath_instance->set_rankmath_values($header_array, $value_array, $map['RANKMATH'], $post_id, $selected_type);
 					break;
 
 				case 'ECOMMETA':

@@ -1,113 +1,131 @@
-=== Import CSV or XML Datafeed With Ease ===
+=== All Import Export Suite for CSV and XML Datafeed ===
 Contributors: smackcoders, smacksupport
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 6.6
-Stable tag: 7.12
+Stable tag: 7.12.1
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
-Tags: wordpress csv import, wordpress xml import, datafeed, csv, xml, import, migrate, import csv to wordpress, import xml to wordpress, advanced xml import, advanced csv import, bulk csv import, bulk xml import, bulk data import, xml to custom post type, csv to custom post type, woocommerce csv import, woocommerce xml import, csv import, import csv, xml import, csv importer
+Tags: import export, wordpress csv import, xml, csv, datafeed, importer, import, xml import, migrate, import csv to wordpress, import xml to wordpress, advanced xml import, advanced csv import, bulk csv import, bulk xml import, bulk data import, xml to custom post type, csv to custom post type, woocommerce csv import, woocommerce xml import, csv import, import csv, wordpress xml import, import xml, csv importer
 License: GPLv2 or later
 
-Import and migrate CSV/XML data into WordPress quickly and accurately. With our plugin, you can import/export posts, users, products, custom fields, and more with ease.
+Our Ultimate WP Import Export plugin enables fast import export of posts, users, products, custom fields as CSV and XML into WordPress easily.
 
 == Description ==
 
-**Tired of wasting time on manual uploads?**  Our powerful CSV/XML Importer plugin lets you migrate your data to WordPress in minutes, not hours. Easily import blog posts, products, users, custom fields, and more with unmatched speed and accuracy.
+**Tired of wasting time on manual uploads?**  
+
+Our powerful WP Import Export plugin lets you migrate your data to WordPress in minutes, not hours. With our WordPress import plugin, easily import blog posts, products, users, custom fields, and more with unmatched speed and accuracy.
+
+Supercharge Your WordPress with our powerful add-ons. By installing our additional add-ons, you can enhance the plugin's capabilities to include export, import, and manage users, products, and custom data types effortlessly. This makes it even easier to manage all types of content and streamline the data handling process for your WordPress site.
 
 [youtube https://www.youtube.com/watch?v=dy3pdwoujxQ]
 
-= Key Benefits: =
-* **Save time:**  Import hundreds or thousands of items in minutes instead of hours.
-* **Wide import compatibility:** Import a diverse range of content including WooCommerce, Yoast, WPML, and more.
-* **Reduce errors:**  Minimize data entry mistakes and ensure accurate migration.
-
 **Explore our [Free Demo](https://demo.smackcoders.com/ultimatecsvimporter/wp-admin/?utm_source=csv-importer-free&utm_medium=wporgreadme&utm_campaign=csv_importer_free_demo). Ready for more? Try our [Private Trial](https://trial.smackcoders.com/index.html?utm_source=csv-importer-free&utm_medium=wporgreadme&utm_campaign=csv_importer_pro_trial).**
+
+= Key Benefits: =
+
+* **Save time:** Import hundreds or thousands of items in minutes. The WP Import Export plugin is optimized to handle large data sets, allowing you to bulk import posts, pages, products, users, images, and custom fields in a single session. Whether you’re setting up a new site or updating an existing one, the plugin streamlines the process, freeing up valuable time for other tasks.
+
+* **Wide import compatibility:** Import a diverse range of content with support for popular plugins and platforms such as WooCommerce, Yoast SEO, WPML, Polylang, and Advanced Custom Fields (ACF). This compatibility allows you to move not only core WordPress content but also custom taxonomies, custom posts, multilingual data, SEO settings, and e-commerce data—ensuring all critical components of your site are seamlessly migrated.
+
+* **Reduce errors:** Minimize data entry mistakes and ensure accurate migration. The plugin’s intuitive drag-and-drop mapping interface and detailed log features help you validate and troubleshoot each import, ensuring that your data is transferred to the target fields without duplicates or missing entries. Additionally, support for file formats like CSV and XML allows for structured data transfer, maintaining the integrity of complex information during migration.
+
+* **Automate and Schedule Imports (Premium):** Set up scheduled imports and exports to keep your site data continuously updated without manual intervention. The Premium version of the WP CSV Import Export plugin lets you configure specific times and intervals for importing new products, posts, or updates, ensuring your content remains current with minimal effort. This scheduling option supports a smooth and efficient workflow, reducing the need for manual checks and allowing your team to focus on strategic tasks.
 
 = User-Friendly Interface =
 
-* **Easy Navigation for Seamless Imports:** Easily upload and import your CSV or XML files in just a few simple steps.
-* **Intuitive mapping:** Quickly match your data fields to WordPress fields using drag and drop.
-* **Real-time progress:** Monitor the import process and identify any issues.
+* **Easy Navigation for Seamless Imports:** Upload and import your CSV or XML files with just a few simple steps. The plugin guides you through a user-friendly process for WordPress import posts from CSV or other files, allowing even non-technical users to manage bulk imports without difficulty. This straightforward navigation reduces setup time, making large-scale data management more accessible and streamlined.
+
+* **Intuitive Mapping:** Quickly and accurately match data fields from your source files to corresponding WordPress fields with our WP Import plugin. The intuitive mapping interface simplifies field selection, helping to eliminate potential errors and allowing for customized imports that align perfectly with your website’s structure and needs. This user-centric design ensures each import is tailored and integrates smoothly with your existing data.
+
+* **Real-Time Progress:** Keep track of your import’s progress as it happens and get immediate visibility into each step. The real-time monitoring feature provides updates on the current status, helps identify potential issues, and allows for quick troubleshooting, ensuring that imports run efficiently from start to finish. This transparency adds control and confidence to large imports, as you’re informed at every stage.
+
+* **Detailed Logs:** Gain insights into your import activities with comprehensive logs that allow you to review each step of the process. These logs not only track progress but also help you troubleshoot any errors that may arise, providing a clear record of what was imported, when, and any issues encountered. This feature enhances transparency and aids in maintaining data integrity.
+
+* **Validation Checks:** The WP Importer plugin incorporates robust validation checks to ensure the integrity of your data before it is imported into WordPress. By performing these checks, the plugin helps prevent common errors such as format mismatches or missing information, ensuring a smoother import process and minimizing the risk of complications that could disrupt your website’s functionality.
 
 = Flexible File Uploads =
 
-* **Import from various sources:** Upload files from your computer, a URL, or FTP/SFTP.
-* **Support for multiple formats:** Import CSV, XML, and other popular file formats.
-* **Customizable options:** Fine-tune the import process to meet your needs.
+* **Import from Various Sources:** Flexibly upload files from a range of sources, including your computer, a direct URL, or through FTP/SFTP. This variety in upload options ensures that no matter where your data is stored, it’s easy to bring it into WordPress, enabling faster and more efficient content migration from different locations.
 
-= Accurate Imports =
+* **Support for Multiple Formats:** The WP Import Export plugin is compatible with multiple file formats, allowing you to import not only CSV and XML files but also other widely used data formats. This broad compatibility helps streamline the import of varied datasets, making it simpler to work with different sources without needing to reformat or convert files.
 
-* **Detailed logs:** Review import logs to track progress and troubleshoot any errors.
-* **Download failed media:** Easily identify and fix issues with image or media imports.
-* **Validation checks:** Ensure data integrity and prevent errors during the import process.
-
-= Unlimited Imports =
-
-* **Import as many items as you need:** No limits on the number of posts, products, or other content you can import.
-* **Efficient processing:** Handle large datasets without performance issues.
-* **Bulk import for time-saving:** Import multiple items at once to streamline your workflow.
+* **Customizable Options:** Tailor the import process with customizable settings like adding custom functions to align with your specific requirements. Whether you need to adjust field mapping, filter data, or set import preferences, these options provide full control over your imports, ensuring they meet your exact needs and integrate seamlessly into your WordPress setup.
 
 = Automatic Media Handling =
-
-* **Import images along with content:** Automatically link and display images within your posts or products.
-* **SEO-optimized imports:** Add alt text and titles to images for better search engine visibility.
+* **Import images along with content:**  Easily manage your media while performing a wp import posts with images, automatically linking and displaying images within your posts or products.
+* **SEO-optimized imports:**  Add alt text and titles to images for better search engine visibility.
 * **Efficient media management:** Easily manage large media libraries without manual uploads.
+* **Download Failed Media:** Quickly identify and resolve issues related to media imports, such as images or files that may not have transferred successfully. With this functionality, you can effortlessly download any media that failed to import, making it easy to address problems without losing track of what needs attention. This ensures that all visual content is accounted for and enhances the overall quality of your imported data.
 
-= Organized Content =
-
-* **Import categories, tags, and taxonomies:** Maintain a well-structured website with organized content.
-* **Preserve relationships:** Import hierarchical relationships between categories and terms.
-* **Custom taxonomy support:** Import custom post types and their associated taxonomies.
-
-= Top CSV Import Features =
-
+= Top WordPress CSV Import Features =
+* **Bulk Import:** Migrate hundreds or thousands of records in minutes.
 * **Easy Preparation:** Use Google Sheets, Excel, or any spreadsheet tool to create or edit CSV files.
 * **Seamless Mapping:** Automatically match your CSV fields to WordPress fields for quick imports.
 * **ACF Field Support:** Import Advanced Custom Fields (ACF) for custom data. **Free version supports Basic, Choices, and jQuery fields.**
 
-= WordPress XML Import =
-
-For those preferring structured data, the plugin fully supports XML imports. With XML, you can ensure your data structure remains intact during migration.
+= WordPress XML Import Features =
+If you prefer structured data, the plugin fully supports WordPress import from XML, allowing for seamless migration of complex data structures. With XML, you can ensure your data structure remains intact during migration.
 
 **Top XML Import Features:**
 
-* **Direct Import:** Import data directly from XML files, no extra steps required.
+* **Direct Import:** Import data directly from XML files, no extra steps are required.
 * **Structured Data Transfer:** Maintain data integrity and structure, minimizing errors.
 * **Custom Content Import:** Bring in custom post types like products, events, or portfolios.
 * **Full Taxonomy Import:** Keep your categories, tags, and taxonomies intact.
 
-= WordPress Import & Export Plugins as Addon =
+= Our WordPress Import Export Plugin Addons =
+**Effortlessly manage your WordPress content with our powerful add-ons!**  These extensions unlock a whole new level of flexibility and control, making it easier than ever to import, export, and streamline your website data.
 
-Streamline your WooCommerce store setup with bulk product imports from CSV or XML files. Easily manage product attributes, variations, and images.
+**WordPress Export Addon**
 
-= WooCommerce Import Features: =
+Make exporting your WordPress content simple by installing our [WordPress All Export for CSV and XML](https://wordpress.org/plugins/wp-ultimate-exporter) Addon. Managing WordPress content doesn't have to be a one-way process. This plugin lets you effortlessly move content in and out of your website, saving time and simplifying maintenance. Here’s what it offers:
 
-* **Bulk Product Import:** Upload hundreds of products, including variations, at once.
-* **Seamless Integration:** Import images, categories, and product attributes in one go.
-* **Flexible Data Sources:** Import product data from CSV, XML, or Excel formats.
+* **Quick Backups:** Export your WordPress content—like posts, pages, custom post types, and comments—with a single click.
+* **Easy Migrations:** Move your website to a new host or domain by exporting your site and importing it elsewhere.
+* **Content Sharing Made Simple:** Share specific posts, pages, or custom content with colleagues or on other sites.
 
-Need more? Install our [WooCommerce Import Addon](https://wordpress.org/plugins/import-woocommerce) for advanced import features like orders and coupons.
+Additional features include exporting posts with images and importing content from other platforms. The CSV Importer plugin also supports automatic updates from CSV or XML files, making it ideal for e-commerce or blog sites that need frequent content updates.
 
-= Media and Image Import =
+**WordPress User Import & Export**
 
-Our plugin handles bulk image imports along with your posts and pages. Add SEO-friendly titles, captions, and alt text to images directly from CSV/XML files. Managing large media libraries has never been easier.
+Easily manage user accounts and grow your online community by installing our [WordPress Users & Members Import from CSV](https://wordpress.org/plugins/import-users) addon along with an export addon.
 
-**Media Import Features:**
+Here’s how these plugins simplify user management:
 
-* **SEO-Optimized Imports:** Automatically add alt text and titles to images.
-* **Efficient Bulk Uploads:** Import images from external sources directly into your WordPress Media Library.
+* **Bulk User Import:** Add hundreds or even thousands of users to your site by uploading a CSV file with details like user names, email addresses, and passwords.
+* **User Migration from Other Platforms:** Easily import users from different sources or databases, with support for various formats.
+* **User Export for Backup:** Export a complete list of all users, including profiles and roles, for backup or documentation.
+* **Password Import:** Securely import users with their passwords, encrypted for security.
 
-= User Import and Export Addon =
+These WordPress plugins streamline user management, simplify onboarding, and enhance data security.
 
-Easily manage users on your WordPress site with bulk import and export features. Whether you're adding new members or migrating from another platform, this plugin simplifies the process.
+**WooCommerce Product Import & Export Addon**
+Adding products to your WooCommerce store doesn’t have to take hours. Install our [WooCommerce Products & Bundle Import](https://wordpress.org/plugins/import-woocommerce) Addon to quickly and accurately import products from various sources.
 
-**User Import Features:**
+**Enhance your product management experience with these features:**
 
-* **Bulk User Import:** Upload thousands of users with details like email, username, and roles.
-* **Secure Imports:** Import hashed passwords for users without compromising security.
+* **Bulk Product Uploads:** Easily import hundreds of products at once using CSV or XML files.
+* **Image Import:** Import products with images to make your listings visually complete from the start.
+* **Product Attributes Included:** Automatically add product details like size, color, or material, skipping manual updates.
+* **Organized Categories:** Keep your store organized by importing products with their categories.
+* **Flexible File Formats:** Import data from CSV, Excel, or XML files, allowing for easy data management from different sources.
+* **WooCommerce Import Export Plugin Addon:** Use two-way functionality to import and export products, perfect for backups or transferring data.
 
-For even more user management, try our [WordPress Users & Members Import Addon](https://wordpress.org/plugins/import-users).
+Using the WooCommerce import-export addon streamlines product management, ensuring data accuracy and improving store efficiency.
+
+**WordPress Multilingual Content Import & Export**
+Running a multilingual website or expanding your audience? Our CSV import plugin works smoothly with popular multilingual plugins like WPML and Polylang, enabling you to import and export content in multiple languages.
+
+Here’s how it simplifies multilingual content management:
+
+* **Migrate Multilingual Content:** Moving your site or importing content from another platform? Easily bring over all language versions with just a few clicks.
+* **Streamlined Workflow:** Manage all your multilingual content in one place, making it easier to stay organized.
+* **Save Time:** Skip manual translation copy-pasting and focus on creating great content for your global audience.
+
+This plugin helps you manage multilingual sites efficiently, saving time and resources.
+
 
 = Premium Features =
 
@@ -129,7 +147,7 @@ Upgrade to our Pro version to unlock advanced features like:
 - [Check Out Our Documentation](https://www.smackcoders.com/documentation/ultimate-csv-importer-pro/how-to-import-csv?utm_source=web&utm_campaign=readme&utm_medium=wporg)
 
 = Watch Our YouTube Tutorials =
-(youtube https://www.youtube.com/watch?v=M78qYD89B8c&list=PL2k3Ck1bFtbTT-5Tz2PLkoAUJ1fRdwUSj&index=2)
+[youtube https://www.youtube.com/watch?v=M78qYD89B8c&list=PL2k3Ck1bFtbTT-5Tz2PLkoAUJ1fRdwUSj&index=2]
 
 
 == Screenshots ==
@@ -146,9 +164,10 @@ Upgrade to our Pro version to unlock advanced features like:
 11. PHP.ini Settings for Imports
 
 
+
 == FREQUENTLY ASKED QUESTIONS ==
 
-= How to Import Data into WordPress? =
+= How to import data to wordpress? =
 
 There are two main ways to import data into WordPress:
 
@@ -161,18 +180,18 @@ There are two main ways to import data into WordPress:
 
 * **XML (Extensible Markup Language):**  Suitable for structured data.  XML files maintain data integrity during migration but require a basic understanding of their structure for editing the source file.
 
-= How to Use the Ultimate CSV and XML WordPress Importer? =
+= How to import any xml or csv file to wordpress?  =
 
-The plugin offers both export and import functionalities:
+The WP Import Export plugin offers both import and export functionalities for smooth WordPress data management.
 
 * **Export:** Use the export feature to create a sample CSV or XML file from your existing content. This file can then be used as a template for your import file or for importing data to another WordPress site.
 
-* **Import:** You can use the import functionality to:
+* **Import:** With the WP Import feature, you can import xml file in wordpress
     * Update existing posts with new values.
     * Add new posts to your website.
     * Update or replace existing content based on your mapping configuration.
 
-= How to Import a WordPress Site from Localhost? =
+= How to Import WordPress Site from Localhost? =
 
 If you've developed your site locally using XAMPP or WAMP, you can easily export it for deployment on a remote host. Here's how:
 
@@ -213,14 +232,15 @@ Here are some reasons why images might not be imported:
 
 = How to Import WordPress Posts with Images? =
 
-There are two ways to import posts with images:
+There are two ways to wp import posts with images
 
 1. **Dedicated Image Column:** Include a separate column in your import file specifically for featured images. Populate this column with the image URLs.
 2. **Inline Images:** Include image URLs directly within the post content using HTML tags.
 
 = How to Import All Images from External URLs? =
 
-In the plugin's "Manage Media Uploads" section, enable the option **"Download Post-Content External Images to Media"**. This allows you to import images directly from various online sources (e.g., Google Images, Pexels, Dropbox) to your WordPress media library. Refer to the [Media Handling in WordPress Importer documentation](https://www.smackcoders.com/documentation/wp-ultimate-csv-importer-pro/how-to-import-schedule-or-update?utmsource=web&utmmedium=wporg&utmcampaign=readme) for more details.
+In the plugin's "Manage Media Uploads" section, enable the option **"Download Post-Content External Images to Media"**. This allows you to import images directly from various online sources (e.g., Google Images, Pexels, Dropbox) to your WordPress media library. [Refer to the plugin's documentation for more details](https://www.smackcoders.com/documentation/wp-ultimate-csv-importer-pro/import-images-into-wordpress?utmsource=web&utmcampaign=readme&utmmedium=wporg)
+
 
 == Installation ==
 It is as simple as installing any other WordPress plugin. There are two general methods:
@@ -232,12 +252,18 @@ It is as simple as installing any other WordPress plugin. There are two general 
 
 == Changelog ==
 
+= 7.12.1 =
+
+Release date: 2024-11-06
+New Feature: Added support for importing RankMath dataset schema-type fields.
+New Feature: Enabled import of array/object custom fields in JSON format.
+
 = 7.12 =
 
 Release date: 2024-10-21
 
 New Feature: Added import support for WooCommerce orders, including personalized product details from PPOM (Personalized Product Option Manager) fields.
-New Feature: Added export support for WooCommerce orders, with personalized product information generated from PPOM fields. 
+New Feature: Added export support for WooCommerce orders, with personalized product information generated from PPOM fields.
 
 = 7.11.10 =
 
@@ -402,7 +428,7 @@ Release date: 2024-05-21
 
 = 7.10.12 =
  
- Fixed: FIFU support for customposttype.
+ Fixed: FIFU support for custom post type.
  Fixed: PHP deprecated error.
  Removed: Additional carriage returns.
  Fixed: WooCommerce postdate import & product count issue.
@@ -1404,7 +1430,7 @@ Release date: 2024-05-21
 
 == Upgrade Notice ==
 
-= 7.12 =
+= 7.12.1 =
 
-Added: import support for WooCommerce orders, including personalized product details from PPOM (Personalized Product Option Manager) fields.
-Added: export support for WooCommerce orders, with personalized product information generated from PPOM fields. 
+Added: importing support for RankMath dataset schema type fields 
+Added: Import support for array/object custom fields into json format.

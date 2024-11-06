@@ -57,6 +57,25 @@ class RankMathExtension extends ExtensionHandler{
 				'Twitter Icon overlay'=>'rank_math_twitter_image_overlay',
 				'Card Type'=>'rank_math_twitter_card_type',
 				'App Description'=>'rank_math_twitter_app_description',
+
+				'Dataset Name' => 'ds_name',
+				'Dataset Desc' => 'ds_description',
+				'Dataset URL' => 'ds_url',
+				
+				'Dataset sameAs' => 'ds_sameAs',
+				'Dataset identifier' => 'ds_identifier',
+				'Dataset keywords' => 'ds_keywords',
+				'Dataset license' => 'ds_license',
+				'Dataset Catalog_name' => 'ds_cat_name',
+				'Dataset temporal coverage' => 'ds_temp_coverage',
+				'Dataset spatial coverage' => 'ds_spatial_coverage',
+				'Distribution Encode Format' => 'encodingFormat',
+				'Distribution Content URL' => 'contentUrl',
+				'Creator Type' => 'creator_type',
+				'Creator Name' => 'creator_name',
+				'Creator sameAs' => 'creator_sameAs',
+				
+
 				'iPhone App Name'=>'rank_math_twitter_app_iphone_name',
 				'iPhone App ID'=>'rank_math_twitter_app_iphone_id',
 				'iPhone App URL'=>'rank_math_twitter_app_iphone_url',

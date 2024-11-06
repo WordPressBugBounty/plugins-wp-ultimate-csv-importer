@@ -56,6 +56,12 @@ class WordpressCustomImport {
                         if (is_serialized($custom_value)) {
                             $custom_value = maybe_unerialize($custom_value);
                         }
+                        if (is_array($custom_value) || is_object($custom_value)) {
+                            // Convert to JSON format
+                            $custom_value = json_encode($custom_value);
+                        }
+                    
+                       
                         update_post_meta($pID, $custom_key, $custom_value);
                     }
                 } else {

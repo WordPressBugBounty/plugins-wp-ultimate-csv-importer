@@ -63,7 +63,10 @@ $plugin_ajax_hooks = [
     'install_addon',
     'get_setting',
     'get_plugin_notice',
-    'dismiss_notice'
+    'dismiss_notice',
+    'helperImport',
+    'helperSearch',
+    'needHelper',
 ];  
 }
 else {

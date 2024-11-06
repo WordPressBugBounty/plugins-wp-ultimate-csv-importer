@@ -32,6 +32,7 @@ class RankMathImport {
 	}
 
 	function rankmath_import_function($data_array, $importas, $pID, $header_array , $value_array) {
+		
 		global $wpdb;
 		$createdFields = $rankmathData = $property_details = $image_details = $speakable_details =  $property_group_details = array();
 		$media_instance = MediaHandling::getInstance();
@@ -290,7 +291,60 @@ class RankMathImport {
 				$array_rank_math=array_merge($schems,$schema,$rank_math,$speakable,$author);						
 				update_post_meta($pID, 'rank_math_schema_BlogPosting', $array_rank_math);
 			}
+
+
+
+			$schems['metadata']=[	
+
+				'title'     => 'Dataset' ,
+				'type'      => 'template',
+				'shortcode' => uniqid( 's-' ),
+				'isPrimary' => true,
+
+			];
+
+			$dataset_basic = [
+				'@type'       => 'Dataset',
+				'name'        => $data_array['ds_name'],
+				'description' => $data_array['ds_description'],
+				'url'         => $data_array['ds_url'],
+				'sameAs' => $data_array['ds_sameAs'],
+				'license' => $data_array['ds_license'],
+				'identifier' => explode(',',$data_array['ds_identifier']),
+				'keywords' => explode(',',$data_array['ds_keywords']),
+				'includedInDataCatalog' =>  [
+					'@type'          => 'DataCatalog',
+					'name'           => $data_array['ds_cat_name']
+					
+				],
+				'temporalCoverage' => $data_array['ds_temp_coverage'],
+				'spatialCoverage' => $data_array['ds_spatial_coverage']
+
+			];
+
+			$encoding_formats = explode(',',$data_array['encodingFormat']);
+			$content_urls = explode(',', $data_array['contentUrl']);
+
+			$dataset_distribution = ['distribution' => []];
+
+			foreach ($encoding_formats as $index => $format) {
+				$dataset_distribution['distribution'][] = [
+					'@type'          => 'DataDownload',
+					'encodingFormat' => $format,
+					'contentUrl'     => $content_urls[$index] ?? '',  
+				];
+			}
+
+			// Merge all arrays to form the complete dataset schema
+			$dataset_schema = array_merge(
+				$schems,
+				$dataset_basic,
+				$dataset_distribution,
+
+			);
 			
+			update_post_meta( $pID, 'rank_math_schema_Dataset', $dataset_schema );
+					
 			
 		}
 		else{

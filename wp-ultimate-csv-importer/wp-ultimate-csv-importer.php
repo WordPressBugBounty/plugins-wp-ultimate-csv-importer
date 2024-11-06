@@ -10,7 +10,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: WP Ultimate CSV Importer
- * Version:     7.12
+ * Version:     7.12.1
  * Plugin URI:  https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
  * Description: Seamlessly create posts, custom posts, pages, media, SEO and more from your CSV data with ease.
  * Author:      Smackcoders
@@ -60,6 +60,8 @@ class SmackCSV{
 	private static $send_password = null ; 
 	private static $security = null ;
 	private static $support_instance = null ;
+	private static $helper_instance = null ;
+	private static $need_helper_instance = null ;
 	private static $uninstall = null ;
 	private static $install = null ;
 	private static $export_instance = null ;
@@ -85,7 +87,7 @@ class SmackCSV{
 	private static $persian_instance = null;
 	private static $chinese_instance = null;
 	private static $addon_instance = null;
-	public $version = '7.12';
+	public $version = '7.12.1';
 
 	public function __construct() { 
 		add_action('init', array(__CLASS__, 'show_admin_menus'));
@@ -153,6 +155,8 @@ class SmackCSV{
 			SmackCSV::$send_password = SendPassword::getInstance();
 			SmackCSV::$security = Security::getInstance();
 			SmackCSV::$support_instance = SupportMail::getInstance();
+			SmackCSV::$helper_instance = HelperExtension::getInstance();
+			SmackCSV::$need_helper_instance = NeedHelperExtension::getInstance();
 			SmackCSV::$install = SmackCSVInstall::getInstance();
 			SmackCSV::$export_instance = ExportExtension::getInstance();
 			SmackCSV::$italy_instance = LangIT::getInstance();
@@ -705,6 +709,8 @@ function loadbasic(){
 		include_once('DragandDropExtension.php');
 		include_once('controllers/SendPassword.php');
 		include_once('controllers/SupportMail.php');
+		include_once('controllers/HelperExtension.php');
+		include_once('controllers/NeedHelperExtension.php');
 		include_once('controllers/Security.php');
 		$plugin = SmackCSV::getInstance();			
 	}	
