@@ -63,11 +63,13 @@ class HelperExtension
             // $input_mode = sanitize_text_field($_POST['helpermode']);
             $search_term = $search_term ?? sanitize_text_field($_POST['searchInput']);
             if (!empty($search_term)) {
+                $search_term = rawurlencode($search_term);
                // $search_url = 'https://dev.smackcoders.com/?swp_form%5Bform_id%5D=2&s=' . $search_term;
                 $search_url = 'https://www.smackcoders.com/?swp_form%5Bform_id%5D=1&s=' . $search_term;
-                $ch = curl_init($search_url);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                $html = curl_exec($ch);
+                // $ch = curl_init($search_url);
+                // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+                // $html = curl_exec($ch);
+                $html = file_get_contents($search_url);
 
                 if ($html === false) {
                     echo json_encode(["error" => "Failed to fetch content"]);

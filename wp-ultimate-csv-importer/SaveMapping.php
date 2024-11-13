@@ -98,7 +98,7 @@ class SaveMapping
 			return $message;
 		}
 		$response = json_decode($response);
-		$current_plugin_version = '7.12.1';
+		$current_plugin_version = '7.12.2';
         if($current_plugin_version < $response->version[0]) {
 			
             $message = $response->message[0];

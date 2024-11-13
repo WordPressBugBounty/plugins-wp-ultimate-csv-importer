@@ -44,6 +44,66 @@ class JetEngineCPTImport {
 		$jet_data = $this->JetEngineCPTFields($type);
 		foreach ($data_array as $dkey => $dvalue) {
 			if(array_key_exists($dkey,$jet_data['JECPT'])){
+				if ($jet_data['JECPT'][$dkey]['type'] === 'advanced-date') {
+					$meta_value = [];
+					$date_test = trim($dvalue) ?? '';
+			
+					if (!empty($date_test)) {
+						$date_parts = explode(',', $date_test);
+			
+						// Assign date parts to core fields
+						$meta_value = [
+							'date' => $date_parts[0] ?? '',
+							'time' => $date_parts[1] ?? '',
+							'is_end_date' => $date_parts[2] ?? '',
+							'end_date' => $date_parts[3] ?? '',
+							'end_time' => $date_parts[4] ?? '',
+							'is_recurring' => $date_parts[5] ?? '',
+							'recurring' => $date_parts[6] ?? '',
+							'recurring_period' => $date_parts[7] ?? ''
+						];
+			
+						// Add recurring details based on recurrence type
+						$recurring = $meta_value['recurring'];
+						switch ($recurring) {
+							case 'daily':
+								$meta_value['end'] = $date_parts[8] ?? '';
+								$meta_value['end_after_date'] = $date_parts[9] ?? '';
+								break;
+							
+							case 'weekly':
+								$meta_value['week_days'] = explode('|', $date_parts[8] ?? '');
+								$meta_value['end'] = $date_parts[9] ?? '';
+								$meta_value['end_after_date'] = $date_parts[10] ?? '';
+								break;
+			
+							case 'monthly':
+								$meta_value['monthly_type'] = $date_parts[8] ?? '';
+								$meta_value['month_day'] = $date_parts[9] ?? '';
+								$meta_value['month_day_type'] = $date_parts[10] ?? '';
+								$meta_value['month_day_type_value'] = $date_parts[11] ?? '';
+								$meta_value['end'] = $date_parts[12] ?? '';
+								$meta_value['end_after_date'] = $date_parts[13] ?? '';
+								break;
+			
+							case 'yearly':
+								$meta_value['monthly_type'] = $date_parts[8] ?? '';
+								$meta_value['month'] = $date_parts[9] ?? '';
+								$meta_value['month_day'] = $date_parts[10] ?? '';
+								$meta_value['month_day_type'] = $date_parts[11] ?? '';
+								$meta_value['month_day_type_value'] = $date_parts[12] ?? '';
+								$meta_value['end'] = $date_parts[13] ?? '';
+								$meta_value['end_after_date'] = $date_parts[14] ?? '';
+								break;
+						}
+			
+						//update meta
+						$meta_key = sanitize_key($dkey . '__config');
+						$meta_value_json = json_encode($meta_value);
+						update_post_meta($pID, $meta_key, $meta_value_json);
+					}
+				}
+
 				if($jet_data['JECPT'][$dkey]['type'] == 'datetime-local'){
 					$dateformat = 'Y-m-d\TH:m';
 					if(!empty($dvalue)){
