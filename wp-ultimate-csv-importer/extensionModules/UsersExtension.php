@@ -71,7 +71,7 @@ class UsersExtension extends ExtensionHandler{
         if(is_plugin_active( 'members/members.php')){
             $members_fields = $this->custom_fields_by_members();
             if(!empty($members_fields)){
-                $response['custom_fields_members'] = null;        
+                $response['custom_fields_members'] = $members_fields;        
             }
             
         } 
@@ -109,6 +109,7 @@ class UsersExtension extends ExtensionHandler{
         $wp_mem_fields = $this->convert_fields_to_array($WPMemberFields);
         return $wp_mem_fields;
     }
+
     public function custom_fields_by_members () {
 		$MemberFields = array();
 		$MemberFields['MULTIROLE']['multi_user_role']['label'] = 'Multi User Role';

@@ -200,7 +200,17 @@ class ProductMetaExtension extends ExtensionHandler{
 					'SHIPMENT: cost'          => 'shipment_cost',
 					'SHIPMENT: taxes'         => 'shipment_taxes',
 				);
+				if ( is_plugin_active( 'yith-woocommerce-order-tracking-premium/init.php' ) && $import_type == 'WooCommerceOrders') {
+					$pro_meta_fields['Tracking Coe'] = 'ywot_tracking_code';
+					$pro_meta_fields['Tracking PostCode'] = 'ywot_tracking_postcode';
+					$pro_meta_fields['Tracking Carrier ID'] = 'ywot_carrier_id';
+					$pro_meta_fields['Pick Up Date'] = 'ywot_pick_up_date';
+					$pro_meta_fields['Estimated Devliery Date'] = 'ywot_estimated_delivery_date';
+					$pro_meta_fields['Pick Up Status '] = 'ywot_picked_up';
+				}
+	
 			}
+			
 			if($import_type == 'WooCommerceCoupons'){           
 				$pro_meta_fields = array(
 					'Discount Type' => 'discount_type',

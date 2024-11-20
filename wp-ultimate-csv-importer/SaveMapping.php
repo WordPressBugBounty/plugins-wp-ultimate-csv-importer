@@ -98,7 +98,7 @@ class SaveMapping
 			return $message;
 		}
 		$response = json_decode($response);
-		$current_plugin_version = '7.12.2';
+		$current_plugin_version = '7.12.3';
         if($current_plugin_version < $response->version[0]) {
 			
             $message = $response->message[0];
@@ -1479,6 +1479,11 @@ class SaveMapping
 				case 'WPMEMBERS':
 					global $wpmember_class;
 					$wpmember_class->set_wpmembers_values($line_number, $header_array, $value_array, $map['WPMEMBERS'], $post_id, $selected_type, $hash_key);
+					break;
+				
+				case 'MEMBERS':
+					global $member_class;
+					$member_class->set_multirole_values($header_array, $value_array, $map['MEMBERS'], $post_id, $selected_type);
 					break;
 
 				case 'TERMS':

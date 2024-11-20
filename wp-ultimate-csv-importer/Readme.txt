@@ -3,7 +3,7 @@ Contributors: smackcoders, smacksupport
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 7.12.2
+Stable tag: 7.12.3
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
 Tags: import export, wordpress csv import, xml, csv, datafeed, importer, import, xml import, migrate, import csv to wordpress, import xml to wordpress, advanced xml import, advanced csv import, bulk csv import, bulk xml import, bulk data import, xml to custom post type, csv to custom post type, woocommerce csv import, woocommerce xml import, csv import, import csv, wordpress xml import, import xml, csv importer
@@ -35,7 +35,6 @@ By installing our additional add-ons, you can enhance the plugin's capabilities 
 
 
 = User-Friendly Interface =
-
 * **Effortless Imports:** Easily upload your **CSV** or **XML files**. The intuitive interface streamlines large-scale data imports, making it manageable for anyone.
 * **Smart Mapping:** Quickly match data fields to **WordPress** fields, ensuring efficient and accurate data transfer.
 * **Real-time Updates:** Track import progress in real-time, allowing you to monitor and address issues as they arise.
@@ -83,6 +82,7 @@ Here’s how these plugins simplify user management:
 * **User Migration from Other Platforms:** Easily import users from different sources or databases, with support for various formats.
 * **User Export for Backup:** Export a complete list of all users, including profiles and roles, for backup or documentation.
 * **Password Import:** Securely import users with their passwords, encrypted for security.
+* **Membership plugins Integration:** Import and export users with WP-Members and MemberPress data.
 
 These WordPress plugins streamline user management, simplify onboarding, and enhance data security.
 
@@ -97,6 +97,7 @@ Adding products to your WooCommerce store doesn’t have to take hours. Install 
 * **Organized Categories:** Keep your store organized by importing products with their categories.
 * **Flexible File Formats:** Import data from CSV, Excel, or XML files, allowing for easy data management from different sources.
 * **WooCommerce Import Export Plugin Addon:** Use two-way functionality to import and export products, perfect for backups or transferring data.
+* **Order Tracking Made Easy:** Now import and export WooCommerce order tracking details with the integration for the YITH Order Tracking plugin.
 
 Using the WooCommerce import-export addon streamlines product management, ensuring data accuracy and improving store efficiency.
 
@@ -247,6 +248,11 @@ It is as simple as installing any other WordPress plugin. There are two general 
  Click Install Now -> Activate
 
 == Changelog ==
+
+= 7.12.3 =
+Release date: 2024-11-20
+New Feature: Added import and export compatibility for YITH Order Tracking data.
+New Feature: Added Import adn export compatibility for MemberPress user data.
 
 = 7.12.2 =
 Release date: 2024-11-13
@@ -1437,6 +1443,9 @@ Release date: 2024-05-21
 
 
 == Upgrade Notice ==
+
+= 7.12.3 = 
+Upgrade to enjoy new import/export compatibility for YITH order tracking and MemberPress plugins.
 
 = 7.12.2 =
 Added: support JetEngine's advanced date field,
