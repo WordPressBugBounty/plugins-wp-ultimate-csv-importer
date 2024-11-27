@@ -1607,6 +1607,11 @@ class SaveMapping
 				case 'JEREL':
 					$jet_engine_rel_instance = JetEngineRELImport::getInstance();
 					$jet_engine_rel_instance->set_jet_engine_rel_values($header_array, $value_array, $map['JEREL'], $post_id, $selected_type, $get_mode, $hash_key, $line_number, $gmode, $templatekey = null);
+
+				case 'LISTINGMETA':
+					$listing_instance = ListingImport::getInstance();
+					$listing_instance->set_listing_values($header_array, $value_array, $map['LISTINGMETA'], $post_id, $selected_type);
+					break;
 			}
 		}
 		if (get_option('total_attachment_ids')) {

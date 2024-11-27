@@ -96,6 +96,11 @@ class CommentsImport {
 			}
 			if ($post_exists) {
 			if($mode == 'Insert'){
+				if(empty( $data_array['comment_date'] )) {
+					$data_array['comment_date'] = current_time('mysql', 0);
+				}else{
+					$data_array['comment_date'] = date( 'Y-m-d H:i:s', strtotime( $data_array['comment_date'] ) );
+				}
 				$retID = wp_insert_comment($data_array);
 				$mode_of_affect = 'Inserted';
 				
