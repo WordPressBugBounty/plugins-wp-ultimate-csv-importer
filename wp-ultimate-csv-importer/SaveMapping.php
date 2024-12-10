@@ -98,7 +98,7 @@ class SaveMapping
 			return $message;
 		}
 		$response = json_decode($response);
-		$current_plugin_version = '7.12.3';
+		$current_plugin_version = '7.13.1';
         if($current_plugin_version < $response->version[0]) {
 			
             $message = $response->message[0];
@@ -1466,6 +1466,11 @@ class SaveMapping
 					$jet_engine_cpt_instance->set_jet_engine_cpt_values($header_array, $value_array, $map['JECPT'], $post_id, $selected_type, $get_mode, $hash_key, $line_number);
 					break;
 
+				case 'JEBOOKING':
+						$jet_engine_instance = JetBookingImport::getInstance();
+						$jet_engine_instance->set_jet_booking_values($header_array, $value_array, $map['JEBOOKING'], $post_id, $selected_type, $get_mode, $hash_key, $line_number, $gmode, $templatekey);
+						break;
+						
 				case 'CFS':
 					$cfs_instance = CFSImport::getInstance();
 					$cfs_instance->set_cfs_values($line_number, $header_array, $value_array, $map['CFS'], $post_id, $selected_type, $hash_key);

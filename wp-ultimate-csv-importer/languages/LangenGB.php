@@ -105,6 +105,7 @@ class LangEN_GB {
                         'jetEngineTaxonomyFields' => 'Jet Engine Taxonomy Fields',
                         'jetEngineTaxonomyRFFields' => 'Jet Engine Taxonomy Repeater Fields',
                         'JetEngineRelationsFields' => 'Jet Engine Relations Fields',
+                        'JetEngineBookingFields' => 'Jet Engine Booking Fields',
                         'RankMathFields'=>'Rank Math Fields',
                         'RankMathProFields'=>'Rank Math Pro Fields',
                         'replyattributesfields' => 'Reply Attributes Fields',

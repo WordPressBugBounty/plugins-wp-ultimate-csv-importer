@@ -152,6 +152,9 @@ class ExtensionHandler{
 				}
 			}
 		}
+		if(is_plugin_active('jet-booking/jet-booking.php')){
+			$importas['Booking'] ='Booking';
+		}
 		return $importas;	
 	}
 
@@ -325,6 +328,9 @@ class ExtensionHandler{
 	public function select_import_type($Headers){
 		$type = 'Posts';
 		if(!empty($Headers)){
+			if(in_array('check_in_date', $Headers) && in_array('check_out_date', $Headers)){
+				$type = 'Booking';
+			}
 			if(in_array('wp_page_template', $Headers) && in_array('menu_order', $Headers)){
 				$type = 'Pages';
 			}

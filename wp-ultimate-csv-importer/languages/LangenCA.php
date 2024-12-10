@@ -99,6 +99,7 @@ class LangEN_CA {
                         'jetEngineTaxonomyFields' => 'Jet Engine Taxonomy Fields',
                         'jetEngineTaxonomyRFFields' => 'Jet Engine Taxonomy Repeater Fields',
                         'JetEngineRelationsFields' => 'Jet Engine Relations Fields',
+                        'JetEngineBookingFields' => 'Jet Engine Booking Fields',
                         'WPMLFields' => 'WPML Fields',
                         'RankMathFields'=>'Rank Math Fields',
                         'RankMathProFields'=>'Rank Math Pro Fields',

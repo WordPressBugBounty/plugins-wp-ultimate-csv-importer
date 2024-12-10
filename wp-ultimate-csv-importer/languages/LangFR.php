@@ -152,6 +152,7 @@ class LangFR {
                         'JetEngineTaxonomyFields' => 'Champs de taxonomie des moteurs à réaction',
                         'JetEngineTaxonomyRFFields' => 'Champs de répéteur de taxonomie des moteurs à réaction',
                         'JetEngineRelationsFields' => 'Domaine des relations avec les moteurs à réaction',
+                        'JetEngineBookingFields' => 'Champs de réservation Jet Engine',
                         'CourseSettingsFields' => 'Champs des paramètres du cours',
                         'CurriculumSettingsFields' => 'Champs des paramètres du programme',
                         'QuizSettingsFields' => 'Champs des paramètres du quiz',

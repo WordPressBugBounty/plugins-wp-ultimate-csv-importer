@@ -163,6 +163,7 @@ class LangJA {
                         'jetEngineTaxonomyFields' => 'ジェット エンジン分類フィールド',
                         'jetEngineTaxonomyRFFields' => 'Jet Engine タクソノミー リピーター フィールド',
                         'jetEngineRelationsFields' => 'ジェットエンジン関連分野',
+                        'JetEngineBookingFields' => 'ジェットエンジン予約フィールド',
                         'CourseSettingsFields' => 'コース設定フィールド',
                         'CurriculumSettingsFields' => 'カリキュラム設定フィールド',
                         'QuizSettingsFields' => 'クイズ設定フィールド',

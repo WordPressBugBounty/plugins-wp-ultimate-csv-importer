@@ -202,7 +202,8 @@ class WordpressCustomExtension extends ExtensionHandler{
             $active_plugin = array(
                 "masterstudy-lms-learning-management-system/masterstudy-lms-learning-management-system.php",  
                 "seo-by-rank-math/rank-math.php",
-                "seo-by-rank-math-pro/rank-math-pro.php"
+                "seo-by-rank-math-pro/rank-math-pro.php",
+                "jet-booking/jet-booking.php"
             );
         }
 

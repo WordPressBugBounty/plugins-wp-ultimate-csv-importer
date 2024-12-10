@@ -77,6 +77,7 @@ class ProductMetaExtension extends ExtensionHandler{
 					'Download Limit' => 'download_limit',
 					'Download Expiry' => 'download_expiry',
 					'Download Type' => 'download_type',
+					'_global_unique_id' => '_global_unique_id',
 					'_subscription_period' => '_subscription_period',
 					'_subscription_period_interval' => '_subscription_period_interval',
 					'_subscription_length' => '_subscription_length',

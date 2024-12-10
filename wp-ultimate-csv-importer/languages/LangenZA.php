@@ -124,7 +124,7 @@ class LangEN_ZA {
                         'JetEngineTaxonomyFields' => 'Jet Engine Taxonomy Fields',
                         'JetEngineTaxonomyRFFields' => 'Jet Engine Taxonomy Repeater Fields',
                         'JetEngineRelationsFields' => 'Jet Engine Relations Fields',
-
+                        'JetEngineBookingFields' => 'Jet Engine Booking Fields',
                         'CourseSettingsFields' => 'Course Settings Fields',
                         'CurriculumSettingsFields' => 'Curriculum Settings Fields',
                         'QuizSettingsFields' => 'Quiz Settings Fields',

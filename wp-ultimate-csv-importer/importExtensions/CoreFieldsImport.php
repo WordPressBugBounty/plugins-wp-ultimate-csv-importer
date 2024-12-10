@@ -95,11 +95,12 @@ class CoreFieldsImport {
 			}
 		}
 		
-		if(($type == 'WooCommerce Product') || ($type == 'WooCommerce Coupons') || ($type == 'WooCommerce Orders') || ($type == 'WooCommerce Reviews') || ($type == 'WooCommerce Product Variations')|| ($type == 'Categories') || ($type == 'Tags') || ($type == 'Taxonomies') || ($type == 'Comments') || ($type == 'Users') || ($type == 'Customer Reviews') || ($type == 'lp_order') || ($type == 'nav_menu_item') || ($type == 'widgets') || ($type == 'Media')){
+		if(($type == 'WooCommerce Product') || ($type == 'WooCommerce Coupons') || ($type == 'WooCommerce Orders') || ($type == 'WooCommerce Reviews') || ($type == 'WooCommerce Product Variations')|| ($type == 'Categories') || ($type == 'Tags') || ($type == 'Taxonomies') || ($type == 'Booking')|| ($type == 'Comments') || ($type == 'Users') || ($type == 'Customer Reviews') || ($type == 'lp_order') || ($type == 'nav_menu_item') || ($type == 'widgets') || ($type == 'Media')){
 
 			$comments_instance = CommentsImport::getInstance();
 			$customer_reviews_instance = CustomerReviewsImport::getInstance();
 			$learnpress_instance = LearnPressImport::getInstance();
+			$jet_booking_instance = JetBookingImport::getInstance();
 			$taxonomies_instance = TaxonomiesImport::getInstance();
 			$woocommerce_core_instance = WooCommerceCoreImport::getInstance();
 			$media_core_instance = MediaImport::getInstance();
@@ -108,6 +109,10 @@ class CoreFieldsImport {
 			$wpml_values = $helpers_instance->get_header_values($wpml_array , $header_array , $value_array);
 			if($type == 'WooCommerce Product'){
 				$result = $uci_woocomm_instance->woocommerce_product_import($post_values , $mode , $check , $unikey_value , $unikey_name , $hash_key, $line_number, $unmatched_row, $wpml_values);
+			}
+			if($type == 'Booking'){
+
+				$result = $jet_booking_instance->jet_booking_import($post_values , $type, $mode ,$unikey_value , $unikey_name, $line_number,$update_based_on,$check,$hash_key);
 			}
 			if($type == 'Media'){
 				$result = $media_core_instance->media_fields_import($post_values , $mode , $type , $media_type ,$unikey_value ,$unikey_name, $line_number,$hash_key,$header_array ,$value_array);
@@ -191,6 +196,15 @@ class CoreFieldsImport {
 					$this->detailed_log[$line_number]['adminLink'] = get_edit_post_link( $post_id, true );
 					$this->detailed_log[$line_number]['post_type'] = get_post_type($post_id);
 					$this->detailed_log[$line_number]['post_title'] = get_the_title($post_id);
+				}
+				elseif( $type == 'Booking'){
+					if (!empty($post_id)) {
+						$this->detailed_log[$line_number]['post_type'] = "jet-booking";
+						$this->detailed_log[$line_number]['id'] = $post_id;	
+						$this->detailed_log[$line_number]['webLink'] = admin_url('admin.php?page=jet-abaf-bookings');				
+						$this->detailed_log[$line_number]['adminLink'] = admin_url('admin.php?page=jet-abaf-bookings');
+						return $post_id;
+					}
 				}
 				elseif( $type == 'Media'){
 					if (!empty($post_id)) {

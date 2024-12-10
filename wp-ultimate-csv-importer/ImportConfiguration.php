@@ -38,6 +38,11 @@ class ImportConfiguration {
 			if($import_type == 'WooCommerce Orders'){
 				$fields = array('ORDERID');
 			}	
+			if(is_plugin_active('jet-booking/jet-booking.php')){
+				if($import_type == 'Booking'){
+					$fields = array('booking_id');
+				}
+			}
 			if($import_type == 'WooCommerce Coupons' || $import_type =='WPeCommerce Coupons'){
 				$fields =  array('COUPONID');
 			}
