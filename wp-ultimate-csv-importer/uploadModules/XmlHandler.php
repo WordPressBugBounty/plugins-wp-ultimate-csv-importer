@@ -48,7 +48,7 @@ class XmlHandler {
 			$child_name = $child->getName();     
 		}
 		$total_xml_count = $this->get_xml_count($path , $child_name);
-		if($total_xml_count == 0 ){
+		if($total_xml_count == 0 || $child_name == 'channel' ){
 			$sub_child = $this->get_child($child,$path);
 			$child_name = $sub_child['child_name'];
 			$total_xml_count = $sub_child['total_count'];
@@ -86,7 +86,7 @@ class XmlHandler {
 			$child_name =  $child->getName();    
 		}
 		$total_xml_count = $this->get_xml_count($path , $child_name);
-		if($total_xml_count == 0){
+		if($total_xml_count == 0 || $child_name == 'channel'){
 			$sub_child = $this->get_child($child,$path);
 			$child_name = $sub_child['child_name'];
 			$total_xml_count = $sub_child['total_count'];
@@ -111,7 +111,7 @@ class XmlHandler {
 			$sub_child_name = $sub_child->getName();
 		}
 		$total_xml_count = $this->get_xml_count($path , $sub_child_name);
-		if($total_xml_count == 0 ){
+		if($total_xml_count == 0 || $sub_child_name == 'channel'){
 			$this->get_child($sub_child,$path);
 		}
 		else{

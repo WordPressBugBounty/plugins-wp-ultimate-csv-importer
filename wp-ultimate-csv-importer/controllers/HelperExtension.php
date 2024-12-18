@@ -95,7 +95,13 @@ class HelperExtension
     {
         try {
             $doc = new \DOMDocument();
-            @$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+            
+            if (function_exists('mb_convert_encoding')) {
+                @$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+            } else {
+                @$doc->loadHTML($html);
+            }
 
             $xpath = new \DOMXPath($doc);
             $result = [];

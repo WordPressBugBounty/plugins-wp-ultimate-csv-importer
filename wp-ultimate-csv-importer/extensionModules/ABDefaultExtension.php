@@ -32,8 +32,7 @@ class DefaultExtension extends ExtensionHandler{
 		$import_type = $this->import_name_as($import_types);
 		$response = [];
 		$check_custpost = array('Posts' => 'post', 'Pages' => 'page', 'Users' => 'users', 'Comments' => 'comments', 'CustomerReviews' =>'wpcr3_review', 'Categories' => 'categories', 'Tags' => 'tags', 'WooCommerce' => 'product', 'WPeCommerce' => 'wpsc-product','WPeCommerceCoupons' => 'wpsc-product', 'WooCommerceVariations' => 'product', 'WooCommerceOrders' => 'product', 'WooCommerceCoupons' => 'product', 'WooCommerceRefunds' => 'product', 'CustomPosts' => 'CustomPosts','WooCommerceReviews' => 'reviews');	
-		if ($import_type != 'Users' && $import_type != 'Taxonomies' && $import_type != 'CustomerReviews' && $import_type != 'Comments' && $import_type != 'WooCommerceVariations' && $import_type != 'WooCommerceOrders' && $import_type != 'WooCommerceCoupons' && $import_type != 'WooCommerceRefunds' && $import_type != 'ngg_pictures' && $import_types != 'Booking' && $import_types != 'lp_order' && $import_types != 'nav_menu_item' && $import_types != 'widgets' && $import_type != 'WooCommerceReviews') {
-			$wordpressfields = array(
+		if ($import_type != 'Users' && $import_type != 'Taxonomies' && $import_type != 'CustomerReviews' && $import_type != 'Comments' && $import_type != 'WooCommerceVariations' && $import_type != 'WooCommerceOrders' && $import_type != 'WooCommerceCoupons' && $import_type != 'WooCommerceRefunds' && $import_type != 'ngg_pictures' && $import_types != 'JetBooking' && $import_types != 'lp_order' && $import_types != 'nav_menu_item' && $import_types != 'widgets' && $import_type != 'WooCommerceReviews') {			$wordpressfields = array(
                 	'Title' => 'post_title',
                     'ID' => 'ID',
                     'Content' => 'post_content',
@@ -363,11 +362,10 @@ class DefaultExtension extends ExtensionHandler{
 				}
 			}
 		}
-		if ($import_types == 'Booking' && is_plugin_active('jet-booking/jet-booking.php')) {
+		if ($import_types == 'JetBooking' && is_plugin_active('jet-booking/jet-booking.php')) {
 			$wordpressfields = array(
 				'booking_id' => 'booking_id',
 				'status' => 'status',
-				'orderStatus' => 'orderStatus',
 				'apartment_id' => 'apartment_id',
 				'apartment_unit' => 'apartment_unit',
 				'check_in_date' => 'check_in_date',
@@ -377,6 +375,7 @@ class DefaultExtension extends ExtensionHandler{
 				'import_id' => 'import_id',
 				'attributes' => 'attributes',
 				'guests' => 'guests',
+				'orderStatus' => 'orderStatus',
 				);
 		if($mode == 'Insert'){
 			unset($wordpressfields['booking_id']);
@@ -385,7 +384,7 @@ class DefaultExtension extends ExtensionHandler{
 			unset($wordpressfields['orderStatus']);
 			unset($wordpressfields['order_id']);
 			unset($wordpressfields['user_id']);
-			
+			unset($wordpressfields['import_id']);	
 		}
 		}
 		$wordpress_value = $this->convert_static_fields_to_array($wordpressfields);

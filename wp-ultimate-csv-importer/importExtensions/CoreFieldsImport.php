@@ -95,9 +95,7 @@ class CoreFieldsImport {
 			}
 		}
 		
-		if(($type == 'WooCommerce Product') || ($type == 'WooCommerce Coupons') || ($type == 'WooCommerce Orders') || ($type == 'WooCommerce Reviews') || ($type == 'WooCommerce Product Variations')|| ($type == 'Categories') || ($type == 'Tags') || ($type == 'Taxonomies') || ($type == 'Booking')|| ($type == 'Comments') || ($type == 'Users') || ($type == 'Customer Reviews') || ($type == 'lp_order') || ($type == 'nav_menu_item') || ($type == 'widgets') || ($type == 'Media')){
-
-			$comments_instance = CommentsImport::getInstance();
+		if(($type == 'WooCommerce Product') || ($type == 'WooCommerce Coupons') || ($type == 'WooCommerce Orders') || ($type == 'WooCommerce Reviews') || ($type == 'WooCommerce Product Variations')|| ($type == 'Categories') || ($type == 'Tags') || ($type == 'Taxonomies') || ($type == 'Booking')|| ($type == 'Comments') || ($type == 'Users') || ($type == 'Customer Reviews') || ($type == 'lp_order') || ($type == 'nav_menu_item') || ($type == 'widgets') || ($type == 'Media')){			$comments_instance = CommentsImport::getInstance();
 			$customer_reviews_instance = CustomerReviewsImport::getInstance();
 			$learnpress_instance = LearnPressImport::getInstance();
 			$jet_booking_instance = JetBookingImport::getInstance();
@@ -110,7 +108,7 @@ class CoreFieldsImport {
 			if($type == 'WooCommerce Product'){
 				$result = $uci_woocomm_instance->woocommerce_product_import($post_values , $mode , $check , $unikey_value , $unikey_name , $hash_key, $line_number, $unmatched_row, $wpml_values);
 			}
-			if($type == 'Booking'){
+			if($type == 'JetBooking'){
 
 				$result = $jet_booking_instance->jet_booking_import($post_values , $type, $mode ,$unikey_value , $unikey_name, $line_number,$update_based_on,$check,$hash_key);
 			}
@@ -450,7 +448,7 @@ class CoreFieldsImport {
 						$matched_element = $matches2[1][0];
 
 						$wp_element= trim($key);
-						$csv_element1 = $helpers_instance->evalPhp($matched_element);
+					//	$csv_element1 = $helpers_instance->evalPhp($matched_element);
 						$post_values[$wp_element] = $csv_element1;
 					}
 					elseif(!in_array($csv_value , $header_array)){

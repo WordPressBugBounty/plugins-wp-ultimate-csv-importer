@@ -98,7 +98,7 @@ class SaveMapping
 			return $message;
 		}
 		$response = json_decode($response);
-		$current_plugin_version = '7.13.1';
+		$current_plugin_version = '7.13.2';
         if($current_plugin_version < $response->version[0]) {
 			
             $message = $response->message[0];
@@ -788,7 +788,7 @@ class SaveMapping
 						$tag = $child->getName();
 					}
 					$total_xml_count = $this->get_xml_count($path, $tag);
-					if ($total_xml_count == 0) {
+					if ($total_xml_count == 0 || $tag == 'channel') {
 						$sub_child = $this->get_child($child, $path);
 						$tag = $sub_child['child_name'];
 						$total_xml_count = $sub_child['total_count'];
@@ -900,8 +900,11 @@ class SaveMapping
 				$wpdb->get_results("DELETE FROM {$wpdb->prefix}ultimate_post_entries");
 			}
 		}
-		if (count($core_instance->detailed_log) > 0) {
-			$log_manager_instance->get_event_log($hash_key, $file_name, $file_extension, $get_mode, $total_rows, $selected_type, $core_instance->detailed_log, $addHeader);
+
+		if (!empty($core_instance->detailed_log) && is_countable($core_instance->detailed_log)) {
+			if (count($core_instance->detailed_log) > 0) {
+				$log_manager_instance->get_event_log($hash_key, $file_name, $file_extension, $get_mode, $total_rows, $selected_type, $core_instance->detailed_log, $addHeader);
+			}
 		}
 		$log_manager_instance->manage_records($hash_key, $selected_type, $file_name, $total_rows);
 		$count = count($info);
@@ -1255,7 +1258,7 @@ class SaveMapping
 					$tag = $child->getName();
 				}
 				$total_xml_count = $this->get_xml_count($path, $tag);
-				if ($total_xml_count == 0) {
+				if ($total_xml_count == 0  || $tag == 'channel') {
 					$sub_child = $this->get_child($child, $path);
 					$tag = $sub_child['child_name'];
 					$total_xml_count = $sub_child['total_count'];
@@ -1328,9 +1331,13 @@ class SaveMapping
 				}
 			}
 		}
-		if (count($core_instance->detailed_log) > 0) {
-			$log_manager_instance->get_event_log($hash_key, $file_name, $file_extension, $get_mode, $total_rows, $selected_type, $core_instance->detailed_log, $addHeader);
+
+		if (!empty($core_instance->detailed_log) && is_countable($core_instance->detailed_log)) {
+			if (count($core_instance->detailed_log) > 0) {
+				$log_manager_instance->get_event_log($hash_key, $file_name, $file_extension, $get_mode, $total_rows, $selected_type, $core_instance->detailed_log, $addHeader);
+			}
 		}
+		
 		$log_manager_instance->manage_records($hash_key, $selected_type, $file_name, $total_rows);
 
 		$count = count($info);
@@ -1366,7 +1373,7 @@ class SaveMapping
 			$sub_child_name = $sub_child->getName();
 		}
 		$total_xml_count = $this->get_xml_count($path, $sub_child_name);
-		if ($total_xml_count == 0) {
+		if ($total_xml_count == 0 || $sub_child_name == 'channel') {
 			$this->get_child($sub_child, $path);
 		} else {
 			$result['child_name'] = $sub_child_name;
@@ -1438,6 +1445,11 @@ class SaveMapping
 					$jet_engine_instance = JetEngineImport::getInstance();
 					$jet_engine_instance->set_jet_engine_values($header_array, $value_array, $map['JE'], $post_id, $selected_type, $get_mode, $hash_key, $line_number);
 					break;
+					
+				case 'POLYLANG':
+					$polylang_instance = PolylangImport::getInstance();
+					$polylang_instance->set_polylang_values($header_array, $value_array, $map['POLYLANG'], $post_id, $selected_type);
+					break;
 
 				case 'COUPONMETA':
 					$variation_id = isset($variation_id) ? $variation_id : '';
@@ -1466,7 +1478,7 @@ class SaveMapping
 					$jet_engine_cpt_instance->set_jet_engine_cpt_values($header_array, $value_array, $map['JECPT'], $post_id, $selected_type, $get_mode, $hash_key, $line_number);
 					break;
 
-				case 'JEBOOKING':
+					case 'JEBOOKING':
 						$jet_engine_instance = JetBookingImport::getInstance();
 						$jet_engine_instance->set_jet_booking_values($header_array, $value_array, $map['JEBOOKING'], $post_id, $selected_type, $get_mode, $hash_key, $line_number, $gmode, $templatekey);
 						break;

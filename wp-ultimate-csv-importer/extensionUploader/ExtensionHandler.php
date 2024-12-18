@@ -153,9 +153,10 @@ class ExtensionHandler{
 			}
 		}
 		if(is_plugin_active('jet-booking/jet-booking.php')){
-			$importas['Booking'] ='Booking';
+			$importas['JetBooking'] ='JetBooking';
 		}
 		return $importas;	
+		
 	}
 
 	public function import_name_as($import_type){
@@ -298,7 +299,7 @@ class ExtensionHandler{
 			}
 			$type = $this->select_import_type($Headers);
 			$total_rows = $this->get_xml_count($path , $child_name);
-			if($total_rows == 0 ){
+			if($total_rows == 0 || $child_name == 'channel' ){
 				$sub_child = $this->get_child($child,$path);
 				$child_name = $sub_child['child_name'];
 				$total_rows = $sub_child['total_count'];
@@ -316,7 +317,7 @@ class ExtensionHandler{
 			$sub_child_name = $sub_child->getName();
 		}
 		$total_xml_count = $this->get_xml_count($path , $sub_child_name);
-		if($total_xml_count == 0){
+		if($total_xml_count == 0 || $sub_child_name == 'channel' ){
 			$this->get_child($sub_child,$path);
 		}
 		else{

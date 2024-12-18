@@ -34,7 +34,7 @@ class PolylangImport {
 		global $wpdb;
 		$term_id = $checkid = "";
 		$code = trim($data_array['language_code']);				 
-		$language = $wpdb->get_results("select term_id,description from {$wpdb->prefix}term_taxonomy where taxonomy ='language'");				
+		$language = $wpdb->get_results("select term_id, term_taxonomy_id, description from {$wpdb->prefix}term_taxonomy where taxonomy ='language'");				
 		$language_id = $wpdb->get_results($wpdb->prepare("select term_taxonomy_id from {$wpdb->prefix}term_relationships WHERE object_id = %d",$pId));
 		$listTaxonomy = get_taxonomies();
 		$lang_list = pll_languages_list();
