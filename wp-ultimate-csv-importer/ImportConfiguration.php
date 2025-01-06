@@ -43,6 +43,11 @@ class ImportConfiguration {
 					$fields = array('booking_id');
 				}
 			}
+			if(is_plugin_active('jet-reviews/jet-reviews.php')) {
+				if($import_type == 'JetReviews'){
+					$fields = array('ID');
+				}
+			}
 			if($import_type == 'WooCommerce Coupons' || $import_type =='WPeCommerce Coupons'){
 				$fields =  array('COUPONID');
 			}

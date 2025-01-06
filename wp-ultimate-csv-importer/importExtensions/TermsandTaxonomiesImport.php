@@ -257,6 +257,12 @@ class TermsandTaxonomiesImport {
 				$termName             = trim( $category_value );
 				$_name                = (string) $termName;
 				$_slug                = preg_replace( '/\s\s+/', '-', strtolower( $_name ) );
+				  // Check if the current category is a parent
+				$is_parent = true;
+				if (!empty($category_set[1]) && isset($category_set[1]) && $item == 0) {
+					// The first category in the set is a parent
+					$is_parent = false;
+				}
 				$checkAvailable       = array();
 				$checkSuperParent     = $checkParent1 = $checkParent2 = null;
 				$super_parent_term_id = $parent_term_id1 = $parent_term_id2 = 0;
@@ -398,7 +404,7 @@ class TermsandTaxonomiesImport {
 								'slug'        => $_slug,
 							) );
 	
-							if(!is_wp_error($taxonomyID)){
+							if(!is_wp_error($taxonomyID) && $is_parent){
 								$retID  = $taxonomyID['term_id'];
 								wp_set_object_terms( $pID, $retID, $category_name, true );
 								if(!empty($poly_values)){
@@ -412,10 +418,12 @@ class TermsandTaxonomiesImport {
 							}	
 							
 						} else {
-							$exist_term_id = array( $checkAvailable['term_id'] );
-							$exist_term_id = array_map( 'intval', $exist_term_id );
-							$exist_term_id = array_unique( $exist_term_id );
-							wp_set_object_terms( $pID, $exist_term_id, $category_name, true );
+							if($is_parent){
+								$exist_term_id = array( $checkAvailable['term_id'] );
+								$exist_term_id = array_map( 'intval', $exist_term_id );
+								$exist_term_id = array_unique( $exist_term_id );
+								wp_set_object_terms( $pID, $exist_term_id, $category_name, true );
+							}
 							
 						}
 					}

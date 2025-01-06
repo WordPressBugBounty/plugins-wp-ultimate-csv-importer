@@ -95,10 +95,11 @@ class CoreFieldsImport {
 			}
 		}
 		
-		if(($type == 'WooCommerce Product') || ($type == 'WooCommerce Coupons') || ($type == 'WooCommerce Orders') || ($type == 'WooCommerce Reviews') || ($type == 'WooCommerce Product Variations')|| ($type == 'Categories') || ($type == 'Tags') || ($type == 'Taxonomies') || ($type == 'Booking')|| ($type == 'Comments') || ($type == 'Users') || ($type == 'Customer Reviews') || ($type == 'lp_order') || ($type == 'nav_menu_item') || ($type == 'widgets') || ($type == 'Media')){			$comments_instance = CommentsImport::getInstance();
+		if(($type == 'WooCommerce Product') || ($type == 'WooCommerce Coupons') || ($type == 'JetReviews')|| ($type == 'WooCommerce Orders') || ($type == 'WooCommerce Reviews') || ($type == 'WooCommerce Product Variations')|| ($type == 'Categories') || ($type == 'Tags') || ($type == 'Taxonomies') || ($type == 'Booking')|| ($type == 'Comments') || ($type == 'Users') || ($type == 'Customer Reviews') || ($type == 'lp_order') || ($type == 'nav_menu_item') || ($type == 'widgets') || ($type == 'Media')){			$comments_instance = CommentsImport::getInstance();
 			$customer_reviews_instance = CustomerReviewsImport::getInstance();
 			$learnpress_instance = LearnPressImport::getInstance();
 			$jet_booking_instance = JetBookingImport::getInstance();
+			$jet_reviews_instance = JetReviewsImport::getInstance();
 			$taxonomies_instance = TaxonomiesImport::getInstance();
 			$woocommerce_core_instance = WooCommerceCoreImport::getInstance();
 			$media_core_instance = MediaImport::getInstance();
@@ -112,6 +113,10 @@ class CoreFieldsImport {
 
 				$result = $jet_booking_instance->jet_booking_import($post_values , $type, $mode ,$unikey_value , $unikey_name, $line_number,$update_based_on,$check,$hash_key);
 			}
+			if ($type == 'JetReviews') {
+				$result = $jet_reviews_instance->set_jet_reviews_values($post_values , $mode ,$unikey_value , $unikey_name, $line_number,$update_based_on,$check);
+			}
+
 			if($type == 'Media'){
 				$result = $media_core_instance->media_fields_import($post_values , $mode , $type , $media_type ,$unikey_value ,$unikey_name, $line_number,$hash_key,$header_array ,$value_array);
 			}
@@ -204,6 +209,28 @@ class CoreFieldsImport {
 						return $post_id;
 					}
 				}
+				elseif ($type == 'JetReviews') {
+					// Get the permalink for the post
+					$post_permalink = get_permalink($post_id);
+				
+					if ($post_permalink) {
+						// Add query parameters to the frontend permalink
+						$web_link = add_query_arg(
+							[
+								'review_id' => $post_id,
+								'review_type' => 'JetReviews',
+							],
+							$post_permalink
+						);
+					}
+				
+					// Add data to the detailed log
+					$this->detailed_log[$line_number]['id'] = $post_id;
+					$this->detailed_log[$line_number]['post_type'] = 'JetReviews';
+					$this->detailed_log[$line_number]['webLink'] = $web_link;
+					$this->detailed_log[$line_number]['adminLink'] = admin_url('admin.php?page=jet-reviews-list-page');
+				}
+
 				elseif( $type == 'Media'){
 					if (!empty($post_id)) {
 						$file_path = get_attached_file($post_id);

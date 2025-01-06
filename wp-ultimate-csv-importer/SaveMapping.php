@@ -1477,7 +1477,10 @@ class SaveMapping
 					$jet_engine_cpt_instance = JetEngineCPTImport::getInstance();
 					$jet_engine_cpt_instance->set_jet_engine_cpt_values($header_array, $value_array, $map['JECPT'], $post_id, $selected_type, $get_mode, $hash_key, $line_number);
 					break;
-
+					case 'JEREVIEW':
+						$jet_engine_instance = JetReviewsImport::getInstance();
+						$jet_engine_instance->set_jet_reviews_values($header_array, $value_array, $map['JEREVIEW'], $post_id, $selected_type, $get_mode, $hash_key, $line_number, $gmode, $templatekey);
+						break;
 					case 'JEBOOKING':
 						$jet_engine_instance = JetBookingImport::getInstance();
 						$jet_engine_instance->set_jet_booking_values($header_array, $value_array, $map['JEBOOKING'], $post_id, $selected_type, $get_mode, $hash_key, $line_number, $gmode, $templatekey);

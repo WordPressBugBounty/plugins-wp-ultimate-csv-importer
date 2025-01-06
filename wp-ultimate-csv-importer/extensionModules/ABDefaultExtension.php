@@ -32,7 +32,7 @@ class DefaultExtension extends ExtensionHandler{
 		$import_type = $this->import_name_as($import_types);
 		$response = [];
 		$check_custpost = array('Posts' => 'post', 'Pages' => 'page', 'Users' => 'users', 'Comments' => 'comments', 'CustomerReviews' =>'wpcr3_review', 'Categories' => 'categories', 'Tags' => 'tags', 'WooCommerce' => 'product', 'WPeCommerce' => 'wpsc-product','WPeCommerceCoupons' => 'wpsc-product', 'WooCommerceVariations' => 'product', 'WooCommerceOrders' => 'product', 'WooCommerceCoupons' => 'product', 'WooCommerceRefunds' => 'product', 'CustomPosts' => 'CustomPosts','WooCommerceReviews' => 'reviews');	
-		if ($import_type != 'Users' && $import_type != 'Taxonomies' && $import_type != 'CustomerReviews' && $import_type != 'Comments' && $import_type != 'WooCommerceVariations' && $import_type != 'WooCommerceOrders' && $import_type != 'WooCommerceCoupons' && $import_type != 'WooCommerceRefunds' && $import_type != 'ngg_pictures' && $import_types != 'JetBooking' && $import_types != 'lp_order' && $import_types != 'nav_menu_item' && $import_types != 'widgets' && $import_type != 'WooCommerceReviews') {			$wordpressfields = array(
+		if ($import_type != 'Users' && $import_type != 'Taxonomies' && $import_types != 'JetReviews' && $import_type != 'CustomerReviews' && $import_type != 'Comments' && $import_type != 'WooCommerceVariations' && $import_type != 'WooCommerceOrders' && $import_type != 'WooCommerceCoupons' && $import_type != 'WooCommerceRefunds' && $import_type != 'ngg_pictures' && $import_types != 'JetBooking' && $import_types != 'lp_order' && $import_types != 'nav_menu_item' && $import_types != 'widgets' && $import_type != 'WooCommerceReviews') {			$wordpressfields = array(
                 	'Title' => 'post_title',
                     'ID' => 'ID',
                     'Content' => 'post_content',
@@ -224,6 +224,29 @@ class DefaultExtension extends ExtensionHandler{
 			foreach($get_navigation_locations as $nav_key => $nav_values){
 				$wordpressfields[$nav_key] = $nav_key;
 			}
+		}
+		if($import_types === 'JetReviews') {
+			$wordpressfields = array(
+				'ID' => 'ID',
+				'Review Post Id' => 'post_id',                // The ID of the post being reviewed
+				'Review Source' => 'source',                  // Source of the review (e.g., 'post')
+				'Review Post Type' => 'post_type',            // Type of post (e.g., 'post', 'page', etc.)
+				'Review Author' => 'author',                  // ID of the author who wrote the review
+				'Review Date' => 'date',                      // Date of the review
+				'Review Title' => 'title',                    // Title of the review
+				'Review Content' => 'content',                // Content of the review
+				'Review Type Slug' => 'type_slug',            // Slug of the review type (e.g., 'default', etc.)
+				'Review Rating Data' => 'rating_data',        // Serialized rating data
+				'Review Rating' => 'rating',                  // Rating score (e.g., 100)
+				'Review Likes' => 'likes',                    // Number of likes
+				'Review Dislikes' => 'dislikes',              // Number of dislikes
+				'Review Approved' => 'approved',              // Whether the review is approved (1 or 0)
+				'Review Pinned' => 'pinned',                  // Whether the review is pinned (1 or 0)
+			);
+			if($mode == 'Insert'){
+				unset($wordpressfields['ID']);
+			}
+
 		}
 
 		if($import_types == 'widgets') {
