@@ -115,6 +115,8 @@ class LangAUS {
                 'ProductAttrFields' => 'Product Attribute Fields',
                 'ProductBundleMetaFields' => 'Product Bundle Meta Fields',
                 'PPOMMetaFields' => 'PPOM Meta Fields',
+                'EPOMetaFields' => 'EPO Meta Fields',
+                'WCPAMetaFields' => 'WCPA Meta Fields',
                 'WPECommerceCustomFields' => 'WP ECommerce Custom Fields',
                 'EventsManagerFields' => 'Events Manager Fields',
                 'CMB2CustomFields' => 'CMB2 Custom Fields',

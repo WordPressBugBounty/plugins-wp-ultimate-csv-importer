@@ -8,7 +8,7 @@
 namespace Smackcoders\FCSV;
 use Smackcoders\WCSV\WooCommerceMetaImport;
 
-if ( ! defined( 'ABSPATH' ) )
+if (!defined( 'ABSPATH' ) )
     exit; // Exit if accessed directly
 class ProductMetaImport {
     private static $product_meta_instance = null;

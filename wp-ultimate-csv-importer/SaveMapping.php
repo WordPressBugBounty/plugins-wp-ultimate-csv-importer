@@ -98,7 +98,7 @@ class SaveMapping
 			return $message;
 		}
 		$response = json_decode($response);
-		$current_plugin_version = '7.13.2';
+		$current_plugin_version = '7.14';
         if($current_plugin_version < $response->version[0]) {
 			
             $message = $response->message[0];
@@ -144,6 +144,7 @@ class SaveMapping
 		$type          = sanitize_text_field($_POST['Types']);
 		$map_fields    = sanitize_text_field($_POST['MappedFields']);
 		$mapping_type = sanitize_text_field($_POST['MappingType']);
+		$counter = isset($counter) ? $counter : 0;
 		$selected_mode = isset($_POST['selectedMode']) ? sanitize_text_field($_POST['selectedMode']) : '';
 		global $wpdb;
 		if ($selected_mode == 'simpleMode') {
@@ -182,6 +183,29 @@ class SaveMapping
 				$map_data[$key] = $value;
 			}
 		}
+		//error_log(print_r(['ATTRMETA' => $map_data['ATTRMETA']],true),3,'/var/www/html/antony.log');
+		// Array
+		// (
+		// 	[ATTRMETA] => Array
+		// 		(
+		// 			[0] => Array
+		// 				(
+		// 					[product_attribute_name1] => shopee_link
+		// 					[product_attribute_value1] => features
+		// 					[product_attribute_visible1] => collections
+		// 				)
+		
+		// 			[1] => Array
+		// 				(
+		// 					[product_attribute_name2] => collections
+		// 					[product_attribute_value2] => finish
+		// 					[product_attribute_visible2] => image_gallery
+		// 				)
+		
+		// 		)
+		
+		// )
+
 		$mapping_fields = serialize($map_data);
 		$time = date('Y-m-d h:i:s');
 
@@ -1462,6 +1486,15 @@ class SaveMapping
 					$meta_type = 'PPOMMETA';
 					$uci_woocomm_meta->set_product_meta_values($header_array, $value_array, $map['PPOMMETA'], $post_id, '', $meta_type, $line_number, $get_mode, $hash_key);
 					break;
+					
+				case 'EPOMETA':	
+						$meta_type = 'EPOMETA';
+						$uci_woocomm_meta->set_product_meta_values($header_array, $value_array, $map['EPOMETA'], $post_id, '', $meta_type, $line_number, $get_mode, $hash_key);
+					    break;
+				case 'WCPAMETA' :
+						$meta_type = 'WCPAMETA';
+						$uci_woocomm_meta->set_product_meta_values($header_array, $value_array, $map['WCPAMETA'], $post_id, '', $meta_type, $line_number, $get_mode, $hash_key);
+						break;
 
 				case 'BUNDLEMETA':
 					$bundle_type = 'BUNDLEMETA';

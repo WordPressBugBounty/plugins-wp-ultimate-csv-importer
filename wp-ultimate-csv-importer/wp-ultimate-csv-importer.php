@@ -10,7 +10,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: WP Ultimate CSV Importer
- * Version:     7.13.3
+ * Version:     7.15
  * Plugin URI:  https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
  * Description: Seamlessly create posts, custom posts, pages, media, SEO and more from your CSV data with ease.
  * Author:      Smackcoders
@@ -87,7 +87,7 @@ class SmackCSV{
 	private static $persian_instance = null;
 	private static $chinese_instance = null;
 	private static $addon_instance = null;
-	public $version = '7.13.3';
+	public $version = '7.15';
 
 	public function __construct() { 
 		add_action('init', array(__CLASS__, 'show_admin_menus'));
@@ -98,7 +98,31 @@ class SmackCSV{
 		if(!empty($nextnoticedate)){
 			$nextnotice=strtotime("+3 day", strtotime($nextnoticedate));
 		}
+
+		add_action('admin_enqueue_scripts', array(__CLASS__, 'smack_enqueue_scripts'));	
 		
+	}
+
+	public static function smack_enqueue_scripts() {
+
+		wp_register_script('react-js', plugins_url('assets/js/react-app.js', __FILE__), array('react'));
+		wp_enqueue_script(
+			'react-js',
+			plugin_dir_url(__FILE__) . 'assets/js/react-app.js', // Path to your React build
+			['wp-element', 'wp-components', 'wp-i18n'], // Gutenberg dependencies
+			'1.0',
+			true
+		);
+
+		$secure_uniquekey_csv = array(
+				'url' => admin_url('admin-ajax.php') ,
+				'nonce' => wp_create_nonce('smack-ultimate-csv-importer'),
+				'imagePath' => plugins_url('/assets/images/', __FILE__)
+			);
+		   
+		wp_localize_script('react-js', 'smack_nonce_object', $secure_uniquekey_csv);
+	
+	
 	}
 
 	public static function csv_register_importers() {
@@ -522,7 +546,10 @@ if (is_plugin_active('wp-ultimate-csv-importer/wp-ultimate-csv-importer.php')) {
 	global $csv_class;
 	$csv_class = new SmackCSV();
 	// For CLI
-	include_once('SmackcliHandler.php');		
+	include_once('SmackcliHandler.php');
+	include_once('SingleImportExport.php');
+	$singlecsv_class = new SingleImportExport();
+												
 }
 
 $activate_plugin = new SmackCSVInstall();

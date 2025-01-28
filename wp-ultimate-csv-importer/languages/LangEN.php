@@ -117,6 +117,8 @@ class LangEN {
                 'ProductAttrFields' => 'Product Attribute Fields',
                 'ProductBundleMetaFields' => 'Product Bundle Meta Fields',
                 'PPOMMetaFields' => 'PPOM Meta Fields',
+                'EPOMetaFields' => 'EPO Meta Fields',
+                'WCPAMetaFields' => 'WCPA Meta Fields',
                 'ListingMetaFields' => 'Listing Fields',
                 'WPECommerceCustomFields' => 'WP ECommerce Custom Fields',
                 'EventsManagerFields' => 'Events Manager Fields',
