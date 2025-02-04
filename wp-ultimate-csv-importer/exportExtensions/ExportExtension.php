@@ -74,9 +74,6 @@ class ExportExtension {
 		elseif ($module == 'WooCommerceRefunds') {
 			$module = 'shop_order_refund';
 		}
-		elseif ($module == 'WooCommerceVariations') {
-			$module = 'product_variation';
-		}
 		elseif($module == 'WPeCommerceCoupons'){
 			$query = $wpdb->get_col("SELECT * FROM {$wpdb->prefix}wpsc_coupon_codes");
 			echo wp_json_encode(count($query));

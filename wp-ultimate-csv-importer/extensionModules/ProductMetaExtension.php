@@ -77,6 +77,7 @@ class ProductMetaExtension extends ExtensionHandler{
 					'Download Limit' => 'download_limit',
 					'Download Expiry' => 'download_expiry',
 					'Download Type' => 'download_type',
+					'parent' => 'parent',
 					'_global_unique_id' => '_global_unique_id',
 					'_subscription_period' => '_subscription_period',
 					'_subscription_period_interval' => '_subscription_period_interval',
@@ -85,7 +86,7 @@ class ProductMetaExtension extends ExtensionHandler{
 					'_subscription_trial_length' => '_subscription_trial_length',
 					'_subscription_price' => '_subscription_price',
                 );
-				if(is_plugin_active('yith-cost-of-goods-for-woocommerce-premium/init.php') && ($import_type == 'WooCommerce' ||$import_type == 'WooCommerceVariations')){
+				if(is_plugin_active('yith-cost-of-goods-for-woocommerce-premium/init.php') && ($import_type == 'WooCommerce')){
 					$pro_meta_fields['yith_cog_cost'] = 'yith_cog_cost';
 				}
 				if(is_plugin_active('woocommerce-min-max-quantities/woocommerce-min-max-quantities.php')){
@@ -101,48 +102,48 @@ class ProductMetaExtension extends ExtensionHandler{
                         $pro_meta_fields['Product Attribute Type'] = 'product_attribute_type';
                 }
 			}
-			if($import_type == 'WooCommerceVariations'){            
-				$pro_meta_fields = array(
-					'Featured' => 'featured',
-					'Downloadable Files' => 'downloadable_files',
-					'Download Limit' => 'download_limit',
-					'Download Expiry' => 'download_expiry',
-					'Price' => 'price',
-					'Sales Price Date From' => 'sale_price_dates_from',
-					'Sales Price Date To' => 'sale_price_dates_to',
-					'Regular Price' => 'regular_price',
-					'Sale Price' => 'sale_price',
-					'Purchase Note' => 'purchase_note',
-					'Default Attributes' => 'default_attributes',
-					'Custom Attributes' => 'custom_attributes',
-					'Enable Reviews' => 'comment_status',
-					'Tax Status' => 'tax_status',
-					'Tax Class' => 'tax_class',
-					'Weight' => 'weight',
-					'Length' => 'length',
-					'Width' => 'width',
-					'Height' => 'height',
-					'Downloadable' => 'downloadable',
-					'Virtual' => 'virtual',
-					'Stock' => 'stock',
-					'Stock Status' => 'stock_status',
-					'Low Stock Threshold' => 'low_stock_threshold',
-					'Stock Quantity' => 'stock_qty',
-					'Sold Individually' => 'sold_individually',
-					'Manage Stock' => 'manage_stock',
-					'Backorders' => 'backorders',
-					'Thumbnail Id' => 'thumbnail_id',
-					'_subscription_period' => '_subscription_period',
-					'_subscription_period_interval' => '_subscription_period_interval',
-					'_subscription_length' => '_subscription_length',
-					'_subscription_trial_period' => '_subscription_trial_period',
-					'_subscription_trial_length' => '_subscription_trial_length',
-					'_subscription_price' => '_subscription_price',
-					'_subscription_sign_up_fee' => '_subscription_sign_up_fee',
-					'Variation Description' => 'variation_description',
-					'Variation Shipping Class' => 'variation_shipping_class'
-				);
-			}
+			// if($import_type == 'WooCommerceVariations'){            
+			// 	$pro_meta_fields = array(
+			// 		'Featured' => 'featured',
+			// 		'Downloadable Files' => 'downloadable_files',
+			// 		'Download Limit' => 'download_limit',
+			// 		'Download Expiry' => 'download_expiry',
+			// 		'Price' => 'price',
+			// 		'Sales Price Date From' => 'sale_price_dates_from',
+			// 		'Sales Price Date To' => 'sale_price_dates_to',
+			// 		'Regular Price' => 'regular_price',
+			// 		'Sale Price' => 'sale_price',
+			// 		'Purchase Note' => 'purchase_note',
+			// 		'Default Attributes' => 'default_attributes',
+			// 		'Custom Attributes' => 'custom_attributes',
+			// 		'Enable Reviews' => 'comment_status',
+			// 		'Tax Status' => 'tax_status',
+			// 		'Tax Class' => 'tax_class',
+			// 		'Weight' => 'weight',
+			// 		'Length' => 'length',
+			// 		'Width' => 'width',
+			// 		'Height' => 'height',
+			// 		'Downloadable' => 'downloadable',
+			// 		'Virtual' => 'virtual',
+			// 		'Stock' => 'stock',
+			// 		'Stock Status' => 'stock_status',
+			// 		'Low Stock Threshold' => 'low_stock_threshold',
+			// 		'Stock Quantity' => 'stock_qty',
+			// 		'Sold Individually' => 'sold_individually',
+			// 		'Manage Stock' => 'manage_stock',
+			// 		'Backorders' => 'backorders',
+			// 		'Thumbnail Id' => 'thumbnail_id',
+			// 		'_subscription_period' => '_subscription_period',
+			// 		'_subscription_period_interval' => '_subscription_period_interval',
+			// 		'_subscription_length' => '_subscription_length',
+			// 		'_subscription_trial_period' => '_subscription_trial_period',
+			// 		'_subscription_trial_length' => '_subscription_trial_length',
+			// 		'_subscription_price' => '_subscription_price',
+			// 		'_subscription_sign_up_fee' => '_subscription_sign_up_fee',
+			// 		'Variation Description' => 'variation_description',
+			// 		'Variation Shipping Class' => 'variation_shipping_class'
+			// 	);
+			// }
 			if($import_type == 'WooCommerceOrders'){            
 				$pro_meta_fields = array(
 					'Recorded Sales'          => 'recorded_sales',
@@ -346,7 +347,7 @@ class ProductMetaExtension extends ExtensionHandler{
 
 			$import_type = $this->import_name_as($import_type);
 		
-				if($import_type == 'WooCommerce' || $import_type == 'WPeCommerce' || $import_type == 'WooCommerceVariations' || $import_type == 'WooCommerceOrders' || $import_type == 'WooCommerceCoupons' || $import_type == 'WooCommerceRefunds') {
+				if($import_type == 'WooCommerce' || $import_type == 'WPeCommerce' || $import_type == 'WooCommerceOrders' || $import_type == 'WooCommerceCoupons' || $import_type == 'WooCommerceRefunds') {
 				return true;
 			}else{
 				return false;

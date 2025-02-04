@@ -163,6 +163,7 @@ class SaveMapping
 		$mapped_fields = json_decode(stripslashes($map_fields), true);
 		$helpers_instance = ImportHelpers::getInstance();
 		$response = [];
+		$counter = 0;
 		foreach ($mapped_fields as $maps) {
 			foreach ($maps as $header_keys => $value) {
 				if (strpos($header_keys, '->cus2') !== false) {
@@ -179,33 +180,24 @@ class SaveMapping
 				if ($has_bundlemeta) {
 					$map_data['BUNDLEMETA'] = $mapped_fields['BUNDLEMETA'];
 				}
-			} elseif ($key !== 'BUNDLEMETA') {
+			}
+			// else if($mapping_type == 'dragdrop-section' && $key === 'ATTRMETA') {
+			// 	foreach ($value as $v_key => $val) {
+			// 		preg_match('/\d+/', $v_key, $matches);
+			// 		$index = $matches[0] ?? $counter;
+			// 		if (!isset($map_data['ATTRMETA'][$index])) {
+			// 			$map_data['ATTRMETA'][$index] = [];
+			// 		}
+			// 		$map_data['ATTRMETA'][$index][$v_key] = $val;
+			// 	}
+			// 	if(is_array($map_data['ATTRMETA'])){
+			// 		$map_data['ATTRMETA'] = array_values($map_data['ATTRMETA']);
+			// 	}
+			// }
+			elseif ($key !== 'BUNDLEMETA') {
 				$map_data[$key] = $value;
 			}
 		}
-		//error_log(print_r(['ATTRMETA' => $map_data['ATTRMETA']],true),3,'/var/www/html/antony.log');
-		// Array
-		// (
-		// 	[ATTRMETA] => Array
-		// 		(
-		// 			[0] => Array
-		// 				(
-		// 					[product_attribute_name1] => shopee_link
-		// 					[product_attribute_value1] => features
-		// 					[product_attribute_visible1] => collections
-		// 				)
-		
-		// 			[1] => Array
-		// 				(
-		// 					[product_attribute_name2] => collections
-		// 					[product_attribute_value2] => finish
-		// 					[product_attribute_visible2] => image_gallery
-		// 				)
-		
-		// 		)
-		
-		// )
-
 		$mapping_fields = serialize($map_data);
 		$time = date('Y-m-d h:i:s');
 
@@ -1428,6 +1420,7 @@ class SaveMapping
 	{
 		$return_arr = [];
 		$core_instance = CoreFieldsImport::getInstance();
+		$order_meta = $attr_data =$meta_data = '';
 		global $core_instance, $uci_woocomm_meta, $uci_woocomm_bundle_meta, $product_attr_instance, $wpmlimp_class;
 		foreach ($map as $group_name => $group_value) {
 			if ($group_name == 'CORE') {
@@ -1437,7 +1430,11 @@ class SaveMapping
 				if ($selected_type == 'WooCommerce Orders') {
 					$order_meta = !empty($map['ORDERMETA']) ? $map['ORDERMETA'] : '';
 				}
-				$post_id = $core_instance->set_core_values($header_array, $value_array, $map['CORE'], $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, $gmode, $templatekey, $wpml_map, $media_map, $media_type, $order_meta);
+				if($selected_type=='WooCommerce Product'){
+					$meta_data = isset($map['ECOMMETA'])?$map['ECOMMETA']:'';
+					$attr_data = isset($map['ATTERMETA'])?$map['ATTERMETA']:'';
+				}
+				$post_id = $core_instance->set_core_values($header_array, $value_array, $map['CORE'], $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, $gmode, $templatekey, $wpml_map, $media_map, $media_type, $order_meta,$meta_data,$attr_data);
 			}
 		}
 		foreach ($map as $group_name => $group_value) {
@@ -1453,17 +1450,17 @@ class SaveMapping
 					$rankmath_instance->set_rankmath_values($header_array, $value_array, $map['RANKMATH'], $post_id, $selected_type);
 					break;
 
-				case 'ECOMMETA':
-					$variation_id = isset($variation_id) ? $variation_id : '';
-					$uci_woocomm_meta->set_product_meta_values($header_array, $value_array, $map['ECOMMETA'], $post_id, $variation_id, $selected_type, $line_number, $get_mode, $hash_key);
-					break;
-				case 'ATTRMETA':
-					$product_meta_instance = ProductMetaImport::getInstance();
-					$variation_id = isset($variation_id) ? $variation_id : '';
-					$wpml_map = isset($map['WPML']) ? $map['WPML'] : '';
-					$woocom_image = isset($map['PRODUCTIMAGEMETA']) ? $map['PRODUCTIMAGEMETA'] : [];
-					$product_meta_instance->set_product_meta_values($header_array, $value_array, $map['ATTRMETA'], $post_id, $variation_id, $selected_type, $line_number, $get_mode, $hash_key);
-					break;
+				// case 'ECOMMETA':
+				// 	$variation_id = isset($variation_id) ? $variation_id : '';
+				// 	$uci_woocomm_meta->set_product_meta_values($header_array, $value_array, $map['ECOMMETA'], $post_id, $variation_id, $selected_type, $line_number, $get_mode, $hash_key);
+				// 	break;
+				// case 'ATTRMETA':
+				// 	$product_meta_instance = ProductMetaImport::getInstance();
+				// 	$variation_id = isset($variation_id) ? $variation_id : '';
+				// 	$wpml_map = isset($map['WPML']) ? $map['WPML'] : '';
+				// 	$woocom_image = isset($map['PRODUCTIMAGEMETA']) ? $map['PRODUCTIMAGEMETA'] : [];
+				// 	$product_meta_instance->set_product_meta_values($header_array, $value_array, $map['ATTRMETA'], $post_id, $variation_id, $selected_type, $line_number, $get_mode, $hash_key);
+				// 	break;
 
 				case 'JE':
 					$jet_engine_instance = JetEngineImport::getInstance();

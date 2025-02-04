@@ -24,7 +24,7 @@ class ExtensionHandler{
 
 	public function import_post_types($import_type) {	
 		$import_type = trim($import_type);	
-		$module = array('Posts' => 'post', 'Pages' => 'page', 'Users' => 'user', 'JetReviews' => 'jetreviews', 'Comments' => 'comments', 'Taxonomies' => $import_type, 'CustomerReviews' =>'wpcr3_review', 'Categories' => 'categories', 'Tags' => 'tags', 'WooCommerce' => 'product', 'WooCommerce Product' => 'product', 'WPeCommerce' => 'wpsc-product','WPeCommerceCoupons' => 'wpsc-product','WooCommerceVariations' => 'product', 'WooCommerceOrders' => 'product', 'WooCommerceCoupons' => 'product', 'WooCommerceRefunds' => 'product', 'CustomPosts' => $import_type,'WooCommerceReviews' => 'reviews');
+		$module = array('Posts' => 'post', 'Pages' => 'page', 'Users' => 'user', 'JetReviews' => 'jetreviews', 'Comments' => 'comments', 'Taxonomies' => $import_type, 'CustomerReviews' =>'wpcr3_review', 'Categories' => 'categories', 'Tags' => 'tags', 'WooCommerce' => 'product', 'WooCommerce Product' => 'product', 'WPeCommerce' => 'wpsc-product','WPeCommerceCoupons' => 'wpsc-product', 'WooCommerceOrders' => 'product', 'WooCommerceCoupons' => 'product', 'WooCommerceRefunds' => 'product', 'CustomPosts' => $import_type,'WooCommerceReviews' => 'reviews');
 		foreach (get_taxonomies() as $key => $taxonomy) {
 			$module[$taxonomy] = $taxonomy;
 		}
@@ -135,7 +135,7 @@ class ExtensionHandler{
 
 		if(is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('import-woocommerce/import-woocommerce.php')){
 			$importas['WooCommerce Product'] ='WooCommerce';
-			$importas['WooCommerce Product Variations'] ='WooCommerceVariations';
+			//$importas['WooCommerce Product Variations'] ='WooCommerceVariations';
 			$importas['WooCommerce Reviews'] ='WooCommerceReviews';
 			$importas['WooCommerce Orders'] = 'WooCommerceOrders';
 			$importas['WooCommerce Coupons'] = 'WooCommerceCoupons';

@@ -29,7 +29,7 @@ class CoreFieldsImport {
 		return CoreFieldsImport::$core_instance;
 	}
 
-	function set_core_values($header_array ,$value_array , $map , $type , $mode , $line_number , $check , $hash_key, $unmatched_row, $gmode, $templatekey, $wpml_array = null,$media_meta=null,$media_type=null,$order_meta=null){
+	function set_core_values($header_array ,$value_array , $map , $type , $mode , $line_number , $check , $hash_key, $unmatched_row, $gmode, $templatekey, $wpml_array = null,$media_meta=null,$media_type=null,$order_meta=null,$meta_data=null ,$attr_data=null){
 		global $wpdb;
 		global $uci_woocomm_instance,$woocommerce_core_instance;
 		global $userimp_class;
@@ -107,14 +107,16 @@ class CoreFieldsImport {
 			$post_values = $helpers_instance->get_header_values($map , $header_array , $value_array);
 			$wpml_values = $helpers_instance->get_header_values($wpml_array , $header_array , $value_array);
 			if($type == 'WooCommerce Product'){
-				$result = $uci_woocomm_instance->woocommerce_product_import($post_values , $mode , $check , $unikey_value , $unikey_name , $hash_key, $line_number, $unmatched_row, $wpml_values);
+				$product_meta_data = $helpers_instance->get_header_values($meta_data,$header_array,$value_array);
+				//$result = $uci_woocomm_instance->woocommerce_product_import_new($post_values , $mode , $type, $unmatched_row, $check , $unikey_value , $unikey_name, $line_number, $acf ,$pods, $toolset,$header_array, $value_array,  $wpml_values,$poly_values,$update_based_on,$product_meta_data,$attr_data,$image_meta);	
+				$result = $uci_woocomm_instance->woocommerce_product_import($post_values , $mode , $check , $unikey_value , $unikey_name , $hash_key, $line_number, $unmatched_row, $header_array,$value_array,$wpml_values,$product_meta_data,$attr_data);
 			}
 			if($type == 'JetBooking'){
 
-				$result = $jet_booking_instance->jet_booking_import($post_values , $type, $mode ,$unikey_value , $unikey_name, $line_number,$update_based_on,$check,$hash_key);
+				$result = $jet_booking_instance->jet_booking_import($post_values , $type, $mode ,$unikey_value , $unikey_name, $line_number,'',$check,$hash_key);
 			}
 			if ($type == 'JetReviews') {
-				$result = $jet_reviews_instance->set_jet_reviews_values($post_values , $mode ,$unikey_value , $unikey_name, $line_number,$update_based_on,$check);
+				$result = $jet_reviews_instance->set_jet_reviews_values($post_values , $mode ,$unikey_value , $unikey_name, $line_number,'',$check);
 			}
 
 			if($type == 'Media'){
