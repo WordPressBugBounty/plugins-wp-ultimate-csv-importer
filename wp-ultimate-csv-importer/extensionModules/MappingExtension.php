@@ -63,7 +63,7 @@ class MappingExtension {
 		$response['currentuser']=$current_user_role;
 		$details = [];
 		$info = [];
-
+		$filename = '';
 		$table_name = $wpdb->prefix."smackcsv_file_events";
 		$fields = $wpdb->get_results("UPDATE $table_name SET mode ='$mode' WHERE hash_key = '$hash_key'");
 

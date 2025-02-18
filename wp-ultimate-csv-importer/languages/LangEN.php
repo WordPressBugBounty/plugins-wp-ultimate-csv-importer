@@ -449,7 +449,7 @@ class LangEN {
                 'SelectDeviceCSVfile' => 'Choose Remote to import images from Remote website URLs.',
                 'MediaContinue' => 'Continue',
                 'FreshImport' => 'Fresh import',
-                'UpdateContent' => 'Update Content',
+                'UpdateContent' => 'Content Update',
                 'UpdateThisMappingAs' => 'Update this mapping as',
                 'Summary' => 'Summary',
 

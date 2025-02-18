@@ -89,6 +89,10 @@ class ProductMetaExtension extends ExtensionHandler{
 				if(is_plugin_active('yith-cost-of-goods-for-woocommerce-premium/init.php') && ($import_type == 'WooCommerce')){
 					$pro_meta_fields['yith_cog_cost'] = 'yith_cog_cost';
 				}
+				if(is_plugin_active('custom-woocommerce-extensions/custom-woocommerce-extensions.php') && ($import_type == 'WooCommerce')){
+					$pro_meta_fields['pdf_download_url'] = 'pdf_download_url';
+				}
+	
 				if(is_plugin_active('woocommerce-min-max-quantities/woocommerce-min-max-quantities.php')){
 					$pro_meta_fields['minimum_allowed_quantity'] = 'minimum_allowed_quantity';
 					$pro_meta_fields['maximum_allowed_quantity'] = 'maximum_allowed_quantity';

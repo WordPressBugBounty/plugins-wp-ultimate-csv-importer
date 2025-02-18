@@ -415,7 +415,7 @@ class LangEN_GB {
                         'SelectDeviceCSVfile' => 'Choose Remote to import images from URLs of remote websites.',
                         'MediaContinue' => 'Continue',
                         'FreshImport' => 'Fresh Import',
-                        'UpdateContent' => 'Update Content',
+                        'UpdateContent' => 'Content Update',
                         'UpdateThisMappingAs' => 'Update this Mapping As',
                         'Overwritetheavailableimages' => 'Overwrite the Available Images',
                         'FeaturedFields' => 'Featured Image Meta',

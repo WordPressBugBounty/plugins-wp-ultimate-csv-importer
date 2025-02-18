@@ -181,42 +181,59 @@ class SaveMapping
 					$map_data['BUNDLEMETA'] = $mapped_fields['BUNDLEMETA'];
 				}
 			}
-			// else if($mapping_type == 'dragdrop-section' && $key === 'ATTRMETA') {
-			// 	foreach ($value as $v_key => $val) {
-			// 		preg_match('/\d+/', $v_key, $matches);
-			// 		$index = $matches[0] ?? $counter;
-			// 		if (!isset($map_data['ATTRMETA'][$index])) {
-			// 			$map_data['ATTRMETA'][$index] = [];
-			// 		}
-			// 		$map_data['ATTRMETA'][$index][$v_key] = $val;
-			// 	}
-			// 	if(is_array($map_data['ATTRMETA'])){
-			// 		$map_data['ATTRMETA'] = array_values($map_data['ATTRMETA']);
-			// 	}
-			// }
-			elseif ($key !== 'BUNDLEMETA') {
+			if ($key !== 'BUNDLEMETA') {
+				
 				$map_data[$key] = $value;
 			}
-		}
-		$mapping_fields = serialize($map_data);
-		$time = date('Y-m-d h:i:s');
-
+		}		
 		$get_detail   = $wpdb->get_results("SELECT file_name FROM $file_table_name WHERE `hash_key` = '$hash_key'");
 		$get_file_name = $get_detail[0]->file_name;
 		$get_hash = $wpdb->get_results("SELECT eventKey FROM $template_table_name");
-
-		if (!empty($get_hash)) {
+		$mapping_fields = serialize($map_data);
+		$time = date('Y-m-d h:i:s');
+		$get_file_name = $get_detail[0]->file_name;
+		
+		// Using prepare to safely insert the values
+		if(!empty($get_hash)){
 			foreach ($get_hash as $hash_values) {
 				$inserted_hash_values[] = $hash_values->eventKey;
 			}
 			if (in_array($hash_key, $inserted_hash_values)) {
-				$fields = $wpdb->get_results("UPDATE $template_table_name SET mapping ='$mapping_fields' , createdtime = '$time' , module = '$type' , mapping_type = '$mapping_type' WHERE eventKey = '$hash_key'");
+				$query = $wpdb->prepare(
+					"UPDATE $template_table_name SET mapping = %s, createdtime = %s, module = %s, mapping_type = %s WHERE eventKey = %s",
+					$mapping_fields,
+					$time,
+					$type,
+					$mapping_type,
+					$hash_key
+				);
 			} else {
-				$fields = $wpdb->get_results("INSERT INTO $template_table_name(mapping ,createdtime ,module,csvname ,eventKey , mapping_type)values('$mapping_fields' , '$time' , '$type' , '$get_file_name', '$hash_key', '$mapping_type')");
+				$query = $wpdb->prepare(
+					"INSERT INTO $template_table_name (mapping, createdtime, module, csvname, eventKey, mapping_type) 
+					VALUES (%s, %s, %s, %s, %s, %s)",
+					$mapping_fields,
+					$time,
+					$type,
+					$get_file_name,
+					$hash_key,
+					$mapping_type
+				);
 			}
-		} else {
-			$fields = $wpdb->get_results("INSERT INTO $template_table_name(mapping ,createdtime ,module,csvname ,eventKey , mapping_type)values('$mapping_fields' , '$time' , '$type' , '$get_file_name', '$hash_key' , '$mapping_type' )");
+		}else{
+			$query = $wpdb->prepare(
+				"INSERT INTO $template_table_name (mapping, createdtime, module, csvname, eventKey, mapping_type) 
+				VALUES (%s, %s, %s, %s, %s, %s)",
+				$mapping_fields,
+				$time,
+				$type,
+				$get_file_name,
+				$hash_key,
+				$mapping_type
+			);
 		}
+
+		$wpdb->query($query);
+
 		$fileiteration = '5';
 		update_option('sm_bulk_import_free_iteration_limit', $fileiteration);
 		$response['success'] = true;
@@ -1421,6 +1438,10 @@ class SaveMapping
 		$return_arr = [];
 		$core_instance = CoreFieldsImport::getInstance();
 		$order_meta = $attr_data =$meta_data = '';
+		$jetengine_map = [];
+		$meta_data = '';
+		$att_data = '';
+		$woocom_image = '';
 		global $core_instance, $uci_woocomm_meta, $uci_woocomm_bundle_meta, $product_attr_instance, $wpmlimp_class;
 		foreach ($map as $group_name => $group_value) {
 			if ($group_name == 'CORE') {
@@ -1434,7 +1455,10 @@ class SaveMapping
 					$meta_data = isset($map['ECOMMETA'])?$map['ECOMMETA']:'';
 					$attr_data = isset($map['ATTERMETA'])?$map['ATTERMETA']:'';
 				}
-				$post_id = $core_instance->set_core_values($header_array, $value_array, $map['CORE'], $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, $gmode, $templatekey, $wpml_map, $media_map, $media_type, $order_meta,$meta_data,$attr_data);
+				if($selected_type=='WooCommerce Customer'){
+					$bsi_data = isset($map['BSI'])?$map['BSI']:'';
+				}
+				$post_id = $core_instance->set_core_values($header_array, $value_array, $map['CORE'], $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, $gmode, $templatekey, $wpml_map, $media_map, $media_type, $order_meta,$meta_data,$attr_data,$bsi_data);
 			}
 		}
 		foreach ($map as $group_name => $group_value) {
@@ -1522,8 +1546,12 @@ class SaveMapping
 					break;
 
 				case 'BSI':
-					global $billing_class;
-					$billing_class->set_bsi_values($header_array, $value_array, $map['BSI'], $post_id, $selected_type);
+					global $billing_class,$customer_billing_class;
+					if($selected_type == 'WooCommerce Customer'){
+						//$customer_billing_class->set_bsi_values($header_array, $value_array, $map['BSI'], $post_id, $selected_type);
+					}else{
+						$billing_class->set_bsi_values($header_array, $value_array, $map['BSI'], $post_id, $selected_type);
+					}
 					break;
 
 				case 'WPMEMBERS':

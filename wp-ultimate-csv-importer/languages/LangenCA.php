@@ -438,7 +438,7 @@ class LangEN_CA {
                         'SelectDeviceCSVfile' => 'Choose Remote to import images from URLs of remote websites.',
                         'MediaContinue' => 'Continue',
                         'FreshImport' => 'Fresh import',
-                        'UpdateContent' => 'Update content',
+                        'UpdateContent' => 'Content Update',
                         'UpdateThisMappingAs' => 'Update this mapping as',
                         'Overwritetheavailableimages' => 'Overwrite the available images',
                         'AlwaysCreateAsNewImage' => 'Always create as new image',

@@ -136,7 +136,9 @@ class UsersExtension extends ExtensionHandler{
 	* @return boolean
 	*/
     public function extensionSupportedImportType($import_type ){
-		if($import_type == 'Users'){
+        $test = WordpressCustomExtension::getInstance();
+        $import_type = $this->import_name_as($import_type);
+		if($import_type == 'Users' || $import_type == 'WooCommerceCustomer'){
             return true;
         }
 	}

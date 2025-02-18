@@ -139,7 +139,7 @@ class ExtensionHandler{
 			$importas['WooCommerce Reviews'] ='WooCommerceReviews';
 			$importas['WooCommerce Orders'] = 'WooCommerceOrders';
 			$importas['WooCommerce Coupons'] = 'WooCommerceCoupons';
-			//$importas['WooCommerce Refunds'] = 'WooCommerceRefunds';
+			$importas['WooCommerce Customer'] = 'WooCommerceCustomer';
 		}
 
 		if(array_key_exists('location' , $importas) && array_key_exists('event-recurring' , $importas)){
@@ -340,8 +340,13 @@ class ExtensionHandler{
 				$type = 'Pages';
 			}
 			elseif(in_array('user_login', $Headers) || in_array('role', $Headers) || in_array('user_email', $Headers) ){
-				$type = 'Users';
-			} elseif(in_array('comment_author', $Headers) || in_array('comment_content', $Headers) ||  in_array('comment_approved', $Headers) ){
+				if(is_plugin_active('import-users/import-users.php')) {
+					$type = 'Users';
+				}else{
+					$type = 'WooCommerce Customer';
+				}
+			}
+			elseif(in_array('comment_author', $Headers) || in_array('comment_content', $Headers) ||  in_array('comment_approved', $Headers) ){
 				$type = 'Comments';
 			} elseif( in_array('reviewer_name', $Headers) || in_array('reviewer_email', $Headers)){
 				$type = 'Customer Reviews';
