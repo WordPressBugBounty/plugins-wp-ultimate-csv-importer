@@ -74,6 +74,9 @@ class MappingExtension {
 		if(empty($file_extension)){
 			$file_extension = 'xml';
 		}
+		if($file_extension == 'xlsx'  || $file_extension == 'xls'){
+			$file_extension = 'csv';                    
+		}
 		$template_table_name = $wpdb->prefix."ultimate_csv_importer_mappingtemplate";
 		$smackcsv_instance = SmackCSV::getInstance();
 		$upload_dir = $smackcsv_instance->create_upload_dir();

@@ -208,6 +208,9 @@ class ExtensionHandler{
 		if(empty($file_extension)){
 			$file_extension = 'xml';
 		}
+		if($file_extension == 'xlsx'  || $file_extension == 'xls'){
+			$file_extension = 'csv';                    
+		}
 		if($file_extension == 'csv' || $file_extension == 'txt'){
 			if (version_compare(PHP_VERSION, '8.1.0', '<')) {  // Only do this if PHP version is less than 8.1.0
 				if (!ini_get("auto_detect_line_endings")) {

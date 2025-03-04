@@ -92,6 +92,9 @@ class ZipHandler {
                 if(empty($file_extension)){
                     $file_extension = 'xml';
                 }
+                if($file_extension == 'xlsx'){
+                    $file_extension = 'csv';                    
+                }
                 $getFileRealPath = explode($get_upload_dirpath,$singleFile);
                 $getFileRealPath = $get_upload_dirurl.$getFileRealPath[1];
             

@@ -158,7 +158,7 @@ class ACFExtension extends ExtensionHandler{
 	* @return boolean
 	*/
 	public function extensionSupportedImportType($import_type){
-		if(is_plugin_active('advanced-custom-fields/acf.php')){
+		if(is_plugin_active('advanced-custom-fields/acf.php') || is_plugin_active('secure-custom-fields/secure-custom-fields.php')){
 			if($import_type == 'nav_menu_item'){
 				return false;
 			}

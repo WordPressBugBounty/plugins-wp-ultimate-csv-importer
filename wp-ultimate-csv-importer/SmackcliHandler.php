@@ -86,6 +86,9 @@ class Smackuci_Cli{
 		        if(empty($file_extension)){
                     $file_extension = 'xml';                    
                 }
+                if($file_extension == 'xlsx'){
+                    $file_extension = 'csv';                    
+                }
                 
                 $schedule_array = array($templatekey,'templatekey',$selected_type);
 		

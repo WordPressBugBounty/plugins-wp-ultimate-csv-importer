@@ -403,6 +403,9 @@ class SaveMapping
 		if (empty($file_extension)) {
 			$file_extension = 'xml';
 		}
+		if($file_extension == 'xlsx' || $file_extension == 'xls'){
+			$file_extension = 'csv';                    
+		}
 		$upload_dir = SaveMapping::$smackcsv_instance->create_upload_dir();
 		$file_size = filesize($upload_dir . $hash_key . '/' . $hash_key);
 		$filesize = $helpers_instance->formatSizeUnits($file_size);
@@ -1175,6 +1178,9 @@ class SaveMapping
 		if (empty($file_extension)) {
 			$file_extension = 'xml';
 		}
+		if($file_extension == 'xlsx' || $file_extension == 'xls'){
+			$file_extension = 'csv';                    
+		}
 		$file_size = filesize($upload_dir . $hash_key . '/' . $hash_key);
 		$filesize = $helpers_instance->formatSizeUnits($file_size);
 
@@ -1442,6 +1448,7 @@ class SaveMapping
 		$meta_data = '';
 		$att_data = '';
 		$woocom_image = '';
+		$bsi_data = '';
 		global $core_instance, $uci_woocomm_meta, $uci_woocomm_bundle_meta, $product_attr_instance, $wpmlimp_class;
 		foreach ($map as $group_name => $group_value) {
 			if ($group_name == 'CORE') {

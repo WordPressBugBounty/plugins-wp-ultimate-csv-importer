@@ -1325,6 +1325,7 @@ Author: Mohamed Fariz
   border-radius: 6px;
   padding: 10px !important;
   display: flex !important;
+  flex-direction: row !important;
   justify-content: center;
   align-items: center;
   margin: auto 5px;
@@ -3046,7 +3047,7 @@ Author: Mohamed Fariz
   .filepond--wrapper
   .filepond--drop-label
   label:after {
-  content: "Supported file types .csv .txt .xml .zip";
+  content: "Supported file types .csv .txt .xml .xlsx .xls .zip";
   position: absolute;
   bottom: -20px;
   z-index: 1000;
@@ -3057,6 +3058,7 @@ Author: Mohamed Fariz
   color: #4a5568;
   width: 300px;
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .wp-ultimate-csv-importer .filepond--wrapper {

@@ -53,7 +53,7 @@ class ACFImport {
 					$wp_element= trim($key);
 
 					if((!empty($csv_element) || $csv_element == 0) && !empty($wp_element)){
-                        if(is_plugin_active('advanced-custom-fields/acf.php')){
+                        if(is_plugin_active('advanced-custom-fields/acf.php') || is_plugin_active('secure-custom-fields/secure-custom-fields.php')){
                             $acf_pluginPath = WP_PLUGIN_DIR . '/advanced-custom-fields/pro';
                             if(is_dir($acf_pluginPath)) {
                                 $this->acfpro_import_function($wp_element ,$post_values, $csv_element ,$type, $post_id,$mode, $hash_key,$line_number);
@@ -106,7 +106,6 @@ class ACFImport {
 		$acf_wp_name = $acf_wpname_element;
 
 		$acf_csv_name = $acf_csv_element; 
-
 		global $wpdb;
 
 		$helpers_instance = ImportHelpers::getInstance();

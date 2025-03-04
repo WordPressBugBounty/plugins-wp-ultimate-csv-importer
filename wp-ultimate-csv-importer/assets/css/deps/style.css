@@ -2853,7 +2853,7 @@ i#smsumicon {
   .filepond--wrapper
   .filepond--drop-label
   label:after {
-  content: "Supported file types .csv .xml .txt .zip";
+  content: "Supported file types .csv .xml .xlsx .xls .txt .zip";
   position: absolute;
   bottom: -20px;
   z-index: 1000;
@@ -2864,13 +2864,14 @@ i#smsumicon {
   color: #4a5568;
   width: 300px;
   font-weight: 500;
+  white-space: nowrap;
 }
 .wp-ultimate-csv-importer
   #v-pills-tabContent1
   .filepond--wrapper
   .filepond--drop-label
   label:after {
-  content: "Supported file types .csv .xml .txt .zip";
+  content: "Supported file types .csv .xml .xlsx .xls .txt .zip";
   position: absolute;
   bottom: -20px;
   z-index: 1000;
@@ -2881,6 +2882,7 @@ i#smsumicon {
   color: #4a5568;
   width: 300px;
   font-weight: 500;
+  white-space: nowrap;
 }
 .wp-ultimate-csv-importer
   #v-pills-tabContent2
@@ -3475,7 +3477,7 @@ i#smsumicon {
   .form-check-inline
   .form-check-input {
   margin-top: 0;
-  margin-right: 0.3125rem;
+  margin-right: 0rem;
   margin-left: 0;
 }
 .wp-ultimate-csv-importer .csv-importer-provider input {
@@ -4304,4 +4306,13 @@ input[type="radio"]:checked::before {
   display: inline-block;
   vertical-align: middle;
   -webkit-font-smoothing: antialiased;
+}
+.form-check-inline{
+  margin-right:0rem
+}
+.form-check.form-check-inline.form_export_file_type {
+  
+  
+  padding-left: 1em;
+ 
 }

@@ -6,6 +6,11 @@
  */
 
 namespace Smackcoders\FCSV;
+require_once(__DIR__.'/../vendor/autoload.php');
+
+use League\Csv\Writer;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Writer\Csv;
 
 if ( ! defined( 'ABSPATH' ) )
     exit; // Exit if accessed directly
@@ -29,6 +34,17 @@ class FtpUpload implements Uploads{
         return FtpUpload::$instance;
     }
 
+    function convertXlsxToCsv($path, $upload_dir_path,$event_key)
+	{
+        $spreadsheet = IOFactory::load($path);
+		$csv_file_path = $upload_dir_path . '/' . $event_key;
+		$csv_writer = new Csv($spreadsheet);
+		$csv_writer->setDelimiter(',');
+		$csv_writer->setEnclosure('"');
+		$csv_writer->setLineEnding("\r\n");
+		$csv_writer->setIncludeSeparatorLine(false);
+		$csv_writer->save($csv_file_path);
+	}
     /**
 	 * Upload file from FTP.
 	 */
@@ -78,6 +94,9 @@ class FtpUpload implements Uploads{
                     if(empty($file_extension)){
                         $file_extension = 'xml';
                     }
+                    // if($file_extension == 'xlsx'){
+                    //     $file_extension = 'csv';                    
+                    // }
                     $file_extn = '.' . $file_extension;
                     $get_local_filename = explode($file_extn, $ftp_file_name);
                     $local_file_name = $get_local_filename[0] . '-1' . $file_extn;
@@ -145,8 +164,11 @@ class FtpUpload implements Uploads{
                     $ret = ftp_nb_continue($conn_id);
                     
                     }
-                    
                     if($ret == FTP_FINISHED){
+                        if ($file_extension == 'xlsx' || $file_extension == 'xls') {
+							$this->convertXlsxToCsv($local_file ,$upload_dir_path, $event_key);				
+                            $file_extension = 'csv';
+                        }
                         chmod($local_file, 0777);
                         $validate_file = $validate_instance->file_validation($local_file , $file_extension);
 
