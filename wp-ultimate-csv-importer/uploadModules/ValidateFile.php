@@ -29,7 +29,7 @@ class ValidateFile {
 	 * @return string
 	 */
     public function validate_file_format($filename){
-        $supported_file = array('csv' , 'xml', 'zip' , 'txt' , 'xlsx' , 'xls');
+        $supported_file = array('csv' , 'xml', 'zip' , 'txt' , 'xlsx' , 'xls', 'tsv');
         $extension = explode(".", $filename);
         $file_extension = end($extension);
         if(empty($file_extension)){

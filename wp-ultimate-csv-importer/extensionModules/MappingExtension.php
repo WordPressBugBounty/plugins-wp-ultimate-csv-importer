@@ -151,6 +151,43 @@ class MappingExtension {
 				}
 			}
 		}
+		if($file_extension == 'tsv'){
+			if (version_compare(PHP_VERSION, '8.1.0', '<')) {  // Only do this if PHP version is less than 8.1.0
+				if (!ini_get("auto_detect_line_endings")) {
+					ini_set("auto_detect_line_endings", true);
+				}
+			}
+			$info = [];
+			if (($h = fopen($upload_dir.$hash_key.'/'.$hash_key, "r")) !== FALSE) 
+			{
+				$file_path = $upload_dir . $hash_key . '/' . $hash_key;
+				$delimiter = MappingExtension::$validatefile->getFileDelimiter($file_path, 5);
+				if($delimiter == '\t'){
+					$hs = $upload_dir . $hash_key . '/' . $hash_key;
+					$line =file($hs, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+					// Read the data from a single line
+					$data = explode("\t", $line[0]); // Split by tab
+					$trimmed_info = array_map('trim', $data);
+						array_push($info , $trimmed_info);
+						$exp_line = $info[0];
+
+						$response['success'] = true;
+						$response['get_key'] = $get_key;
+						$response['show_template'] = false;
+						$response['csv_fields'] = $exp_line;
+						if(!empty($media_type) && $import_type == 'Media'){
+							$value = $this->media_mapping_fields($import_type,$mode,$media_type);
+						}else{
+							$value = $this->mapping_fields($import_type);
+						}
+						
+						$response['fields'] = $value;
+						$response['total_records'] = (int)$total_rows;
+						echo wp_json_encode($response);
+						wp_die();
+				}	
+			}
+		}
 		if($file_extension == 'xml'){
 			$xml_class = new XmlHandler();
 			$upload_dir_path = $upload_dir. $hash_key;

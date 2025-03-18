@@ -84,7 +84,7 @@ class WordpressCustomExtension extends ExtensionHandler{
             $pods[] = $pods_fields->post_name;  
         }
   
-        if(is_plugin_active('meta-box/meta-box.php')){
+		if(is_plugin_active('meta-box/meta-box.php') || is_plugin_active('meta-box-aio/meta-box-aio.php')){
             $metabox_fields = [];
             $import_as = $this->import_post_types($import_types);
             $get_metabox_fields = \rwmb_get_object_fields( $import_as );

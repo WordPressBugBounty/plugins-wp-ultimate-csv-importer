@@ -107,7 +107,7 @@ class UrlUpload implements Uploads{
 				$url_file_name = $get_local_filename[0];	
 			}else { # Other URL's except google spreadsheets	
 		
-				$supported_file = array('csv' , 'xml' ,'xlsx','zip' , 'txt','json');
+				$supported_file = array('csv' , 'xml' ,'xlsx','zip' , 'txt','json', 'tsv');
 				$has_extension = explode(".", basename($file_url));
 				$has_file_extension = end($has_extension);
 				if($has_extension && in_array($has_file_extension , $supported_file)){

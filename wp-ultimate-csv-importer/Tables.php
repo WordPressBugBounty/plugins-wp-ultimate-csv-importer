@@ -87,6 +87,7 @@ class Tables {
 			`id` int(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
 			`templatename` varchar(250) NOT NULL,
 			`mapping` blob NOT NULL,
+			`mapping_filter` blob NOT NULL,
 			`createdtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
 			`deleted` int(1) DEFAULT '0',
 			`templateused` int(10) DEFAULT '0',
@@ -228,6 +229,10 @@ class Tables {
 
 		) ENGINE=InnoDB;
 		");
+		$result = $wpdb->get_var("SHOW COLUMNS FROM `{$wpdb->prefix}ultimate_csv_importer_mappingtemplate` LIKE 'mapping_filter'");
+		if(!$result){
+			$wpdb->query("ALTER TABLE `{$wpdb->prefix}ultimate_csv_importer_mappingtemplate` ADD COLUMN `mapping_filter` blob NULL AFTER `mapping`");
+		}
 		$result = $wpdb->query("SHOW COLUMNS FROM `{$wpdb->prefix}failed_media` LIKE 'post_title'");
 		if($result){
 			$wpdb->query("ALTER TABLE `{$wpdb->prefix}failed_media` CHANGE post_title title VARCHAR(20)");

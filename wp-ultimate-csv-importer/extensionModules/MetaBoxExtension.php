@@ -60,7 +60,7 @@ class MetaBoxExtension extends ExtensionHandler{
 	* @return boolean
 	*/
     public function extensionSupportedImportType($import_type ){
-		if(is_plugin_active('meta-box/meta-box.php')){
+		if(is_plugin_active('meta-box/meta-box.php') || is_plugin_active('meta-box-aio/meta-box-aio.php')){
 			if($import_type == 'nav_menu_item'){
 				return false;
 			}

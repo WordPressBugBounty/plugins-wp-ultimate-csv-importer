@@ -58,22 +58,39 @@ class DragandDropExtension {
         $file_path = $upload_dir . $hashkey . '/' . $hashkey;
         $delimiter = DragandDropExtension::$validatefile->getFileDelimiter($file_path, 5);
         $array_index = array_search($delimiter,$delimiters);
-        if($array_index == 5){
-            $delimiters[$array_index] = ' ';
+        if($delimiter == '\t'){
+            while (($data = fgetcsv($h, 0, "\t")) !== FALSE) 
+            {		
+                // Read the data from a single line
+                $trimmed_info = array_map('trim', $data);
+                array_push($info , $trimmed_info);
+                if($line_number == 0){
+                    $Headers = $info[$line_number];
+                }else{
+                    $values = $info[$line_number];
+                    array_push($Values , $values);		
+                }
+                $line_number ++;		
+            }
         }
-		while (($data = fgetcsv($h, 0, $delimiters[$array_index])) !== FALSE) 
-		{		
-			// Read the data from a single line
-			$trimmed_info = array_map('trim', $data);
-			array_push($info , $trimmed_info);
-			if($line_number == 0){
-                $Headers = $info[$line_number];
-            }else{
-                $values = $info[$line_number];
-                array_push($Values , $values);		
-			}
-			$line_number ++;		
-		}	
+        else{
+            if($array_index == 5){
+                $delimiters[$array_index] = ' ';
+            }
+            while (($data = fgetcsv($h, 0, $delimiters[$array_index])) !== FALSE) 
+            {		
+                // Read the data from a single line
+                $trimmed_info = array_map('trim', $data);
+                array_push($info , $trimmed_info);
+                if($line_number == 0){
+                    $Headers = $info[$line_number];
+                }else{
+                    $values = $info[$line_number];
+                    array_push($Values , $values);		
+                }
+                $line_number ++;		
+            }	
+        }
 		// Close the file
 		fclose($h);
 		}

@@ -2853,7 +2853,7 @@ i#smsumicon {
   .filepond--wrapper
   .filepond--drop-label
   label:after {
-  content: "Supported file types .csv .xml .xlsx .xls .txt .zip";
+    content: "Supported file types .csv .xml .xlsx .xls .txt .zip .tsv";
   position: absolute;
   bottom: -20px;
   z-index: 1000;
@@ -2871,19 +2871,19 @@ i#smsumicon {
   .filepond--wrapper
   .filepond--drop-label
   label:after {
-  content: "Supported file types .csv .xml .xlsx .xls .txt .zip";
-  position: absolute;
-  bottom: -20px;
-  z-index: 1000;
-  transform: translateX(-50%);
-  left: 50%;
-  text-align: center;
-  font-family: "Poppins", sans-serif !important;
-  color: #4a5568;
-  width: 300px;
-  font-weight: 500;
-  white-space: nowrap;
-}
+    content: "Supported file types .csv .xml .xlsx .xls \A .txt .zip";
+    position: absolute;
+    bottom: -46px;
+    z-index: 1000;
+    transform: translateX(-50%);
+    left: 50%;
+    text-align: center;
+    font-family: "Poppins", sans-serif !important;
+    color: #4a5568;
+    width: 300px;
+    font-weight: 500;
+    white-space: pre-line;  /* Enables line breaks */
+  }
 .wp-ultimate-csv-importer
   #v-pills-tabContent2
   .filepond--wrapper

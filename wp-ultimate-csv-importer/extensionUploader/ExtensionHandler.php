@@ -312,6 +312,47 @@ class ExtensionHandler{
 				$total_rows = $sub_child['total_count'];
 			}
 		}
+		if($file_extension == 'tsv'){
+			if (version_compare(PHP_VERSION, '8.1.0', '<')) {  // Only do this if PHP version is less than 8.1.0
+				if (!ini_get("auto_detect_line_endings")) {
+					ini_set("auto_detect_line_endings", true);
+				}
+			}
+			$info = [];
+			if (($h = fopen($upload_dir.$hashkey.'/'.$hashkey, "r")) !== FALSE) 
+			{
+				$line_number = 0;
+				$Headers = [];
+				$values = [];
+				$file_path = $upload_dir . $hashkey . '/' . $hashkey;
+				ExtensionHandler::$validate_file = ValidateFile::getInstance();
+				$delimiter = ExtensionHandler::$validate_file->getFileDelimiter($file_path, 5);
+				if($delimiter == '\t'){
+						$hs = $upload_dir.$hashkey.'/'.$hashkey;
+						while (($data = fgetcsv($h, 0, "\t")) !== FALSE) {
+						
+						// Read the data from a single line
+					
+						$data = explode("\t", $line[0]); // Split by tab
+						$trimmed_info = array_map('trim', $data);
+					
+						array_push($info , $trimmed_info);
+
+						if($line_number == 0){
+							$Headers = $info[$line_number];
+							$type = $this->select_import_type($Headers);	
+						}
+						else{
+							$values = $info[$line_number];
+						}
+						$line_number ++;		
+					}
+					// Close the file
+				fclose($h);
+				}
+			}
+			$total_rows = $line_number - 1;
+		}
 		global $wpdb;
 		$table_name = $wpdb->prefix ."smackcsv_file_events";
 		$fields = $wpdb->get_results("UPDATE $table_name SET total_rows=$total_rows WHERE hash_key = '$hashkey'");
