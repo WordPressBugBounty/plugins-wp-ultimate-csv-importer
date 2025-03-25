@@ -194,29 +194,47 @@ class MediaHandling{
 
 	public function deleteImage()
 	{
+		if (!is_user_logged_in() || !current_user_can('manage_options')) {
+			wp_send_json_error(['message' => 'Unauthorized access.'], 403);
+			return;
+		}
+	
+		// Verify nonce for CSRF protection
 		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+	
+		// Decode JSON safely
 		$images = json_decode(stripslashes($_POST['images']), true);
-		if (!empty($images)) {
-			// Get the media upload directory
-			$media_dir = wp_get_upload_dir();
-			$upload_path = $media_dir['path'];
-			foreach ($images as $image) {
-				// Ensure that the image name is a valid file name
-				if (strpos($image, '/')) {
-					$img_parts = explode('/', $image);
-					$deleteimage = end($img_parts);
-				} else {
-					$deleteimage = $image;
-				}
-				$file_path = $upload_path . '/' . $deleteimage;
-				if (file_exists($file_path)) {
-					unlink($file_path);
-				}
+		if (empty($images) || !is_array($images)) {
+			wp_send_json_error(['message' => 'Invalid input.'], 400);
+			return;
+		}
+	
+		// Get the media upload directory
+		$media_dir = wp_get_upload_dir();
+		$upload_path = realpath($media_dir['path']); // Get absolute path
+	
+		if (!$upload_path) {
+			wp_send_json_error(['message' => 'Upload directory not found.'], 500);
+			return;
+		}
+	
+		foreach ($images as $image) {
+			// Sanitize the filename to prevent directory traversal
+			$deleteimage = sanitize_file_name(basename($image));
+			$file_path = realpath(trailingslashit($upload_path) . $deleteimage);
+	
+			// Ensure the file is inside the uploads directory
+			if (!$file_path || strpos($file_path, $upload_path) !== 0) {
+				wp_send_json_error(['message' => 'Invalid file path.'], 403);
+				return;
+			}
+	
+			// Delete the file if it exists
+			if (file_exists($file_path) && is_file($file_path)) {
+				unlink($file_path);
 			}
 			$result['success'] = 'true';
-		} else {
-			$result['success'] = 'true';
-		}
+		} 
 
 		echo wp_json_encode($result);
 		wp_die();

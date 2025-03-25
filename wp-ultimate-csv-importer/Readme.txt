@@ -3,7 +3,7 @@ Contributors: smackcoders, smacksupport
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 7.19
+Stable tag: 7.19.1
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
 Tags: import export, wordpress csv import, xml, csv, all import, import all, datafeed, importer, import, xml import, migrate, import csv to wordpress, import xml to wordpress, advanced xml import, advanced csv import, bulk csv import, bulk xml import, bulk data import, xml to custom post type, csv to custom post type, woocommerce csv import, woocommerce xml import, csv import, import csv, wordpress xml import, import xml, csv importer
@@ -288,6 +288,9 @@ It is as simple as installing any other WordPress plugin. There are two general 
 
 
 == Changelog ==
+
+= 7.19.1 =
+Fixed: Security Fix - Arbitrary File Upload issue reported by Wordfence
 
 = 7.19 =
 Added: Advanced filtering options with support for multiple conditions
@@ -1485,5 +1488,6 @@ Added: Introducing a new WPML import feature, enabling users to import multiling
 
 == Upgrade Notice ==
 
-= 7.19 =
-Now supports advanced filtering with multiple conditions, TSV file import, and the latest MetaBox update for smoother compatibility.
+= 7.19.1 =
+
+Upgrade now for security fix
