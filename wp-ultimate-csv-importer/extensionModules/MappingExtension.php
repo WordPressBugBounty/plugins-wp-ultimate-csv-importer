@@ -46,7 +46,7 @@ class MappingExtension {
 	 * Provides all Widget Fields for Mapping Section
 	 * @return array - mapping fields
 	 */
-	public function mapping_field_function(){
+	public function mapping_field_function(){	
 		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
 		$import_type = sanitize_text_field($_POST['Types']);
 		if(isset($_POST['MediaType'])){
@@ -81,6 +81,7 @@ class MappingExtension {
 		$smackcsv_instance = SmackCSV::getInstance();
 		$upload_dir = $smackcsv_instance->create_upload_dir();
 		if($file_extension == 'csv' || $file_extension == 'txt'){
+		
 			if (version_compare(PHP_VERSION, '8.1.0', '<')) {  // Only do this if PHP version is less than 8.1.0
 				if (!ini_get("auto_detect_line_endings")) {
 					ini_set("auto_detect_line_endings", true);
@@ -96,9 +97,11 @@ class MappingExtension {
 				$delimiter = MappingExtension::$validatefile->getFileDelimiter($file_path, 5);
 				$array_index = array_search($delimiter,$delimiters);
 				if($array_index == 5){
+					
 					$delimiters[$array_index] = ' ';
 				}
 				if($delimiter == '\t'){
+				
 					$delimiter ='~';
 					 $temp=$file_path.'temp';
 					 if (($handles = fopen($temp, 'r')) !== FALSE){
@@ -125,8 +128,10 @@ class MappingExtension {
 					fclose($handles);
 				}
 				else{
+					
 					while (($data = fgetcsv($h, 0, $delimiters[$array_index])) !== FALSE) 
-					{		
+					{	
+						
 						// Read the data from a single line
 						$trimmed_info = array_map('trim', $data);
 						array_push($info , $trimmed_info);

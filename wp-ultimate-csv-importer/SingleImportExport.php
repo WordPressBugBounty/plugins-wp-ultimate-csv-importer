@@ -35,27 +35,11 @@ class SingleImportExport {
 
 
 	public static function import_single_post_as_csv() {
-		
-		if (!is_user_logged_in() || !current_user_can('manage_options')) {
-			wp_send_json_error(['message' => 'Unauthorized access.'], 403);
-			return;
-		}
-
 		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
-		
 
-		if (empty($_FILES['file']) || $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
-			wp_send_json_error(['message' => 'File upload error.']);
-			return;
-		}
 
 		$file_name = sanitize_file_name($_FILES['file']['name']);
-		$file_tmp  = $_FILES['file']['tmp_name'];
-		$file_info = wp_check_filetype_and_ext($file_tmp, $file_name, ['csv' => 'text/csv']);
-		if (!$file_info['ext'] || $file_info['ext'] !== 'csv') {
-			wp_send_json_error(['message' => 'Invalid file type. Only CSV files are allowed.']);
-			return;
-		}
+		$file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
 		$upload = wp_upload_dir();
 		$upload_dir = $upload['basedir'];
 		if (is_user_logged_in() && current_user_can('administrator'))
@@ -171,21 +155,10 @@ class SingleImportExport {
 
 
 	public static function export_single_post_as_csv() {
-
-		if (!is_user_logged_in() || !current_user_can('manage_options')) {
-			wp_send_json_error(['message' => 'Unauthorized access.'], 403);
-			return;
-		}
-
 		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
 		global $wpdb;
 		$post_id = intval($_POST['post_id']);
 		$post = get_post($post_id);
-
-		if (!is_user_logged_in() || !current_user_can('manage_options')) {
-			wp_send_json_error(['message' => 'Unauthorized access.']);
-			return;
-		}
 
 		if (!$post_id || get_post_status($post_id) !== 'publish') {
 			wp_send_json_error(['message' => 'Invalid or unpublished post ID.']);

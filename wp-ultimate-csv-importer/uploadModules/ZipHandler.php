@@ -31,13 +31,13 @@ class ZipHandler {
      * @param  string $extract_path 
 	 * @return string
 	 */
-    public function zip_upload($path , $extract_path ){
+    public function zip_upload($path , $extract_path , $event_key =''){
     
         if (class_exists('ZipArchive')) {
             $zip = new \ZipArchive;
             $res = $zip->open($path);
             if ($res === TRUE) {
-                $response = $this->wp_csv_importer_generate_content($zip, $extract_path);
+                $response = $this->wp_csv_importer_generate_content($zip, $extract_path,$event_key);
                 if($response == "UnSupported File Format"){
                     //rmdir($extract_path);
                     unlink($path);
@@ -59,20 +59,60 @@ class ZipHandler {
 	 * @return string
 	 */
    
-    public function wp_csv_importer_generate_content($zip, $dir){
-
+    public function wp_csv_importer_generate_content($zip, $dir,$event_key=''){
         $get_upload_dir = wp_upload_dir();
-        $supported_formats = array('csv', 'xml', 'txt');
+        $supported_formats = array('csv', 'xml', 'txt', 'json');
         $check_for_extracted_files = false;
         for($i = 0; $i < $zip->numFiles; $i++)
         {
             $filterfiles = $zip->getNameIndex($i);
+
+        
             $file_extension = pathinfo($filterfiles, PATHINFO_EXTENSION);
+          
+            
             if (in_array($file_extension, $supported_formats)){
                 $zip->extractTo($dir,$filterfiles);
                 chmod($dir , 0777);
                 $check_for_extracted_files = true;
             }
+
+          
+
+            if (!empty($event_key)) {
+                $files = scandir($dir);
+              
+            
+                foreach ($files as $file) {
+                    if ($file !== '.' && $file !== '..') {
+                    $old_file_path = $dir . '/' . $file; // Full path of the old file
+            
+                    if (is_file($old_file_path)) { // Ensure it's a file
+                        $file_info = wp_check_filetype($old_file_path); // Check file type
+                        $extension = pathinfo($old_file_path, PATHINFO_EXTENSION); // Get file extension
+            
+                      
+                     
+                        // Check file type based on extension
+                        $allowed_extensions = ['csv', 'xml', 'xlsx', 'xls', 'tsv'];
+                        if (in_array(strtolower($extension), $allowed_extensions)) {
+                            
+                            $random_key = $event_key; // Generate a unique random key
+                            $new_file_name = $random_key; // Save file without extension
+                            $new_file_path = $dir . '/' . $new_file_name; // Update path
+            
+                            // Rename the file securely
+                            if (rename($old_file_path, $new_file_path)) {
+                              //  echo "File renamed successfully: $old_file_path to $new_file_path\n";
+                            } else {
+                              //  echo "Failed to rename: $old_file_path\n";
+                            }
+                        }
+                    }
+                }
+            }
+            }
+            
         }
     
         if($check_for_extracted_files){

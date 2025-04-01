@@ -638,6 +638,7 @@ class CoreFieldsImport {
 							$post_values['post_content'] = htmlspecialchars_decode($post_values['post_content'], ENT_QUOTES);
 							$post_values['post_content'] = preg_replace('/\xC2\xA0/', ' ', $post_values['post_content']); // Replace non-breaking spaces
 							//$post_values['post_content'] = trim($post_values['post_content']); // Remove extra spaces
+							unset($post_values['ID']);
 							$post_id = wp_insert_post($post_values);
 							$status = $post_values['post_status'];
 							$update=$wpdb->get_results("UPDATE {$wpdb->prefix}posts set post_status = '$status' where id = $post_id");

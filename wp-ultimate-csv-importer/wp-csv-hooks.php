@@ -16,6 +16,7 @@ $plugin_ajax_hooks = [
 
     'security_performance',
     'settings_options',
+    'oneClickUpload',
     'get_options',
     'support_mail',
     'send_subscribe_email',
