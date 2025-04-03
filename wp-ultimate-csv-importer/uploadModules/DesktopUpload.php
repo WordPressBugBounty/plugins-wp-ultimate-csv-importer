@@ -115,78 +115,81 @@ class DesktopUpload implements Uploads{
 									"core_fields" => "CORE",
 									"Comments" => "Comments",
 									"acf_fields" => "ACF",
-									"acf_group_fields" => "ACF",
-									"acf_pro_fields" => "ACFPro",
-									"acf_group_fields" => "ACFPro",
-									"acf_repeater_fields" => "ACFPro",
-									"acf_flexible_fields" => "ACFPro",
-									"all_in_one_seo_fields" => "AllInOneSeo",
-									"bp_fields" => "BBPress",
-									"WooCommerceBSI" => "WooCommerce Billing Shipping Information", //TODO: To be named properly
-									"CCTM" => "Custom Content Types Manager",
+									"featured_image_meta" => "FEATURED_IMAGE_META",
+									"acf_pro_fields" => "ACF",
+									"acf_repeater_fields" => "RF",
+									"acf_repeater_of_repeater_fields" => "RRF",
+									"jet_review_fields" => "JEREVIEW",
+									"jet_booking_fields" => "JEBOOKING",
+									"jetengine_fields" => "JE",
+									"jetengine_rf_fields" => "JERF",
+									"jetenginecpt_fields" => "JECPT",
+									"jetenginecpt_rf_fields" => "JECPTRF",
+									"jetenginecct_fields" => "JECCT",
+									"jetenginecct_rf_fields" => "JECCTRF",
+									"jetenginetaxonomy_fields" => "JETAX",
+									"jetenginetaxonomy_rf_fields" => "JETAXRF",
+									"jetengine_rel_fields" => "JEREL",
+									"pods_fields" => "PODS",
+									"all_in_one_seo_fields" => "AIOSEO",
+									"yoast_seo_fields" => "YOASTSEO",
+									"wpcomplete_fields" => "WPCOMPLETE",
+									"seopress_fields" => "SEOPRESS",
+									"rank_math_fields" => "RANKMATH",
+									"elementor_meta_fields" => "ELEMENTOR",
+									"product_meta_fields" => "ECOMMETA",
+									"product_attr_fields" => "ATTRMETA",
+									"product_bundle_meta_fields" => "BUNDLEMETA",
+									"ppom_meta_fields" => "PPOMMETA",
+									"epo_meta_fields" => "EPOMETA",
+									"listing_meta_fields" => "LISTINGMETA",
+									"refund_meta_fields" => "REFUNDMETA",
+									"order_meta_fields" => "ORDERMETA",
+									"coupon_meta_fields" => "COUPONMETA",
+									"cctm_fields" => "CCTM",
 									"custom_fields_suite_fields" => "CFS",
 									"cmb2_fields" => "CMB2",
-									"CustomerReviews" => "Customer Reviews",
-									"Elementor" => "Elementor",
-									"events_manager_fields" =>"EventsManager",
-									"jetengine_fields" => "JetEngine",
-									"jetengine_rf_fields" => "JetEngine",
-									"jetenginecct_fields" => "JetEngineCCT",
-									"jetenginecct_rf_fields" => "JetEngineCCT",
-									"jetenginecpt_fields" => "JetEngineCPT",
-									"jetenginecpt_rf_fields" => "JetEngineCPT",
-									"jetengine_rel_fields" => "JetEngineRelations",
-									"jetenginetaxonomy_fields" => "JetEngineTaxonomy",
-									"jetenginetaxonomy_rf_fields" => "JetEngineTaxonomy",
-									"job_listing_fields" => "Job",
-									"course_settings_fields" => "LearnPress",
-									"curriculum_settings_fields" => "LearnPress",
-									"lesson_settings_fields" => "LearnPress",
-									"quiz_settings_fields" => "LearnPress",
-									"question_settings_fields" => "LearnPress",
-									"order_settings_fields" => "LearnPress",
-									"metabox_fields" => "MetaBox",
-									"metabox_group_fields" => "MetaBoxGroup",
-									"metabox_relations_fields" => "MetaBoxRelation",
-									"custom_fields_members" => "Users",
-									"custom_ultimate_members" => "Users",
-									"custom_fields_wp_members" => "Users",
-									"NextgenGallery" => "Nextgen Gallery",
-									"pods_fields" => "Pods",
-									"Polylang_settings_fields" => "Polylang",
-									"WooProductAttr" => "WooCommerce Product Attributes",
-									"WooProductBundleMeta" => "WooCommerce Product Bundle Meta",
-									"order_meta_fields" => "WooProductMeta",
-									"coupon_meta_fields" => "WooProductMeta",
-									"refund_meta_fields" => "WooProductMeta",
-									"product_meta_fields" => "WooProductMeta",
-									"rank_math_fields" => "RankMath",
-									"rank_math_pro_fields" => "RankMath",
-									"seopress_fields" => "SeoPress",
-									"terms_and_taxonomies" => "TermsAndTaxonomies",
-									"types_fields" => "ToolSet",
-									"billing_and_shipping_information" => "Users",
-									"WooCommerceMeta" => "WooCommerce Meta",
-									"wordpress_custom_fields" => "WordpressCustom",
-									"directory_pro_fields" => "WordpressCustom",
-									"wp_ecom_custom_fields" => "WPeCommerce",
+									"billing_and_shipping_information" => "BSI",
+									"custom_fields_wp_members" => "WPMEMBERS",
+									"custom_fields_members" => "MEMBERS",
+									"wp_ecom_custom_fields" => "WPECOMMETA",
+									"terms_and_taxonomies" => "TERMS",
 									"wpml_fields" => "WPML",
-									"yoast_seo_fields" => "YoastSeo",
-									"lifter_course_settings_fields" => "LifterLMS",
-									"lifter_lesson_settings_fields" => "LifterLMS",
-									"lifter_quiz_settings_fields" => "LifterLMS",
-									"lifter_coupon_settings_fields" => "LifterLMS",
-									"lifter_review_settings_fields" => "LifterLMS",
-									"course_settings_fields_stm" => "MasterStudyLMS",
-									"curriculum_settings_fields_stm" => "MasterStudyLMS",
-									"lesson_settings_fields_stm" => "MasterStudyLMS",
-									"quiz_settings_fields_stm" => "MasterStudyLMS",
-									"question_settings_fields_stm" => "MasterStudyLMS",
-									"order_settings_fields_stm" => "MasterStudyLMS",
-									"forum_attributes_fields" => "BBPress",
-									"topic_attributes_fields" => "BBPress",
-									"reply_attributes_fields" => "BBPress"
+									"wordpress_custom_fields" => "CORECUSTFIELDS",
+									"directory_pro_fields" => "DPF",
+									"events_manager_fields" => "EVENTS",
+									"nextgen_gallery_fields" => "NEXTGEN",
+									"course_settings_fields" => "LPCOURSE",
+									"acf_flexible_fields" => "FC",
+									"acf_group_fields" => "GF",
+									"types_fields" => "TYPES",
+									"lesson_settings_fields" => "LPLESSON",
+									"curriculum_settings_fields" => "LPCURRICULUM",
+									"quiz_settings_fields" => "LPQUIZ",
+									"question_settings_fields" => "LPQUESTION",
+									"order_settings_fields" => "LPORDER",
+									"lifter_course_settings_fields" => "LIFTERCOURSE",
+									"lifter_review_settings_fields" => "LIFTERREVIEW",
+									"lifter_coupon_settings_fields" => "LIFTERCOUPON",
+									"lifter_lesson_settings_fields" => "LIFTERLESSON",
+									"course_settings_fields_stm" => "STMCOURSE",
+									"curriculum_settings_fields_stm" => "STMCURRICULUM",
+									"lesson_settings_fields_stm" => "STMLESSON",
+									"quiz_settings_fields_stm" => "STMQUIZ",
+									"order_settings_fields_stm" => "STMORDER",
+									"forum_attributes_fields" => "FORUM",
+									"topic_attributes_fields" => "TOPIC",
+									"reply_attributes_fields" => "REPLY",
+									"Polylang_settings_fields" => "POLYLANG",
+									"metabox_fields" => "METABOX",
+									"metabox_relations_fields" => "METABOXRELATION",
+									"metabox_group_fields" => "METABOXGROUP",
+									"job_listing_fields" => "JOB",
+									"fifu_post_settings_fields" => "FIFUPOSTS",
+									"fifu_page_settings_fields" => "FIFUPAGE",
+									"fifu_custompost_settings_fields" => "FIFUCUSTOMPOST"
 								);
+
 								foreach ($zip_result as $file) {
 
 									if (pathinfo($file['name'], PATHINFO_EXTENSION) === 'json') {
@@ -407,11 +410,27 @@ class DesktopUpload implements Uploads{
 				if ($has_bundlemeta) {
 					$map_data['BUNDLEMETA'] = $mapped_fields['BUNDLEMETA'];
 				}
+				
 			}
-			if ($key !== 'BUNDLEMETA') {
-
+			elseif ($key !== 'BUNDLEMETA') {
 				$map_data[$key] = $value;
 			}
+			elseif($key == "ATTRMETA"){
+				foreach ($value as $v_key => $val) {
+					preg_match('/\d+/', $v_key, $matches);
+					$index = $matches[0] ?? $counter;
+					if (!isset($map_data['ATTRMETA'][$index])) {
+						$map_data['ATTRMETA'][$index] = [];
+					}
+					$map_data['ATTRMETA'][$index][$v_key] = $val;
+				}
+				if(is_array($map_data['ATTRMETA'])){
+					$map_data['ATTRMETA'] = array_values($map_data['ATTRMETA']);
+				}
+			} 
+
+
+			
 		}		
 		$get_detail   = $wpdb->get_results("SELECT file_name FROM $file_table_name WHERE `hash_key` = '$hash_key'");
 		$get_file_name = $get_detail[0]->file_name;
