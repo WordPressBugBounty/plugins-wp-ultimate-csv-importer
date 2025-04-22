@@ -111,7 +111,7 @@ class DefaultExtension extends ExtensionHandler{
 				unset($wordpressfields['Author']);
 			}
 
-			if($import_types == 'lp_quiz' || $import_types == 'lp_question'){
+			if($import_types == 'lp_quiz' || $import_types == 'lp_question' || $import_types == 'wp_font_face' || $import_types == 'wp_font_family' || $import_types == 'wp_global_style' || $import_types == 'wp_template' ){
 				unset($wordpressfields['Format']);
 				unset($wordpressfields['Featured Image']);
 				unset($wordpressfields['Short Description']);
@@ -119,6 +119,7 @@ class DefaultExtension extends ExtensionHandler{
 				unset($wordpressfields['Comment Status']);
 				unset($wordpressfields['Ping Status']);
 				unset($wordpressfields['Track Options']);
+				unset($wordpressfields['Order']);
 			}
 		}
 		if(is_plugin_active('jet-engine/jet-engine.php')){

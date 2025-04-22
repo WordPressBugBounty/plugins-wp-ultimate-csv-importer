@@ -193,7 +193,8 @@ class SmackCSVInstall {
 				'drop_table' => 'off',
 				'author_editor_access' => 'off',
 				'woocomattr' => 'off',
-				'unmatchedrow' => 'off'
+				'unmatchedrow' => 'off',
+				"singleimport" => 'Off'
 				);
 
 		add_option('sm_uci_pro_settings', $settings);

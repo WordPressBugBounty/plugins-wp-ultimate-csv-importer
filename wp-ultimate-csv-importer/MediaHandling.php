@@ -160,7 +160,7 @@ class MediaHandling{
 	}
 	private function ValidImageFileAdded($filename)
 	{
-		$validExtensions = ['jpg', 'jpeg', 'png', 'svg','webp'];
+		$validExtensions = ['jpg', 'jpeg', 'png', 'svg','webp','bmp'];
 		$filteredFiles = [];
 		for ($i = 0; $i < count($filename); $i++) {
 			$fileInfo = pathinfo($filename[$i]);
@@ -178,7 +178,7 @@ class MediaHandling{
 	private function isValidImageFile($filename)
 	{
 		$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-		if (in_array($ext, ['jpg', 'jpeg', 'png', 'svg','webp'])) {
+		if (in_array($ext, ['jpg', 'jpeg', 'png', 'svg','webp', 'bmp'])) {
 			return true;
 		} else {
 			return false;
@@ -768,7 +768,7 @@ class MediaHandling{
 			$response = wp_remote_get($meta_val);
 			$rawdata =  wp_remote_retrieve_body($response);
 		} else {
-			if ($file_type['ext'] == 'jpeg' || $file_type['ext'] == 'jpg') {
+			if ($file_type['ext'] == 'jpeg' || $file_type['ext'] == 'jpg' || $file_type['ext'] == 'bmp') {
 				$response = wp_remote_get($f_img, array('timeout' => 30));
 			} 
 			else if ($file_type['ext'] == 'gif') {

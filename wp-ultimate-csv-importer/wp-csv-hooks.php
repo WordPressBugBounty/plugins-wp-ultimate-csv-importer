@@ -68,6 +68,7 @@ $plugin_ajax_hooks = [
     'helperImport',
     'helperSearch',
     'needHelper',
+    'wpquery_data'
 ];  
 }
 else {

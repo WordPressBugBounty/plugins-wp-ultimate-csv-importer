@@ -3,8 +3,8 @@ Contributors: smackcoders, smacksupport
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 6.7
-Stable tag: 7.20.1
-Version: 7.20.1
+Stable tag: 7.21
+Version: 7.21
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
 Tags: import export, wordpress csv import, xml, csv, all import, import all, datafeed, importer, import, xml import, migrate, import csv to wordpress, import xml to wordpress, advanced xml import, advanced csv import, bulk csv import, bulk xml import, bulk data import, xml to custom post type, csv to custom post type, woocommerce csv import, woocommerce xml import, csv import, import csv, wordpress xml import, import xml, csv importer
@@ -70,11 +70,12 @@ Expand the capabilities of your WP Import-Export plugin with our powerful add-on
 
 = Migration & One-Click Import for Faster Website Data Transfers =
 
-WP Ultimate CSV Importer v7.20 introduces powerful new features to make data transfers smoother and more efficient. This update brings migration and one-click import, allowing you to seamlessly transfer supported data types between WordPress and WooCommerce sites with minimal effort.
+WP Ultimate CSV Importer has some powerful features to make data transfers smoother and more efficient. The migration and one-click import feature allows you to seamlessly transfer supported data types between WordPress and WooCommerce sites with minimal effort.
 
-When exporting, you’ll now see a Migrate option, which lets you download a ZIP file containing your data and mapping templates. Simply upload this bundled ZIP file (without unzipping it) to your destination site. Once uploaded, a One-Click Import button will appear, guiding you to the import configuration step, where the plugin automatically applies the necessary mapping configurations. All you need to do is click the Import button to complete the data transfer effortlessly.
+When exporting, you’ll see a Migrate option, which lets you download a ZIP file containing your data and mapping templates. Simply upload this bundled ZIP file (without unzipping it) to your destination site. Once uploaded, a One-Click Import button will appear, guiding you to the import configuration step, where the plugin automatically applies the necessary mapping configurations. All you need to do is click the Import button to complete the data transfer effortlessly.
 
-Additionally, this update includes performance optimizations for faster and more reliable imports, along with full compatibility with the latest WordPress and WooCommerce versions. We’ve also addressed various bug fixes and refinements to enhance stability and user experience. Upgrade now to take advantage of these improvements!
+= What's new in v7.21 =
+WP Ultimate CSV Importer v7.21 introduces a set of new helpful features to make content and design transfers across WordPress sites easier. You can now export content dynamically using custom WP_Query for posts, users, or comments, and preview the first 10 records before processing a full export. This version also adds support for BMP image format, enabling media library imports and exports in broader formats. For design-focused workflows, you can now import and export entire font families and faces, global styles like color schemes and typography, as well as template parts such as headers and footers. Additionally, full page templates can be transferred between block-based WordPress themes, making v7.21 a complete toolkit for flexible data handling and consistent site design.
 
 = Popular Plugins Integration =
 * Advanced Custom Fields (ACF): Basic, Choices, and jQuery fields.  
@@ -175,16 +176,18 @@ Experience the convenience of the instant one-click CSV export and import featur
 
 Perfect for backups or migrations in just a single click.
 
+
 = Premium Features =
 
-Upgrade to our Pro version to unlock advanced features like:
+Upgrade to the Pro version to unlock powerful features like:
 
-* **ACF & Other Custom Fields Plugin Import:** Supports ACF, JetEngine, CMB2, and Toolset fields.  
-* **Multilingual Support:** Compatible with WPML, qTranslate X, and Polylang.  
-* **WooCommerce Data:** Import products, variations, orders, and more with full control.  
-* **Yoast SEO PRO Integration:** Import SEO data like meta titles and descriptions.  
-* **Scheduled Imports:** Automate imports by scheduling them in the background.  
-* **Advanced Export Options:** Filter and export your WordPress content into different formats.  
+* **ACF & Custom Fields Plugin Support**: Import data into fields created with ACF, JetEngine, CMB2, and Toolset.
+* **Multilingual Compatibility:** Fully compatible with WPML, Polylang, and qTranslate X.
+* **WooCommerce Import:** Import products, variations, orders, and custom WooCommerce fields.
+* **Yoast SEO PRO Integration:** Import SEO metadata like titles, descriptions, and focus keywords.
+* **Scheduled Imports:** Automate imports by scheduling them to run in the background.
+* **Data Update Support:** Update existing WordPress content without creating duplicates.
+* **Advanced Export Options:** Export content using filters, post types, and WP_Query for flexible data control.
 
 [Explore WP Ultimate CSV Importer Pro Features](https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html?utm_source=web&utm_campaign=readme&utm_medium=wporg).
 
@@ -290,6 +293,16 @@ You can effortlessly import all WordPress data, including posts, pages, products
 = How Do You Import Images Using the WP Import Export Plugin? =
 The WP Import Export plugin makes it easy to import images alongside your content. You can link images to posts or products and enhance SEO by adding alt text and titles during the import process.
 
+= How to export data with WP_Query in WP Ultimate CSV Importer? =
+WP_Query export lets you export specific posts, users, or comments data using your own custom query. It’s helpful when you want more control than the standard filters allow.
+
+Follow these steps to export using WP_Query:
+* Go to Export → WP_Query in WP Ultimate CSV Importer.
+* Choose one query type: Post, User or Comment query.
+* Enter your query in JSON format.
+* Provide file name and type.
+* Click Export to download the fie in your preferred format.
+
 
 == Installation ==
 It is as simple as installing any other WordPress plugin. There are two general methods:
@@ -301,6 +314,14 @@ It is as simple as installing any other WordPress plugin. There are two general 
 
 
 == Changelog ==
+
+= 7.21 =
+Added: WP_Query results export – Export dynamic content using WP_Query for posts, users, and comments
+Added: Preview option – View the first 10 records before full export
+Added: Support for BMP image format – Import and export BMP images to the WordPress media library
+Added: Font faces and font families – Import/export complete font groups including styles and weights
+Added: Global styles support – Transfer design presets like color schemes and typography across sites
+Added: Full templates import/export – Migrate complete page layouts or full templates in block themes
 
 = 7.20.1 =
 Fixed: Security Fix - Arbitrary File Upload issue reported by Wordfence
@@ -1508,6 +1529,6 @@ Fixed: Term & Taxonomies Hierarchy import issue
 
 == Upgrade Notice ==
 
-= 7.20.1 =
+= 7.21 =
 
-Upgrade now to security fix.
+Upgrade now to enjoy powerful new features like WP_Query export, BMP image support, font family imports, and seamless template migration between WordPress sites.
