@@ -47,6 +47,7 @@ class NextGenExtension extends ExtensionHandler{
 	* @return boolean
 	*/
     public function extensionSupportedImportType($import_type){
+		return false;
 		if(is_plugin_active('nextgen-gallery/nggallery.php')){
 			if($import_type == 'nav_menu_item'){
 				return false;
