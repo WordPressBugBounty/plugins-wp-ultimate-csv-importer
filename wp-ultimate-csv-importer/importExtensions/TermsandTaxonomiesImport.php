@@ -43,6 +43,11 @@ class TermsandTaxonomiesImport {
 			} else {
 				$data_array['product_category'] = empty($data_array['product_category']) ? 'Uncategorized' : $data_array['product_category'];
 			}
+			$uncategorized = get_term_by( 'name', 'Uncategorized', 'product_cat' );
+
+				if ( $uncategorized && ! is_wp_error( $uncategorized ) ) {
+					wp_remove_object_terms( $pID, (int) $uncategorized->term_id, 'product_cat' );
+				}
 		}
 		unset($data_array['post_format']);
 		unset($data_array['product_type']);
