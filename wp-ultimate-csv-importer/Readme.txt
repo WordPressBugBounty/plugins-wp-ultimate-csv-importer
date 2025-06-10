@@ -3,8 +3,8 @@ Contributors: smackcoders, smacksupport
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 7.21.2
-Version: 7.21.2
+Stable tag: 7.21.3
+Version: 7.21.3
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
 Tags: import export, wordpress csv import, xml, csv, all import, import all, datafeed, importer, import, xml import, migrate, import csv to wordpress, import xml to wordpress, advanced xml import, advanced csv import, bulk csv import, bulk xml import, bulk data import, xml to custom post type, csv to custom post type, woocommerce csv import, woocommerce xml import, csv import, import csv, wordpress xml import, import xml, csv importer
@@ -16,11 +16,9 @@ Simplify your WP import export management today with our Ultimate CSV Importer p
 
 **Tired of wasting time on manual uploads?**
 
-Our WP Import Export plugin features and add-ons are your one-stop solution for all your WordPress data migration needs. Import and export everything from posts and pages to products and custom fields.
+Our WP Import Export plugin and add-ons are your one-stop solution for all your WordPress data migration needs. Import and export everything from posts and pages to products and custom fields.
 
-Expand the capabilities of your WP Import-Export plugin with our powerful add-ons. Easily import, export, and manage users, products, and custom data types.
-
-**Explore our [PRO DEMO](https://demo.smackcoders.com/wordpress/wp-admin/?utm_source=csv_importer_free&utm_medium=wporgreadme&utm_campaign=csv_importer_pro_demo). Ready for more? Try our [Private Trial](https://trial.smackcoders.com/index.html?utm_source=csv-importer-free&utm_medium=wporgreadme&utm_campaign=csv_importer_pro_trial).**
+** Ready for more? Try our [Private Trial](https://trial.smackcoders.com/index.html?utm_source=csv-importer-free&utm_medium=wporgreadme&utm_campaign=csv_importer_pro_trial) or explore our [PRO DEMO](https://demo.smackcoders.com/wordpress/wp-admin/?utm_source=csv_importer_free&utm_medium=wporgreadme&utm_campaign=csv_importer_pro_demo). **
 
 [youtube https://www.youtube.com/watch?v=dy3pdwoujxQ]
 
@@ -75,7 +73,7 @@ WP Ultimate CSV Importer has some powerful features to make data transfers smoot
 When exporting, you’ll see a Migrate option, which lets you download a ZIP file containing your data and mapping templates. Simply upload this bundled ZIP file (without unzipping it) to your destination site. Once uploaded, a One-Click Import button will appear, guiding you to the import configuration step, where the plugin automatically applies the necessary mapping configurations. All you need to do is click the Import button to complete the data transfer effortlessly.
 
 = Popular Plugins Integration =
-* Advanced Custom Fields (ACF): Basic, Choices, and jQuery fields.  
+* Advanced Custom Fields (ACF): Basic, Choices, jQuery, and WYSIWYG fields.  
 * MetaBox Plugin ~ Basic & Limited Advanced fields.  
 * Pods ~ CPT and All Fields.  
 * JetEngine ~ Basic fields (CPTs & CCTs).  
@@ -127,7 +125,7 @@ Effortlessly import data from Excel files (.xlsx or .xls) into WordPress without
 
 = Our WordPress Import Export Plugin Addons = 
 
-Enhance your website management experience with powerful plugin add-ons designed to make importing, exporting, and maintaining WordPress content effortless.
+Expand the capabilities of this WP Import Export plugin with our powerful add-ons which are listed below. Easily import, export, and manage users, products, and custom data types.
 
 = Ultimate WordPress Exporter Addon =
 Efficiently export WordPress content with our [WordPress All Export for CSV and XML](https://wordpress.org/plugins/wp-ultimate-exporter) addon. This tool turns content management into a two-way process, streamlining backups, migrations, and sharing.
@@ -317,6 +315,11 @@ It is as simple as installing any other WordPress plugin. There are two general 
 
 
 == Changelog ==
+
+= 7.12.3 =
+Added: Import export compatibility for ACF WYSIWYG editor field
+Fixed: Product category export related issue
+
 = 7.21.2 =
 Fixed: Uncategorized imported while product import
 Fixed: Minor bugs
@@ -1540,6 +1543,6 @@ Fixed: Term & Taxonomies Hierarchy import issue
 
 == Upgrade Notice ==
 
-= 7.21.2 =
+= 7.21.3 =
 
-Upgrade now to get minor bug fixes.
+Upgrade now to import and export ACF WYSIWYG editor field and fix product category export issues.

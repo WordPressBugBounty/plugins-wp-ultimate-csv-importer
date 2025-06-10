@@ -98,7 +98,7 @@ class ACFExtension extends ExtensionHandler{
 									
 						} 					
 						 elseif ( $acf_pro_fields->post_excerpt != null || $acf_pro_fields->post_excerpt != '' ) {
-							if($get_field_content['type'] !== 'group' && $get_field_content['type'] !== 'message' && $get_field_content['type'] !== 'tab' && $get_field_content['type'] !== 'image' && $get_field_content['type'] !== 'file' && $get_field_content['type'] !== 'wysiwyg' && $get_field_content['type'] !== 'oembed' && $get_field_content['type'] !== 'link' && $get_field_content['type'] !== 'page_link'){
+							if($get_field_content['type'] !== 'group' && $get_field_content['type'] !== 'message' && $get_field_content['type'] !== 'tab' && $get_field_content['type'] !== 'image' && $get_field_content['type'] !== 'file' && $get_field_content['type'] !== 'oembed' && $get_field_content['type'] !== 'link' && $get_field_content['type'] !== 'page_link'){
 								if($get_field_content['type'] == 'select'){
 									if($get_field_content['multiple'] == 0){
 										$customFields["ACF"][ $acf_pro_fields->post_name ]['label'] = $acf_pro_fields->post_title;

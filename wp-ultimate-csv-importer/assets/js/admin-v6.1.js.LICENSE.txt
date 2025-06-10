@@ -11,8 +11,8 @@ object-assign
 */
 
 /*!
-  * Bootstrap v5.3.3 (https://getbootstrap.com/)
-  * Copyright 2011-2024 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+  * Bootstrap v5.3.6 (https://getbootstrap.com/)
+  * Copyright 2011-2025 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
   */
 
@@ -54,7 +54,7 @@ object-assign
  */
 
 /*!
- * FilePond 4.32.7
+ * FilePond 4.32.8
  * Licensed under MIT, https://opensource.org/licenses/MIT/
  * Please visit https://pqina.nl/filepond/ for details.
  */
@@ -66,7 +66,7 @@ object-assign
  * MIT Licensed
  */
 
-/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */
 
 /**
  * @license React
@@ -89,7 +89,7 @@ object-assign
  */
 
 /**
- * @mui/styled-engine v6.4.6
+ * @mui/styled-engine v6.4.11
  *
  * @license MIT
  * This source code is licensed under the MIT license found in the
