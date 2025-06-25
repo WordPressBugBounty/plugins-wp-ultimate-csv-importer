@@ -22,10 +22,10 @@ class ACFImport {
 		return ACFImport::$acf_instance;
 	}
 
-    function set_acf_values($header_array ,$value_array , $map, $maps, $post_id , $type,$mode, $hash_key,$line_number){	
+	function set_acf_values($header_array ,$value_array , $map, $maps, $post_id , $type,$mode, $hash_key,$line_number){	
 		$helpers_instance = ImportHelpers::getInstance();
 		$helpers_instance = ImportHelpers::getInstance();
-        $post_values =$helpers_instance->get_header_values($maps , $header_array , $value_array);
+		$post_values =$helpers_instance->get_header_values($maps , $header_array , $value_array);
 		foreach($map as $key => $value){
 			$csv_value= trim($map[$key]);
 			if(!empty($csv_value) || $csv_value == 0){
@@ -45,23 +45,23 @@ class ACFImport {
 					}
 
 					$math = 'MATH';
-						if (strpos($csv_element, $math) !== false) {
-									
-							$equation = str_replace('MATH', '', $csv_element);
-							$csv_element = $helpers_instance->evalmath($equation);
-						}
+					if (strpos($csv_element, $math) !== false) {
+
+						$equation = str_replace('MATH', '', $csv_element);
+						$csv_element = $helpers_instance->evalmath($equation);
+					}
 					$wp_element= trim($key);
 
 					if((!empty($csv_element) || $csv_element == 0) && !empty($wp_element)){
-                        if(is_plugin_active('advanced-custom-fields/acf.php') || is_plugin_active('secure-custom-fields/secure-custom-fields.php')){
-                            $acf_pluginPath = WP_PLUGIN_DIR . '/advanced-custom-fields/pro';
-                            if(is_dir($acf_pluginPath)) {
-                                $this->acfpro_import_function($wp_element ,$post_values, $csv_element ,$type, $post_id,$mode, $hash_key,$line_number);
-                            }
-                            else{
-                                $this->acf_import_function($wp_element ,$post_values, $csv_element ,$type, $post_id,$mode, $hash_key,$line_number);
-                            }
-                        }
+						if(is_plugin_active('advanced-custom-fields/acf.php') || is_plugin_active('secure-custom-fields/secure-custom-fields.php')){
+							$acf_pluginPath = WP_PLUGIN_DIR . '/advanced-custom-fields/pro';
+							if(is_dir($acf_pluginPath)) {
+								$this->acfpro_import_function($wp_element ,$post_values, $csv_element ,$type, $post_id,$mode, $hash_key,$line_number);
+							}
+							else{
+								$this->acf_import_function($wp_element ,$post_values, $csv_element ,$type, $post_id,$mode, $hash_key,$line_number);
+							}
+						}
 					}
 				}
 
@@ -78,7 +78,7 @@ class ACFImport {
 						$wp_element= trim($key);
 						if($mode == 'Insert'){
 							if((!empty($csv_element) || $csv_element == 0) && !empty($wp_element)){
-							    $this->acf_import_function($wp_element ,$post_values, $csv_element ,$type, $post_id,$mode, $hash_key,$line_number);
+								$this->acf_import_function($wp_element ,$post_values, $csv_element ,$type, $post_id,$mode, $hash_key,$line_number);
 							}	
 						}
 						else{
@@ -87,7 +87,7 @@ class ACFImport {
 							}	
 
 						}
-						
+
 					}
 				}
 			}
@@ -102,7 +102,7 @@ class ACFImport {
 	 * @param string $post_id - inserted post id
 	 */
 	function acf_import_function($acf_wpname_element ,$post_values,$acf_csv_element, $importAs , $post_id,$mode, $hash_key,$line_number){
-		
+
 		$acf_wp_name = $acf_wpname_element;
 
 		$acf_csv_name = $acf_csv_element; 
@@ -111,7 +111,7 @@ class ACFImport {
 		$helpers_instance = ImportHelpers::getInstance();
 		$media_instance = MediaHandling::getInstance();
 
-        $plugin = 'acf';
+		$plugin = 'acf';
 		$get_acf_fields = $wpdb->get_results($wpdb->prepare("select post_content, post_name from {$wpdb->prefix}posts where post_type = %s and post_excerpt = %s", 'acf-field', $acf_wp_name ), ARRAY_A);
 
 		foreach($get_acf_fields as $keys => $value_type){
@@ -121,7 +121,7 @@ class ACFImport {
 			$key = $get_acf_fields[0]['post_name'];
 			// $return_format = $get_type_field['return_format'];
 			$return_format = isset($get_type_field['return_format']) ? $get_type_field['return_format'] : '';
-			
+
 			if($field_type == 'text' || $field_type == 'textarea' || $field_type == 'number' || $field_type == 'email' || $field_type == 'url' || $field_type == 'password' || $field_type == 'range' || $field_type == 'radio' || $field_type == 'true_false' || $field_type == 'time_picker' || $field_type == 'color_picker' || $field_type == 'button_group' || $field_type == 'oembed' || $field_type == 'wysiwyg'){
 				$map_acf_wp_element = $acf_wp_name;
 				$map_acf_csv_element = $acf_csv_name;	
@@ -152,7 +152,7 @@ class ACFImport {
 				$dt_var = trim($acf_csv_name);
 				$dateformat = "Y-m-d H:i:s";
 				$date_time_of = $helpers_instance->validate_datefield($dt_var,$acf_wp_name,$dateformat,$line_number);
-				
+
 				if($mode == 'Insert'){
 					if($dt_var == 0 || $dt_var == '')
 						$map_acf_csv_element = $dt_var;	
@@ -161,11 +161,11 @@ class ACFImport {
 					}
 				}
 				else{
-						if($dt_var == 0 || $dt_var == '')
+					if($dt_var == 0 || $dt_var == '')
 						$map_acf_csv_element = $dt_var;	
-						else{
-							$map_acf_csv_element = $date_time_of;
-						}
+					else{
+						$map_acf_csv_element = $date_time_of;
+					}
 				}
 				$map_acf_wp_element = $acf_wp_name;
 			}
@@ -212,11 +212,11 @@ class ACFImport {
 					}	
 				}
 				$map_acf_csv_elements = $maps_acf_csv_name;				
-				
+
 				if($get_type_field['multiple'] == 0){
 					if (!is_numeric($map_acf_csv_elements ) ){
 						$map_acf_csv_elements = $wpdb->_real_escape($map_acf_csv_elements);
-					
+
 						$id = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = '{$map_acf_csv_elements}' AND post_status = 'publish' order by ID DESC", ARRAY_A);
 						$map_acf_csv_element = isset($id[0]['ID']) ? $id[0]['ID'] : '';
 					}
@@ -233,25 +233,25 @@ class ACFImport {
 					}
 				}			
 				$bidirectional =$get_type_field ['bidirectional'] ;	
-					if($bidirectional == 1){
-						$bidirectional_target =$get_type_field ['bidirectional_target'] ;	
-						
-						foreach($bidirectional_target as $bidirectional) {
-							$field_name = $wpdb->get_results("SELECT post_excerpt FROM {$wpdb->prefix}posts WHERE post_name = '$bidirectional' AND post_status = 'publish'", ARRAY_A);						
-							$field_value = $field_name[0]['post_excerpt'];	
-						
-							foreach($map_acf_csv_element as $id){
-								$get_relation = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '$field_value' AND post_id = '$id'", ARRAY_A);
+				if($bidirectional == 1){
+					$bidirectional_target =$get_type_field ['bidirectional_target'] ;	
 
-								$get_object_field=$get_relation[0]['meta_value'];
-								$update_id = unserialize($get_object_field);
-								$update_id[] = $post_id;
+					foreach($bidirectional_target as $bidirectional) {
+						$field_name = $wpdb->get_results("SELECT post_excerpt FROM {$wpdb->prefix}posts WHERE post_name = '$bidirectional' AND post_status = 'publish'", ARRAY_A);						
+						$field_value = $field_name[0]['post_excerpt'];	
 
-								update_post_meta($id, $field_value, $update_id);
-								update_post_meta($id, '_' . $field_value, $bidirectional);
-							}
+						foreach($map_acf_csv_element as $id){
+							$get_relation = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '$field_value' AND post_id = '$id'", ARRAY_A);
+
+							$get_object_field=$get_relation[0]['meta_value'];
+							$update_id = unserialize($get_object_field);
+							$update_id[] = $post_id;
+
+							update_post_meta($id, $field_value, $update_id);
+							update_post_meta($id, '_' . $field_value, $bidirectional);
 						}
-					}	
+					}
+				}	
 
 				$map_acf_wp_element = $acf_wp_name;
 			}
@@ -284,7 +284,7 @@ class ACFImport {
 								$relations[] = $relationTerm;
 							} else {
 								$relVal = $wpdb->_real_escape($relVal);
-							
+
 								$relation_id = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = '$relVal' AND post_status = 'publish'", ARRAY_A);
 								if (!empty($relation_id)) {
 									$relations[] = $relation_id[0]['ID'];
@@ -301,7 +301,7 @@ class ACFImport {
 					foreach($bidirectional_target as $bidirectional) {
 						$field_name = $wpdb->get_results("SELECT post_excerpt FROM {$wpdb->prefix}posts WHERE post_name = '$bidirectional' AND post_status = 'publish'", ARRAY_A);						
 						$field_value = $field_name[0]['post_excerpt'];
-					
+
 						foreach($relations as $relation_id) {
 							if ($field_type == 'taxonomy') {
 								$get_relation = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE meta_key = '$field_value' AND term_id = '$relation_id'", ARRAY_A);	
@@ -313,13 +313,13 @@ class ACFImport {
 							$update_id = unserialize($get_relation_field);
 							$update_id[] = $post_id;
 							if ($field_type == 'taxonomy') {
-									if(isset($tax_field_type) && ($tax_field_type == 'select' || $tax_field_type == 'radio')){
-										update_term_meta($relation_id, $field_value, $bidirectional_single);
-									}
-									else{
-										update_term_meta($relation_id, $field_value, $update_id);
-									}
-										update_term_meta($relation_id, '_' . $field_value, $bidirectional);
+								if(isset($tax_field_type) && ($tax_field_type == 'select' || $tax_field_type == 'radio')){
+									update_term_meta($relation_id, $field_value, $bidirectional_single);
+								}
+								else{
+									update_term_meta($relation_id, $field_value, $update_id);
+								}
+								update_term_meta($relation_id, '_' . $field_value, $bidirectional);
 							}
 							else{
 								if(isset($tax_field_type) && ($tax_field_type == 'select' || $tax_field_type == 'radio')){
@@ -387,9 +387,9 @@ class ACFImport {
 				$explode_acf_csv_name = [];
 				foreach($explode_acf_csv as $explode_acf_csv_value){
 					if(!empty($explode_acf_csv_value)){
-                      $explode_acf_csv_name[] = trim($explode_acf_csv_value);
+						$explode_acf_csv_name[] = trim($explode_acf_csv_value);
 					}
-					
+
 				}	
 
 				$map_acf_csv_element = $explode_acf_csv_name;

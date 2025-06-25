@@ -204,6 +204,7 @@ class MediaHandling{
 	
 		// Decode JSON safely
 		$images = json_decode(stripslashes($_POST['images']), true);
+		if (!empty($images)) {
 		if (empty($images) || !is_array($images)) {
 			wp_send_json_error(['message' => 'Invalid input.'], 400);
 			return;
@@ -235,6 +236,11 @@ class MediaHandling{
 			}
 			$result['success'] = 'true';
 		} 
+	}
+	else {
+			$result['success'] = 'true';
+		}
+
 
 		echo wp_json_encode($result);
 		wp_die();
