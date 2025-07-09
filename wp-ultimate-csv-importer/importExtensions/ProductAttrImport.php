@@ -6,7 +6,7 @@
  */
 
 namespace Smackcoders\FCSV;
-use Smackcoders\WCSV\WooCommerceMetaImport;
+use Smackcoders\FCSV\WooCommerceMetaImport;
 
 if ( ! defined( 'ABSPATH' ) )
     exit; // Exit if accessed directly

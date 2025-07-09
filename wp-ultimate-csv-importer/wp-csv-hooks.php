@@ -19,6 +19,7 @@ $plugin_ajax_hooks = [
     'oneClickUpload',
     'get_options',
     'support_mail',
+    'toolset_state',
     'send_subscribe_email',
     'parse_data',
     'total_records',

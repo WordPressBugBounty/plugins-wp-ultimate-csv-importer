@@ -6,7 +6,7 @@
  * You can contact Smackcoders at email address info@smackcoders.com.
  *******************************************************************************************/
 
-namespace Smackcoders\WCSV;
+namespace Smackcoders\FCSV;
 
 use Smackcoders\FCSV\CoreFieldsImport;
 use Smackcoders\FCSV\ImportHelpers;

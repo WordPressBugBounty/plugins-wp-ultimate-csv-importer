@@ -103,7 +103,7 @@ class MetaBoxImport {
 
 				update_post_meta($pID, $data_key, $fieldset_array);
 			}
-			elseif($field_type == 'image' || $field_type == 'file' || $field_type == 'file_advanced' || $field_type == 'image_advanced'){
+			elseif($field_type == 'image' || $field_type == 'video' || $field_type == 'file' || $field_type == 'file_advanced' || $field_type == 'image_advanced'){
 				$get_uploads_fields = explode(',', $data_value);
 				$get_fields_count = count($get_uploads_fields);
 				$indexs = 0;
@@ -119,7 +119,7 @@ class MetaBoxImport {
 					$indexs++;
 				}	
 			}
-			elseif($field_type == 'video'){
+			elseif($field_type == 'videos'){
 				$media_fd = explode(',',$data_value);
 				$media_arr = array();
 				foreach($media_fd as $data){
@@ -177,8 +177,9 @@ class MetaBoxImport {
 						update_term_meta($pID,$data_key,$data_value);
 				    }
 
-				update_post_meta($pID, $data_key, $data_value);
+				
 				}
+				update_post_meta($pID, $data_key, $data_value);
 			}
 		}
 	}

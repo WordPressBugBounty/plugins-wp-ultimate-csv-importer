@@ -38,6 +38,7 @@ class SupportMail {
 	 */
 	public function doHooks(){
 		add_action('wp_ajax_support_mail', array($this,'supportMail'));
+		add_action('wp_ajax_toolset_state', array($this,'toolsetState'));
 		add_action('wp_ajax_send_subscribe_email', array($this,'sendSubscribeEmail'));
 	}
 
@@ -67,6 +68,21 @@ class SupportMail {
 		}
 	}
 
+	public static function toolsetState(){
+		if(is_plugin_active('types/wpcf.php')){
+			$state = 'true';
+		}
+		else{
+			$state =  'false';
+		}
+	
+			$myarr['success'] = true;
+			$myarr['state'] = $state;
+			echo wp_json_encode($myarr);
+			wp_die();
+		
+	}
+	
 	public static function sendSubscribeEmail(){
 				check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
 				if($_POST){

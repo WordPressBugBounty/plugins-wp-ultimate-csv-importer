@@ -8,7 +8,7 @@
 namespace Smackcoders\FCSV;
 
 use Smackcoders\FCSV\MediaImport;
-use Smackcoders\WCSV\WooCommerceCoreImport;
+use Smackcoders\FCSV\WooCommerceCoreImport;
 
 if ( ! defined( 'ABSPATH' ) )
 	exit; // Exit if accessed directly
