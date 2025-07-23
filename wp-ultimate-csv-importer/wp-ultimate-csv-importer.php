@@ -10,7 +10,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: WP Ultimate CSV Importer
- * Version:     7.23
+ * Version:     7.24
  * Plugin URI:  https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
  * Description: Seamlessly create posts, custom posts, pages, media, SEO and more from your CSV data with ease.
  * Author:      Smackcoders
@@ -87,7 +87,7 @@ class SmackCSV{
 	private static $persian_instance = null;
 	private static $chinese_instance = null;
 	private static $addon_instance = null;
-	public $version = '7.23';
+	public $version = '7.24';
 
 	public function __construct() { 
 		add_action('init', array(__CLASS__, 'show_admin_menus'));

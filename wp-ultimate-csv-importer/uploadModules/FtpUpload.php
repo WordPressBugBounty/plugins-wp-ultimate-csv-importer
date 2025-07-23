@@ -110,7 +110,9 @@ class FtpUpload implements Uploads{
                         $extract_path = $upload_dir . $event_key;
                         $server_file = $host_path;
                         
-                        $ret = ftp_nb_get($conn_id,$path,$server_file,FTP_ASCII);
+$file_extension = strtolower($file_extension); 
+$ftp_mode = in_array($file_extension, ['csv', 'txt']) ? FTP_ASCII : FTP_BINARY;
+$ret = ftp_nb_get($conn_id, $local_file, $server_file, $ftp_mode);
                         $ret = ftp_nb_continue($conn_id);
                         if($ret == FTP_FINISHED){
                             chmod($path, 0777);
@@ -141,7 +143,9 @@ class FtpUpload implements Uploads{
                     $server_file = $host_path;
                     
                     $fs = ftp_size($conn_id , $server_file);    
-                    $ret = ftp_nb_get($conn_id,$local_file,$server_file,FTP_ASCII);
+$file_extension = strtolower($file_extension);
+$ftp_mode = in_array($file_extension, ['csv', 'txt']) ? FTP_ASCII : FTP_BINARY;
+$ret = ftp_nb_get($conn_id, $local_file, $server_file, $ftp_mode);
                    
                     $filesize = filesize($local_file);
                     if ($filesize > 1024 && $filesize < (1024 * 1024)) {

@@ -3,18 +3,20 @@ Contributors: smackcoders, riswanasmack, premairuthayarajan
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 7.23
-Version: 7.23
+Stable tag: 7.24
+Version: 7.24
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
-Tags: wp import, csv, datafeed, csv importer, wordpress csv import, wordpress xml import, xml, export woocommerce products, product export, product import, woocommerce product import,  wordpress csv import, xml import, import all, importer, migrate, all import, import export
+Tags: wp import, import export, datafeed, csv importer, wordpress csv import, wordpress xml import, xml, export woocommerce products, product export, product import, woocommerce product import, wordpress csv import, xml import, import all, importer, migrate, all import, csv
 License: GPLv2 or later
 
-Powerful WP Import plugin to bulk import posts, pages, custom data, WooCommerce products, ACF fields, and more from CSV or XML into WordPress.
+A powerful WP import and export plugin to bulk import or export posts, pages, custom post types, WooCommerce products, ACF fields, and more using CSV or XML files to and from WordPress.
 
 == Description ==
 
-**WP Ultimate CSV Importer** is your all-in-one **WP import** solution to easily upload, update, and manage WordPress content in bulk. Whether you’re importing WooCommerce products, ACF custom fields, users, orders, or custom post types, this plugin offers a flexible and robust way to import CSV and XML files into your WordPress site—saving hours of manual effort.
+**WP Ultimate CSV Importer** is your all-in-one **WP import and export** solution to easily upload, update, and manage WordPress content in bulk. Whether you’re working with WooCommerce products, ACF custom fields, users, orders, or custom post types, it offers a flexible and robust way to import & export CSV or XML files—saving you hours of manual effort.
+
+To enable exporting, you'll need the [WP Ultimate Exporter add-on](https://wordpress.org/plugins/wp-ultimate-exporter). Once you install and activate the Importer plugin, you’ll be prompted to add the Exporter( and other available add-ons) via the plugin dashboard or when you visit the Export page.
 
 **Try Before You Install**
 
@@ -39,7 +41,7 @@ Try by creating a [Private Trial](https://trial.smackcoders.com/index.html?utm_s
 
 * **Accelerate Workflow:** Easily handle large datasets in minutes, saving valuable time and simplifying website updates. Whether launching a new site or updating content, the bulk import/export features boost productivity and reduce manual work.
 
-* **Extensive Plugins Compatibility:** Enjoy smooth integration with plugins like WooCommerce, Yoast SEO, WPML, Advanced Custom Fields, and more. This ensures your core content, taxonomies, multilingual data, and SEO settings migrate without any hassle.
+* **Extensive Plugins Compatibility:** Enjoy smooth integration with plugins like WooCommerce, Yoast SEO, WPML, Advanced Custom Fields, MetaBox, JetEngine, and more. This ensures your core content, taxonomies, multilingual data, and SEO settings migrate without any hassle.
 
 * **Single Post Import-Export:** Instant, easy export or import of individual posts, pages, and custom post content as CSV directly from the edit or create view, eliminating the need to process a bulk dataset.
 
@@ -57,7 +59,9 @@ Try by creating a [Private Trial](https://trial.smackcoders.com/index.html?utm_s
 
 * **Comprehensive Logs:** Access detailed import logs for transparency and troubleshooting.  
 
-* **Pre-Import Validation:** Ensure error-free imports by validating your data before uploading.  
+* **Pre-Import File Validation:** Ensure error-free imports by validating your data while uploading and before import.  
+
+* **Server-Side Error Handling:** Identifies server-related issues like timeouts or memory limits for smoother, more stable imports.
 
 = Flexible File Uploads =
 
@@ -103,7 +107,7 @@ Or watch the full walkthrough on YouTube: [https://www.youtube.com/watch?v=NiBx2
 
 = Popular Plugins Integration =
 * Advanced Custom Fields (ACF): Basic, Choices, jQuery, and WYSIWYG fields.  
-* MetaBox Plugin ~ Basic & Limited Advanced fields.  
+* MetaBox Plugin ~ Basic & Limited Advanced fields.  (Now supports OpenStreetMap and Custom Icon fields)
 * Pods ~ CPT and All Fields.  
 * JetEngine ~ Basic fields (CPTs & CCTs).  
 * Toolset Types ~ Basic fields.  
@@ -355,6 +359,16 @@ This is ideal for staging-to-live or cross-site migration of structured WordPres
 
 Refer to our [Migrate & One Click Import Options detailed documentation] (https://www.smackcoders.com/documentation/wp-ultimate-csv-importer-pro/migrate-wordpress-and-woocommerce-data?utmsource=web&utmcampaign=readme&utmmedium=wporg) for more detailed steps.
 
+= Why am I seeing alerts like “Please create Upload folder with writable permission” or “File size exceeded post maximum size” when uploading a file in WP Ultimate CSV Importer? =
+
+These alerts usually mean your server setup needs adjustment, for example, either the upload folder is missing, file size limits are too low, or memory is insufficient. To fix this: 
+
+* Create the ultimate-csv-importer folder in wp-content/uploads/ with 755 or 775 permissions.
+
+* Increase upload_max_filesize, post_max_size, and memory_limit in your PHP settings.
+
+For more troubleshooting tips, refer to the [WP Ultimate CSV Importer troubleshooting guide](https://www.smackcoders.com/documentation/wp-ultimate-csv-importer-pro/troubleshooting-guide?utmsource=web&utmcampaign=readme&utmmedium=wporg).
+
 
 == Installation ==
 
@@ -370,6 +384,10 @@ This method ensures a hassle-free setup directly from your WordPress dashboard.
 
 
 == Changelog ==
+
+= 7.24 =
+Added: Support for MetaBox OpenStreetMap & Custom Icon fields
+Improved: Enhanced server-side and file validation error handling to reduce server-related import failures
 
 = 7.23 =
 Added: Redirect to WordPress.org support forum for free users.
@@ -828,6 +846,6 @@ Fixed: Term & Taxonomies Hierarchy import issue
 
 == Upgrade Notice ==
 
-= 7.23 =
+= 7.24 =
 
-Upgrade now to get improved ChatGPT integration, clear “Pro” feature labels, streamlined support redirection, and important stability fixes.
+Upgrade now to unlock MetaBox OpenStreetMap and Icon fields support, smoother server-side validation, and improved handling of file-related import errors.

@@ -3924,6 +3924,7 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .file-processing-tag::before {
+  display: none;
   content: "FOR RECORDS ABOVE 1000 CHOOSE ITERATIVE FILE PROCESSING";
   position: absolute;
   z-index: 1000;

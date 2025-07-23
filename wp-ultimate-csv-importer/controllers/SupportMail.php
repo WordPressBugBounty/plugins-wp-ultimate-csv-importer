@@ -72,6 +72,9 @@ class SupportMail {
 		if(is_plugin_active('types/wpcf.php')){
 			$state = 'true';
 		}
+		elseif (is_plugin_active('all-in-one-seo-pack/all_in_one_seo_pack.php') || is_plugin_active('all-in-one-seo-pack-pro/all_in_one_seo_pack.php')){
+			$state = 'true';
+		}
 		else{
 			$state =  'false';
 		}
