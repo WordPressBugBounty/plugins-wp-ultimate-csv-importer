@@ -80,14 +80,24 @@ class SendPassword {
 	 */
 	public function showOptions() {
 		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
-		if (isset($_POST['prefixValue'])) {
-			$prefixValue = sanitize_text_field($_POST['prefixValue']);
+
+		$json = isset($_POST['data']) ? wp_unslash($_POST['data']) : '';
+
+  		// Decode JSON
+    	$data = json_decode($json, true);
+
+    	// Sanitize the value
+    	$apikey = isset($data['apikey']) ? sanitize_text_field($data['apikey']) : '';
+		update_option('openAI_settings', $apikey);
+
+		if (isset($apikey )) {
+			$apikey = sanitize_text_field($_POST['prefixValue']);
 		}
-		if(!empty($prefixValue)){
-			update_option('openAI_settings', $prefixValue);
+		if(!empty($apikey )){
+			update_option('openAI_settings', $apikey);
 		}
-		if(!empty($prefixValue)){
-			if($prefixValue == 'delete'){
+		if(!empty($apikey )){
+			if($apikey == 'delete'){
 				delete_option('openAI_settings');
 			}
 		}

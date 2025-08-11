@@ -15,7 +15,7 @@ class OpenAIHelper {
     private $apiKey;
     private $baseUrl = 'https://api.openai.com/v1/chat/completions';
     private $image_baseUrl = 'https://api.openai.com/v1/images/generations';
-    public function generateContent($prompt, $maxCharacters) {
+    public function generateContent($prompt) {
         $get_key =get_option('openAI_settings');
         $this->apiKey = $get_key;
 

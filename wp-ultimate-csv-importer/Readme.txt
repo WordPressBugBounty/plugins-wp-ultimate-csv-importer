@@ -3,8 +3,8 @@ Contributors: smackcoders, riswanasmack, premairuthayarajan
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 7.24
-Version: 7.24
+Stable tag: 7.25
+Version: 7.25
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
 Tags: wp import, import export, datafeed, csv importer, wordpress csv import, wordpress xml import, xml, export woocommerce products, product export, product import, woocommerce product import, wordpress csv import, xml import, import all, importer, migrate, all import, csv
@@ -26,6 +26,19 @@ Try by creating a [Private Trial](https://trial.smackcoders.com/index.html?utm_s
 
 [youtube https://www.youtube.com/watch?v=dy3pdwoujxQ]
 
+** What’s New in WP Ultimate CSV Importer 7.25 **
+Version 7.25 takes your import experience to the next level with powerful new tools and smarter automation. Here’s what’s included:
+
+1. AI-Powered Content Generation with Gemini & Claude
+Our new Gemini and Claude AI integration lets you auto-generate post content and product description during import, saving time and adding a creative boost to your WordPress site. Not only this, you can also generate images for featured images fields and generate content for other text fields too.
+
+2. Smoother Header Manipulation Experience
+We’ve redesigned and refined the Header Manipulation section to make it more intuitive, visually clear, and efficient. Now you'll find one settings icon which includes all the actions like forumla, custom functions, static, and AI. Whether you’re mapping fields or adjusting column headers, the improved UI and functionality make the process faster and frustration-free.
+
+3. HTML-Safe Post Content Rendering
+Imported content now benefits from HTML-safe rendering, ensuring that your posts display cleanly, securely, and exactly as intended — without messy formatting or security concerns.
+
+
 **Key Features of WP Import – Ultimate CSV/XML Importer**
 
 - **All-in-One WP Import Support**: Import posts, pages, custom post types, taxonomies, media, users, and more.
@@ -36,6 +49,7 @@ Try by creating a [Private Trial](https://trial.smackcoders.com/index.html?utm_s
 - **Scheduled Imports**: Automate your wp import tasks via FTP, URL, or manual uploads.
 - **Multilingual & SEO Plugins**: Compatible with WPML, Polylang, Yoast SEO, and more.
 - **Flexible File Formats**: Supports CSV, XML, Google Sheets, and ZIP files.
+- **AI Integrations**: Supports ChatGPT AI, Gemini, and Claude AI to generate content and image during import.
 
 **Key Benefits:**
 
@@ -100,10 +114,9 @@ Here’s how it works:
 5. Click it, and it will automatically do all configurations pre-applied and directs to the Import page.
 6. You can just click Import, and run the import.
 
-If you want more detailed instructions, refer to our [Migrate & One Click Import Options detailed documentation] (https://www.smackcoders.com/documentation/wp-ultimate-csv-importer-pro/migrate-wordpress-and-woocommerce-data?utmsource=web&utmcampaign=readme&utmmedium=wporg).
+If you want more detailed instructions, refer to our [Migrate & One Click Import Options detailed documentation](https://www.smackcoders.com/documentation/wp-ultimate-csv-importer-pro/migrate-wordpress-and-woocommerce-data?utmsource=web&utmcampaign=readme&utmmedium=wporg).
 
-Or watch the full walkthrough on YouTube: [https://www.youtube.com/watch?v=NiBx2fqX1kc&pp=0gcJCcEJAYcqIYzv](https://www.youtube.com/watch?v=NiBx2fqX1kc&pp=0gcJCcEJAYcqIYzv)
-
+[youtube https://www.youtube.com/watch?v=NiBx2fqX1kc&pp=0gcJCcEJAYcqIYzv]
 
 = Popular Plugins Integration =
 * Advanced Custom Fields (ACF): Basic, Choices, jQuery, and WYSIWYG fields.  
@@ -384,6 +397,12 @@ This method ensures a hassle-free setup directly from your WordPress dashboard.
 
 
 == Changelog ==
+
+= 7. 25 =
+
+New: Gemini & Claude AI integration for smarter, automated content generation
+Enhanced: Header Manipulation section with improved UI and functionality for a smoother workflow
+Added: HTML-safe rendering support for post content to ensure clean and secure output
 
 = 7.24 =
 Added: Support for MetaBox OpenStreetMap & Custom Icon fields
@@ -846,6 +865,8 @@ Fixed: Term & Taxonomies Hierarchy import issue
 
 == Upgrade Notice ==
 
-= 7.24 =
+= 7.25 =
 
-Upgrade now to unlock MetaBox OpenStreetMap and Icon fields support, smoother server-side validation, and improved handling of file-related import errors.
+Upgrade now to get Gemini & Claude AI integration for smarter content generation, an improved Header Manipulation section with better UI and functionality, and HTML-safe rendering support for post content.
+
+

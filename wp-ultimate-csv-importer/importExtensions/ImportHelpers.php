@@ -240,8 +240,7 @@ class ImportHelpers {
 		$trim_content = array(
 			'->static' => '', 
 			'->math' => '', 
-			'->cus1' => '',
-			'->openAI' => '',
+			'->cus1' => ''
 		);
 		if(is_array($map)){
 			foreach($map as $header_keys => $value){
@@ -251,6 +250,16 @@ class ImportHelpers {
 						unset($map[$header_keys]);
 					}
 				}
+				if (strpos($header_keys, '->openAI') !== false) {
+					$OpenAIHelper = new OpenAIHelper;
+					$newKey = str_replace('->openAI', '', $header_keys);
+					$map[$newKey] = $OpenAIHelper->generateContent($value);
+									
+				}
+
+			 if (stripos($header_keys, 'openAI') !== false) 	{
+        			unset($map[$header_keys]);
+   			}
 				else{
 					$header_trim = strtr($header_keys, $trim_content);
 					if($header_trim != $header_keys){

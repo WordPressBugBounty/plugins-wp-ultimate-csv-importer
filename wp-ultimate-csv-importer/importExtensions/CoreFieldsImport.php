@@ -408,13 +408,12 @@ class CoreFieldsImport {
 			$get_result = null;
 			$post_values['post_content'] = '';
 			$map = $this->filterNumKeys($map);
-			$map=$this->replaceValues($map);
-			
+		//	$map=$this->replaceValues($map);
+
 			$trim_content = array(
 				'->static' => '', 
 				'->math' => '', 
-				'->cus1' => '',
-				'->openAI' => '', 
+				'->cus1' => ''
 			);
 
 			foreach($map as $header_keys => $value){
@@ -1094,7 +1093,18 @@ class CoreFieldsImport {
 
 	function import_core_fields($data_array){
 		$helpers_instance = ImportHelpers::getInstance();
+            foreach ($data_array as $innerKey => $innerValue) {
+			if (strpos($innerKey, '->openAI') !== false) {
+					$OpenAIHelper = new OpenAIHelper;
+					$newKey = str_replace('->openAI', '', $innerKey);
+					$data_array[$newKey] = $OpenAIHelper->generateContent($innerValue);
+									
+			}
 
+			 if (stripos($innerKey, 'openAI') !== false) 	{
+        			unset($data_array[$innerKey]);
+   			}
+		}
 		if(empty( $data_array['post_date'] )) {
 			$data_array['post_date'] = current_time('Y-m-d H:i:s');
 		} else {
@@ -1123,6 +1133,7 @@ class CoreFieldsImport {
 		}else{
 			$data_array['post_status'] = 'publish';
 		}
+		
 		return $data_array;
 	}
 

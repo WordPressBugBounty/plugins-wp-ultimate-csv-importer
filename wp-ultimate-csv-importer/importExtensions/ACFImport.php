@@ -26,6 +26,29 @@ class ACFImport {
 		$helpers_instance = ImportHelpers::getInstance();
 		$helpers_instance = ImportHelpers::getInstance();
 		$post_values =$helpers_instance->get_header_values($maps , $header_array , $value_array);
+	
+		$trim_content = array(
+			'->static' => '', 
+			'->math' => '', 
+			'->cus1' => '',
+			'->openAI' => '',
+		);
+		if(is_array($map)){
+		foreach($map as $header_keys => $value){
+				if( strpos($header_keys, '->cus2') !== false) {
+					if(!empty($value)){
+						$this->write_to_customfile($value, $header_array, $value_array);
+						unset($map[$header_keys]);
+					}
+				}
+				else{
+					$header_trim = strtr($header_keys, $trim_content);
+					if($header_trim != $header_keys){
+						unset($map[$header_keys]);
+					}
+					$map[$header_trim] = $value;
+				}
+		}
 		foreach($map as $key => $value){
 			$csv_value= trim($map[$key]);
 			if(!empty($csv_value) || $csv_value == 0){
@@ -92,6 +115,7 @@ class ACFImport {
 				}
 			}
 		} 
+	}
 	}
 
 	/**

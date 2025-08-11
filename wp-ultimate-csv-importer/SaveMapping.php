@@ -481,7 +481,7 @@ class SaveMapping
 								$map_openAI = false;
 								foreach ($map as $subarray) {
 									foreach ($subarray as $key => $value) {
-										if (strpos($key, '->openAI') !== false) {
+										if (strpos($key, '->OPENAIA') !== false) {
 											$map_openAI = 1;
 											break;
 										}
@@ -490,9 +490,9 @@ class SaveMapping
 								if ($map_openAI == true) {
 									foreach ($map as $mainKey => $mainValue) {
 										foreach ($mainValue as $subKey => $subValue) {
-											if (substr($subKey, -8) === '->openAI') {
+											if (substr($subKey, -8) === '->OPENAIA') {
 												$flag = true;
-												$value_header = str_replace("->openAI", "", $subKey);
+												$value_header = str_replace("->OPENAIA", "", $subKey);
 												$openAIKeys[] = $value_header;
 												$openAIValues[] = $subValue;
 											}
@@ -575,7 +575,7 @@ class SaveMapping
 											$responsevalueArray[] = $OpenAIHelper->generateContent($word, $val);
 										}
 									}
-									$core_instance->openAI_response = $responsevalueArray;
+									$core_instance->OPENAIA_response = $responsevalueArray;
 									foreach ($openAIKeys as $value) {
 										$index = array_search($value, $header_array);
 										if ($index !== false) {
@@ -646,7 +646,7 @@ class SaveMapping
 							$map_openAI = false;
 							foreach ($map as $subarray) {
 								foreach ($subarray as $key => $value) {
-									if (strpos($key, '->openAI') !== false) {
+									if (strpos($key, '->OPENAIA') !== false) {
 										$map_openAI = 1;
 										break;
 									}
@@ -655,9 +655,9 @@ class SaveMapping
 							if ($map_openAI == true) {
 								foreach ($map as $mainKey => $mainValue) {
 									foreach ($mainValue as $subKey => $subValue) {
-										if (substr($subKey, -8) === '->openAI') {
+										if (substr($subKey, -8) === '->OPENAIA') {
 											$flag = true;
-											$value_header = str_replace("->openAI", "", $subKey);
+											$value_header = str_replace("->OPENAIA", "", $subKey);
 											$openAIKeys[] = $value_header;
 											$openAIValues[] = $subValue;
 										}
@@ -740,7 +740,7 @@ class SaveMapping
 										$responsevalueArray[] = $OpenAIHelper->generateContent($word, $val);
 									}
 								}
-								$core_instance->openAI_response = $responsevalueArray;
+								$core_instance->OPENAIA_response = $responsevalueArray;
 								foreach ($openAIKeys as $value) {
 									$index = array_search($value, $header_array);
 									if ($index !== false) {
@@ -836,7 +836,7 @@ class SaveMapping
 						$map_openAI = false;
 						foreach ($map as $subarray) {
 							foreach ($subarray as $key => $value) {
-								if (strpos($key, '->openAI') !== false) {
+								if (strpos($key, '->OPENAIA') !== false) {
 									$map_openAI = 1;
 									break;
 								}
@@ -845,9 +845,9 @@ class SaveMapping
 						if ($map_openAI == true) {
 							foreach ($map as $mainKey => $mainValue) {
 								foreach ($mainValue as $subKey => $subValue) {
-									if (substr($subKey, -8) === '->openAI') {
+									if (substr($subKey, -8) === '->OPENAIA') {
 										$flag = true;
-										$value_header = str_replace("->openAI", "", $subKey);
+										$value_header = str_replace("->OPENAIA", "", $subKey);
 										$openAIKeys[] = $value_header;
 										$openAIValues[] = $subValue;
 									}
@@ -930,7 +930,7 @@ class SaveMapping
 									$responsevalueArray[] = $OpenAIHelper->generateContent($word, $val);
 								}
 							}
-							$core_instance->openAI_response = $responsevalueArray;
+							$core_instance->OPENAIA_response = $responsevalueArray;
 							foreach ($openAIKeys as $value) {
 								$index = array_search($value, $header_array);
 								if ($index !== false) {
