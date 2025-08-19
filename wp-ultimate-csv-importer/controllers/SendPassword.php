@@ -90,9 +90,6 @@ class SendPassword {
     	$apikey = isset($data['apikey']) ? sanitize_text_field($data['apikey']) : '';
 		update_option('openAI_settings', $apikey);
 
-		if (isset($apikey )) {
-			$apikey = sanitize_text_field($_POST['prefixValue']);
-		}
 		if(!empty($apikey )){
 			update_option('openAI_settings', $apikey);
 		}
