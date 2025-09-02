@@ -775,15 +775,15 @@ class MediaHandling{
 			$rawdata =  wp_remote_retrieve_body($response);
 		} else {
 			if ($file_type['ext'] == 'jpeg' || $file_type['ext'] == 'jpg' || $file_type['ext'] == 'bmp') {
-				$response = wp_remote_get($f_img, array('timeout' => 30));
+				$response = wp_remote_get($f_img, array('timeout' => 120));
 			} 
 			else if ($file_type['ext'] == 'gif') {
 				$response = wp_remote_get($f_img, array('timeout' => 300));
 			}
 			else if ($file_type['ext'] == 'mp4') {
-				$response = wp_remote_get($f_img, array('timeout' => 50));
+				$response = wp_remote_get($f_img, array('timeout' => 120));
 			} else {
-				$response = wp_remote_get($f_img, array('timeout' => 10));
+				$response = wp_remote_get($f_img, array('timeout' => 60));
 			}
 
 			$rawdata =  wp_remote_retrieve_body($response);

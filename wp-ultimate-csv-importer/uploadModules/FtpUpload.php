@@ -192,6 +192,11 @@ $ret = ftp_nb_get($conn_id, $local_file, $server_file, $ftp_mode);
                             $response['file_type'] = $file_extension;
                             $response['file_size'] = $files_size;
                             $response['message'] = 'Downloaded Successfully';
+                            if ($file_extension === 'csv' || $file_extension === 'tsv') {
+    $delimiter = DesktopUpload::detect_csv_delimiter($local_file);
+    update_option("smack_csv_delimiter_{$event_key}", $delimiter);
+}
+
                             echo wp_json_encode($response);
                         }else{
                             $response['success'] = false;

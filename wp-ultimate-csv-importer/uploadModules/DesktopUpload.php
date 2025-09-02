@@ -21,6 +21,8 @@ class DesktopUpload implements Uploads{
 	private function __construct(){
 		add_action('wp_ajax_get_desktop',array($this,'upload_function'));
 		add_action('wp_ajax_oneClickUpload',array($this,'upload_function'));
+	//	add_action('wp_ajax_get_csv_delimiter', [$this, 'get_csv_delimiter']);
+
 	}
 
 	public static function getInstance() {
@@ -323,6 +325,12 @@ class DesktopUpload implements Uploads{
 						$response['file_type'] = $file_extension;
 						$response['file_size'] = $filesize;
 						$response['message'] = 'success';
+
+						  if ($file_extension === 'csv' || $file_extension === 'tsv') {
+        $delimiter = $this->detect_csv_delimiter($path);
+        update_option("smack_csv_delimiter_{$event_key}", $delimiter);
+    }
+
 						echo wp_json_encode($response); 
 
 					}
@@ -503,5 +511,41 @@ class DesktopUpload implements Uploads{
 	
 		return $mime_map[$mime_type] ?? null;
 	}
+
+	public static function detect_csv_delimiter($file_path) {
+    $delimiters = [",", ";", "\t", "|"];
+    $line = '';
+    $handle = fopen($file_path, 'r');
+    if ($handle) {
+        $line = fgets($handle); 
+        fclose($handle);
+    }
+
+    $best_delimiter = ',';
+    $max_count = 0;
+
+    foreach ($delimiters as $delimiter) {
+        $fields = str_getcsv($line, $delimiter);
+        if (count($fields) > $max_count) {
+            $max_count = count($fields);
+            $best_delimiter = $delimiter;
+        }
+    }
+	  if ($best_delimiter === "\t") {
+        $best_delimiter = '\\t';
+    }
+    return $best_delimiter;
+}
+
+public function get_csv_delimiter() {
+    check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+    $event_key = sanitize_text_field($_POST['hashkey']);
+
+    $delimiter = get_option("smack_csv_delimiter_{$event_key}", ',');
+
+    wp_send_json_success([
+        'delimiter' => $delimiter
+    ]);
+}
 
 }

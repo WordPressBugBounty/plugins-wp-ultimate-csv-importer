@@ -41,8 +41,7 @@ class ListingExtension extends ExtensionHandler{
 				if ( !empty( $results ) ) {
 					foreach ( $results as $field ) {
 
-						$pro_meta_fields[$field->label] = $field->shortname;
-
+$pro_meta_fields[$field->label] = '_wpbdp[fields][' . $field->id . ']';
 					}
 				} 
 

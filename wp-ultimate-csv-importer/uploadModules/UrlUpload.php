@@ -212,7 +212,14 @@ class UrlUpload implements Uploads{
 							fputs($file, $curlData);
 							chmod($path, 0777);
 							fclose($file);
-						}
+						}	
+    $real_path = $path;
+    if (file_exists($real_path) && ($file_extension === 'csv' || $file_extension === 'tsv')) {
+        if (class_exists('\Smackcoders\FCSV\DesktopUpload')) {
+            $delimiter = \Smackcoders\FCSV\DesktopUpload::detect_csv_delimiter($real_path);
+            update_option("smack_csv_delimiter_{$event_key}", $delimiter);
+        }
+    } 
 						$validate_file = $validate_instance->file_validation($path , $file_extension );
 
 						$file_size = filesize($path);
@@ -232,8 +239,10 @@ class UrlUpload implements Uploads{
 							$response['file_size'] = $filesize;
 							$response['templatename'] = $template_name;
 							$response['message'] = 'success';
+							
 							echo wp_json_encode($response); 
-						}else{
+						}
+						else{
 							$response['success'] = false;
 							$response['message'] = $validate_file;
 							echo wp_json_encode($response); 
