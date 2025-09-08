@@ -10,7 +10,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: WP Ultimate CSV Importer
- * Version:     7.27
+ * Version:     7.28
  * Plugin URI:  https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
  * Description: Seamlessly create posts, custom posts, pages, media, SEO and more from your CSV data with ease.
  * Author:      Smackcoders
@@ -100,8 +100,68 @@ class SmackCSV{
 		}
 
 		add_action('admin_enqueue_scripts', array(__CLASS__, 'smack_enqueue_scripts'));	
-		
+		$this->init_review_notice();
 	}
+
+	public function init_review_notice() {
+    add_action('admin_notices', [$this, 'render_review_notice']);
+    add_action('admin_init', [$this, 'handle_review_notice_actions']);
+}
+
+public function render_review_notice() {
+    if (!current_user_can('manage_options')) {
+        return;
+    }
+
+    $activation_time = get_option('wcsv_activation_time');
+    $dismissed       = get_option('wcsv_review_dismissed');
+    $later           = get_option('wcsv_review_later');
+
+    if (!$activation_time) {
+        update_option('wcsv_activation_time', time());  
+        return;
+    }
+
+    if ((time() - $activation_time) < 7 * DAY_IN_SECONDS) {
+        return;
+    }
+
+    if ($dismissed) {
+        return;
+    }
+
+    if ($later && (time() - $later) < 7 * DAY_IN_SECONDS) {
+        return;
+    }
+    ?>
+    <div class="notice notice-success is-dismissible">
+        <h2><?php esc_html_e('Loving WP Ultimate CSV Importer? 💙', 'wp-ultimate-csv-importer'); ?></h2>
+        <p>
+            <?php esc_html_e('We’d be so grateful if you could share your experience in a quick review. It only takes a minute, and it really helps us reach more WordPress users like you.', 'wp-ultimate-csv-importer'); ?>
+        </p>
+        <p>
+            <a href="https://wordpress.org/support/plugin/wp-ultimate-csv-importer/reviews/?filter=5"
+               target="_blank" class="button button-primary">⭐ Sure, I’ll Rate It</a>
+            <a href="<?php echo esc_url(add_query_arg('wcsv_review_later', '1')); ?>" class="button">Maybe Later</a>
+            <a href="<?php echo esc_url(add_query_arg('wcsv_review_dismiss', '1')); ?>" class="button">No,Thanks</a>
+        </p>
+    </div>
+    <?php
+}
+
+public function handle_review_notice_actions() {
+    if (isset($_GET['wcsv_review_dismiss'])) {
+        update_option('wcsv_review_dismissed', 1);
+        wp_redirect(remove_query_arg('wcsv_review_dismiss'));
+        exit;
+    }
+
+    if (isset($_GET['wcsv_review_later'])) {
+        update_option('wcsv_review_later', time());
+        wp_redirect(remove_query_arg('wcsv_review_later')); 
+        exit;
+    }
+}
 
 	public static function smack_enqueue_scripts() {
 		$single_import_state = get_option('sm_uci_pro_settings');

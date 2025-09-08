@@ -45,11 +45,29 @@ class FtpUpload implements Uploads{
 		$csv_writer->setIncludeSeparatorLine(false);
 		$csv_writer->save($csv_file_path);
 	}
+
+    /**
+     * Security check for FTP operations
+     * Validates nonce and user capabilities
+     */
+    private function check_ftp_security() {
+        // Security: Check nonce for CSRF protection using wp_verify_nonce
+        if (!wp_verify_nonce($_POST['securekey'], 'smack-ultimate-csv-importer')) {
+            wp_die(__('Security check failed'));
+        }
+        
+        // Security: Check user capabilities - only administrators should access FTP functionality
+        if (!current_user_can('manage_options')) {
+            wp_die(__('You do not have sufficient permissions to access this page.'));
+        }
+    }
+
     /**
 	 * Upload file from FTP.
 	 */
     public function upload_function(){
-        check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+        $this->check_ftp_security();
+        
         $host_name = sanitize_text_field($_POST['HostName']);
         $host_port = isset($_POST['HostPort']) ? intval(sanitize_text_field($_POST['HostPort'])) : 0;
         $host_username = sanitize_text_field($_POST['HostUserName']);
@@ -228,7 +246,8 @@ $ret = ftp_nb_get($conn_id, $local_file, $server_file, $ftp_mode);
     }
 
     public function getFtpDetails(){
-        check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+        $this->check_ftp_security();
+        
         $result['HostName'] = get_option('sm_ftp_hostname');
         $result['HostPort'] = get_option('sm_ftp_hostport');
         $result['HostUserName'] = get_option('sm_ftp_hostusername');

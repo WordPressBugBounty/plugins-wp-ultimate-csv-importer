@@ -102,12 +102,39 @@ class SingleImportExport {
 
 					if (!is_wp_error($post_id)) {
 						// Set meta data
-						foreach ($data as $key => $value) {
-							if (strpos($key, 'meta_') === 0 && !empty($value)) {
-								$meta_key = substr($key, 5); // Remove 'meta_' prefix
-								update_post_meta($post_id, $meta_key, sanitize_text_field($value));
-							}
-						}
+foreach ($data as $key => $value) {
+    if (strpos($key, 'meta_') === 0 && $value !== '') {
+        $meta_key = substr($key, 5); 
+
+        if ($meta_key === '_elementor_data') {
+            update_post_meta($post_id, $meta_key, wp_slash($value));
+        } elseif (in_array($meta_key, [
+            '_elementor_css',
+            '_elementor_page_assets',
+            '_elementor_controls_usage'
+        ], true)) {
+            $maybe_array = @unserialize($value);
+
+            if ($maybe_array !== false || $value === 'b:0;') {
+                update_post_meta($post_id, $meta_key, $maybe_array);
+            } elseif (is_array($value)) {
+                update_post_meta($post_id, $meta_key, $value);
+            } else {
+                update_post_meta($post_id, $meta_key, [$value]);
+            }
+        } elseif ($meta_key === '_elementor_element_cache') {
+            $decoded = json_decode($value, true);
+            if (json_last_error() === JSON_ERROR_NONE) {
+                update_post_meta($post_id, $meta_key, $decoded);
+            } else {
+                update_post_meta($post_id, $meta_key, $value);
+            }
+        } else {
+            update_post_meta($post_id, $meta_key, sanitize_text_field($value));
+        }
+    }
+}
+
 
 						// Set terms
 						if (!empty($data['terms_data'])) {
@@ -235,9 +262,16 @@ class SingleImportExport {
 		];
 
 		// Meta data
-		foreach ($meta_keys as $meta_key) {
-			$row["meta_$meta_key"] = get_post_meta($post_id, $meta_key, true);
-		}
+foreach ($meta_keys as $meta_key) {
+    $meta_value = get_post_meta($post_id, $meta_key, true);
+
+    if (is_array($meta_value) || is_object($meta_value)) {
+        $meta_value = wp_json_encode($meta_value, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    }
+
+    $row["meta_$meta_key"] = $meta_value;
+}
+
 
 		// Terms data
 		$terms_data = [];

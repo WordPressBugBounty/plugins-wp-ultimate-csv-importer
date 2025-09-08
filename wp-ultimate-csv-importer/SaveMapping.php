@@ -1841,7 +1841,12 @@ class SaveMapping
 				}
 			}
 			foreach ($map as $group_name => $group_value) {
+
 				switch ($group_name) {
+	case 'ELEMENTOR':
+							$elementor_instance = ElementorImport::getInstance();
+							$elementor_instance->set_elementor_value($header_array, $value_array, $map['ELEMENTOR'], $post_id, $selected_type, $hash_key, $gmode, $templatekey);
+							break;
 	
 					case 'AIOSEO':
 						$all_seo_instance = AllInOneSeoImport::getInstance();

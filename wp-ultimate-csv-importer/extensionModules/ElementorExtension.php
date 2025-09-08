@@ -30,9 +30,10 @@ class ElementorExtension extends ExtensionHandler{
 
 		$import_type = $data;
 		$response = [];
-		$import_type = $this->import_type_as($import_type);
+		// $import_type = $this->import_type_as($import_type);
+		$import_type = $this->import_name_as($import_type);
 		if( is_plugin_active('elementor/elementor.php') || is_plugin_active('elementor-pro/elementor-pro.php') ){   
-			if($import_type == 'Posts' || $import_type == 'Pages' || $import_type == 'WooCommerce Product' || $import_type == 'Custom Posts'){
+			if($import_type == 'Posts' || $import_type == 'Pages' || $import_type == 'WooCommerce Product' || $import_type == 'CustomPosts'){
 				$pro_meta_fields = array(
 					'Elementor Template Type' => '_elementor_template_type',
 					'Elementor Version' => '_elementor_version',
@@ -67,13 +68,13 @@ class ElementorExtension extends ExtensionHandler{
 	 * @return boolean
 	 */
 	public function extensionSupportedImportType($import_type ){
+		$import_type = $this->import_name_as($import_type);
 		if( is_plugin_active('elementor/elementor.php') || is_plugin_active('elementor-pro/elementor-pro.php')){
-			if($import_type == 'elementor_library' || $import_type == 'Pages' || $import_type == 'Posts' || $import_type == 'WooCommerce Product' || $import_type == 'Custom Posts') { 
+			if($import_type == 'elementor_library' || $import_type == 'Pages' || $import_type == 'Posts' || $import_type == 'WooCommerce Product' || $import_type == 'CustomPosts') { 
 				return true;
 			}else{
 				return false;
 			}
 		}
 	}
-
 }

@@ -2240,6 +2240,7 @@ Author: Mohamed Fariz
   text-align: left;
   position: relative;
   vertical-align: middle;
+  width: 30%;
 }
 
 .wp-ultimate-csv-importer .table.table-mapping tbody tr td .wpfields {

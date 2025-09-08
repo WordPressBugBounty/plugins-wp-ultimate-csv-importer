@@ -3,8 +3,8 @@ Contributors: smackcoders, riswanasmack, premairuthayarajan
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 7.27
-Version: 7.27
+Stable tag: 7.28
+Version: 7.28
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
 Tags: wp import, import export, csv importer, wordpress csv import, csv, wordpress xml import, xml, all import, import all, export woocommerce products, product export, product import, woocommerce product import, wordpress csv importer, xml import, importer, migrate, datafeed
@@ -412,6 +412,14 @@ This method ensures a hassle-free setup directly from your WordPress dashboard.
 
 
 == Changelog ==
+
+= 7.28 =
+
+Security: Use wp_verify_nonce for nonce validation 
+Security fix: Add capability checks to FTP credential access 
+Feat: Single page import & export for elementor page builder
+Feat: Auto-detect field separator (comma, semicolon, tab) Implemented
+Feedback: Implement to get feedback after one week of usage. 
 
 = 7.27 =
 

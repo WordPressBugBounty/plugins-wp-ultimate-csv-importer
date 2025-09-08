@@ -21,7 +21,7 @@ class DesktopUpload implements Uploads{
 	private function __construct(){
 		add_action('wp_ajax_get_desktop',array($this,'upload_function'));
 		add_action('wp_ajax_oneClickUpload',array($this,'upload_function'));
-	//	add_action('wp_ajax_get_csv_delimiter', [$this, 'get_csv_delimiter']);
+		add_action('wp_ajax_get_csv_delimiter', [$this, 'get_csv_delimiter']);
 
 	}
 
@@ -531,9 +531,7 @@ class DesktopUpload implements Uploads{
             $best_delimiter = $delimiter;
         }
     }
-	  if ($best_delimiter === "\t") {
-        $best_delimiter = '\\t';
-    }
+	
     return $best_delimiter;
 }
 
