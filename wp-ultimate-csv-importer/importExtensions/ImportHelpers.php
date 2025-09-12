@@ -567,41 +567,52 @@ $value_assoc = array_combine($header_array, $value_array);
 
 	}
 	
-	public function write_to_customfile($csv_value, $header_array=null, $value_array=null){
-		//if(preg_match_all('/{+(.*?)}/', $csv_value, $matches)) {
-		
-			// foreach($matches[1] as $value){
-			// 	$get_value1 = $this->replace_header_with_values($value, $header_array, $value_array);
-			// 	$values1 = '{'.$value.'}';
-			// 	$get_value1 = "'".$get_value1."'";
-			// 	$csv_value = str_replace($values1, $get_value1, $csv_value);
-			// }
-		
-			$upload = wp_upload_dir();
-   			$upload_base_url = $upload['basedir'];
-        	$customfn_file_path = $upload_base_url . '/smack_uci_uploads/customFunction.php';
+	public function write_to_customfile($csv_value, $header_array = null, $value_array = null) {
+		// Only allow admin users (or users with 'manage_options') to write
+		if (!current_user_can('manage_options')) {
+		    wp_die(__('You do not have sufficient permissions to access this page.'));
+      	}
 
-			if(!file_exists($customfn_file_path)){
-				$add_php_tag = '<?php';
-				$openFile = fopen($customfn_file_path, "w+");
-				fwrite($openFile, $add_php_tag);
-				fclose($openFile);
-				chmod($customfn_file_path , 0777);
-			}
+		// Prepare upload directory
+		$upload = wp_upload_dir();
+		$upload_base_dir = $upload['basedir'] . '/smack_uci_uploads';
+		if (!file_exists($upload_base_dir)) {
+			wp_mkdir_p($upload_base_dir); // creates directory safely
+		}
 
-			$get_custom_content = file_get_contents($customfn_file_path);
-			$exp_data =explode('{',$csv_value);
-			if(strpos($get_custom_content,$exp_data[0]) !== false) {
+		$custom_file_path = $upload_base_dir . '/custom_data.json';
+
+		// Initialize file if it doesn't exist
+		if (!file_exists($custom_file_path)) {
+			file_put_contents($custom_file_path, json_encode([]));
+			chmod($custom_file_path, 0644);
+		}
+
+		// Safely replace placeholders with values
+		if ($header_array && $value_array && preg_match_all('/{+(.*?)}/', $csv_value, $matches)) {
+			foreach ($matches[1] as $key) {
+				$replacement = isset($value_array[$key]) ? $value_array[$key] : '';
+				$csv_value = str_replace('{'.$key.'}', $replacement, $csv_value);
 			}
-			else{
-				$openFile = fopen($customfn_file_path, "a+");
-				fwrite($openFile, "\n".$csv_value);
-				fclose($openFile);
-				chmod($customfn_file_path , 0777);
-			}
-			require_once $customfn_file_path;
-		//}
+		}
+
+		// Load existing data safely
+		$existing_data = json_decode(file_get_contents($custom_file_path), true);
+		if (!is_array($existing_data)) {
+			$existing_data = [];
+		}
+
+		// Avoid duplicates
+		if (!in_array($csv_value, $existing_data)) {
+			$existing_data[] = $csv_value;
+			file_put_contents($custom_file_path, json_encode($existing_data, JSON_PRETTY_PRINT));
+			chmod($custom_file_path, 0644);
+		}
+
+		// Return the stored data for further use
+		return $existing_data;
 	}
+
 
 	public function replace_header_with_values($csv_header, $header_array, $value_array){
 		$csv_value = $csv_header;

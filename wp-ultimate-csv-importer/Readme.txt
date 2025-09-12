@@ -3,8 +3,8 @@ Contributors: smackcoders, riswanasmack, premairuthayarajan
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 7.28
-Version: 7.28
+Stable tag: 7.29
+Version: 7.29
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
 Tags: wp import, import export, csv importer, wordpress csv import, csv, wordpress xml import, xml, all import, import all, export woocommerce products, product export, product import, woocommerce product import, wordpress csv importer, xml import, importer, migrate, datafeed
@@ -412,6 +412,11 @@ This method ensures a hassle-free setup directly from your WordPress dashboard.
 
 
 == Changelog ==
+
+= 7.29 =
+
+Security: Added capability check to the oneClickUpload feature to restrict access to authorized users.
+Updated: write_to_customfile() to no longer write arbitrary PHP code to a file, preventing potential Remote Code Execution (RCE) vulnerabilities.
 
 = 7.28 =
 
@@ -897,8 +902,8 @@ Fixed: Term & Taxonomies Hierarchy import issue
 
 == Upgrade Notice ==
 
-= 7.27 =
+= 7.29 =
 
-Upgrade now to get enhanced import and export support for the Business Directory plugin, delivering smoother compatibility and a more reliable experience.
+Upgrade now to get security fixes.
 
 

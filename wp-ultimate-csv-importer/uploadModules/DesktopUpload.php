@@ -49,7 +49,8 @@ class DesktopUpload implements Uploads{
 	 * Upload file from desktop.
 	 */
 	public function upload_function(){
-
+  		$this->check_upload_security();
+     
 		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
 		global $wpdb;
 
@@ -372,6 +373,18 @@ class DesktopUpload implements Uploads{
 
 	}
 
+	private function check_upload_security() {
+        // Security: Check nonce for CSRF protection using wp_verify_nonce
+        if (!wp_verify_nonce($_POST['securekey'], 'smack-ultimate-csv-importer')) {
+            wp_die(__('Security check failed'));
+        }
+        
+        // Security: Check user capabilities - only administrators should access upload functionality
+        if (!current_user_can('manage_options')) {
+            wp_die(__('You do not have sufficient permissions to access this page.'));
+        }
+    }
+
 
 	public function save_mapping($data,$hash_key,$post,$decoded_json)
 	{
@@ -536,6 +549,8 @@ class DesktopUpload implements Uploads{
 }
 
 public function get_csv_delimiter() {
+	
+	$this->check_upload_security(); 
     check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
     $event_key = sanitize_text_field($_POST['hashkey']);
 
