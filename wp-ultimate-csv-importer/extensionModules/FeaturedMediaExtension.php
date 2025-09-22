@@ -49,8 +49,7 @@ class FeaturedMediaExtension extends ExtensionHandler{
 	* @return boolean
 	*/
     public function extensionSupportedImportType($import_type){	
-        $import_types = $data;
-        $import_type = $this->import_name_as($import_types);
+       
 	
         if( $import_type == "Posts" || $import_type == "Pages" || $import_type == "CustomPosts" || $import_type == "WooCommerce" || $import_types == "wp_font_family"  || $import_types == "wp_font_face"  || $import_types == 'wp_global_style' || $import_types == 'wp_template'){
             return true;

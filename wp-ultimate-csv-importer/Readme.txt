@@ -3,8 +3,8 @@ Contributors: smackcoders, riswanasmack, premairuthayarajan
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 6.8
-Stable tag: 7.29
-Version: 7.29
+Stable tag: 7.30
+Version: 7.30
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
 Tags: wp import, import export, csv importer, wordpress csv import, csv, wordpress xml import, xml, all import, import all, export woocommerce products, product export, product import, woocommerce product import, wordpress csv importer, xml import, importer, migrate, datafeed
@@ -26,13 +26,12 @@ Try by creating a [Private Trial](https://trial.smackcoders.com/index.html?utm_s
 
 [youtube https://www.youtube.com/watch?v=dy3pdwoujxQ]
 
-** What’s New in WP Ultimate CSV Importer 7.27 **
+** What’s New in WP Ultimate CSV Importer 7.30 **
 
-We’ve rolled out a new update focused on better compatibility and smoother workflows.
+If you are a JetEngine pugin user, this release is an absolute treat for you. We've added support for Custom Content Types (CCTs) now. You can seamlessly import and export CCTs with WP Ultimate CSV Importer Free v7.30. Please upgrade now and try it today. Let us know the feedback about your experience.
 
-✅ Business Directory plugin support – Importing and exporting data with the Business Directory plugin is now more seamless than ever. This update ensures better stability and accuracy when handling your directory listings, so you can manage large datasets without hassle.
+Along with that, we've also done some improvements in the file validation area. So the imports now become more smoother, reliable, and error-free.
 
-This version is a refinement release aimed at making your listings imports and exports more reliable. If you’re using the Business Directory plugin, upgrading to v7.27 is highly recommended.
 
 **Key Features of WP Import – Ultimate CSV/XML Importer**
 
@@ -153,7 +152,7 @@ If you want more detailed instructions, refer to our [Migrate & One Click Import
 
 = Top WordPress CSV Importer Features = 
 
-Easily handle bulk imports and migrate thousands of records in minutes with the plugin’s powerful tools. The free version also includes supports for **Advanced Custom Fields (ACF)**, however, with limited field compatibility, including **Basic fields**, **Choices**, and **JQuery fields**, making it simple to manage and import custom data.
+Easily handle bulk imports and migrate thousands of records in minutes with the plugin’s powerful tools. The free version also includes supports for **Advanced Custom Fields (ACF)**, however, with limited field compatibility, including **Basic fields**, **Choices**, and **JQuery fields**, making it simple to manage and import custom data. You can also try the import and export now for your JetEngine CCTs with the latest version.
 
 = WordPress CSV Import Features =
 
@@ -221,7 +220,7 @@ Perfect for backups or migrations in just a single click.
 
 Upgrade to the Pro version to unlock powerful features like:
 
-* **ACF & Custom Fields Plugin Support**: Import data into fields created with ACF, JetEngine, MetaBox, CMB2, Pods, and Toolset.
+* **ACF & Custom Fields Plugin Advanced Support**: Import data into fields created with ACF, JetEngine, MetaBox, CMB2, Pods, and Toolset.
 * **Multilingual Compatibility:** Fully compatible with WPML, Polylang, and qTranslate X.
 * **WooCommerce Import:** Import products, variations, orders, and custom WooCommerce fields.
 * **Yoast SEO PRO Integration:** Import SEO metadata like titles, descriptions, and focus keywords.
@@ -397,6 +396,10 @@ This process ensures smooth migration of WordPress data between sites.
 
 Note: To export your data, you'll need the WP Ultimate Exporter add-on, which can be easily installed from the WordPress plugin repository.
 
+= Can i Import JetEngine CCTs with this plugin? =
+
+Yes, you can import and export your JetEngine CCTs using WP Ultimate CSV Importer Free. But for advanced features like importing and exporting with "Has single page" option you might require a pro version. You can also upgrade to Pro for updating bulk records, and scheduling the import and export process. Learn more about [JetEngine import export here](https://www.smackcoders.com/documentation/wp-ultimate-csv-importer-pro/jet-engine-data-import?utmsource=web&utmcampaign=readme&utmmedium=wporg).
+
 
 == Installation ==
 
@@ -413,6 +416,11 @@ This method ensures a hassle-free setup directly from your WordPress dashboard.
 
 == Changelog ==
 
+= 7.30 =
+
+Added: Import and export support for Jetengine CCTs. 
+Improvements: Minor upload validation.
+
 = 7.29 =
 
 Security: Added capability check to the oneClickUpload feature to restrict access to authorized users.
@@ -422,8 +430,8 @@ Updated: write_to_customfile() to no longer write arbitrary PHP code to a file, 
 
 Security: Use wp_verify_nonce for nonce validation 
 Security fix: Add capability checks to FTP credential access 
-Feat: Single page import & export for elementor page builder
-Feat: Auto-detect field separator (comma, semicolon, tab) Implemented
+Added: Single page import & export for elementor page builder
+Added: Auto-detect field separator (comma, semicolon, tab) Implemented
 Feedback: Implement to get feedback after one week of usage. 
 
 = 7.27 =
@@ -902,8 +910,6 @@ Fixed: Term & Taxonomies Hierarchy import issue
 
 == Upgrade Notice ==
 
-= 7.29 =
+= 7.30 =
 
-Upgrade now to get security fixes.
-
-
+Upgrade to version 7.30 now and unlock the new JetEngine Custom Content Types (CCTs) import and export feature, along with improvements in file upload validation for smoother and more reliable imports.

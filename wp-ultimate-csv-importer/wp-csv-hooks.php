@@ -17,6 +17,7 @@ $plugin_ajax_hooks = [
     'security_performance',
     'settings_options',
     'oneClickUpload',
+    'smackuci_check_review_popup',
     'get_options',
     'get_csv_delimiter',
     'support_mail',

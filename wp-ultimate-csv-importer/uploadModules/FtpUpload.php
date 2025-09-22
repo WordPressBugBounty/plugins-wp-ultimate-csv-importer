@@ -109,6 +109,10 @@ class FtpUpload implements Uploads{
                     $path = explode($ftp_file_name, $host_path);
                     $path = isset($path[0]) ? $path[0] : '';
                     $file_extension = pathinfo($ftp_file_name, PATHINFO_EXTENSION);
+                    $allowed_exts = ['csv', 'xml', 'xlsx', 'xls', 'txt', 'tsv'];
+                    if ( ! in_array( $file_extension, $allowed_exts, true ) ) {
+                        wp_die( __( 'Invalid file type.', 'wp-ultimate-csv-importer' ), 400 );
+                    }
                     if(empty($file_extension)){
                         $file_extension = 'xml';
                     }
@@ -220,7 +224,15 @@ $ret = ftp_nb_get($conn_id, $local_file, $server_file, $ftp_mode);
                             $response['success'] = false;
                             $response['message'] = $validate_file;
                             echo wp_json_encode($response); 
-                            unlink($path);
+                            $upload_dir = wp_upload_dir();
+                            $base_dir   = trailingslashit($upload_dir['basedir']);
+
+                            $real_base = realpath($base_dir);
+                            $real_path = realpath($path);
+
+                            if ($real_path !== false && strpos($real_path, $real_base) === 0) {
+                                unlink($real_path); // safe delete inside uploads only
+                            }
                             $wpdb->get_results("UPDATE $file_table_name SET status='Download Failed' WHERE id = '$lastid'");
                         }
                     } else {

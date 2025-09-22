@@ -38,6 +38,10 @@ class SaveMapping
 		add_action('wp_ajax_PauseImport', array($this, 'pause_import'));
 		add_action('wp_ajax_ResumeImport', array($this, 'resume_import'));
 		add_action('wp_ajax_DeactivateMail', array($this, 'deactivate_mail'));
+		add_action('wp_ajax_smackuci_check_review_popup', array($this, 'smackuci_check_review_popup'));
+add_action('wp_ajax_nopriv_smackuci_check_review_popup', array($this, 'smackuci_check_review_popup'));
+
+
 	}
 
 	public static function getInstance()
@@ -50,6 +54,42 @@ class SaveMapping
 		}
 		return SaveMapping::$instance;
 	}
+
+public function smackuci_check_review_popup() {
+	check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+
+    global $wpdb;
+
+    $table = $wpdb->prefix . "smackuci_events";
+
+    $dont_show = get_option('smackuci_dont_show_again', false);
+
+    if (isset($_POST['Later']) && $_POST['Later'] === "true") {
+        $import_count = (int) $wpdb->get_var("SELECT COUNT(*) FROM $table");
+
+        update_option('smackuci_last_feedback_check', $import_count);
+
+        wp_send_json_success(['reset' => true]);
+    }
+
+    if (isset($_POST['DontNotopen']) && $_POST['DontNotopen'] === "true") {
+        update_option('smackuci_dont_show_again', true);
+        wp_send_json_success(['dont_show' => true]);
+    }
+
+    $import_count = (int) $wpdb->get_var("SELECT COUNT(*) FROM $table");
+
+    $last_shown_at = (int) get_option('smackuci_last_feedback_check', 0);
+
+    if ($import_count >= ($last_shown_at + 10) && !$dont_show) {
+        update_option('smackuci_last_feedback_check', $import_count);
+        wp_send_json_success(['show_popup' => true]);
+    }
+
+    wp_send_json_error(['show_popup' => false]);
+}
+
+
 
 	public function handle_close_notification_action() {
 		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
