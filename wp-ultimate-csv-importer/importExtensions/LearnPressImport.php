@@ -381,11 +381,22 @@ class LearnPressImport
                        $post_type_values = $wpdb->get_results("SELECT post_title FROM {$wpdb->prefix}posts WHERE id = $question_post_id ", ARRAY_A);
                         $get_title_options_value = explode('|', $option_value);
                         if($option_key == $post_type_values[0]['post_title']){
-                            $wpdb->insert( 
-                                "{$wpdb->prefix}learnpress_question_answers", 
-                                array("question_id" => $question_post_id, "title" => $get_title_options_value[0], "is_true"=>$get_title_options_value[1]),
-                                array('%d', '%s','%s')
-                            );
+                           $wpdb->insert( 
+    "{$wpdb->prefix}learnpress_question_answers", 
+    array("question_id" => $question_post_id, "title" => $get_title_options_value[0], "is_true"=>$get_title_options_value[1]),
+    array('%d', '%s','%s')
+);
+
+$answer_id = $wpdb->insert_id;
+
+$unique_value = substr(md5(uniqid(rand(), true)), 0, 12);
+
+$wpdb->update(
+    "{$wpdb->prefix}learnpress_question_answers",
+    ['value' => $unique_value],
+    ['question_answer_id' => $answer_id]
+);
+
                         } 
                     }
                    
@@ -400,11 +411,22 @@ class LearnPressImport
                 
                 foreach($get_separate_options as $option_values){
                     $get_title_options = explode('|', $option_values);
-                    $wpdb->insert( 
-                        "{$wpdb->prefix}learnpress_question_answers", 
-                        array("question_id" => $question_post_id, "title" => $get_title_options[0], "is_true"=>$get_title_options[1]),
-                        array('%d', '%s','%s')
-                    );
+                 $wpdb->insert( 
+    "{$wpdb->prefix}learnpress_question_answers", 
+    array("question_id" => $question_post_id, "title" => $get_title_options[0], "is_true"=>$get_title_options[1]),
+    array('%d', '%s','%s')
+);
+
+$answer_id = $wpdb->insert_id;
+
+$unique_value = substr(md5(uniqid(rand(), true)), 0, 12);
+
+$wpdb->update(
+    "{$wpdb->prefix}learnpress_question_answers",
+    ['value' => $unique_value],
+    ['question_answer_id' => $answer_id]
+);
+
                 }
             }
         }

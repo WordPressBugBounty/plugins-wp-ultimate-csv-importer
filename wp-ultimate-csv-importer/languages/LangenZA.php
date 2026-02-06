@@ -98,6 +98,13 @@ class LangEN_ZA {
                         'AllInOneSeoFields' => 'All In One Seo Fields',
                         'MetaBoxFields' => 'MetaBox-velde',
                         'YoastSeoFields' => 'Yoast Seo Fields',
+                        'SlimSeoFields' => 'Slim SEO Fields',
+'EDDDownloadsFields' => 'EDD Downloads Fields',
+'EDDCustomersFields' => 'EDD Customers Fields',
+'EDDDiscountsFields' => 'EDD Discounts Fields',
+
+                        'ListeoFields' => 'Listeo Fields',
+                        'EventCalendarMetaFields' => 'EventCalendar Meta Fields',
                         'WPMLFields' => 'WPML Fields',
                         'RankMathFields'=>'Rank Math Fields',
                         'RankMathProFields'=>'Rank Math Pro Fields',

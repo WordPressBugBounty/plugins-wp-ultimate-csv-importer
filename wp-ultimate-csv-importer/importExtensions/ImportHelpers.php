@@ -262,8 +262,16 @@ class ImportHelpers {
 	
 			foreach($map as $key => $value){	
 				$csv_value= trim($map[$key]);
-$value_assoc = array_combine($header_array, $value_array);
+$num_keys = count($header_array);
+$num_values = count($value_array);
 
+if ($num_keys > $num_values) {
+    $value_array = array_pad($value_array, $num_keys, '');
+} elseif ($num_values > $num_keys) {
+    $header_array = array_pad($header_array, $num_values, '');
+}
+
+$value_assoc = array_combine($header_array, $value_array);
 				if(!empty($csv_value)){
 					//$pattern = "/({([a-z A-Z 0-9 | , _ -]+)(.*?)(}))/";
 					$pattern1 = '/{([^}]*)}/';

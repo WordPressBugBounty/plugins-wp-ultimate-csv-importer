@@ -92,6 +92,12 @@ class LangPT {
                         'AllInOneSeoFields' => 'All In One Seo Fields',
                         'MetaBoxFields' => 'Campos MetaBox',
                         'YoastSeoFields' => 'Yoast Seo Fields',
+'SlimSeoFields' => 'Slim SEO Fields',
+'EDDDownloadsFields' => 'EDD Downloads Fields',
+'EDDCustomersFields' => 'EDD Customers Fields',
+'EDDDiscountsFields' => 'EDD Discounts Fields',
+
+'ListeoFields' => 'Listeo Fields',
                         'WPMLFields' => 'Campos WPML',
                         'JetEngineFields' => 'Campos do Motor a Jato',
                         'JetEngineRFFields' => 'Campos do repetidor do motor a jato',

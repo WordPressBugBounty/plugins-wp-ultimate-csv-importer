@@ -4229,10 +4229,10 @@ i.removeapikey {
 }
 
 .wp-ultimate-csv-importer .chatgpt-notify {
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 15px auto;
+  margin: 15px;
   padding: 10px 15px;
   border-radius: 0px 6px 6px 0px;
   background: #fff;

@@ -229,7 +229,9 @@ class WordpressCustomExtension extends ExtensionHandler{
                 "learnpress/learnpress.php",
                 "sitepress-multilingual-cms/sitepress.php",
                 "wp-job-manager/wp-job-manager.php",
-                "wp-customer-reviews/wp-customer-reviews-3.php"
+                "wp-customer-reviews/wp-customer-reviews-3.php",
+                "slim-seo/slim-seo.php",
+                "listeo-core/listeo-core.php"
             );
         }
 

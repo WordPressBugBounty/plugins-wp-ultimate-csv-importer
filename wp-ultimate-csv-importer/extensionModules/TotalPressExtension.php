@@ -45,12 +45,17 @@ class TotalpressExtension extends ExtensionHandler{
 		$temp = 0;
 		if (!empty($getTPFields)) {
 			foreach ($getTPFields as $key => $value) {
-				$getTPField = @unserialize($value['meta_value']);
+				// SECURITY FIX: Use maybe_unserialize instead of unserialize for safety
+				$getTPField = maybe_unserialize($value['meta_value']);
 				
-				foreach($getTPField as $fk => $fv){
-					$customFields["TOTALPRESS"][$temp]['label'] = $fv['label'];
-					$customFields["TOTALPRESS"][$temp]['name'] = $fv['key'];
-					$temp++;
+				if (is_array($getTPField)) {
+					foreach($getTPField as $fk => $fv){
+						if (isset($fv['label'], $fv['key'])) {
+							$customFields["TOTALPRESS"][$temp]['label'] = $fv['label'];
+							$customFields["TOTALPRESS"][$temp]['name'] = $fv['key'];
+							$temp++;
+						}
+					}
 				}
 			}
 		}

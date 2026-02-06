@@ -113,13 +113,17 @@ foreach ($data as $key => $value) {
             '_elementor_page_assets',
             '_elementor_controls_usage'
         ], true)) {
-            $maybe_array = @unserialize($value);
-
-            if ($maybe_array !== false || $value === 'b:0;') {
-                update_post_meta($post_id, $meta_key, $maybe_array);
+            // SECURITY FIX: Use JSON instead of unserialize to prevent PHP Object Injection
+            // Try JSON decode first (modern Elementor format)
+            $decoded_value = json_decode($value, true);
+            
+            if (json_last_error() === JSON_ERROR_NONE && is_array($decoded_value)) {
+                // Valid JSON
+                update_post_meta($post_id, $meta_key, $decoded_value);
             } elseif (is_array($value)) {
                 update_post_meta($post_id, $meta_key, $value);
             } else {
+                // Store as array with single value (safest option)
                 update_post_meta($post_id, $meta_key, [$value]);
             }
         } elseif ($meta_key === '_elementor_element_cache') {

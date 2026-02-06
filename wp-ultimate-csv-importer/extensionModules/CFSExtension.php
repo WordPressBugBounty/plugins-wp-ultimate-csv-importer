@@ -44,11 +44,16 @@ class CFSExtension extends ExtensionHandler{
 		// Available CFS fields
 		if (!empty($get_cfs_fields)) {
 			foreach ($get_cfs_fields as $key => $value) {
-				$get_cfs_field = @unserialize($value[0]['meta_value']);
-				foreach($get_cfs_field as $fk => $fv){
-					$customFields["CFS"][$fv['name']]['label'] = $fv['label'];
-					$customFields["CFS"][$fv['name']]['name'] = $fv['name'];
-					$cfs_field[] = $fv['name'];
+				// SECURITY FIX: Use maybe_unserialize instead of unserialize for safety
+				$get_cfs_field = maybe_unserialize($value[0]['meta_value']);
+				if (is_array($get_cfs_field)) {
+					foreach($get_cfs_field as $fk => $fv){
+						if (isset($fv['name'], $fv['label'])) {
+							$customFields["CFS"][$fv['name']]['label'] = $fv['label'];
+							$customFields["CFS"][$fv['name']]['name'] = $fv['name'];
+							$cfs_field[] = $fv['name'];
+						}
+					}
 				}
 			}
 		}

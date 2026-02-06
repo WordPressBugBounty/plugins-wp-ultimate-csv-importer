@@ -132,6 +132,13 @@ class LangFR {
                         'AllInOneSeoFields' => 'Tout en un Seo Fields',
                         'MetaBoxFields' => 'Champs MetaBox',
                         'YoastSeoFields' => 'Yoast Seo Fields',
+                        'SlimSeoFields' => 'Slim SEO Fields',
+'EDDDownloadsFields' => 'EDD Downloads Fields',
+'EDDCustomersFields' => 'EDD Customers Fields',
+'EDDDiscountsFields' => 'EDD Discounts Fields',
+
+                        'ListeoFields' => 'Listeo Fields',
+                        'EventCalendarMetaFields' => 'EventCalendar Meta Fields',
                         'WPMLFields' => 'Champs WPML',
                         'RankMathFields'=>'Rank Math Fields',
                         'RankMathProFields'=>'Rank Math Pro Fields',

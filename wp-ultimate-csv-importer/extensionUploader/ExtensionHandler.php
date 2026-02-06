@@ -142,6 +142,18 @@ class ExtensionHandler{
 			$importas['WooCommerce Customer'] = 'WooCommerceCustomer';
 		}
 
+		if ( is_plugin_active( 'easy-digital-downloads/easy-digital-downloads.php' ) ) {
+
+    $importas['EDD Downloads']  = 'EDD_DOWNLOADS';
+    $importas['EDD Customers']  = 'EDD_CUSTOMERS';
+    $importas['EDD Discounts']  = 'EDD_DISCOUNTS';
+
+    if ( isset( $importas['download'] ) ) {
+        unset( $importas['download'] );
+    }
+}
+
+
 		if(array_key_exists('location' , $importas) && array_key_exists('event-recurring' , $importas)){
 			unset($importas['location']);
 			unset($importas['event-recurring']);

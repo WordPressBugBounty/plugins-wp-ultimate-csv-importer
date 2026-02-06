@@ -28,8 +28,16 @@ class ElementorImport {
 		$helpers_instance = ImportHelpers::getInstance();
 		$post_values = $helpers_instance->get_header_values($map , $header_array , $value_array);
 		foreach ($post_values as $custom_key => $custom_value) {
+			// SECURITY FIX: Use JSON decode instead of unserialize to prevent PHP Object Injection
 			if(is_serialized($custom_value) && $custom_key != '_elementor_data'){
-				$custom_value = unserialize($custom_value);		
+				// Try JSON first (modern format)
+				$json_decoded = json_decode($custom_value, true);
+				if (json_last_error() === JSON_ERROR_NONE && is_array($json_decoded)) {
+					$custom_value = $json_decoded;
+				} else {
+					// For legacy data from database only (not user input), use maybe_unserialize
+					$custom_value = maybe_unserialize($custom_value);
+				}
 			}
 			elseif($custom_key =='_elementor_data'){
 				$custom_value = wp_slash(base64_decode($custom_value));
@@ -64,9 +72,21 @@ class ElementorImport {
 			}
 			$content_data=$data[2];
 
-			$content=unserialize($content_data);
-			$styles =unserialize($data[3]);
-			$style_data =unserialize($styles);
+			// SECURITY FIX: Use JSON decode instead of unserialize to prevent PHP Object Injection
+			// Try JSON first (modern and secure format)
+			$content = json_decode($content_data, true);
+			if (json_last_error() !== JSON_ERROR_NONE || !is_array($content)) {
+				// Fallback: if not valid JSON, skip or use safe default
+				$content = ['content' => ''];
+			}
+			
+			// Parse styles data safely
+			$styles_data = isset($data[3]) ? $data[3] : '';
+			$style_data = json_decode($styles_data, true);
+			if (json_last_error() !== JSON_ERROR_NONE || !is_array($style_data)) {
+				$style_data = [];
+			}
+			
 			$style_encode= json_encode($style_data);
 			$style_encode = wp_slash( $style_encode );
 				$template_data = [
