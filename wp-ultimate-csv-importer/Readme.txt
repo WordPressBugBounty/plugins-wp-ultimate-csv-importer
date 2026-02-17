@@ -1,10 +1,10 @@
 === WP Import – Ultimate CSV XML Importer for WordPress ===
-Contributors: smackcoders, riswanasmack, premairuthayarajan
+Contributors: smackcoders, premairuthayarajan
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 7.38
-Version: 7.38
+Stable tag: 7.39
+Version: 7.39
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
 Tags: wp import, import export, csv importer, wordpress csv import, csv, wordpress xml import, xml, all import, import all, export woocommerce products, product export, product import, woocommerce product import, wordpress csv importer, xml import, importer, migrate, datafeed, wordpress importer
@@ -18,6 +18,9 @@ Powerful WP import export plugin to bulk import and export posts, pages, custom 
 
 To enable exporting feature, you'll need the [WP Ultimate Exporter add-on](https://wordpress.org/plugins/wp-ultimate-exporter). Once you install and activate the Importer plugin, you’ll be prompted to add the Exporter( and other available add-ons) via the plugin dashboard or when you visit the Export page.
 
+**What’s New in Version 7.39**
+
+Version 7.39 is a valuable update for SureCart users, introducing import and export support for SureCart modules in WP Ultimate CSV Importer Free. You can now import SureCart Products, Orders, Coupons, and Customers using CSV files. In addition, you can export SureCart Products, Coupons, and Customers. This update helps you manage and migrate your store data directly within WordPress.
 
 **Try Before You Install**
 
@@ -113,6 +116,7 @@ Here are the list of plugins, we've added import and export compatibility with W
 * WooCommerce ~ Products, Coupons, Orders, Reviews, Customers, and Refunds. WooCommerce products are imported with categories, tags, gallery images, and attributes  
 * WooCommerce Product Bundles Plugin
 * WooCommerce Billing & Shipping Information  
+* SureCart
 * WordPress SEO Plugins: AIOSEO (free & pro), RankMath SEO FREE, SEOPress (free & pro), Yoast SEO
 * WPML (posts & pages)
 * Polylang Free
@@ -414,6 +418,8 @@ Yes, you can import and export your JetEngine CCTs using WP Ultimate CSV Importe
 
 Yes, you can. But for any data, you may need to upgrade to pro version. However, in free, we have added compatibility for many post types to export with smart filters. For exporting, you must need to install our free export add-on.
 
+= Can I migrate my SureCart store to another WordPress site? =
+Yes. You can export SureCart Products, Coupons, and Customers from one site and import them into another WordPress site using CSV, XML, or Excel files.
 
 == Installation ==
 
@@ -429,6 +435,9 @@ This method ensures a hassle-free setup directly from your WordPress dashboard.
 
 
 == Changelog ==
+
+= 7.39 =
+Added: Support for SureCart modules import export
 
 = 7.38 =
 Fixed: Minor bugs
@@ -957,9 +966,11 @@ Fixed: Term & Taxonomies Hierarchy import issue
 
 == Upgrade Notice ==
 
-= 7.38 =
+= 7.39 =
 
-This version includes minor bug fixes including stability and google api related issues. Upgrade to the latest version now.
+This update introduces SureCart plugin compatibility. You can now import and export SureCart Products, Orders, Coupons, and Customers. Update now to expand your eCommerce data management capabilities.
+
+
 
 
 

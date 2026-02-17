@@ -2189,6 +2189,36 @@ class SaveMapping
 
 						}
 						break;
+					case 'SURECART_COUPONS':
+					case 'SURECART_CUSTOMERS':
+						if (is_plugin_active('surecart/surecart.php')) {
+							$surecart_instance = SureCartImport::getInstance();
+							$meta_map = $group_value;
+							
+							if ($group_name == 'SURECART_CUSTOMERS') {
+								$surecart_instance->import_customers($header_array, $value_array, $meta_map, $hash_key, $gmode, $templatekey, $line_number);
+							} elseif ($group_name == 'SURECART_COUPONS') {
+								$surecart_instance->import_coupons($header_array, $value_array, $meta_map, $hash_key, $gmode, $templatekey, $line_number);
+							}
+						}
+						break;
+					
+					case 'SURECART_PRODUCTS':
+						if (is_plugin_active('surecart/surecart.php')) {
+
+							SureCartImport::getInstance()->import_products(
+								$header_array,
+								$value_array,
+								$map['SURECART_PRODUCTS'],
+								$post_id,
+								$hash_key,
+								$gmode,
+								$templatekey,
+								$line_number
+							);
+
+						}
+						break;
 
 
 					case 'YOASTSEO':

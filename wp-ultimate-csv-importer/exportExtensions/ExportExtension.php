@@ -133,7 +133,36 @@ class ExportExtension
 			$count = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->prefix}edd_orders WHERE type = 'sale'");
 			echo wp_json_encode((int) $count);
 			wp_die();
-		} else {
+		} elseif($optionalType == 'SURECART_PRODUCTS' || $optionalType == 'SURECART_CUSTOMERS' || $optionalType == 'SURECART_COUPONS'){
+				$module = $optionalType;
+				if ($module == 'SURECART_PRODUCTS') {
+					$module = 'sc_product';
+				} elseif ($module == 'SURECART_CUSTOMERS') {
+					$module = 'sc_customer';
+				} elseif ($module == 'SURECART_COUPONS') {
+					$module = 'sc_coupon';
+				}
+				// error_log('this importer called');
+				if (is_plugin_active('surecart/surecart.php')) {
+					$model_mapping = [
+						'sc_product' => '\SureCart\Models\Product',
+						'sc_order' => '\SureCart\Models\Order',
+						'sc_customer' => '\SureCart\Models\Customer',
+						'sc_subscription' => '\SureCart\Models\Subscription',
+						'sc_coupon' => '\SureCart\Models\Coupon',
+						'sc_report' => '\SureCart\Models\Order',
+					];
+					if (array_key_exists($module, $model_mapping)) {
+						$model_class = $model_mapping[$module];
+						if (class_exists($model_class)) {
+							$collection = $model_class::paginate(['per_page' => 1]);
+							$response = $collection->total();
+							echo wp_json_encode($response);
+							wp_die();
+						}
+					}
+				}
+			} else {
 			if ($module == 'CustomPosts') {
 				$optional_type = $optionalType;
 			} else {

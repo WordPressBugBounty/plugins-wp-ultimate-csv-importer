@@ -38,6 +38,10 @@ class DefaultExtension extends ExtensionHandler
 		if ($import_type == 'EDD_CUSTOMERS' || $import_type == 'EDD_DISCOUNTS') {
 			return true;
 		}
+		$response = [];
+		if (in_array($import_type, ['SURECART_ORDERS', 'SURECART_CUSTOMERS', 'SURECART_COUPONS'])) {
+			return $response;
+		}
 		$check_custpost = array('Posts' => 'post', 'Pages' => 'page', 'Users' => 'users', 'Comments' => 'comments', 'CustomerReviews' => 'wpcr3_review', 'Categories' => 'categories', 'Tags' => 'tags', 'WooCommerce' => 'product', 'WPeCommerce' => 'wpsc-product', 'WPeCommerceCoupons' => 'wpsc-product', 'WooCommerceOrders' => 'product', 'WooCommerceCoupons' => 'product', 'WooCommerceRefunds' => 'product', 'CustomPosts' => 'CustomPosts', 'WooCommerceReviews' => 'reviews');
 		if ($import_type != 'Users' && $import_type != 'WooCommerceCustomer' && $import_type != 'Taxonomies' && $import_types != 'JetReviews' && $import_type != 'CustomerReviews' && $import_type != 'Comments' && $import_type != 'WooCommerceOrders' && $import_type != 'WooCommerceCoupons' && $import_type != 'WooCommerceRefunds' && $import_type != 'ngg_pictures' && $import_types != 'JetBooking' && $import_types != 'lp_order' && $import_types != 'nav_menu_item' && $import_types != 'widgets' && $import_type != 'WooCommerceReviews') {
 			$wordpressfields = array(
