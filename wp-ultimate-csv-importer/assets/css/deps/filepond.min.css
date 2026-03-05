@@ -859,6 +859,7 @@
   text-decoration: none;
   z-index: 3;
   bottom: -14px;
+  display: none;
 }
 .filepond--root .filepond--credits[style] {
 }

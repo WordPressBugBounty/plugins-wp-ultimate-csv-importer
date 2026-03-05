@@ -3,8 +3,8 @@ Contributors: smackcoders, premairuthayarajan
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 6.9
-Stable tag: 7.39
-Version: 7.39
+Stable tag: 7.39.1
+Version: 7.39.1
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
 Tags: wp import, import export, csv importer, wordpress csv import, csv, wordpress xml import, xml, all import, import all, export woocommerce products, product export, product import, woocommerce product import, wordpress csv importer, xml import, importer, migrate, datafeed, wordpress importer
@@ -17,10 +17,6 @@ Powerful WP import export plugin to bulk import and export posts, pages, custom 
 **WP Ultimate CSV Importer** is your all-in-one **WP import export** solution to easily upload, insert, and manage WordPress content in bulk. Whether you’re working with WooCommerce products or orders, ACF custom fields, JetEngine, Yoast SEO, users, comments, or other custom post types, it offers a flexible and easier way to import & export CSV, XML, or Excel files, saving you hours of manual effort.
 
 To enable exporting feature, you'll need the [WP Ultimate Exporter add-on](https://wordpress.org/plugins/wp-ultimate-exporter). Once you install and activate the Importer plugin, you’ll be prompted to add the Exporter( and other available add-ons) via the plugin dashboard or when you visit the Export page.
-
-**What’s New in Version 7.39**
-
-Version 7.39 is a valuable update for SureCart users, introducing import and export support for SureCart modules in WP Ultimate CSV Importer Free. You can now import SureCart Products, Orders, Coupons, and Customers using CSV files. In addition, you can export SureCart Products, Coupons, and Customers. This update helps you manage and migrate your store data directly within WordPress.
 
 **Try Before You Install**
 
@@ -435,6 +431,9 @@ This method ensures a hassle-free setup directly from your WordPress dashboard.
 
 
 == Changelog ==
+
+= 7.39.1 =
+Fixed: Added compatibility with WooCommerce High-Performance Order Storage (HPOS) to ensure the plugin works correctly when HPOS is enabled.
 
 = 7.39 =
 Added: Support for SureCart modules import export
@@ -966,11 +965,11 @@ Fixed: Term & Taxonomies Hierarchy import issue
 
 == Upgrade Notice ==
 
-= 7.39 =
-
-This update introduces SureCart plugin compatibility. You can now import and export SureCart Products, Orders, Coupons, and Customers. Update now to expand your eCommerce data management capabilities.
 
 
+= 7.39.1 =
+
+Upgrade now to get latest updates.
 
 
 

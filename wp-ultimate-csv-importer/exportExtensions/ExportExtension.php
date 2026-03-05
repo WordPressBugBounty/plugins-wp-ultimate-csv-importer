@@ -219,15 +219,16 @@ class ExportExtension
 			echo wp_json_encode($response);
 			wp_die();
 		} elseif ($module == 'shop_order') {
-			$order_statuses = array('wc-completed', 'wc-cancelled', 'wc-on-hold', 'wc-processing', 'wc-pending');
-			$orders = wc_get_orders(array(
-				'status' => $order_statuses,
-				'limit' => -1,
-				'return' => 'ids',
-			));
-			$response = count($orders);
-			echo wp_json_encode($response);
-			wp_die();
+			$order_statuses = array('wc-completed','wc-cancelled','wc-on-hold','wc-processing','wc-pending','wc-refunded','wc-failed','wc-checkout-draft');
+				$args = [
+						'return'  => 'ids',
+						'limit'  => -1,
+						'status'  => $order_statuses
+					];
+				$orders = wc_get_orders($args);
+				$response = count($orders);
+				echo wp_json_encode($response);
+				wp_die();
 		} elseif ($module == 'shop_coupon') {
 
 			$get_post_ids .= " and post_status in ('publish','draft','pending')";
