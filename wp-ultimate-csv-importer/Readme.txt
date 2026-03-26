@@ -3,8 +3,8 @@ Contributors: smackcoders, premairuthayarajan
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 6.9.3
-Stable tag: 7.39.2
-Version: 7.39.2
+Stable tag: 7.39.3
+Version: 7.39.3
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
 Tags: csv importer, xml importer, woocommerce import, wordpress import, import export, excel import, wp import, data migration, wordpress csv import, wordpress xml import, xml, all import, import all, export woocommerce products, product export, product import, woocommerce product import, wordpress csv importer, xml import, importer, migrate, datafeed, wordpress importer
@@ -27,7 +27,6 @@ Unlike other WordPress importers that lock basic features behind a paywall, WP U
 
 **Try Before You Install**
 
-Experience the Pro plugin in action: [Live Demo »](https://demo.smackcoders.com/wordpress/wp-admin/?utm_source=csv_importer_free&utm_medium=wporgreadme&utm_campaign=csv_importer_pro_demo)
 
 Try by creating a [Private Trial](https://trial.smackcoders.com/index.html?utm_source=csv-importer-free&utm_medium=wporgreadme&utm_campaign=csv_importer_pro_trial)
 
@@ -177,6 +176,36 @@ Expand your global reach with multilingual content management. The plugin integr
 * **Time-Saving Automation:** Eliminate manual translation uploads, focusing on your global strategy.
 * **Export with language-based records filtering(PRO feature):** Exporter records in specific languages of particular post type from WordPress. 
 
+= Our WordPress Import Export Plugin Add-ons = 
+
+Expand the capabilities of this WP Import Export plugin with our add-ons listed below. Easily import, export, and manage users, products, and custom data types.
+
+= Ultimate WordPress Exporter Add-on =
+Bulk Export WordPress content with our [WordPress All Export for CSV and XML](https://wordpress.org/plugins/wp-ultimate-exporter) add-on. This tool turns content management into a two-way process, streamlining backups, migrations, and sharing.
+
+* **Quick Backups:** Export posts, pages, custom post types, and comments in few clicks.  
+* **Easy Migrations:** Transfer your website content to a new host or domain with ease.  
+* **Filter Exports:** Extract specific content using built-in filters.  
+* **Export with Media:** Include images for a complete content package.  
+
+= WordPress User Import & Export Add-on =
+
+Effortlessly manage user accounts with the [WordPress Users & Members Import from CSV](https://wordpress.org/plugins/import-users) add-on and its export counterpart.  
+
+* **Bulk Import Users:** Quickly add large numbers of users.  
+* **User Migration:** Import users from other platforms or databases with format flexibility.  
+* **Export for Backups:** Generate comprehensive backups of user data, including roles and profiles.  
+* **Secure Password Management:** Safely import encrypted user passwords.  
+
+= WooCommerce Products Import & Export Add-on =
+Simplify product management for your WooCommerce store using the [WooCommerce Products & Bundle Import](https://wordpress.org/plugins/import-woocommerce) add-on.  
+
+* **Bulk Products Upload:** Quickly import large product inventories via CSV or XML.  
+* **Media Integration:** Import products with images or galleries for detailed listings.  
+* **Attribute Management:** Automate the addition of details like size, color, and material.  
+* **Category Organization:** Maintain proper classification with category-specific imports.  
+* **Flexible Formats:** Handle CSV, Excel, and XML files for data from multiple sources. 
+
 = Premium Features =
 
 Upgrade to the Pro version to unlock more powerful features such as:
@@ -206,7 +235,6 @@ Recognized by one of the most respected sources in the WordPress community, WP M
 
 = Ready to Get Started? =
 
-* [Try Our PRO DEMO](https://demo.smackcoders.com/wordpress/wp-admin/?utm_source=csv_importer_free&utm_medium=wporgreadme&utm_campaign=csv_importer_pro_demo)
 * [Play with Our Private Trial](https://trial.smackcoders.com/index.html?utm_source=csv-importer-free&utm_medium=wporgreadme&utm_campaign=csv_importer_pro_trial)
 * [Check Out Our Documentation](https://www.smackcoders.com/documentation/wp-ultimate-csv-importer-pro?utm_source=csv_importer_free_readme&utm_medium=wporg&utm_campaign=csv_importer_docs)
 
@@ -386,6 +414,10 @@ This method ensures a hassle-free setup directly from your WordPress dashboard.
 
 
 == Changelog ==
+
+= 7.39.2 =
+Fixed: Minor bugs in UI
+
 
 = 7.39.2 =
 Added : Compatibility for WordPress 6.9.3
@@ -924,10 +956,9 @@ Fixed: Term & Taxonomies Hierarchy import issue
 
 == Upgrade Notice ==
 
-= 7.39.2 =
+= 7.39.3 =
 
-Update to ensure compatibility with WordPress 6.9.3 and to resolve issues related to Simple Mode imports.
-
+Update to resolve issues related to UI.
 
 
 
