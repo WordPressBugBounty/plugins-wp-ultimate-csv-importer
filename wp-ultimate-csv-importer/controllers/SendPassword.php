@@ -82,12 +82,15 @@ class SendPassword {
 			wp_die( __( 'You do not have sufficient permissions to access this page.', 'wp-ultimate-csv-importer' ) );
 		}
 
-		// Fetch settings safely
-		$result['setting'] = get_option( 'openAI_settings' );
+		// WordPress 7.0: AI status from Connectors (no plugin-level API key).
+		$status = ConnectorsHelper::get_status();
+		$result['configured']    = $status['configured'];
+		$result['settings_url']  = $status['settings_url'];
+		$result['setting']       = $status['configured']; // Backward compat for frontend until fully switched.
+		$result['get_key']       = $status['configured']; // Backward compat.
 
-		echo wp_json_encode($result);
+		echo wp_json_encode( $result );
 		wp_die();
-
 	}
 
 
@@ -101,26 +104,13 @@ class SendPassword {
 		$prefixValue = isset($_POST['prefixValue']) ? sanitize_text_field($_POST['prefixValue']) : '';
 
 		if ($prefixValue === 'delete') {
-			delete_option('openAI_settings');
+			// No plugin-level AI key storage; ignore delete for openAI.
 			$result['success'] = true;
 			echo wp_json_encode($result);
 			wp_die();
 		}
 
-		$json = isset($_POST['data']) ? wp_unslash($_POST['data']) : '';
-		$data = json_decode($json, true);
-
-		if (is_array($data)) {
-			$settings = [
-				'ai' => isset($data['ai']) ? sanitize_text_field($data['ai']) : 'chatgpt',
-				'apikey' => isset($data['apikey']) ? sanitize_text_field($data['apikey']) : '',
-				'model' => isset($data['model']) ? sanitize_text_field($data['model']) : '',
-				'enabled' => isset($data['enabled']) ? (bool)$data['enabled'] : false,
-			];
-			
-			update_option('openAI_settings', json_encode($settings));
-		}
-
+		// No longer save openAI_settings; AI uses WordPress 7.0 Connectors.
 		$ucisettings = get_option('sm_uci_pro_settings');
 		foreach ($ucisettings as $key => $val) {
 			$settings[$key] = json_decode($val);

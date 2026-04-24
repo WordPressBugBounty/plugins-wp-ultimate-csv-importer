@@ -75,6 +75,12 @@ class ExportExtension
 			$module = 'shop_coupon';
 		} elseif ($module == 'WooCommerceRefunds') {
 			$module = 'shop_order_refund';
+		} elseif ($module == 'WooCommerceCustomer') {
+				$user_count = count_users();
+				$result = isset($user_count['avail_roles']['customer']) ? $user_count['avail_roles']['customer'] : 0;
+				$total = $result;
+				echo wp_json_encode($total);
+				wp_die();
 		} elseif ($module == 'WPeCommerceCoupons') {
 			$query = $wpdb->get_col("SELECT * FROM {$wpdb->prefix}wpsc_coupon_codes");
 			echo wp_json_encode(count($query));

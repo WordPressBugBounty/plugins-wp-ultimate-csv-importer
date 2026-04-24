@@ -36,24 +36,54 @@ class MediaImport {
 		$log_manager_instance = LogManager::getInstance();
 		global $core_instance;
 		$import_detail_table_name = $wpdb->prefix ."import_detail_log";
-        $media_handle = get_option('smack_image_options');
-		$updated_row_counts = $helpers_instance->update_count($unikey,$unikey_name);
-		$created_count = $updated_row_counts['created'];
-		$updated_count = $updated_row_counts['updated'];
-		$skipped_count = $updated_row_counts['skipped'];
-		$failed_count = $updated_row_counts['failed'];
+		$media_handle = get_option('smack_image_options');
+		if (! is_array($media_handle) || ! isset($media_handle['media_settings']) || ! is_array($media_handle['media_settings'])) {
+			$media_handle = array(
+				'media_settings' => array(
+					'media_handle_option' => 'false',
+				),
+			);
+		}
+		$img = '';
+		$file_name = '';
+		$updated_row_counts = $helpers_instance->update_count($unikey, $unikey_name);
+		$created_count = isset($updated_row_counts['created']) ? (int) $updated_row_counts['created'] : 0;
+		$updated_count = isset($updated_row_counts['updated']) ? (int) $updated_row_counts['updated'] : 0;
+		$skipped_count = isset($updated_row_counts['skipped']) ? (int) $updated_row_counts['skipped'] : 0;
+		$failed_count = isset($updated_row_counts['failed']) ? (int) $updated_row_counts['failed'] : 1;
 		$title = isset($data_array['title']) ? $data_array['title'] : '';
 		$caption = isset($data_array['caption']) ? $data_array['caption'] : '';
 		$alt_text = isset($data_array['alt_text']) ? $data_array['alt_text'] : '';
 		$description = isset($data_array['description']) ? $data_array['description'] : '';
 		$actual_url = isset($data_array['actual_url']) ? $data_array['actual_url'] : '';
-		if(!empty($data_array['file_name'])){
-			$sanitized_filename = str_replace(' ', '-', basename($data_array['file_name']));
-			$img = preg_replace('/[^a-zA-Z0-9._\-\s]/', '', $sanitized_filename);
-			$file_name = $img;
+		if (!empty($data_array['file_name'])) {
+			$raw = trim(wp_unslash($data_array['file_name']));
+			$raw = html_entity_decode(rawurldecode($raw), ENT_QUOTES, 'UTF-8');
+			$raw = str_replace('\\', '/', $raw);
+			if ($raw !== '' && preg_match('/[,|;]/', $raw)) {
+				$parts = preg_split('/\s*[,|;]+\s*/', $raw, -1, PREG_SPLIT_NO_EMPTY);
+				$raw = !empty($parts[0]) ? trim($parts[0]) : '';
+			}
+			$file_name = sanitize_file_name(basename(str_replace(' ', '-', $raw)));
+			$img = $raw;
 		}
-		if($media_type == 'External'){
-			$img = isset($data_array['actual_url']) ? $data_array['actual_url'] : '';
+		if ($media_type == 'External') {
+			$img = isset($data_array['actual_url']) ? trim(wp_unslash($data_array['actual_url'])) : '';
+			$img = html_entity_decode(rawurldecode($img), ENT_QUOTES, 'UTF-8');
+			if ($img !== '' && preg_match('/[,|;]/', $img)) {
+				$parts = preg_split('/\s*[,|;]+\s*/', $img, -1, PREG_SPLIT_NO_EMPTY);
+				$img = !empty($parts[0]) ? trim($parts[0]) : '';
+			}
+			if ($img === '' && !empty($data_array['file_name'])) {
+				$raw = trim(wp_unslash($data_array['file_name']));
+				$raw = html_entity_decode(rawurldecode($raw), ENT_QUOTES, 'UTF-8');
+				$raw = str_replace('\\', '/', $raw);
+				if ($raw !== '' && preg_match('/[,|;]/', $raw)) {
+					$parts = preg_split('/\s*[,|;]+\s*/', $raw, -1, PREG_SPLIT_NO_EMPTY);
+					$raw = !empty($parts[0]) ? trim($parts[0]) : '';
+				}
+				$img = $raw;
+			}
 		}
 		if($media_handle['media_settings']['media_handle_option'] == 'true'){
 			$media_handle['media_settings']['title'] = $title ;
@@ -77,10 +107,20 @@ class MediaImport {
 			if(!empty($attachment_id)) {
 				if($media_type == 'Local'){
 					$data = array('media_id'   => $attach_id,'file_url'   => wp_get_attachment_url($attach_id),'file_name' => $file_name,'title' => $title,'caption' => $caption,'alt_text'=> $alt_text,'description' => $description,'status' => 'failed');
-					$core_instance->detailed_log[$line_number]['Message'] = "Unable to detect the image in your import file. Please check and try again.";
+					$detail = MediaHandling::get_last_image_import_failure();
+					$msg = "Unable to detect the image in your import file. Please check and try again.";
+					if ($detail !== '') {
+						$msg .= ' ' . $detail;
+					}
+					$core_instance->detailed_log[$line_number]['Message'] = $msg;
 				}else if($media_type == 'External'){
 					$data = array('media_id'   => $attach_id,'file_url'   => wp_get_attachment_url($attach_id),'actual_url'  => $actual_url,'file_name' => $file_name,'title' => $title,'caption' => $caption,'alt_text'=> $alt_text,'description' => $description,'status' => 'failed');
-					$core_instance->detailed_log[$line_number]['Message'] = "The provided image file URL is invalid. Please verify the URL and try again";
+					$detail = MediaHandling::get_last_image_import_failure();
+					$msg = "The provided image file URL is invalid. Please verify the URL and try again";
+					if ($detail !== '') {
+						$msg .= ' ' . $detail;
+					}
+					$core_instance->detailed_log[$line_number]['Message'] = $msg;
 				}
 				$core_instance->media_log[$line_number] = $data;
 				$core_instance->detailed_log[$line_number]['state'] = 'Failed';

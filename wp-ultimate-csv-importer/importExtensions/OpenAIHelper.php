@@ -6,188 +6,193 @@
  * You can contact Smackcoders at email address info@smackcoders.com.
  *******************************************************************************************/
 
- namespace Smackcoders\FCSV;
+namespace Smackcoders\FCSV;
 
- if ( ! defined( 'ABSPATH' ) )
-	exit; // Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
+/**
+ * AI content generation helper.
+ *
+ * Relies entirely on WordPress 7.0 Global AI Settings (Settings → Connectors).
+ * No plugin-level API key storage or fallback.
+ *
+ * @since 8.2.0
+ */
 class OpenAIHelper {
-    private $apiKey;
-    private $baseUrl = 'https://api.openai.com/v1/chat/completions';
-    private $image_baseUrl = 'https://api.openai.com/v1/images/generations';
-    public function generateContent($prompt, $maxWords = 0) {
-        $settings = get_option('openAI_settings');
-        
-        // Handle legacy string settings or new JSON settings
-        if (is_string($settings) && $json = json_decode($settings, true)) {
-            if (isset($json['ai'])) {
-                $settings = $json;
-            } else {
-                // It might be a JSON but not our settings structure, or just a key
-                // If it's just a key, treat as legacy OpenAI
-                $settings = ['ai' => 'chatgpt', 'apikey' => $settings, 'model' => 'gpt-3.5-turbo'];
-            }
-        } elseif (is_string($settings)) {
-             $settings = ['ai' => 'chatgpt', 'apikey' => $settings, 'model' => 'gpt-3.5-turbo'];
-        }
 
-        $provider = isset($settings['ai']) ? $settings['ai'] : 'chatgpt';
-        $this->apiKey = isset($settings['apikey']) ? $settings['apikey'] : '';
-        $model = isset($settings['model']) ? $settings['model'] : '';
 
-        if (empty($this->apiKey)) {
-            return false;
-        }
+	/**
+	 * Generate text content from a prompt.
+	 *
+	 * Uses WordPress 7.0 wp_ai_client_prompt() when Connectors are configured.
+	 *
+	 * @param string $prompt         The prompt text.
+	 * @param string|int $max_words  Unused (kept for backward compatibility).
+	 * @return string|int|false Generated text, HTTP error code, or false on failure.
+	 */
+	public function generateContent( $prompt, $max_words = 0 ) {
+		$prompt = is_string( $prompt ) ? trim( $prompt ) : '';
+		if ( $prompt === '' ) {
+			return false;
+		}
 
-        switch ($provider) {
-            case 'gemini':
-                return $this->generateGeminiContent($prompt, $model, $maxWords);
-            case 'claude':
-                return $this->generateClaudeContent($prompt, $model, $maxWords);
-            case 'chatgpt':
-            default:
-                return $this->generateOpenAIContent($prompt, $model, $maxWords);
-        }
-    }
+		$wp_ai_available = function_exists( 'wp_ai_client_prompt' );
+		$has_connector   = ConnectorsHelper::has_any_connector();
 
-    private function generateOpenAIContent($prompt, $model, $maxWords = 0) {
-        $model = $model ?: 'gpt-3.5-turbo';
-        if ($maxWords > 0) {
-            $prompt .= " The response must be approximately $maxWords words long. Do not include the word count or any meta-information about the length in the output.";
-        }
-        $data = [
-            'messages' => [['role' => 'user', 'content' => $prompt]],
-            'model' => $model,
-        ];
+		if ( ! $wp_ai_available || ! $has_connector ) {
+			return false;
+		}
+		// Send prompt directly. Do not modify or apply max token/word rules here.
+		$result = $this->generate_content_via_wp_ai( $prompt );
+		return $result;
+	}
 
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $this->apiKey,
-        ];
+	/**
+	 * Generate text using WordPress AI Client.
+	 *
+	 * @param string $prompt         The prompt text.
+	 * @return string|int|false Generated text, HTTP error code, or false.
+	 */
+	private function generate_content_via_wp_ai( $prompt ) {
 
-        $response = wp_remote_post($this->baseUrl, array(
-            'body' => json_encode($data),
-            'headers' => $headers,
-            'timeout' => 60,
-        ));
+		$builder = wp_ai_client_prompt( $prompt );
+		$result = $builder->generate_text();
 
-        return $this->processResponse($response, 'openai');
-    }
+		if ( is_wp_error( $result ) ) {
+			$code = $result->get_error_code();
+			return is_numeric( $code ) ? (int) $code : false;
+		}
 
-    private function generateGeminiContent($prompt, $model, $maxWords = 0) {
-        $model = $model ?: 'gemini-flash-latest';
-        if ($maxWords > 0) {
-            $prompt .= " The response must be approximately $maxWords words long. Do not include the word count or any meta-information about the length in the output.";
-        }
-        $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key=" . $this->apiKey;
-        
-        $data = [
-            'contents' => [
-                [
-                    'parts' => [
-                        ['text' => $prompt]
-                    ]
-                ]
-            ]
-        ];
+		if ( is_string( $result ) ) {
+			return $result;
+		}
 
-        $headers = [
-            'Content-Type' => 'application/json',
-        ];
+		// Some WP AI implementations may return an object/array rather than a raw string.
+		if ( is_object( $result ) ) {
+			foreach ( array( 'getText', 'get_text', 'text', '__toString' ) as $m ) {
+				if ( method_exists( $result, $m ) ) {
+					$val = $result->$m();
+					if ( is_string( $val ) && $val !== '' ) {
+						return $val;
+					}
+				}
+			}
+		}
+		if ( is_array( $result ) ) {
+			if ( isset( $result['text'] ) && is_string( $result['text'] ) ) {
+				return $result['text'];
+			}
+			if ( isset( $result['content'] ) && is_string( $result['content'] ) ) {
+				return $result['content'];
+			}
+		}
 
-        $response = wp_remote_post($url, array(
-            'body' => json_encode($data),
-            'headers' => $headers,
-            'timeout' => 60,
-        ));
+		return false;
+	}
 
-        return $this->processResponse($response, 'gemini');
-    }
+		/**
+	 * Generate image from a prompt.
+	 *
+	 * @param string $prompt The image prompt.
+	 * @return string|int|false Image URL or data URI, HTTP error code, or false on failure.
+	 */
+	public function generateImage( $prompt ) {
+		$prompt = is_string( $prompt ) ? trim( $prompt ) : '';
+		if ( $prompt === '' ) {
+			return false;
+		}
 
-    private function generateClaudeContent($prompt, $model, $maxWords = 0) {
-        $model = $model ?: 'claude-3-opus-20240229';
-        if ($maxWords > 0) {
-            $prompt .= " The response must be approximately $maxWords words long. Do not include the word count or any meta-information about the length in the output.";
-        }
-        $url = 'https://api.anthropic.com/v1/messages';
+		$wp_ai_available = function_exists( 'wp_ai_client_prompt' );
+		$has_connector   = ConnectorsHelper::has_any_connector();
 
-        $data = [
-            'model' => $model,
-            'max_tokens' => 1024,
-            'messages' => [
-                ['role' => 'user', 'content' => $prompt]
-            ]
-        ];
+		if ( ! $wp_ai_available || ! $has_connector ) {
+			return false;
+		}
+		$result = $this->generate_image_via_wp_ai( $prompt );
+		return $result;
+	}
 
-        $headers = [
-            'x-api-key' => $this->apiKey,
-            'anthropic-version' => '2023-06-01',
-            'content-type' => 'application/json',
-        ];
+	/**
+	 * Generate image using WordPress AI Client.
+	 *
+	 * @param string $prompt The image prompt.
+	 * @return string|int|false Image URL or data URI, HTTP error code, or false.
+	 */
+	private function generate_image_via_wp_ai( $prompt ) {
+		$builder = wp_ai_client_prompt( $prompt );
+		if ( ConnectorsHelper::is_configured( 'openai' ) && method_exists( $builder, 'using_provider' ) ) {
+			$builder = $builder->using_provider( 'openai' );
+		}
 
-        $response = wp_remote_post($url, array(
-            'body' => json_encode($data),
-            'headers' => $headers,
-            'timeout' => 60,
-        ));
+		$supported = method_exists( $builder, 'is_supported_for_image_generation' ) && $builder->is_supported_for_image_generation();
 
-        return $this->processResponse($response, 'claude');
-    }
+		if ( ! $supported && ! ConnectorsHelper::is_configured( 'openai' ) ) {
+			return false;
+		}
 
-    private function processResponse($response, $provider) {
-        if (is_wp_error($response)) {
-            return "Error: " . $response->get_error_message();
-        }
+		$result = $builder->generate_image();
+		if ( is_wp_error( $result ) ) {
+			$code = $result->get_error_code();
+			return is_numeric( $code ) ? (int) $code : false;
+		}
 
-        $httpCode = wp_remote_retrieve_response_code($response);
-        $body = wp_remote_retrieve_body($response);
-        $decodedResponse = json_decode($body, true);
+		$url     = null;
+		$data_uri = null;
+		if ( is_object( $result ) && method_exists( $result, 'getUrl' ) ) {
+			$url = $result->getUrl();
+		}
+		if ( is_object( $result ) && method_exists( $result, 'getDataUri' ) ) {
+			$data_uri = $result->getDataUri();
+		}
+		if ( $url !== null && $url !== '' ) {
+			return $url;
+		}
+		if ( $data_uri !== null && $data_uri !== '' ) {
+			$file_url = $this->save_data_uri_to_upload( $data_uri );
+			return $file_url !== null ? $file_url : $data_uri;
+		}
+		return false;
+	}
 
-        if ($httpCode != 200) {
-            // Log error or return code
-            return "Error ($httpCode): " . $body;
-        }
-
-        switch ($provider) {
-            case 'openai':
-                return isset($decodedResponse['choices'][0]['message']['content']) ? $decodedResponse['choices'][0]['message']['content'] : false;
-            case 'gemini':
-                return isset($decodedResponse['candidates'][0]['content']['parts'][0]['text']) ? $decodedResponse['candidates'][0]['content']['parts'][0]['text'] : false;
-            case 'claude':
-                return isset($decodedResponse['content'][0]['text']) ? $decodedResponse['content'][0]['text'] : false;
-            default:
-                return false;
-        }
-    }
-
-    public function generateImage($prompt) {
-        $get_key =get_option('openAI_settings');
-        $this->apiKey = $get_key;
-        $data = [
-            'prompt' => $prompt,
-            'model' => 'dall-e-3',
-        ];
-
-        $headers = [
-            'Content-Type' => 'application/json',
-            'Authorization' => 'Bearer ' . $this->apiKey,
-        ];
-
-        $response = wp_remote_post($this->image_baseUrl, array(
-            'body' => json_encode($data),
-            'headers' => $headers,
-            'timeout' => 60,
-        ));
-        $httpCode = wp_remote_retrieve_response_code($response);
-        $decodedResponse = json_decode(wp_remote_retrieve_body($response), true);
-
-        if ($httpCode !== 200) {
-            return $httpCode;
-        }
-        if (isset($decodedResponse['data'][0]['url'])) {
-            return $decodedResponse['data'][0]['url'];
-        } else {
-            return false;
-        }
-    }
+	/**
+	 * Save data URI (base64 image) to WordPress uploads and return the URL.
+	 *
+	 * MediaHandling expects http/https URLs; data URIs are not supported.
+	 *
+	 * @param string $data_uri Data URI like data:image/png;base64,iVBORw0...
+	 * @return string|null File URL or null on failure.
+	 */
+	private function save_data_uri_to_upload( $data_uri ) {
+		if ( ! is_string( $data_uri ) || strpos( $data_uri, 'data:image' ) !== 0 ) {
+			return null;
+		}
+		if ( ! preg_match( '/^data:image\/(\w+);base64,(.+)$/', $data_uri, $m ) ) {
+			return null;
+		}
+		$ext    = strtolower( $m[1] );
+		$ext    = ( $ext === 'jpeg' ) ? 'jpg' : $ext;
+		$binary = base64_decode( $m[2], true );
+		if ( $binary === false || strlen( $binary ) < 100 ) {
+			return null;
+		}
+		$upload = wp_upload_dir();
+		if ( ! empty( $upload['error'] ) ) {
+			return null;
+		}
+		$subdir  = $upload['subdir'];
+		$basedir = $upload['basedir'];
+		$baseurl = $upload['baseurl'];
+		$dir     = $basedir . $subdir;
+		if ( ! wp_mkdir_p( $dir ) ) {
+			return null;
+		}
+		$filename = 'ai-' . uniqid() . '.' . $ext;
+		$filepath = $dir . '/' . $filename;
+		if ( file_put_contents( $filepath, $binary ) === false ) {
+			return null;
+		}
+		return $baseurl . $subdir . '/' . $filename;
+	}
 }

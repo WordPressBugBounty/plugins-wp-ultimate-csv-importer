@@ -15,6 +15,9 @@ class MediaHandling{
 	public $header_array;
 	public $value_array;
 
+	/** @var string Last image import failure (logs + detailed log messages). */
+	private static $last_image_import_failure = '';
+
 	public function __construct(){
 		
 		include_once(ABSPATH . 'wp-admin/includes/image.php');
@@ -26,16 +29,16 @@ class MediaHandling{
 	public static function imageOptions()
 	{
 		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
-		$media_settings['use_ExistingImage'] = sanitize_text_field($_POST['use_ExistingImage']);
-		$media_settings['overwriteImage'] = sanitize_text_field($_POST['overwriteImage']);
-		$media_settings['enable_postcontent_image'] = sanitize_text_field($_POST['postContent_image_option']);
-		$media_settings['newImage'] = sanitize_text_field($_POST['newImage']);
-		$media_settings['title'] = sanitize_text_field($_POST['title']);
-		$media_settings['caption'] = sanitize_text_field($_POST['caption']);
-		$media_settings['alttext'] = sanitize_text_field($_POST['alttext']);
-		$media_settings['description'] = sanitize_text_field($_POST['description']);
-		$media_settings['file_name'] = sanitize_text_field($_POST['file_name']);
-		$media_settings['media_handle_option'] = sanitize_text_field($_POST['media_handle_option']);
+		$media_settings['use_ExistingImage'] = sanitize_text_field($_POST['use_ExistingImage'] ?? '');
+		$media_settings['overwriteImage'] = sanitize_text_field($_POST['overwriteImage'] ?? '');
+		$media_settings['enable_postcontent_image'] = sanitize_text_field($_POST['postContent_image_option'] ?? '');
+		$media_settings['newImage'] = sanitize_text_field($_POST['newImage'] ?? '');
+		$media_settings['title'] = sanitize_text_field($_POST['title'] ?? '');
+		$media_settings['caption'] = sanitize_text_field($_POST['caption'] ?? '');
+		$media_settings['alttext'] = sanitize_text_field($_POST['alttext'] ?? '');
+		$media_settings['description'] = sanitize_text_field($_POST['description'] ?? '');
+		$media_settings['file_name'] = sanitize_text_field($_POST['file_name'] ?? '');
+		$media_settings['media_handle_option'] = sanitize_text_field($_POST['media_handle_option'] ?? '');
 		$image_info = array(
 			'media_settings'  => $media_settings
 		);
@@ -82,10 +85,24 @@ class MediaHandling{
 			}
 
 			$hash_key = MediaHandling::$smack_instance->convert_string2hash_key($zip_file_name);
-			$media_dir = wp_get_upload_dir();
 			$upload_dir = MediaHandling::$smack_instance->create_upload_dir();
 			$path = $upload_dir . $hash_key . '.zip';
-			$extract_path = $media_dir['path'] . '/';
+			$extract_base = $this->get_separate_import_images_dir();
+			if ($extract_base === '') {
+				$result['success'] = false;
+				$result['message'] = 'Upload directory is not available.';
+				echo wp_json_encode($result);
+				wp_die();
+			}
+			if (!is_dir($extract_base)) {
+				wp_mkdir_p($extract_base);
+			}
+			$index_php = trailingslashit($extract_base) . 'index.php';
+			if (!file_exists($index_php)) {
+				file_put_contents($index_php, "<?php\n");
+			}
+			@chmod($extract_base, 0755);
+			$extract_path = trailingslashit($extract_base);
 
 			if (file_exists($path)) {
 				chmod($path, 0777);
@@ -210,30 +227,35 @@ class MediaHandling{
 			return;
 		}
 	
-		// Get the media upload directory
+		$uploads = wp_upload_dir();
+		$basedir_real = !empty($uploads['basedir']) ? realpath($uploads['basedir']) : false;
+		$pool_abs = $this->get_separate_import_images_dir();
+		$pool_real = ($pool_abs !== '' && is_dir($pool_abs)) ? realpath($pool_abs) : false;
 		$media_dir = wp_get_upload_dir();
-		$upload_path = realpath($media_dir['path']); // Get absolute path
+		$upload_path_month = !empty($media_dir['path']) ? realpath($media_dir['path']) : false;
 	
-		if (!$upload_path) {
+		if (!$basedir_real) {
 			wp_send_json_error(['message' => 'Upload directory not found.'], 500);
 			return;
 		}
 	
 		foreach ($images as $image) {
-			// Sanitize the filename to prevent directory traversal
 			$deleteimage = sanitize_file_name(basename($image));
-			$file_path = realpath(trailingslashit($upload_path) . $deleteimage);
-	
-			// Ensure the file is inside the uploads directory
-			if (!$file_path || strpos($file_path, $upload_path) !== 0) {
+			$file_path = false;
+			if ($pool_real && is_dir($pool_real)) {
+				$file_path = realpath(trailingslashit($pool_real) . $deleteimage);
+			}
+			if ((!$file_path || !is_file($file_path)) && $upload_path_month) {
+				$file_path = realpath(trailingslashit($upload_path_month) . $deleteimage);
+			}
+			if (!$file_path || !is_file($file_path)) {
+				continue;
+			}
+			if (strpos($file_path, $basedir_real) !== 0) {
 				wp_send_json_error(['message' => 'Invalid file path.'], 403);
 				return;
 			}
-	
-			// Delete the file if it exists
-			if (file_exists($file_path) && is_file($file_path)) {
-				unlink($file_path);
-			}
+			unlink($file_path);
 			$result['success'] = 'true';
 		} 
 	}
@@ -249,8 +271,7 @@ class MediaHandling{
 	public function media_handling($img_url, $post_id, $data_array = null, $plugin = null, $import_type = null, $acf_wpname_element = null, $templatekey = null, $unikey = null, $unikey_name = null, $header_array = null, $value_array = null, $wpml_array = null, $image_metas = null, $line_number = null, $indexs = null, $acf_image_meta = null, $media_type = null, $media_id = null, $jet_child_object_id = null, $parent_object_id = null, $media_mode = null,$featured= false)
 	{
 		global $wpdb;
-		$encodedurl = urlencode($img_url);
-		$img_url = urldecode($encodedurl);
+		$img_url = trim(html_entity_decode(rawurldecode($img_url), ENT_QUOTES, 'UTF-8'));
 		$url = parse_url($img_url);
 		$media_handle = get_option('smack_image_options');
 		if (isset($url['scheme']) && ($url['scheme'] == 'http' || $url['scheme'] == 'https')) {
@@ -265,7 +286,8 @@ class MediaHandling{
 			$image_title = preg_replace('/\\.[^.\\s]{3,4}$/', '', $img_url);
 		}
 
-		if (strpos($img_url, 'wp-ultimate-csv-importer-pro/assets/images/loading-image.jpg') !== false) {
+		if (strpos($img_url, 'wp-ultimate-csv-importer-pro/assets/images/loading-image.jpg') !== false
+			|| strpos($img_url, 'wp-ultimate-csv-importer/assets/images/loading-image.jpg') !== false) {
 			$existing_loading_image_id = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_name LIKE 'loading-image%' AND guid LIKE '%loading-image%' ", ARRAY_A);
 			if (!empty($existing_loading_image_id[0]['ID'])) {
 				$attach_id = $existing_loading_image_id[0]['ID'];
@@ -390,6 +412,8 @@ class MediaHandling{
 						}
 					}
 				}
+			} else {
+				$attach_id = $this->image_function($img_url, $post_id, $data_array, '', '', $header_array, $value_array, [], $unikey, $image_metas, $line_number, $plugin, $import_type, $acf_wpname_element, $templatekey, $indexs, $acf_image_meta, $media_type, $media_id, $jet_child_object_id, $parent_object_id, $media_mode, $featured);
 			}
 		}
 		$attach_id = isset($attach_id) ? $attach_id : '';
@@ -438,9 +462,407 @@ class MediaHandling{
 		return $post_author;
 	}
 
+	public static function get_last_image_import_failure()
+	{
+		return self::$last_image_import_failure;
+	}
+
+	private static function set_last_image_import_failure($message)
+	{
+		self::$last_image_import_failure = (string) $message;
+	}
+
+	private function normalize_image_source_value($raw)
+	{
+		if ($raw === null || $raw === '') {
+			return '';
+		}
+		$s = trim(wp_unslash((string) $raw));
+		$s = html_entity_decode(rawurldecode($s), ENT_QUOTES, 'UTF-8');
+		$s = trim(str_replace(array("\0"), '', $s));
+		if ($s === '') {
+			return '';
+		}
+		if (preg_match('/[,|;]/', $s)) {
+			$parts = preg_split('/\s*[,|;]+\s*/', $s, -1, PREG_SPLIT_NO_EMPTY);
+			if (!empty($parts[0])) {
+				$s = trim($parts[0]);
+			}
+		}
+		return trim($s);
+	}
+
+	/**
+	 * Make a value usable with wp_remote_get: add https for www/host-only URLs, reject invalid.
+	 */
+	private function normalize_url_for_http_request($url)
+	{
+		if ($url === null) {
+			return '';
+		}
+		$url = trim((string) $url);
+		$url = trim($url, " \t\n\r\0\x0B\"'<>");
+		if ($url === '') {
+			return '';
+		}
+		if (preg_match('#^//#', $url)) {
+			$url = 'https:' . $url;
+		} elseif (preg_match('#^www\.#i', $url)) {
+			$url = 'https://' . $url;
+		} elseif (!preg_match('#^https?://#i', $url)) {
+			// Use ~ delimiter: a literal # in the pattern must not close a #-delimited regex.
+			$no_path = (strpos($url, '/') === false && strpos($url, '?') === false && strpos($url, '#') === false);
+			$looks_like_filename = $no_path && preg_match('~\.(jpe?g|png|gif|webp|svg|bmp|ico|avif|tiff?|pdf|mp4|mp3|zip)$~i', $url);
+			if (!$looks_like_filename && preg_match('~^[a-z0-9][a-z0-9.-]*\.[a-z]{2,}(/|\?|#|$)~i', $url)) {
+				$url = 'https://' . $url;
+			}
+		}
+		if (!preg_match('#^https?://#i', $url)) {
+			return '';
+		}
+		if (function_exists('wp_http_validate_url') && !wp_http_validate_url($url)) {
+			return '';
+		}
+		return $url;
+	}
+
+	/**
+	 * Turn relative image paths from HTML into absolute http(s) URLs using a base URL.
+	 */
+	private function resolve_relative_image_url($relative, $base_url)
+	{
+		$relative = trim((string) $relative);
+		if ($relative === '') {
+			return '';
+		}
+		$base_url = str_replace('%20', ' ', rawurldecode($base_url));
+		if (preg_match('#^https?://#i', $relative)) {
+			return $this->normalize_url_for_http_request($relative);
+		}
+		if (preg_match('#^//#', $relative)) {
+			return $this->normalize_url_for_http_request($relative);
+		}
+		$base = wp_parse_url($base_url);
+		if (empty($base['scheme']) || empty($base['host'])) {
+			return '';
+		}
+		$host = $base['host'];
+		if (!empty($base['port'])) {
+			$host .= ':' . $base['port'];
+		}
+		if (isset($relative[0]) && $relative[0] === '/') {
+			return $this->normalize_url_for_http_request($base['scheme'] . '://' . $host . $relative);
+		}
+		$path = isset($base['path']) ? $base['path'] : '/';
+		$path = trailingslashit(preg_replace('#/[^/]*$#', '/', $path));
+		return $this->normalize_url_for_http_request($base['scheme'] . '://' . $host . $path . $relative);
+	}
+
+	/**
+	 * Stable directory for images uploaded via the plugin UI (ZIP separate from CSV).
+	 */
+	private function get_separate_import_images_dir()
+	{
+		$uploads = wp_upload_dir();
+		if (!empty($uploads['error']) || empty($uploads['basedir'])) {
+			return '';
+		}
+		return wp_normalize_path($uploads['basedir'] . '/smack_uci_uploads/import_images');
+	}
+
+	private function find_basename_under_dir($dir, $basename)
+	{
+		if ($dir === '' || $basename === '' || $basename === '.' || $basename === '..') {
+			return '';
+		}
+		$dir = wp_normalize_path(trailingslashit($dir));
+		if (!is_dir($dir) || !is_readable($dir)) {
+			return '';
+		}
+		$try = $dir . $basename;
+		if (is_file($try) && is_readable($try)) {
+			return wp_normalize_path($try);
+		}
+		$scan = @scandir($dir);
+		if (!is_array($scan)) {
+			return '';
+		}
+		$want_lower = strtolower($basename);
+		foreach ($scan as $ent) {
+			if ($ent === '.' || $ent === '..') {
+				continue;
+			}
+			if (strtolower($ent) !== $want_lower) {
+				continue;
+			}
+			$cand_path = $dir . $ent;
+			if (is_file($cand_path) && is_readable($cand_path)) {
+				return wp_normalize_path($cand_path);
+			}
+		}
+		return '';
+	}
+
+	private function find_uploaded_image_file($candidate, $import_hash_key = null)
+	{
+		if ($candidate === null || $candidate === '') {
+			return '';
+		}
+		$candidate = str_replace('\\', '/', trim($candidate));
+		$candidate = preg_replace('/[?#].*$/', '', $candidate);
+
+		$uploads = wp_upload_dir();
+		if (!empty($uploads['error']) || empty($uploads['basedir'])) {
+			return '';
+		}
+		$basedir = wp_normalize_path(trailingslashit($uploads['basedir']));
+
+		if (preg_match('#^https?://#i', $candidate)) {
+			$uploads_url = $uploads['baseurl'];
+			$url_path = (string) wp_parse_url($candidate, PHP_URL_PATH);
+			$uploads_path = (string) wp_parse_url($uploads_url, PHP_URL_PATH);
+			if ($uploads_path !== '' && $url_path !== '' && strpos($url_path, $uploads_path) !== false) {
+				$rel = substr($url_path, strpos($url_path, $uploads_path) + strlen($uploads_path));
+				$rel = ltrim(str_replace('\\', '/', $rel), '/');
+				$abs = wp_normalize_path($basedir . $rel);
+				if (is_file($abs) && is_readable($abs)) {
+					return $abs;
+				}
+			}
+			return '';
+		}
+
+		$maybe = wp_normalize_path($candidate);
+		if (preg_match('#^/#', $maybe) || preg_match('#^[A-Za-z]:/#', $maybe)) {
+			if (strpos($maybe, $basedir) === 0 && is_file($maybe) && is_readable($maybe)) {
+				return $maybe;
+			}
+		}
+
+		$rel = ltrim($candidate, '/');
+		$direct = wp_normalize_path($basedir . $rel);
+		if (is_file($direct) && is_readable($direct)) {
+			return $direct;
+		}
+
+		$basename = basename($candidate);
+		if ($basename === '' || $basename === '.' || $basename === '..') {
+			return '';
+		}
+
+		$pool_dir = $this->get_separate_import_images_dir();
+		if ($pool_dir !== '') {
+			$found = $this->find_basename_under_dir($pool_dir, $basename);
+			if ($found !== '') {
+				return $found;
+			}
+		}
+
+		if ($import_hash_key !== null && $import_hash_key !== '') {
+			$key = preg_replace('/[^a-fA-F0-9]/', '', (string) $import_hash_key);
+			if ($key !== '') {
+				$import_dir = wp_normalize_path(trailingslashit($basedir . 'smack_uci_uploads/imports/' . $key));
+				$found = $this->find_basename_under_dir($import_dir, $basename);
+				if ($found !== '') {
+					return $found;
+				}
+			}
+		}
+
+		if (!empty($uploads['path'])) {
+			$p = wp_normalize_path(trailingslashit($uploads['path']) . $basename);
+			if (is_file($p) && is_readable($p)) {
+				return $p;
+			}
+		}
+
+		$root_try = wp_normalize_path($basedir . $basename);
+		if (is_file($root_try) && is_readable($root_try)) {
+			return $root_try;
+		}
+
+		$patterns = array(
+			$basedir . '*/' . $basename,
+			$basedir . '*/*/' . $basename,
+			$basedir . '*/*/*/' . $basename,
+			$basedir . '*/*/*/*/' . $basename,
+		);
+		foreach ($patterns as $pattern) {
+			$hits = glob($pattern, GLOB_NOSORT);
+			if (!empty($hits) && is_file($hits[0]) && is_readable($hits[0])) {
+				return wp_normalize_path($hits[0]);
+			}
+		}
+
+		return '';
+	}
+
+	private function file_path_to_uploads_url($absolute_path)
+	{
+		$uploads = wp_upload_dir();
+		if (!empty($uploads['error']) || empty($uploads['basedir']) || empty($uploads['baseurl'])) {
+			return '';
+		}
+		$abs = wp_normalize_path($absolute_path);
+		$base = wp_normalize_path(trailingslashit($uploads['basedir']));
+		if (strpos($abs, $base) !== 0) {
+			return '';
+		}
+		$rel = ltrim(str_replace('\\', '/', substr($abs, strlen($base))), '/');
+		return trailingslashit($uploads['baseurl']) . implode('/', array_map('rawurlencode', explode('/', $rel)));
+	}
+
+	private function stage_local_image_to_path($source_abs, $dest_abs)
+	{
+		$source_abs = wp_normalize_path($source_abs);
+		$dest_abs = wp_normalize_path($dest_abs);
+		if ($source_abs === $dest_abs && is_file($source_abs)) {
+			return $dest_abs;
+		}
+		if (!is_file($source_abs) || !is_readable($source_abs)) {
+			return '';
+		}
+		$dir = dirname($dest_abs);
+		if (!wp_mkdir_p($dir)) {
+			return '';
+		}
+		$final = $dest_abs;
+		if (is_file($final)) {
+			$final = trailingslashit($dir) . wp_unique_filename($dir, basename($final));
+		}
+		if (!@copy($source_abs, $final)) {
+			return '';
+		}
+		return wp_normalize_path($final);
+	}
+
+	/**
+	 * Copy a resolved uploads path into the import target and create or update the attachment.
+	 *
+	 * @param string $local_source_abs Absolute path from find_uploaded_image_file().
+	 * @param string $disk_path        Target path under uploads (e.g. .../2026/04/file.jpg).
+	 * @return int|null                Attachment ID or null on failure.
+	 */
+	private function finish_image_from_local_disk($local_source_abs, $disk_path, $uploaddir_url, $f_img, $post_id, $data_array, $media_handle, $header_array, $value_array, $featured, $media_type, $plugin, $media_id)
+	{
+		global $wpdb;
+
+		$disk_path = (string) $disk_path;
+		if ($local_source_abs === '' || $disk_path === '') {
+			self::set_last_image_import_failure('Local file missing under uploads or invalid destination path. Value: ' . $f_img);
+			return null;
+		}
+		$staged = $this->stage_local_image_to_path($local_source_abs, $disk_path);
+		if ($staged === '') {
+			self::set_last_image_import_failure('Could not copy local image into the uploads directory (permissions or disk).');
+			return null;
+		}
+		$disk_path = $staged;
+		$fimg_name = basename($staged);
+		$file_type = wp_check_filetype($disk_path);
+		if (empty($file_type['type']) || empty($file_type['ext'])) {
+			$dims = @getimagesize($disk_path);
+			if (!empty($dims['mime'])) {
+				$file_type['type'] = $dims['mime'];
+			}
+			$ft2 = wp_check_filetype($disk_path);
+			if (empty($file_type['ext']) && !empty($ft2['ext'])) {
+				$file_type['ext'] = $ft2['ext'];
+			}
+		}
+		if (empty($file_type['type'])) {
+			$file_type['type'] = 'image/jpeg';
+		}
+		$attachment_title = sanitize_file_name(pathinfo($fimg_name, PATHINFO_FILENAME));
+		$guid_for_post = $this->file_path_to_uploads_url($disk_path);
+		if ($guid_for_post === '') {
+			$guid_for_post = $uploaddir_url . '/' . $fimg_name;
+		}
+		if ($plugin == 'Media' && !empty($media_id)) {
+			$attach_id = $media_id;
+			$post_info = array('ID' => $attach_id, 'post_title' => $attachment_title);
+			wp_update_post($post_info);
+			$wpdb->update($wpdb->posts, array('guid' => $guid_for_post), array('ID' => $attach_id), array('%s'), array('%d'));
+			update_attached_file($attach_id, $disk_path);
+			$attach_data = wp_generate_attachment_metadata($attach_id, $disk_path);
+			wp_update_attachment_metadata($attach_id, $attach_data);
+		} else {
+			$post_info = array(
+				'guid' => $guid_for_post,
+				'post_mime_type' => $file_type['type'],
+				'post_title' => $attachment_title,
+				'post_content' => '',
+				'post_status' => 'inherit',
+				'post_author' => $data_array['post_author'],
+			);
+			$attach_id = wp_insert_attachment($post_info, $disk_path, $post_id);
+			$attach_data = wp_generate_attachment_metadata($attach_id, $disk_path);
+			wp_update_attachment_metadata($attach_id, $attach_data);
+		}
+		if (!empty($data_array['featured_image'])) {
+			set_post_thumbnail($post_id, $attach_id);
+		}
+
+		if (strpos($f_img, 'loading-image.jpg') !== false) {
+		} else {
+			$this->imageMetaImport($attach_id, $media_handle, $header_array, $value_array, $featured, $media_type);
+		}
+		return (int) $attach_id;
+	}
+
+	private function remote_get_with_retries($url, $args, $max_attempts = 3)
+	{
+		$url = $this->normalize_url_for_http_request($url);
+		if ($url === '') {
+			return new \WP_Error('http_request_failed', 'A valid URL was not provided.');
+		}
+		$last = null;
+		$response = null;
+		for ($i = 0; $i < $max_attempts; $i++) {
+			if ($i > 0) {
+				usleep(350000 * $i);
+			}
+			$response = wp_remote_get($url, $args);
+			if (is_wp_error($response)) {
+				$last = $response;
+				continue;
+			}
+			$code = (int) wp_remote_retrieve_response_code($response);
+			if ($code >= 200 && $code < 300) {
+				return $response;
+			}
+			if (in_array($code, array(429, 500, 502, 503, 504), true)) {
+				$last = $response;
+				continue;
+			}
+			return $response;
+		}
+		return is_wp_error($last) ? $last : (isset($response) ? $response : new \WP_Error('http_request_failed', 'No response'));
+	}
+
 	public function image_function($f_img, $post_id, $data_array = null, $option_name = null, $use_existing_image = false, $header_array = null, $value_array = null, $wpml_array = null, $unikey = null, $image_metas = null, $line_number = null, $plugin = null, $import_type = null, $acf_wpname_element = null, $hashkey = null, $indexs = null, $acf_image_meta = null, $media_type = null, $media_id = null, $jet_child_object_id = null, $parent_object_id = null, $media_mode = null,$featured = false)
 	{
 		global $wpdb;
+
+		self::set_last_image_import_failure('');
+		$f_img = $this->normalize_image_source_value($f_img);
+		if ($f_img === '') {
+			self::set_last_image_import_failure('Empty image field after trim/decode.');
+			return null;
+		}
+
+		$local_source_abs = '';
+		$uploads_for_local = wp_upload_dir();
+		$uploads_baseurl = isset($uploads_for_local['baseurl']) ? $uploads_for_local['baseurl'] : '';
+
+		$allowed_extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'pdf', 'mp4', 'mp3', 'zip', 'svg');
+		$file_ext = strtolower(pathinfo($f_img, PATHINFO_EXTENSION));
+		if (!empty($file_ext) && !in_array($file_ext, $allowed_extensions)) {
+			self::set_last_image_import_failure('Unsupported file extension: ' . $file_ext);
+			return null;
+		}
+
+		$user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36';
 		if (isset($data_array['post_author'])) {
 			$data_array['post_author'] = $this->getAuthor($data_array['post_author']);
 		} else {
@@ -452,8 +874,21 @@ class MediaHandling{
 			}
 		}
 		$media_handle = get_option('smack_image_options');
+		if (!is_array($media_handle)) {
+			$media_handle = array('media_settings' => array());
+		}
+		if (!isset($media_handle['media_settings']) || !is_array($media_handle['media_settings'])) {
+			$media_handle['media_settings'] = array();
+		}
 		$media_settings = [];
 		if (!empty($header_array) && !empty($value_array)) {
+			if (count($header_array) !== count($value_array)) {
+				if (count($value_array) < count($header_array)) {
+					$value_array = array_pad($value_array, count($header_array), '');
+				} else {
+					$value_array = array_slice($value_array, 0, count($header_array));
+				}
+			}
 			$media_settings = array_combine($header_array, $value_array);
 		} else {
 			if (!empty($unikey) && !is_array($unikey)) {
@@ -461,6 +896,13 @@ class MediaHandling{
 				if (!empty($get_array_value)) {
 					$header_array = $get_array_value['header_array'];
 					$value_array = $get_array_value['value_array'];
+					if (count($header_array) !== count($value_array)) {
+						if (count($value_array) < count($header_array)) {
+							$value_array = array_pad($value_array, count($header_array), '');
+						} else {
+							$value_array = array_slice($value_array, 0, count($header_array));
+						}
+					}
 					$media_settings = array_combine($header_array, $value_array);
 				}
 			}
@@ -473,26 +915,26 @@ class MediaHandling{
 			$alttext['_wp_postcontent_image_alt'] = $media_handle['postcontent_image_alt'];
 		}
 
-		if (preg_match_all('/\b(?:(?:https?|http|ftp|file):\/\/|www\.|ftp\.)[-A-Z0-9+&@#\/%=~_|$?!:,.]*[A-Z0-9+&@#\/%=~_|$]/i', $f_img, $matchedlist, PREG_PATTERN_ORDER)) {
+		$is_url_like = (bool) preg_match_all('/\b(?:(?:https?|http|ftp|file):\/\/|www\.|ftp\.)[-A-Z0-9+&@#\/%=~_|$?!:,.]*[A-Z0-9+&@#\/%=~_|$]/i', $f_img, $matchedlist, PREG_PATTERN_ORDER);
+		if ($is_url_like) {
 			$f_img = trim($f_img);
-		} else {
-			$media_dir = wp_get_upload_dir();
-			$names = glob($media_dir['path'] . '/' . '*.*');
-			foreach ($names as $values) {
-				if (!empty($f_img) && strpos($values, $f_img) !== false) {
-
-					if (!empty($media_handle['media_settings']['file_name'])) {
-						$file_type = wp_check_filetype($f_img, null);
-						if (pathinfo($media_handle['media_settings']['file_name'], PATHINFO_EXTENSION) !== $file_type['ext']) {
-							$fimg_name = $media_handle['media_settings']['file_name'] . '.' . $file_type['ext'];
-						} else {
-							$fimg_name = $media_handle['media_settings']['file_name'];
-						}
-						$f_img = $media_dir['url'] . '/' . $fimg_name;
-					} else {
-						$f_img = $media_dir['url'] . '/' . $f_img;
-					}
+			$local_source_abs = $this->find_uploaded_image_file($f_img, $hashkey);
+			if ($local_source_abs !== '') {
+				$built = $this->file_path_to_uploads_url($local_source_abs);
+				if ($built !== '') {
+					$f_img = $built;
 				}
+			}
+		} else {
+			$local_source_abs = $this->find_uploaded_image_file($f_img, $hashkey);
+			if ($local_source_abs !== '') {
+				$built = $this->file_path_to_uploads_url($local_source_abs);
+				if ($built !== '') {
+					$f_img = $built;
+				}
+			} elseif (!$use_existing_image) {
+				self::set_last_image_import_failure('Local image not found under uploads (searched basename and YYYY/MM folders): ' . $f_img);
+				return null;
 			}
 		}
 		$image_name = pathinfo($f_img);
@@ -646,8 +1088,17 @@ class MediaHandling{
 			$uploaddir_paths = $dir['basedir'] . '/' . $dirname;
 			$uploaddir_url = $dir['baseurl'] . '/' . $dirname;
 		} else {
-			$uploaddir_paths = $dir['basedir'];
-			$uploaddir_url = $dir['baseurl'];
+
+			$parsed_url = parse_url($f_img, PHP_URL_PATH);
+
+			if (preg_match('#/uploads/(\d{4}/\d{2})/#', (string) $parsed_url, $matches)) {
+				$dirname = $matches[1];
+			} else {
+				$dirname = date('Y') . '/' . date('m');
+			}
+			$uploaddir_paths = $dir['basedir'] . '/' . $dirname;
+			$uploaddir_url = $dir['baseurl'] . '/' . $dirname;
+
 		}
 		$f_img = str_replace(" ", "%20", $f_img);
 		if (!empty($media_handle['media_settings']['file_name']) && isset($media_handle['media_settings']['file_name'])) {
@@ -683,22 +1134,26 @@ class MediaHandling{
 		// if ($uploaddir_paths != "" && $uploaddir_paths) {
 		// 	$uploaddir_path = $uploaddir_paths . "/" . $fimg_name;
 		// }
+		$response = null;
+		$rawdata = '';
+		$fetch_url = null;
 		if (strstr($f_img, 'https://drive.google.com')) {
 
 			if (strstr($f_img, 'https://drive.google.com/uc?export=download&id')) {
 				$rawdata = file_get_contents($f_img);
-			}
-			else if (strpos($f_img, 'https://drive.google.com/file/d/') !== false) {
-				// Extract the file ID using string functions
-				$file_id_start = strpos($f_img, '/d/') + 3; // Find position after '/d/'
-				$file_id_end = strpos($f_img, '/view', $file_id_start); // Find position of '/view'
+			} else if (strpos($f_img, 'https://drive.google.com/file/d/') !== false) {
+				$file_id_start = strpos($f_img, '/d/') + 3;
+				$file_id_end = strpos($f_img, '/view', $file_id_start);
 				$file_id = substr($f_img, $file_id_start, $file_id_end - $file_id_start);
 				$f_img = "https://drive.google.com/uc?export=download&id=$file_id";
-				//$response = wp_remote_get($f_img);
-				$response = wp_remote_get($f_img, array('timeout' => 30));
+				$drive_dl = $this->normalize_url_for_http_request($f_img);
+				if ($drive_dl === '') {
+					self::set_last_image_import_failure('Invalid Google Drive download URL.');
+					return null;
+				}
+				$response = wp_remote_get($drive_dl, array('timeout' => 30));
 				$rawdata = wp_remote_retrieve_body($response);
-			}
-			 else {
+			} else {
 				$page_content = file_get_contents($f_img);
 				if (empty($page_content)) {
 					preg_match('~/d/\K[^/]+(?=/)~', $f_img, $result_id);
@@ -714,55 +1169,34 @@ class MediaHandling{
 							$meta_val = $meta->getAttribute('content');
 						}
 					}
+					$meta_val = $this->normalize_url_for_http_request($meta_val);
+					if ($meta_val === '') {
+						self::set_last_image_import_failure('Google Drive page did not provide a usable og:image URL.');
+						return null;
+					}
 					$ch = curl_init($meta_val);
 					curl_setopt($ch, CURLOPT_HEADER, 0);
 					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 					curl_setopt($ch, CURLOPT_BINARYTRANSFER, 1);
 					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 					$rawdata = curl_exec($ch);
-
-					// if(empty($rawdata)){
-					// 	preg_match('~/d/\K[^/]+(?=/)~', $f_img, $result_id);
-					// 	$image_link_id = isset($result_id[0]) ? $result_id[0] : $f_img;	
-					// 	$image_link = 'https://drive.google.com/uc?export=download&id=' . $image_link_id;
-					// 	$rawdata = file_get_contents($image_link);	
-					// }
 				}
 			}
-		} elseif (isset($media_dir['url']) && strstr($f_img, $media_dir['url'])) {
-			if ($plugin == 'Media' && !empty($media_id)) { // write update media
-				$attach_id = $media_id;
-				$post_info = array('ID' => $attach_id, 'post_title'   => $attachment_title);
-				wp_update_post($post_info);
-				$new_guid = $uploaddir_url . '/' . $fimg_name;
-				$wpdb->update($wpdb->posts, array('guid' => $new_guid), array('ID' => $attach_id), array('%s'), array('%d'));
-				update_attached_file($attach_id, $uploaddir_path);
-				$attach_data = wp_generate_attachment_metadata($attach_id, $uploaddir_path);
-				wp_update_attachment_metadata($attach_id, $attach_data);
-			} else {
-				$post_info = array(
-					'guid'           => $uploaddir_url . "/" .  $fimg_name,
-					'post_mime_type' => $file_type['type'],
-					'post_title'     => $attachment_title,
-					'post_content'   => '',
-					'post_status'    => 'inherit',
-					'post_author'  => $data_array['post_author']
-				);
-				$attach_id = wp_insert_attachment($post_info, $uploaddir_path, $post_id);
-				$attach_data = wp_generate_attachment_metadata($attach_id, $uploaddir_path);
-				wp_update_attachment_metadata($attach_id,  $attach_data);
+		} elseif (
+			$local_source_abs !== ''
+			|| (!empty($dir['baseurl']) && stripos($f_img, $dir['baseurl']) !== false)
+		) {
+			if ($local_source_abs === '') {
+				$local_source_abs = $this->find_uploaded_image_file(str_replace('%20', ' ', rawurldecode($f_img)), $hashkey);
 			}
-			if (!empty($data_array['featured_image'])) {
-				set_post_thumbnail($post_id, $attach_id);
-			}
-
-			if (strpos($f_img, 'loading-image.jpg') !== FALSE) {
-			} else {
-				$this->imageMetaImport($attach_id, $media_handle, $header_array, $value_array,$featured, $media_type);
+			$disk_path = isset($uploaddir_path) ? $uploaddir_path : '';
+			$attach_id = $this->finish_image_from_local_disk($local_source_abs, $disk_path, $uploaddir_url, $f_img, $post_id, $data_array, $media_handle, $header_array, $value_array, $featured, $media_type, $plugin, $media_id);
+			if ($attach_id === null) {
+				return null;
 			}
 			return $attach_id;
 		} else if (strstr($f_img, 'https://www.dropbox.com/')) {
-			$page_content   = file_get_contents($f_img);
+			$page_content = file_get_contents($f_img);
 			$dom_obj = new \DOMDocument();
 			$dom_obj->loadHTML($page_content);
 			$meta_val = null;
@@ -771,42 +1205,103 @@ class MediaHandling{
 					$meta_val = $meta->getAttribute('content');
 				}
 			}
-			$response = wp_remote_get($meta_val);
-			$rawdata =  wp_remote_retrieve_body($response);
+			$meta_val = $this->normalize_url_for_http_request($meta_val);
+			if ($meta_val === '') {
+				self::set_last_image_import_failure('Dropbox (or similar) page did not return a usable og:image URL for download.');
+				return null;
+			}
+			usleep(500000);
+			$response = $this->remote_get_with_retries($meta_val, array(
+				'timeout' => 60,
+				'user-agent' => $user_agent,
+				'sslverify' => apply_filters('smack_csv_importer_image_download_sslverify', true, $f_img),
+				'redirection' => 5,
+			));
+			$rawdata = is_wp_error($response) ? '' : wp_remote_retrieve_body($response);
 		} else {
-			if ($file_type['ext'] == 'jpeg' || $file_type['ext'] == 'jpg' || $file_type['ext'] == 'bmp') {
-				$response = wp_remote_get($f_img, array('timeout' => 120));
-			} 
-			else if ($file_type['ext'] == 'gif') {
-				$response = wp_remote_get($f_img, array('timeout' => 300));
+			usleep(500000);
+			$fetch_url = $this->normalize_url_for_http_request(str_replace('%20', ' ', rawurldecode($f_img)));
+			if ($fetch_url === '') {
+				$decoded_f = str_replace('%20', ' ', rawurldecode($f_img));
+				$fallback_abs = $this->find_uploaded_image_file($decoded_f, $hashkey);
+				if ($fallback_abs !== '') {
+					$disk_path_fb = isset($uploaddir_path) ? $uploaddir_path : '';
+					$attach_id_fb = $this->finish_image_from_local_disk($fallback_abs, $disk_path_fb, $uploaddir_url, $f_img, $post_id, $data_array, $media_handle, $header_array, $value_array, $featured, $media_type, $plugin, $media_id);
+					if ($attach_id_fb !== null) {
+						return $attach_id_fb;
+					}
+					return null;
+				}
+				self::set_last_image_import_failure('External image value is not a valid HTTP(S) URL. Add https:// or use a full URL (e.g. https://example.com/image.jpg). If the file is on this server, put it under wp-content/uploads (same basename) or switch image import to Local. Value: ' . $f_img);
+				return null;
 			}
-			else if ($file_type['ext'] == 'mp4') {
-				$response = wp_remote_get($f_img, array('timeout' => 120));
+			$f_img = str_replace(' ', '%20', $fetch_url);
+			$ext = isset($file_type['ext']) ? $file_type['ext'] : '';
+			if ($ext == 'jpeg' || $ext == 'jpg' || $ext == 'bmp') {
+				$timeout = 120;
+			} elseif ($ext == 'gif' || $ext == 'pdf') {
+				$timeout = 300;
+			} elseif ($ext == 'mp4') {
+				$timeout = 120;
 			} else {
-				$response = wp_remote_get($f_img, array('timeout' => 60));
+				$timeout = 60;
 			}
-
-			$rawdata =  wp_remote_retrieve_body($response);
+			$req_args = array(
+				'timeout' => $timeout,
+				'user-agent' => $user_agent,
+				'sslverify' => apply_filters('smack_csv_importer_image_download_sslverify', true, $fetch_url),
+				'redirection' => 5,
+			);
+			$response = $this->remote_get_with_retries($fetch_url, $req_args);
+			$rawdata = is_wp_error($response) ? '' : wp_remote_retrieve_body($response);
 		}
-		$http_code = wp_remote_retrieve_response_code($response);
+		$http_code = 0;
+		if (is_wp_error($response)) {
+			self::set_last_image_import_failure('Download failed: ' . $response->get_error_message());
+			return null;
+		}
+		if ($response !== null) {
+			$http_code = (int) wp_remote_retrieve_response_code($response);
+		}
+		if ($http_code === 0 && is_string($rawdata) && $rawdata !== '') {
+			$http_code = 200;
+		}
 		if (strpos($rawdata, '<img src=') !== false) {
 			$raw_file = explode('<img src', $rawdata);
 			$urls = rtrim(end($raw_file), '>');
 			$urls = ltrim($urls, '=');
-			$urls = str_replace(' ', '', $urls);
-			//$rawdata=file_get_contents($urls);
-			$response = wp_remote_get($urls, array('timeout' => 50));
-			$rawdata =  wp_remote_retrieve_body($response);
-			$http_code = wp_remote_retrieve_response_code($response);
+			$urls = str_replace(array(' ', '"', "'"), '', $urls);
+			$resolve_base = ($fetch_url !== null && $fetch_url !== '') ? $fetch_url : str_replace('%20', ' ', rawurldecode($f_img));
+			$urls = $this->resolve_relative_image_url($urls, $resolve_base);
+			if ($urls === '') {
+				self::set_last_image_import_failure('Could not resolve image URL from HTML response.');
+				return null;
+			}
+			usleep(500000);
+			$response = $this->remote_get_with_retries($urls, array(
+				'timeout' => 60,
+				'user-agent' => $user_agent,
+				'sslverify' => apply_filters('smack_csv_importer_image_download_sslverify', true, $urls),
+				'redirection' => 5,
+			));
+			if (is_wp_error($response)) {
+				self::set_last_image_import_failure('Secondary image URL fetch failed: ' . $response->get_error_message());
+				return null;
+			}
+			$rawdata = wp_remote_retrieve_body($response);
+			$http_code = (int) wp_remote_retrieve_response_code($response);
 		}
-		if ($http_code == 404 || $http_code == 403 || $http_code == 500 || $http_code == 401 || $http_code == 408 || $http_code == 502 || $http_code == 503 || $http_code == 504) {
+		if ($http_code >= 400 && $http_code < 600) {
+			self::set_last_image_import_failure('HTTP status ' . $http_code . ' when downloading image.');
 			return null;
 		}
-		if ($http_code != 200 && strpos($rawdata, 'Not Found') != 0) {
+		if ($http_code > 0 && $http_code < 200) {
+			self::set_last_image_import_failure('Unexpected HTTP status ' . $http_code . ' when downloading image.');
 			return null;
 		}
 
-		if ($rawdata == false) {
+		if ($rawdata === false || $rawdata === '') {
+			self::set_last_image_import_failure('Empty response body when downloading image.');
 			return null;
 		} else {
 			if ($plugin == 'Media' && !empty($media_id)) {
@@ -830,12 +1325,24 @@ class MediaHandling{
 					}
 				}
 			}
-			$fp = fopen($uploaddir_path, 'x');
-			if ($fp === false) {
+
+			$directory_path = dirname($uploaddir_path);
+			if (!file_exists($directory_path)) {
+				wp_mkdir_p($directory_path);
+			}
+			$fp = @fopen($uploaddir_path, 'x');
+			if ($fp === false && !empty($uploaddir_paths) && is_file($uploaddir_path)) {
+				$uploaddir_path = trailingslashit($uploaddir_paths) . wp_unique_filename($uploaddir_paths, basename($uploaddir_path));
+				$fimg_name = basename($uploaddir_path);
+				$fp = @fopen($uploaddir_path, 'x');
+			}
+			if ($fp !== false) {
+				fwrite($fp, $rawdata);
+				fclose($fp);
+			} else {
+				self::set_last_image_import_failure('Could not write downloaded file to uploads (exists or permissions). Path: ' . $uploaddir_path);
 				return null;
 			}
-			fwrite($fp, $rawdata);
-			fclose($fp);
 		}
 
 		if (empty($file_type['type'])) {
@@ -1435,9 +1942,14 @@ class MediaHandling{
 	public function handle_media_image($acf_csv_name, $post_id, $post_values, $plugin, $get_import_type, $acf_wpname_element, $hash_key, $header_array, $value_array, $line_number, $indexs, $media_type, $uploaddir_url, $fimg_name, $file_type, $uploaddir_path)
 	{
 		$media_handle = get_option('smack_image_options');
+		self::set_last_image_import_failure('');
 		$attach_id = $this->media_handling($acf_csv_name, $post_id, $post_values, $plugin, $get_import_type, $acf_wpname_element, $hash_key, '', '', $header_array, $value_array, '', '', $line_number, $indexs, '', $media_type);
 		if (!empty($attach_id)) {
 			return $attach_id;
+		}
+
+		if (self::get_last_image_import_failure() === '') {
+			self::set_last_image_import_failure('No attachment was created. Verify the file exists under Media uploads or the URL is reachable.');
 		}
 
 		$post_info = array(
@@ -1450,9 +1962,7 @@ class MediaHandling{
 		);
 		$attach_id = wp_insert_attachment($post_info, $uploaddir_path, $post_id);
 		if (!empty($media_handle)) {
-			$media_handle['media_settings']['title'] = 'image-failed';
-			update_option('smack_image_options', $media_handle);
-			$this->imageMetaImport($attach_id, $media_handle, $header_array, $value_array,'',$media_type);
+			$this->imageMetaImport($attach_id, $media_handle, $header_array, $value_array, '', $media_type);
 		}
 		return $attach_id;
 	}

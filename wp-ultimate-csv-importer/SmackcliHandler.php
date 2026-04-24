@@ -114,7 +114,7 @@ class Smackuci_Cli{
 				$line_number = 0;				
 				$info = [];
 				$i = 0;
-				while(($data = fgetcsv($h, 0, $delimiters[$array_index]))!== FALSE) {
+				while(($data = fgetcsv($h, 0, $delimiters[$array_index], '"', '\\'))!== FALSE) {
 					$trimmed_array = array_map('trim', $data);
 					array_push($info , $trimmed_array);
 

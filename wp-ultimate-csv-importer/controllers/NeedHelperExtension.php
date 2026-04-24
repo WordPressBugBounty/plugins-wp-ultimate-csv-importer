@@ -126,7 +126,7 @@ class NeedHelperExtension
                 [
                     "id" => 'import#3',
                     "title" => "Content Enhancement with OpenAI Integration",
-                    "content" => "Set up your OpenAI API key in the settings to enable content generation during the import process. Use the OpenAI icon in the post content, excerpt, and product description fields while mapping to configure the prompt field name [...]",
+                    "content" => "Set up your AI API key in Settings → Connectors to enable content generation during the import process. Use the OpenAI icon in the post content, excerpt, and product description fields while mapping to configure the prompt field name.[...]",
                     "link" => "https://www.smackcoders.com/documentation/wp-ultimate-csv-importer-pro/chatgpt-integration",
                     "keyvalue" => "MappingFields"
                 ],

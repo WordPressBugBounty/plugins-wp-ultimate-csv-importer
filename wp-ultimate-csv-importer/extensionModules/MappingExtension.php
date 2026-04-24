@@ -53,14 +53,17 @@ class MappingExtension {
 			$media_type = sanitize_key($_POST['MediaType']);
 		}
 		$hash_key = sanitize_key($_POST['HashKey']);
-		$get_key = get_option('openAI_settings');
+		$ai_status = ConnectorsHelper::get_status();
+		$get_key  = $ai_status['configured']; // Backward compat for frontend (get_key / setting).
 		$mode = sanitize_text_field($_POST['Mode']);
 		global $wpdb;
 
 		$response = [];
 		$current_user = wp_get_current_user();
 		$current_user_role = $current_user->roles[0];
-		$response['currentuser']=$current_user_role;
+		$response['currentuser']   = $current_user_role;
+		$response['configured']   = $ai_status['configured'];
+		$response['settings_url'] = $ai_status['settings_url'];
 		$details = [];
 		$info = [];
 		$filename = '';
@@ -105,7 +108,7 @@ class MappingExtension {
 					$delimiter ='~';
 					 $temp=$file_path.'temp';
 					 if (($handles = fopen($temp, 'r')) !== FALSE){
-						while (($data = fgetcsv($handles, 0, $delimiter)) !== FALSE)
+						while (($data = fgetcsv($handles, 0, $delimiter, '"', '\\')) !== FALSE)
 						{
 							$trimmed_array = array_map('trim', $data);
 							array_push($info , $trimmed_array);	
@@ -129,7 +132,7 @@ class MappingExtension {
 				}
 				else{
 					
-					while (($data = fgetcsv($h, 0, $delimiters[$array_index])) !== FALSE) 
+					while (($data = fgetcsv($h, 0, $delimiters[$array_index], '"', '\\')) !== FALSE) 
 					{	
 						
 						// Read the data from a single line

@@ -10,7 +10,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: WP Ultimate CSV Importer
- * Version:     7.39.3
+ * Version:     7.40
  * Plugin URI:  https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
  * Description: Seamlessly create posts, custom posts, pages, media, SEO and more from your CSV data with ease.
  * Author:      Smackcoders
@@ -18,6 +18,7 @@
  * Text Domain: wp-ultimate-csv-importer
  * Domain Path: /languages
  * License:     GPL v3
+ * Requires PHP: 7.4
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -87,19 +88,24 @@ class SmackCSV{
 	private static $persian_instance = null;
 	private static $chinese_instance = null;
 	private static $addon_instance = null;
-	public $version = '7.39.3';
+	public $version = '7.40';
 
-	public function __construct() { 
+	public function __construct() {
 		add_action('init', array(__CLASS__, 'show_admin_menus'));
 		//action to register in wordpress tools
 		add_action('admin_init', array(__CLASS__, 'csv_register_importers'));
+		// WordPress 7.0 AI: increase timeout for AI generation during import.
+		add_filter('wp_ai_client_default_request_timeout', function ($timeout) {
+			return 120;
+		});
 		$current_date_and_time = date("Y-m-d H:i:s");
 		$nextnoticedate =get_option('close_date');
 		if(!empty($nextnoticedate)){
 			$nextnotice=strtotime("+3 day", strtotime($nextnoticedate));
 		}
 
-		add_action('admin_enqueue_scripts', array(__CLASS__, 'smack_enqueue_scripts'));	
+		add_action('admin_enqueue_scripts', array(__CLASS__, 'smack_enqueue_scripts'));
+		add_filter('admin_body_class', array(__CLASS__, 'admin_body_class'));
 		$this->init_review_notice();
 	}
 
@@ -321,6 +327,16 @@ public function handle_review_notice_actions() {
 			wp_localize_script('script_csv_importer_recommend_addon', 'smack_nonce_object', $secure_uniquekey_csv);
 			wp_enqueue_script('script_csv_importer_recommend_addon');
 		include_once('recommended-addons.php');		
+	}
+
+	/**
+	 * Add body class on plugin admin page for WP 7.0 DataViews CSS isolation.
+	 */
+	public static function admin_body_class($classes) {
+		if (isset($_GET['page']) && $_GET['page'] === 'com.smackcoders.csvimporternew.menu') {
+			$classes .= ' smack-uci-free-page';
+		}
+		return $classes;
 	}
 
 	public static function load_admin_js() {

@@ -59,7 +59,7 @@ class DragandDropExtension {
         $delimiter = DragandDropExtension::$validatefile->getFileDelimiter($file_path, 5);
         $array_index = array_search($delimiter,$delimiters);
         if($delimiter == '\t'){
-            while (($data = fgetcsv($h, 0, "\t")) !== FALSE) 
+            while (($data = fgetcsv($h, 0, "\t", '"', '\\')) !== FALSE) 
             {		
                 // Read the data from a single line
                 $trimmed_info = array_map('trim', $data);
@@ -77,7 +77,7 @@ class DragandDropExtension {
             if($array_index == 5){
                 $delimiters[$array_index] = ' ';
             }
-            while (($data = fgetcsv($h, 0, $delimiters[$array_index])) !== FALSE) 
+            while (($data = fgetcsv($h, 0, $delimiters[$array_index], '"', '\\')) !== FALSE) 
             {		
                 // Read the data from a single line
                 $trimmed_info = array_map('trim', $data);

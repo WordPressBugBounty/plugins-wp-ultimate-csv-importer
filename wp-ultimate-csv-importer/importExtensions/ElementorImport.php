@@ -64,7 +64,7 @@ class ElementorImport {
 		$csv_file = $upload_dir.$hash_key.'/'.$hash_key;
 		$file_handle = fopen($csv_file, 'r');
 		$first_row = true;
-		while (($data = fgetcsv($file_handle, 1000, ",")) !== FALSE) {
+		while (($data = fgetcsv($file_handle, 1000, ",", '"', '\\')) !== FALSE) {
 			// Skip header row
 			if ($first_row) {
 				$first_row = false;

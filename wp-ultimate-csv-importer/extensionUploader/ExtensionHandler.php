@@ -270,7 +270,7 @@ class ExtensionHandler{
 					$delimiter ='~';
 					 $temp=$file_path.'temp';
 					 if (($handles = fopen($temp, 'r')) !== FALSE){
-						while (($data = fgetcsv($handles, 0, $delimiter)) !== FALSE)
+						while (($data = fgetcsv($handles, 0, $delimiter, '"', '\\')) !== FALSE)
 						{
 							$trimmed_info = array_map('trim', $data);
 				
@@ -290,7 +290,7 @@ class ExtensionHandler{
 					fclose($handles);
 				}
 				else{
-				while (($data = fgetcsv($h, 0, $delimiters[$array_index])) !== FALSE)  
+				while (($data = fgetcsv($h, 0, $delimiters[$array_index], '"', '\\')) !== FALSE)  
 				{		
 					// Read the data from a single line
 
@@ -363,7 +363,7 @@ class ExtensionHandler{
 				$delimiter = ExtensionHandler::$validate_file->getFileDelimiter($file_path, 5);
 				if($delimiter == '\t'){
 						$hs = $upload_dir.$hashkey.'/'.$hashkey;
-						while (($data = fgetcsv($h, 0, "\t")) !== FALSE) {
+						while (($data = fgetcsv($h, 0, "\t", '"', '\\')) !== FALSE) {
 						
 						// Read the data from a single line
 					

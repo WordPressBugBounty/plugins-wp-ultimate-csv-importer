@@ -24,6 +24,7 @@ class SaveMapping
 	private static $core = null;
 	public $media_log, $manage_filter;
 	public $check_manage_filter = false;
+
 	private function __construct()
 	{
 		add_action('wp_ajax_saveMappedFields', array($this, 'save_fields_function'));
@@ -205,8 +206,8 @@ class SaveMapping
 		$template_table_name = $wpdb->prefix . "ultimate_csv_importer_mappingtemplate";
 		$file_table_name = $wpdb->prefix . "smackcsv_file_events";
 
-		$filters = json_decode(stripslashes($_POST['MappedFilter']), true);
-		$mapping_filter = serialize($filters);
+		$filters = json_decode(stripslashes((string) ($_POST['MappedFilter'] ?? '')), true);
+		$mapping_filter = serialize(is_array($filters) ? $filters : []);
 
 		$mapped_fields = json_decode(stripslashes($map_fields), true);
 		$helpers_instance = ImportHelpers::getInstance();
@@ -433,7 +434,7 @@ class SaveMapping
 		$selected_type = sanitize_text_field($_POST['Types']);
 		$page_number = isset($_POST['PageNumber']) ? intval(sanitize_text_field($_POST['PageNumber'])) : 0;
 		$rollback_option = sanitize_text_field($_POST['RollBack']);
-		$check_filter = sanitize_text_field($_POST['mappingFilterCheck']);
+		$check_filter = isset($_POST['mappingFilterCheck']) ? sanitize_text_field(wp_unslash($_POST['mappingFilterCheck'])) : 'true';
 		$this->check_manage_filter = $check_filter == 'false' ? false : true;
 		$unmatched_row_value = get_option('sm_uci_pro_settings');
 		$unmatched_row = isset($unmatched_row_value['unmatchedrow']) ? $unmatched_row_value['unmatchedrow'] : '';
@@ -505,7 +506,7 @@ class SaveMapping
 					$delimiter = '~';
 					$temp = $file_path . 'temp';
 					if (($handles = fopen($temp, 'r')) !== FALSE) {
-						while (($data = fgetcsv($handles, 0, $delimiter)) !== FALSE) {
+						while (($data = fgetcsv($handles, 0, $delimiter, '"', '\\')) !== FALSE) {
 							$trimmed_info = array_map('trim', $data);
 							array_push($info, $trimmed_info);
 							if ($i == 0) {
@@ -524,18 +525,21 @@ class SaveMapping
 								$map_openAI = false;
 								foreach ($map as $subarray) {
 									foreach ($subarray as $key => $value) {
-										if (strpos($key, '->OPENAIA') !== false) {
+										if (strpos($key, '->openAI') !== false) {
 											$map_openAI = 1;
 											break;
 										}
 									}
 								}
 								if ($map_openAI == true) {
+									$responsevalueArray = array();
+									$openAInumberKeys = array();
+									$openAInumberValues = array();
 									foreach ($map as $mainKey => $mainValue) {
 										foreach ($mainValue as $subKey => $subValue) {
-											if (substr($subKey, -8) === '->OPENAIA') {
+											if (substr($subKey, -8) === '->openAI') {
 												$flag = true;
-												$value_header = str_replace("->OPENAIA", "", $subKey);
+												$value_header = str_replace("->openAI", "", $subKey);
 												$openAIKeys[] = $value_header;
 												$openAIValues[] = $subValue;
 											}
@@ -550,25 +554,38 @@ class SaveMapping
 									$core_instance->generated_content = $flag;
 									$combinedArray = array_combine($openAIKeys, $openAIValues);
 									if (isset($combinedArray['featured_image'])) {
-										$featuredImageValue = $combinedArray['featured_image'];
-										$index = array_search($featuredImageValue, $header_array);
+										$featuredImageTemplate = $combinedArray['featured_image'];
+										$csv_col_index = array_search($featuredImageTemplate, $header_array);
 
-										if ($index !== false) {
-											if (isset($value_array[$index])) {
-												$resultArray = $value_array[$index];
-											} else {
-												$resultArray = '';
+										$field_to_csv_img = array();
+										foreach ($map as $section => $fields) {
+											if (is_array($fields)) {
+												foreach ($fields as $fieldKey => $csvCol) {
+													if (strpos($fieldKey, '->openAI') === false) {
+														$field_to_csv_img[trim($fieldKey)] = $csvCol;
+													}
+												}
 											}
+										}
+
+										$imgPrompt = '';
+										if ($csv_col_index !== false) {
+											$imgPrompt = isset($value_array[$csv_col_index]) ? $value_array[$csv_col_index] : '';
 										} else {
-											$resultArray = '';
+											$prompt = (string) ($featuredImageTemplate ?? '');
+											if (preg_match_all('/{([^}]*)}/', $prompt, $matches)) {
+												foreach ($matches[1] as $k => $placeholder) {
+													$placeholder = trim($placeholder);
+													$header = isset($field_to_csv_img[$placeholder]) ? $field_to_csv_img[$placeholder] : $placeholder;
+													$replacement = $helpers_instance->replace_header_with_values($header, $header_array, $value_array);
+													$prompt = str_replace($matches[0][$k], $replacement, $prompt);
+												}
+											}
+											$imgPrompt = trim($prompt);
 										}
 
-										$resultArray = [$mainKey => $resultArray];
-										foreach ($resultArray as $index => $valueName) {
-											$OpenAIHelper = new OpenAIHelper;
-
-											$responsevalueArray[] = $OpenAIHelper->generateImage($valueName);
-										}
+										$OpenAIHelper = new OpenAIHelper;
+										$responsevalueArray[] = $OpenAIHelper->generateImage($imgPrompt);
 
 										$value = 'featured_image';
 										$index = array_search($value, $header_array);
@@ -578,47 +595,55 @@ class SaveMapping
 
 										foreach ($responsevalueArray as $value) {
 											$index = array_search($value, $header_array);
-											$value_array[$index] = $value;
+											if ($index !== false) {
+												$value_array[$index] = $value;
+											}
 										}
 										unset($combinedArray['featured_image']);
 									}
 
 									$openAIValues = array_values($combinedArray);
 									$openAIKeys = array_keys($combinedArray);
-
-									$resultArrays = [];
-
-									foreach ($openAIValues as $mainKey) {
-										$index = array_search($mainKey, $header_array);
-										$resultArray = [];
-										if ($index !== false) {
-											if (isset($value_array[$index])) {
-												$resultArray = $value_array[$index];
-											} else {
-												$resultArray = '';
+									$field_to_csv = array();
+									foreach ($map as $section => $fields) {
+										if (is_array($fields)) {
+											foreach ($fields as $fieldKey => $csvCol) {
+												if (strpos($fieldKey, '->openAI') === false) {
+													$field_to_csv[trim($fieldKey)] = $csvCol;
+												}
 											}
-										} else {
-											$resultArray = '';
 										}
-										$resultArrays[] = [$mainKey => $resultArray];
 									}
 
-									$outputArray = array();
-									foreach ($resultArrays as $key => $resultArray) {
-										$dynamicKey = key($resultArray);
-										$outputArray[$key] = array(
-											$openAInumberValues[$key] => $resultArray[$dynamicKey]
-										);
-									}
-									$resultArrays = $outputArray;
-									$responsevalueArray = [];
-									foreach ($resultArrays as $index => $valueName) {
-										foreach ($valueName as $val => $word) {
-											$OpenAIHelper = new OpenAIHelper;
-											$responsevalueArray[] = $OpenAIHelper->generateContent($word, $val);
+									$OpenAIHelper = new OpenAIHelper;
+									foreach ($openAIKeys as $fieldKey) {
+										$template = isset($combinedArray[$fieldKey]) ? $combinedArray[$fieldKey] : '';
+										if ($template === '') {
+											continue;
 										}
+										$max_tokens = '';
+										if (!empty($openAInumberKeys) && in_array($fieldKey, $openAInumberKeys, true)) {
+											$num_idx = array_search($fieldKey, $openAInumberKeys, true);
+											$max_tokens = isset($openAInumberValues[$num_idx]) ? $openAInumberValues[$num_idx] : '';
+										}
+										$prompt = (string) ($template ?? '');
+										if (preg_match_all('/{([^}]*)}/', $prompt, $matches)) {
+											foreach ($matches[1] as $k => $placeholder) {
+												$placeholder = trim($placeholder);
+												$header = isset($field_to_csv[$placeholder]) ? $field_to_csv[$placeholder] : $placeholder;
+												$replacement = $helpers_instance->replace_header_with_values($header, $header_array, $value_array);
+												$prompt = str_replace($matches[0][$k], $replacement, $prompt);
+											}
+										}
+										$prompt = trim($prompt);
+										if ($prompt === '') {
+											$prompt = __('Generate a short description.', 'wp-ultimate-csv-importer');
+										}
+										$contentResult = $OpenAIHelper->generateContent($prompt, $max_tokens);
+										$responsevalueArray[] = $contentResult;
 									}
-									$core_instance->OPENAIA_response = $responsevalueArray;
+									$core_instance->openAI_response = $responsevalueArray;
+
 									foreach ($openAIKeys as $value) {
 										$index = array_search($value, $header_array);
 										if ($index !== false) {
@@ -628,7 +653,24 @@ class SaveMapping
 									foreach ($responsevalueArray as $value) {
 										foreach ($openAIKeys as $mainKey) {
 											$index = array_search($mainKey, $header_array);
-											$value_array[$index] = $value;
+											if ($index !== false) {
+												$value_array[$index] = $value;
+											}
+										}
+									}
+
+									foreach ($map as $key => &$value) {
+										if (is_array($value)) {
+											foreach ($value as $innerKey => $innerValue) {
+												if (strpos($innerKey, '->openAI') !== false) {
+													$newKey = str_replace('->openAI', '', $innerKey);
+													$value[$newKey] = $newKey;
+													unset($value[$innerKey]);
+												}
+												if (strpos($innerKey, '->num') !== false) {
+													unset($value[$innerKey]);
+												}
+											}
 										}
 									}
 								}
@@ -666,7 +708,7 @@ class SaveMapping
 						}
 					}
 				} else {
-					while (($data = fgetcsv($h, 0, $delimiters[$array_index])) !== FALSE) {
+					while (($data = fgetcsv($h, 0, $delimiters[$array_index], '"', '\\')) !== FALSE) {
 						$trimmed_info = array_map('trim', $data);
 						array_push($info, $trimmed_info);
 						if ($i == 0) {
@@ -685,18 +727,21 @@ class SaveMapping
 							$map_openAI = false;
 							foreach ($map as $subarray) {
 								foreach ($subarray as $key => $value) {
-									if (strpos($key, '->OPENAIA') !== false) {
+									if (strpos($key, '->openAI') !== false) {
 										$map_openAI = 1;
 										break;
 									}
 								}
 							}
 							if ($map_openAI == true) {
+								$responsevalueArray = array();
+								$openAInumberKeys = array();
+								$openAInumberValues = array();
 								foreach ($map as $mainKey => $mainValue) {
 									foreach ($mainValue as $subKey => $subValue) {
-										if (substr($subKey, -8) === '->OPENAIA') {
+										if (substr($subKey, -8) === '->openAI') {
 											$flag = true;
-											$value_header = str_replace("->OPENAIA", "", $subKey);
+											$value_header = str_replace("->openAI", "", $subKey);
 											$openAIKeys[] = $value_header;
 											$openAIValues[] = $subValue;
 										}
@@ -711,25 +756,38 @@ class SaveMapping
 								$core_instance->generated_content = $flag;
 								$combinedArray = array_combine($openAIKeys, $openAIValues);
 								if (isset($combinedArray['featured_image'])) {
-									$featuredImageValue = $combinedArray['featured_image'];
-									$index = array_search($featuredImageValue, $header_array);
+									$featuredImageTemplate = $combinedArray['featured_image'];
+									$csv_col_index = array_search($featuredImageTemplate, $header_array);
 
-									if ($index !== false) {
-										if (isset($value_array[$index])) {
-											$resultArray = $value_array[$index];
-										} else {
-											$resultArray = '';
+									$field_to_csv_img = array();
+									foreach ($map as $section => $fields) {
+										if (is_array($fields)) {
+											foreach ($fields as $fieldKey => $csvCol) {
+												if (strpos($fieldKey, '->openAI') === false) {
+													$field_to_csv_img[trim($fieldKey)] = $csvCol;
+												}
+											}
 										}
+									}
+
+									$imgPrompt = '';
+									if ($csv_col_index !== false) {
+										$imgPrompt = isset($value_array[$csv_col_index]) ? $value_array[$csv_col_index] : '';
 									} else {
-										$resultArray = '';
+										$prompt = (string) ($featuredImageTemplate ?? '');
+										if (preg_match_all('/{([^}]*)}/', $prompt, $matches)) {
+											foreach ($matches[1] as $k => $placeholder) {
+												$placeholder = trim($placeholder);
+												$header = isset($field_to_csv_img[$placeholder]) ? $field_to_csv_img[$placeholder] : $placeholder;
+												$replacement = $helpers_instance->replace_header_with_values($header, $header_array, $value_array);
+												$prompt = str_replace($matches[0][$k], $replacement, $prompt);
+											}
+										}
+										$imgPrompt = trim($prompt);
 									}
 
-									$resultArray = [$mainKey => $resultArray];
-									foreach ($resultArray as $index => $valueName) {
-										$OpenAIHelper = new OpenAIHelper;
-
-										$responsevalueArray[] = $OpenAIHelper->generateImage($valueName);
-									}
+									$OpenAIHelper = new OpenAIHelper;
+									$responsevalueArray[] = $OpenAIHelper->generateImage($imgPrompt);
 
 									$value = 'featured_image';
 									$index = array_search($value, $header_array);
@@ -739,7 +797,9 @@ class SaveMapping
 
 									foreach ($responsevalueArray as $value) {
 										$index = array_search($value, $header_array);
-										$value_array[$index] = $value;
+										if ($index !== false) {
+											$value_array[$index] = $value;
+										}
 									}
 									unset($combinedArray['featured_image']);
 								}
@@ -747,39 +807,46 @@ class SaveMapping
 								$openAIValues = array_values($combinedArray);
 								$openAIKeys = array_keys($combinedArray);
 
-								$resultArrays = [];
-
-								foreach ($openAIValues as $mainKey) {
-									$index = array_search($mainKey, $header_array);
-									$resultArray = [];
-									if ($index !== false) {
-										if (isset($value_array[$index])) {
-											$resultArray = $value_array[$index];
-										} else {
-											$resultArray = '';
+								$field_to_csv = array();
+								foreach ($map as $section => $fields) {
+									if (is_array($fields)) {
+										foreach ($fields as $fieldKey => $csvCol) {
+											if (strpos($fieldKey, '->openAI') === false) {
+												$field_to_csv[trim($fieldKey)] = $csvCol;
+											}
 										}
-									} else {
-										$resultArray = '';
 									}
-									$resultArrays[] = [$mainKey => $resultArray];
 								}
 
-								$outputArray = array();
-								foreach ($resultArrays as $key => $resultArray) {
-									$dynamicKey = key($resultArray);
-									$outputArray[$key] = array(
-										$openAInumberValues[$key] => $resultArray[$dynamicKey]
-									);
-								}
-								$resultArrays = $outputArray;
-								$responsevalueArray = [];
-								foreach ($resultArrays as $index => $valueName) {
-									foreach ($valueName as $val => $word) {
-										$OpenAIHelper = new OpenAIHelper;
-										$responsevalueArray[] = $OpenAIHelper->generateContent($word, $val);
+								$OpenAIHelper = new OpenAIHelper;
+								foreach ($openAIKeys as $fieldKey) {
+									$template = isset($combinedArray[$fieldKey]) ? $combinedArray[$fieldKey] : '';
+									if ($template === '') {
+										continue;
 									}
+									$max_tokens = '';
+									if (!empty($openAInumberKeys) && in_array($fieldKey, $openAInumberKeys, true)) {
+										$num_idx = array_search($fieldKey, $openAInumberKeys, true);
+										$max_tokens = isset($openAInumberValues[$num_idx]) ? $openAInumberValues[$num_idx] : '';
+									}
+									$prompt = (string) ($template ?? '');
+									if (preg_match_all('/{([^}]*)}/', $prompt, $matches)) {
+										foreach ($matches[1] as $k => $placeholder) {
+											$placeholder = trim($placeholder);
+											$header = isset($field_to_csv[$placeholder]) ? $field_to_csv[$placeholder] : $placeholder;
+											$replacement = $helpers_instance->replace_header_with_values($header, $header_array, $value_array);
+											$prompt = str_replace($matches[0][$k], $replacement, $prompt);
+										}
+									}
+									$prompt = trim($prompt);
+									if ($prompt === '') {
+										$prompt = __('Generate a short description.', 'wp-ultimate-csv-importer');
+									}
+									$contentResult = $OpenAIHelper->generateContent($prompt, $max_tokens);
+									$responsevalueArray[] = $contentResult;
 								}
-								$core_instance->OPENAIA_response = $responsevalueArray;
+								$core_instance->openAI_response = $responsevalueArray;
+
 								foreach ($openAIKeys as $value) {
 									$index = array_search($value, $header_array);
 									if ($index !== false) {
@@ -789,7 +856,24 @@ class SaveMapping
 								foreach ($responsevalueArray as $value) {
 									foreach ($openAIKeys as $mainKey) {
 										$index = array_search($mainKey, $header_array);
-										$value_array[$index] = $value;
+										if ($index !== false) {
+											$value_array[$index] = $value;
+										}
+									}
+								}
+
+								foreach ($map as $key => &$value) {
+									if (is_array($value)) {
+										foreach ($value as $innerKey => $innerValue) {
+											if (strpos($innerKey, '->openAI') !== false) {
+												$newKey = str_replace('->openAI', '', $innerKey);
+												$value[$newKey] = $newKey;
+												unset($value[$innerKey]);
+											}
+											if (strpos($innerKey, '->num') !== false) {
+												unset($value[$innerKey]);
+											}
+										}
 									}
 								}
 							}
@@ -851,7 +935,7 @@ class SaveMapping
 				}
 				$info = [];
 				$i = 0;
-				while (($data = fgetcsv($h, 0, "\t")) !== FALSE) {
+				while (($data = fgetcsv($h, 0, "\t", '"', '\\')) !== FALSE) {
 
 					$trimmed_info = array_map('trim', $data);
 					array_push($info, $trimmed_info);
@@ -871,18 +955,21 @@ class SaveMapping
 						$map_openAI = false;
 						foreach ($map as $subarray) {
 							foreach ($subarray as $key => $value) {
-								if (strpos($key, '->OPENAIA') !== false) {
+								if (strpos($key, '->openAI') !== false) {
 									$map_openAI = 1;
 									break;
 								}
 							}
 						}
 						if ($map_openAI == true) {
+							$responsevalueArray = array();
+							$openAInumberKeys = array();
+							$openAInumberValues = array();
 							foreach ($map as $mainKey => $mainValue) {
 								foreach ($mainValue as $subKey => $subValue) {
-									if (substr($subKey, -8) === '->OPENAIA') {
+									if (substr($subKey, -8) === '->openAI') {
 										$flag = true;
-										$value_header = str_replace("->OPENAIA", "", $subKey);
+										$value_header = str_replace("->openAI", "", $subKey);
 										$openAIKeys[] = $value_header;
 										$openAIValues[] = $subValue;
 									}
@@ -897,25 +984,38 @@ class SaveMapping
 							$core_instance->generated_content = $flag;
 							$combinedArray = array_combine($openAIKeys, $openAIValues);
 							if (isset($combinedArray['featured_image'])) {
-								$featuredImageValue = $combinedArray['featured_image'];
-								$index = array_search($featuredImageValue, $header_array);
+								$featuredImageTemplate = $combinedArray['featured_image'];
+								$csv_col_index = array_search($featuredImageTemplate, $header_array);
 
-								if ($index !== false) {
-									if (isset($value_array[$index])) {
-										$resultArray = $value_array[$index];
-									} else {
-										$resultArray = '';
+								$field_to_csv_img = array();
+								foreach ($map as $section => $fields) {
+									if (is_array($fields)) {
+										foreach ($fields as $fieldKey => $csvCol) {
+											if (strpos($fieldKey, '->openAI') === false) {
+												$field_to_csv_img[trim($fieldKey)] = $csvCol;
+											}
+										}
 									}
+								}
+
+								$imgPrompt = '';
+								if ($csv_col_index !== false) {
+									$imgPrompt = isset($value_array[$csv_col_index]) ? $value_array[$csv_col_index] : '';
 								} else {
-									$resultArray = '';
+									$prompt = (string) ($featuredImageTemplate ?? '');
+									if (preg_match_all('/{([^}]*)}/', $prompt, $matches)) {
+										foreach ($matches[1] as $k => $placeholder) {
+											$placeholder = trim($placeholder);
+											$header = isset($field_to_csv_img[$placeholder]) ? $field_to_csv_img[$placeholder] : $placeholder;
+											$replacement = $helpers_instance->replace_header_with_values($header, $header_array, $value_array);
+											$prompt = str_replace($matches[0][$k], $replacement, $prompt);
+										}
+									}
+									$imgPrompt = trim($prompt);
 								}
 
-								$resultArray = [$mainKey => $resultArray];
-								foreach ($resultArray as $index => $valueName) {
-									$OpenAIHelper = new OpenAIHelper;
-
-									$responsevalueArray[] = $OpenAIHelper->generateImage($valueName);
-								}
+								$OpenAIHelper = new OpenAIHelper;
+								$responsevalueArray[] = $OpenAIHelper->generateImage($imgPrompt);
 
 								$value = 'featured_image';
 								$index = array_search($value, $header_array);
@@ -925,7 +1025,9 @@ class SaveMapping
 
 								foreach ($responsevalueArray as $value) {
 									$index = array_search($value, $header_array);
-									$value_array[$index] = $value;
+									if ($index !== false) {
+										$value_array[$index] = $value;
+									}
 								}
 								unset($combinedArray['featured_image']);
 							}
@@ -933,39 +1035,46 @@ class SaveMapping
 							$openAIValues = array_values($combinedArray);
 							$openAIKeys = array_keys($combinedArray);
 
-							$resultArrays = [];
-
-							foreach ($openAIValues as $mainKey) {
-								$index = array_search($mainKey, $header_array);
-								$resultArray = [];
-								if ($index !== false) {
-									if (isset($value_array[$index])) {
-										$resultArray = $value_array[$index];
-									} else {
-										$resultArray = '';
+							$field_to_csv = array();
+							foreach ($map as $section => $fields) {
+								if (is_array($fields)) {
+									foreach ($fields as $fieldKey => $csvCol) {
+										if (strpos($fieldKey, '->openAI') === false) {
+											$field_to_csv[trim($fieldKey)] = $csvCol;
+										}
 									}
-								} else {
-									$resultArray = '';
 								}
-								$resultArrays[] = [$mainKey => $resultArray];
 							}
 
-							$outputArray = array();
-							foreach ($resultArrays as $key => $resultArray) {
-								$dynamicKey = key($resultArray);
-								$outputArray[$key] = array(
-									$openAInumberValues[$key] => $resultArray[$dynamicKey]
-								);
-							}
-							$resultArrays = $outputArray;
-							$responsevalueArray = [];
-							foreach ($resultArrays as $index => $valueName) {
-								foreach ($valueName as $val => $word) {
-									$OpenAIHelper = new OpenAIHelper;
-									$responsevalueArray[] = $OpenAIHelper->generateContent($word, $val);
+							$OpenAIHelper = new OpenAIHelper;
+							foreach ($openAIKeys as $fieldKey) {
+								$template = isset($combinedArray[$fieldKey]) ? $combinedArray[$fieldKey] : '';
+								if ($template === '') {
+									continue;
 								}
+								$max_tokens = '';
+								if (!empty($openAInumberKeys) && in_array($fieldKey, $openAInumberKeys, true)) {
+									$num_idx = array_search($fieldKey, $openAInumberKeys, true);
+									$max_tokens = isset($openAInumberValues[$num_idx]) ? $openAInumberValues[$num_idx] : '';
+								}
+								$prompt = (string) ($template ?? '');
+								if (preg_match_all('/{([^}]*)}/', $prompt, $matches)) {
+									foreach ($matches[1] as $k => $placeholder) {
+										$placeholder = trim($placeholder);
+										$header = isset($field_to_csv[$placeholder]) ? $field_to_csv[$placeholder] : $placeholder;
+										$replacement = $helpers_instance->replace_header_with_values($header, $header_array, $value_array);
+										$prompt = str_replace($matches[0][$k], $replacement, $prompt);
+									}
+								}
+								$prompt = trim($prompt);
+								if ($prompt === '') {
+									$prompt = __('Generate a short description.', 'wp-ultimate-csv-importer');
+								}
+								$contentResult = $OpenAIHelper->generateContent($prompt, $max_tokens);
+								$responsevalueArray[] = $contentResult;
 							}
-							$core_instance->OPENAIA_response = $responsevalueArray;
+							$core_instance->openAI_response = $responsevalueArray;
+
 							foreach ($openAIKeys as $value) {
 								$index = array_search($value, $header_array);
 								if ($index !== false) {
@@ -975,7 +1084,24 @@ class SaveMapping
 							foreach ($responsevalueArray as $value) {
 								foreach ($openAIKeys as $mainKey) {
 									$index = array_search($mainKey, $header_array);
-									$value_array[$index] = $value;
+									if ($index !== false) {
+										$value_array[$index] = $value;
+									}
+								}
+							}
+
+							foreach ($map as $key => &$value) {
+								if (is_array($value)) {
+									foreach ($value as $innerKey => $innerValue) {
+										if (strpos($innerKey, '->openAI') !== false) {
+											$newKey = str_replace('->openAI', '', $innerKey);
+											$value[$newKey] = $newKey;
+											unset($value[$innerKey]);
+										}
+										if (strpos($innerKey, '->num') !== false) {
+											unset($value[$innerKey]);
+										}
+									}
 								}
 							}
 						}
@@ -1066,12 +1192,13 @@ class SaveMapping
 					$doc->load($path);
 					foreach ($map as $field => $value) {
 						foreach ($value as $head => $val) {
+							$val = (string) ($val ?? '');
 							if (preg_match('/{/', $val) && preg_match('/}/', $val)) {
 								preg_match_all('/{(.*?)}/', $val, $matches);
 								$line_numbers = $i + 1;
 								$val = preg_replace("{" . "(" . $tag . "[+[0-9]+])" . "}", $tag . "[" . $line_numbers . "]", $val);
 								for ($k = 0; $k < count($matches[1]); $k++) {
-									$matches[1][$k] = preg_replace("(" . $tag . "[+[0-9]+])", $tag . "[" . $line_numbers . "]", $matches[1][$k]);
+									$matches[1][$k] = preg_replace("(" . $tag . "[+[0-9]+])", $tag . "[" . $line_numbers . "]", (string) ($matches[1][$k] ?? ''));
 									$value = $this->parse_element($doc, $matches[1][$k], $i);
 									$search = '{' . $matches[1][$k] . '}';
 									$val = str_replace($search, $value, $val);
@@ -1182,7 +1309,7 @@ class SaveMapping
 		for ($i = 1; $i <= $count; $i++) {
 			if (isset($info[$i]) && (is_array($info)) && (is_array($info[$i]))) {
 				foreach ($info[$i] as $key => $value) {
-					if (preg_match("/<img/", $value)) {
+					if (preg_match("/<img/", (string) ($value ?? ''))) {
 						// SaveMapping::$smackcsv_instance->image_schedule();
 						// $image = $wpdb->get_results("select * from {$wpdb->prefix}ultimate_csv_importer_shortcode_manager where hash_key = '{$hash_key}'");
 						// if (!empty($image)) {
@@ -1442,7 +1569,7 @@ class SaveMapping
 				if ($array_index == 5) {
 					$delimiters[$array_index] = ' ';
 				}
-				while (($data = fgetcsv($h, 0, $delimiters[$array_index])) !== FALSE) {
+				while (($data = fgetcsv($h, 0, $delimiters[$array_index], '"', '\\')) !== FALSE) {
 					// Read the data from a single line
 					array_push($info, $data);
 
@@ -1518,7 +1645,7 @@ class SaveMapping
 				$addHeader = true;
 				$file_path = $upload_dir . $hash_key . '/' . $hash_key;
 				$delimiter = SaveMapping::$validatefile->getFileDelimiter($file_path, 5);
-				while (($data = fgetcsv($h, 0, "\t")) !== FALSE) {
+				while (($data = fgetcsv($h, 0, "\t", '"', '\\')) !== FALSE) {
 					// Read the data from a single line
 
 					array_push($info, $data);
@@ -1618,12 +1745,13 @@ class SaveMapping
 
 				foreach ($map as $field => $value) {
 					foreach ($value as $head => $val) {
+						$val = (string) ($val ?? '');
 						if (preg_match('/{/', $val) && preg_match('/}/', $val)) {
 							preg_match_all('/{(.*?)}/', $val, $matches);
 							$line_numbers = $line_number + 1;
 							$val = preg_replace("{" . "(" . $tag . "[+[0-9]+])" . "}", $tag . "[" . $line_numbers . "]", $val);
 							for ($i = 0; $i < count($matches[1]); $i++) {
-								$matches[1][$i] = preg_replace("(" . $tag . "[+[0-9]+])", $tag . "[" . $line_numbers . "]", $matches[1][$i]);
+								$matches[1][$i] = preg_replace("(" . $tag . "[+[0-9]+])", $tag . "[" . $line_numbers . "]", (string) ($matches[1][$i] ?? ''));
 								$value = $this->parse_element($doc, $matches[1][$i], $line_number);
 								$search = '{' . $matches[1][$i] . '}';
 								$val = str_replace($search, $value, $val);
@@ -1696,7 +1824,7 @@ class SaveMapping
 
 			if (is_array($info)) {
 				foreach ($info[$i] as $key => $value) {
-					if (preg_match("/<img/", $value)) {
+					if (preg_match("/<img/", (string) ($value ?? ''))) {
 						// SaveMapping::$smackcsv_instance->image_schedule();
 						// $image = $wpdb->get_results("select * from {$wpdb->prefix}ultimate_csv_importer_shortcode_manager where hash_key = '{$hash_key}'");
 						// if (!empty($image)) {
@@ -1854,7 +1982,7 @@ class SaveMapping
 		global $core_instance, $uci_woocomm_meta, $uci_woocomm_bundle_meta, $product_attr_instance, $wpmlimp_class;
 		/*** check manage filteration */
 		$this->check_manage_filter ? $this->manage_filteration($this->manage_filter, $header_array, $value_array, $core_instance, $line_number, $hash_key) : '';
-		if (preg_match("/(Can't|Skipped|Duplicate)/", $core_instance->detailed_log[$line_number]['Message']) === 0) {
+		if (preg_match("/(Can't|Skipped|Duplicate)/", (string) ($core_instance->detailed_log[$line_number]['Message'] ?? '')) === 0) {
 			foreach ($map as $group_name => $group_value) {
 				if ($group_name == 'CORE') {
 					$wpml_map = isset($map['WPML']) ? $map['WPML'] : '';

@@ -151,7 +151,7 @@ class ValidateFile {
                     }
                     fclose($temphandle);
                     if (($handles = fopen($temp, 'r')) !== FALSE){
-                        while (($row = fgetcsv($handles, 0, $delimiter)) !== FALSE)
+                        while (($row = fgetcsv($handles, 0, $delimiter, '"', '\\')) !== FALSE)
                         {
                             if(!$header)
                                 $header = $row;
@@ -162,7 +162,7 @@ class ValidateFile {
                         }  
                     
                         $handle = fopen($file_path, 'r');   
-                        if(array_key_exists(null,$data[0])){
+                        if (isset($data[0]) && array_key_exists('', $data[0])) {
                             $valid = 'No';
                         }
                         else{
@@ -181,7 +181,7 @@ class ValidateFile {
             else{
                 if (($handle = fopen($file_path, 'r')) !== FALSE)
                 {
-                    while (($row = fgetcsv($handle, 0, $delimiter)) !== FALSE)
+                    while (($row = fgetcsv($handle, 0, $delimiter, '"', '\\')) !== FALSE)
                     {
                         
                         if(!$header)
@@ -192,7 +192,7 @@ class ValidateFile {
                         }      
                     }   
                     $handle = fopen($file_path, 'r');   
-                    if(array_key_exists(null,$data[0])){
+                    if (isset($data[0]) && array_key_exists('', $data[0])) {
                         $valid = 'No';
                     }else{
                         $valid = 'Yes';

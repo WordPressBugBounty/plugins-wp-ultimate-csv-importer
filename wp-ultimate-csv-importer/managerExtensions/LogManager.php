@@ -870,7 +870,7 @@ class LogManager {
 		$lines = [];
 		if (file_exists($filePath)) {
 			$file = fopen($filePath, 'r');
-			while (($line = fgetcsv($file)) !== FALSE) {
+			while (($line = fgetcsv($file, 0, ',', '"', '\\')) !== FALSE) {
 				$lines[] = $line;
 			}
 			fclose($file);
@@ -927,7 +927,7 @@ class LogManager {
 			}
 
 			$data_found = false;
-			while (($row = fgetcsv($file_handle)) !== false) {
+			while (($row = fgetcsv($file_handle, 0, ',', '"', '\\')) !== false) {
 				if (!empty(array_filter($row))) {
 					$data_found = true;
 					break;
@@ -953,7 +953,7 @@ class LogManager {
 		$lines = [];
 		if (file_exists($file_path)) {
 			$file = fopen($file_path, 'r');
-			while (($line = fgetcsv($file)) !== false) {
+			while (($line = fgetcsv($file, 0, ',', '"', '\\')) !== false) {
 				$lines[] = $line;
 			}
 			fclose($file);
@@ -1021,7 +1021,7 @@ class LogManager {
 		$lines = [];
 		if (file_exists($filePath)) {
 			$file = fopen($filePath, 'r');
-			while (($line = fgetcsv($file)) !== FALSE) {
+			while (($line = fgetcsv($file, 0, ',', '"', '\\')) !== FALSE) {
 				$lines[] = $line;
 			}
 			fclose($file);

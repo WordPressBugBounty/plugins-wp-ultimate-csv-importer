@@ -524,17 +524,26 @@ $value_assoc = array_combine($header_array, $value_array);
         return $bytes;
 	}
 
-	public function update_count($unikey_value,$unikey_name){
-		$response = [];
+	public function update_count($unikey_value, $unikey_name)
+	{
+		$response = array();
 		global $wpdb;
-		$log_table_name = $wpdb->prefix ."import_detail_log";
-		$get_data =  $wpdb->get_results("SELECT skipped , created , updated FROM $log_table_name WHERE $unikey_name = '$unikey_value' ");
-			$skipped = $get_data[0]->skipped;
-			$response['skipped'] = $skipped + 1;
-			$created = $get_data[0]->created;
-			$response['created'] = $created + 1;
-			$updated = $get_data[0]->updated;
-			$response['updated'] = $updated + 1;
+		$log_table_name = $wpdb->prefix . 'import_detail_log';
+		$get_data = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT skipped, created, updated, failed FROM {$log_table_name} WHERE {$unikey_name} = %s",
+				$unikey_value
+			)
+		);
+
+		$skipped = isset($get_data[0]->skipped) ? (int) $get_data[0]->skipped : 0;
+		$response['skipped'] = $skipped + 1;
+		$created = isset($get_data[0]->created) ? (int) $get_data[0]->created : 0;
+		$response['created'] = $created + 1;
+		$updated = isset($get_data[0]->updated) ? (int) $get_data[0]->updated : 0;
+		$response['updated'] = $updated + 1;
+		$failed = isset($get_data[0]->failed) ? (int) $get_data[0]->failed : 0;
+		$response['failed'] = $failed + 1;
 
 		return $response;
 	}

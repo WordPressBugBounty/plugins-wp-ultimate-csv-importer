@@ -538,7 +538,7 @@ class DesktopUpload implements Uploads{
     $max_count = 0;
 
     foreach ($delimiters as $delimiter) {
-        $fields = str_getcsv($line, $delimiter);
+        $fields = str_getcsv($line, $delimiter, '"', '\\');
         if (count($fields) > $max_count) {
             $max_count = count($fields);
             $best_delimiter = $delimiter;

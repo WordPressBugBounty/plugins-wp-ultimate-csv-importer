@@ -698,7 +698,7 @@ class CoreFieldsImport
 								}
 							}
 						}
-						if ($media_handle['media_settings']['media_handle_option'] == 'true' && !empty($post_values['post_content']) && $media_handle['media_settings']['enable_postcontent_image'] == 'false' && preg_match("/<img/", $post_values['post_content'])) {
+						if ($media_handle['media_settings']['media_handle_option'] == 'true' && !empty($post_values['post_content']) && $media_handle['media_settings']['enable_postcontent_image'] == 'false' && preg_match("/<img/", (string) ($post_values['post_content'] ?? ''))) {
 							$dom = new \DOMDocument();
 							@$dom->loadHTML($post_values['post_content']);
 							$xpath = new \DOMXPath($dom);
@@ -945,13 +945,13 @@ class CoreFieldsImport
 			$lang_title = $exploded_title[1];
 
 		}
-		if (strpos($post_values['post_content'], '|') !== false) {
-			$exploded_content = explode('|', $post_values['post_content']);
+		if (strpos($post_values['post_content'] ?? '', '|') !== false) {
+			$exploded_content = explode('|', $post_values['post_content'] ?? '');
 			$post_values['post_content'] = $exploded_content[0];
 			$lang_content = $exploded_content[1];
 		}
-		if (strpos($post_values['post_excerpt'], '|') !== false) {
-			$exploded_excerpt = explode('|', $post_values['post_excerpt']);
+		if (strpos($post_values['post_excerpt'] ?? '', '|') !== false) {
+			$exploded_excerpt = explode('|', $post_values['post_excerpt'] ?? '');
 			$post_values['post_excerpt'] = $exploded_excerpt[0];
 			$lang_excerpt = $exploded_excerpt[1];
 		}

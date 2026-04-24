@@ -86,8 +86,8 @@ class SingleImportExport {
 		if(move_uploaded_file($_FILES['file']['tmp_name'], $csv_file)){
 			if (($handle = fopen($csv_file, 'r')) !== false) {
 
-				$headers = fgetcsv($handle, 1000, ',');
-				while (($row = fgetcsv($handle, 1000, ',')) !== false) {
+				$headers = fgetcsv($handle, 1000, ',', '"', '\\');
+				while (($row = fgetcsv($handle, 1000, ',', '"', '\\')) !== false) {
 					$data = array_combine($headers, $row);
 					foreach ($data as $key => $value) {
 
