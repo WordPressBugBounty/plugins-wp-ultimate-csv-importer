@@ -5,7 +5,7 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 if ( ! defined( 'ABSPATH' ) )
 	exit; // Exit if accessed directly
@@ -236,7 +236,7 @@ class ExtensionHandler{
 
 	public function set_post_types($hashkey , $filename) {
 
-		$smackcsv_instance = SmackCSV::getInstance();
+		$smackcsv_instance = UCICore::getInstance();
 		$upload_dir = $smackcsv_instance->create_upload_dir();
 		$file_extension = pathinfo($filename, PATHINFO_EXTENSION);
 		if(empty($file_extension)){

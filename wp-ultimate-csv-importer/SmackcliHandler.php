@@ -4,7 +4,7 @@
  *
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 if ( ! defined( 'ABSPATH' ) )
 exit; // Exit if accessed directly
@@ -12,7 +12,7 @@ exit; // Exit if accessed directly
  // Define WP CLI command.
  
 if (class_exists('\WP_CLI')) {       
-    \WP_CLI::add_command( 'ultimate-csvimport', 'Smackcoders\FCSV\Smackuci_Cli' );
+    \WP_CLI::add_command( 'ultimate-csvimport', 'Smackcoders\UCI\Core\Smackuci_Cli' );
     global $smackCLI;
     $smackCLI = true;
     loadbasic();
@@ -28,7 +28,7 @@ class Smackuci_Cli{
 	{
         if (Smackuci_Cli::$instance == null) {
             Smackuci_Cli::$instance = new Smackuci_Cli;
-            Smackuci_Cli::$smackcsv_instance = SmackCSV::getInstance();
+            Smackuci_Cli::$smackcsv_instance = UCICore::getInstance();
             return Smackuci_Cli::$instance;
         }
         return Smackuci_Cli::$instance;        
@@ -45,7 +45,7 @@ class Smackuci_Cli{
 
         $helpers_instance = ImportHelpers::getInstance();
         $core_instance = CoreFieldsImport::getInstance();
-        $smackcsv_instance = SmackCSV::getInstance();
+        $smackcsv_instance = UCICore::getInstance();
                 
         $log_manager_instance = LogManager::getInstance();
         global $wpdb;
@@ -166,7 +166,7 @@ class Smackuci_Cli{
       function importcsv($all_value_array,$map,$header_array,$selected_type,$get_mode,$hash_key,$templatekey,$gmode,$progress,$file_name,$total_rows){
         global $wpdb;
         $save_mapping_instance = SaveMapping::getInstance();  
-        $smackcsv_instance = SmackCSV::getInstance();                                      
+        $smackcsv_instance = UCICore::getInstance();                                      
         foreach($all_value_array as $line_number => $value_array){
             if(!empty($value_array)){                                                                               
                 $this->maintainlog($templatekey,$hash_key,$file_name,$total_rows,$line_number,'Processing');                   
@@ -223,7 +223,7 @@ class Smackuci_Cli{
             );                    
         }
         else {
-            $smackcsv_instance = SmackCSV::getInstance();
+            $smackcsv_instance = UCICore::getInstance();
             $upload_dir = $smackcsv_instance->create_upload_dir('CLI');
             $file_path = $upload_dir.$hash_key.'/'.$hash_key;
             $file_size = filesize($file_path);

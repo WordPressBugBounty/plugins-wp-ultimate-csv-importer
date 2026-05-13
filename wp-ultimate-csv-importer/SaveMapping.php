@@ -6,7 +6,7 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 if (!defined('ABSPATH'))
 	exit; // Exit if accessed directly
@@ -49,7 +49,7 @@ class SaveMapping
 	{
 		if (SaveMapping::$instance == null) {
 			SaveMapping::$instance = new SaveMapping;
-			SaveMapping::$smackcsv_instance = SmackCSV::getInstance();
+			SaveMapping::$smackcsv_instance = UCICore::getInstance();
 			SaveMapping::$validatefile = new ValidateFile;
 			return SaveMapping::$instance;
 		}
@@ -424,6 +424,17 @@ class SaveMapping
 	public function bulk_import()
 	{
 		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+
+		// Imports can legitimately take longer than default max_execution_time due to
+		// image downloads + resizing/thumbnail generation. Best-effort raise time limit.
+		// Keep bounded (not infinite) to avoid runaway requests.
+		if (function_exists('set_time_limit')) {
+			@set_time_limit(300);
+		}
+		@ini_set('max_execution_time', '300');
+		if (function_exists('wp_raise_memory_limit')) {
+			@wp_raise_memory_limit('image');
+		}
 
 		global $wpdb, $core_instance, $uci_woocomm_meta, $uci_woocomm_bundle_meta, $product_attr_instance, $wpmlimp_class;
 		$header_array = [];

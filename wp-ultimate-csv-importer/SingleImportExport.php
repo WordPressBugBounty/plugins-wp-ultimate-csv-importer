@@ -7,7 +7,7 @@
  * You can contact Smackcoders at email address info@smackcoders.com.
  *******************************************************************************************/
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 
 if ( ! defined( 'ABSPATH' ) )

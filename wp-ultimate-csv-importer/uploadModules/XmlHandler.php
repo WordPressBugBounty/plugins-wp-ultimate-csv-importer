@@ -5,7 +5,7 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 if ( ! defined( 'ABSPATH' ) )
 	exit; // Exit if accessed directly
@@ -32,7 +32,7 @@ class XmlHandler {
 		$row_count = isset($_POST['row']) ? intval(sanitize_text_field($_POST['row'])) : 0;
 		$hash_key = sanitize_key($_POST['HashKey']);
 
-		$smack_csv_instance = SmackCSV::getInstance();
+		$smack_csv_instance = UCICore::getInstance();
 		$upload_dir = $smack_csv_instance->create_upload_dir();
 
 		$upload_dir_path = $upload_dir. $hash_key;
@@ -68,7 +68,7 @@ class XmlHandler {
 	public function parse_xmls($hash_key,$line_number = null,$mode = null,$path = null){
 
 
-		$smack_csv_instance = SmackCSV::getInstance();
+		$smack_csv_instance = UCICore::getInstance();
 		if($mode != 'CLI') {
 		$upload_dir = $smack_csv_instance->create_upload_dir();
 
@@ -129,7 +129,7 @@ class XmlHandler {
 		$hash_key = sanitize_key($_POST['HashKey']);
 		$treetype = sanitize_text_field($_POST['treetype']);	
 
-		$smack_csv_instance = SmackCSV::getInstance();
+		$smack_csv_instance = UCICore::getInstance();
 		$upload_dir = $smack_csv_instance->create_upload_dir();
 
 		$upload_dir_path = $upload_dir. $hash_key;

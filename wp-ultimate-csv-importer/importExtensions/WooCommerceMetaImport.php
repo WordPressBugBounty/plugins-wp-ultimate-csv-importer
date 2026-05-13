@@ -6,9 +6,9 @@
  * You can contact Smackcoders at email address info@smackcoders.com.
  *******************************************************************************************/
 
-namespace Smackcoders\FCSV;
-use Smackcoders\FCSV\CoreFieldsImport;
-use Smackcoders\FCSV\MediaHandling;
+namespace Smackcoders\UCI\Core;
+use Smackcoders\UCI\Core\CoreFieldsImport;
+use Smackcoders\UCI\Core\MediaHandling;
 
 if ( ! defined( 'ABSPATH' ) )
 	exit; // Exit if accessed directly

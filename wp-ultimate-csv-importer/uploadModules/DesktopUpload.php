@@ -5,7 +5,7 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 require_once(__DIR__.'/../vendor/autoload.php');
 use League\Csv\Writer;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -28,7 +28,7 @@ class DesktopUpload implements Uploads{
 	public static function getInstance() {
 		if (DesktopUpload::$instance == null) {
 			DesktopUpload::$instance = new DesktopUpload;
-			DesktopUpload::$smack_csv_instance = SmackCSV::getInstance();
+			DesktopUpload::$smack_csv_instance = UCICore::getInstance();
 			return DesktopUpload::$instance;
 		}
 		return DesktopUpload::$instance;
@@ -266,7 +266,7 @@ class DesktopUpload implements Uploads{
 							
 						
 							// Get the extension based on MIME type
-							$extension = $this->get_extension_from_mime($mime_type);
+							$extension = self::get_extension_from_mime($mime_type);
 						}
 
 						$file_name = $matches[1] .'.'.$extension ;
@@ -512,7 +512,7 @@ class DesktopUpload implements Uploads{
 
 	}
 
-	public function get_extension_from_mime($mime_type) {
+	public static function get_extension_from_mime($mime_type) {
 		$mime_map = [
 			'text/csv'              => 'csv',
 			'application/xml'       => 'xml',

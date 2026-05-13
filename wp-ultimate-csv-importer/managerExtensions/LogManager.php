@@ -5,7 +5,7 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 if ( ! defined( 'ABSPATH' ) )
 	exit; // Exit if accessed directly
@@ -28,7 +28,7 @@ class LogManager {
     public static function getInstance() {
 		if (LogManager::$instance == null) {
 			LogManager::$instance = new LogManager;
-			LogManager::$smack_csv_instance = SmackCSV::getInstance();
+			LogManager::$smack_csv_instance = UCICore::getInstance();
 			LogManager::$saveMappingInstance = SaveMapping::getInstance();
 			return LogManager::$instance;
 		}
@@ -48,7 +48,7 @@ class LogManager {
 	 * @param  boolean $addHeader 
 	 */
 	public function get_event_log($hash_key , $original_file_name , $fileType , $mode , $totalCount , $importType , $core_log, $addHeader,$templatekey = null){
-		$smack_instance = SmackCSV::getInstance();
+		$smack_instance = UCICore::getInstance();
 		global $logArr;
 		if (is_array($core_log)){
 			$logArr = $core_log;
@@ -124,7 +124,7 @@ class LogManager {
 	public function delete_log(){
 		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
 		global $wpdb;
-		$smack_instance = SmackCSV::getInstance();
+		$smack_instance = UCICore::getInstance();
 		$filename = sanitize_text_field($_POST['filename']);
 		$revision = sanitize_text_field($_POST['revision']);
 		$upload_path = $smack_instance->create_upload_dir();

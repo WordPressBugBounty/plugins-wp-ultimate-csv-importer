@@ -5,14 +5,14 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 if ( ! defined( 'ABSPATH' ) )
 exit; // Exit if accessed directly
 
 /**
  * Class SmackUCIUnInstall
- * @package Smackcoders\FCSV
+ * @package Smackcoders\UCI\Core
  */
 
 class SmackUCIUnInstall {
@@ -21,7 +21,7 @@ class SmackUCIUnInstall {
 	 */
 	protected static $instance = null,$plugin;
 	public function __construct() {
-		$plugin = Plugin::getInstance();
+		$plugin = UCICore::getInstance();
 	}
 
 	public static function getInstance() {

@@ -5,7 +5,7 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 if ( ! defined( 'ABSPATH' ) )
 	exit; // Exit if accessed directly
@@ -32,7 +32,7 @@ class MappingExtension {
 			MappingExtension::$validatefile = new ValidateFile;
 	
 			foreach(get_declared_classes() as $class){
-				if(is_subclass_of($class, 'Smackcoders\FCSV\ExtensionHandler')){ 
+				if(is_subclass_of($class, 'Smackcoders\UCI\Core\ExtensionHandler')){ 
 					array_push(MappingExtension::$extension ,$class::getInstance() );
 				}
 			}
@@ -81,7 +81,7 @@ class MappingExtension {
 			$file_extension = 'csv';                    
 		}
 		$template_table_name = $wpdb->prefix."ultimate_csv_importer_mappingtemplate";
-		$smackcsv_instance = SmackCSV::getInstance();
+		$smackcsv_instance = UCICore::getInstance();
 		$upload_dir = $smackcsv_instance->create_upload_dir();
 		if($file_extension == 'csv' || $file_extension == 'txt'){
 		
@@ -261,7 +261,7 @@ class MappingExtension {
 	public function mapping_fields($import_type,$process_type = null){
 		$support_instance = [];
 		$value = [];
-		//SmackCSV::getInstance();
+		//UCICore::getInstance();
 		for($i = 0 ; $i < count(MappingExtension::$extension) ; $i++){
 			$extension_instance = MappingExtension::$extension[$i];
 			if($extension_instance->extensionSupportedImportType($import_type)){

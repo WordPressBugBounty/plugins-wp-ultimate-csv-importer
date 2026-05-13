@@ -5,7 +5,7 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 require_once(__DIR__.'/../vendor/autoload.php');
 
 use League\Csv\Writer;
@@ -28,7 +28,7 @@ class FtpUpload implements Uploads{
     public static function getInstance() {
         if (FtpUpload::$instance == null) {
             FtpUpload::$instance = new FtpUpload;
-            FtpUpload::$smack_csv_instance = SmackCSV::getInstance();
+            FtpUpload::$smack_csv_instance = UCICore::getInstance();
             return FtpUpload::$instance;
         }
         return FtpUpload::$instance;

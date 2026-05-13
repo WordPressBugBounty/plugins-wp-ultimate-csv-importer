@@ -5,7 +5,7 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 if ( ! defined( 'ABSPATH' ) )
     exit; // Exit if accessed directly
@@ -35,19 +35,18 @@ class TermsandTaxonomiesImport {
 		$helpers_instance = ImportHelpers::getInstance();
 		global $core_instance;
 		if ($type == 'WooCommerce Product') {
-			if ($mode == 'Update') {
-				if (empty($data_array['product_category'])) {
-					$categories = wp_get_post_terms($pID, 'product_cat', array('fields' => 'names'));
-					$data_array['product_category'] = !empty($categories) ? implode(', ', $categories) : 'Uncategorized';
-				}
-			} else {
-				$data_array['product_category'] = empty($data_array['product_category']) ? 'Uncategorized' : $data_array['product_category'];
-			}
-			$uncategorized = get_term_by( 'name', 'Uncategorized', 'product_cat' );
+			$raw_cat = $data_array['product_category'] ?? '';
 
-				if ( $uncategorized && ! is_wp_error( $uncategorized ) ) {
-					wp_remove_object_terms( $pID, (int) $uncategorized->term_id, 'product_cat' );
-				}
+			// IMPORTANT: Do not force Uncategorized here; WooCommerce will default it when no categories are assigned.
+			// For Update mode, if user didn't map category, preserve existing instead of forcing Uncategorized.
+			if ($mode == 'Update' && empty($raw_cat)) {
+				$existing_names = wp_get_post_terms($pID, 'product_cat', array('fields' => 'names'));
+				$data_array['product_category'] = !empty($existing_names) ? implode(', ', $existing_names) : '';
+			}
+
+			if (empty($data_array['product_category'])) {
+				// Leave empty to let WooCommerce default behavior apply.
+			}
 		}
 		unset($data_array['post_format']);
 		unset($data_array['product_type']);
@@ -123,8 +122,33 @@ class TermsandTaxonomiesImport {
 					}
 
 					// Create / Assign categories to the post types
-					if(isset($categories[$termKey]) && $categories[$termKey] != '')
-						$this->assignTermsAndTaxonomies($categories, $category_name, $pID,$poly_values);
+					if(isset($categories[$termKey]) && $categories[$termKey] != '') {
+						$assigned_term_ids = $this->assignTermsAndTaxonomies($categories, $category_name, $pID,$poly_values);
+
+						// If we successfully assigned any non-default categories, remove default category term.
+						if (!empty($assigned_term_ids)) {
+							$default_candidates = [];
+							$default_product_cat_id = (int) get_option('default_product_cat');
+							if (!empty($default_product_cat_id)) {
+								$default_candidates[] = $default_product_cat_id;
+							}
+
+							$uncat_slug_term = get_term_by('slug', 'uncategorized', 'product_cat');
+							if ($uncat_slug_term && !is_wp_error($uncat_slug_term)) {
+								$default_candidates[] = (int) $uncat_slug_term->term_id;
+							}
+
+							$uncat_name_term = get_term_by('name', 'Uncategorized', 'product_cat');
+							if ($uncat_name_term && !is_wp_error($uncat_name_term)) {
+								$default_candidates[] = (int) $uncat_name_term->term_id;
+							}
+
+							$default_candidates = array_values(array_unique(array_filter(array_map('intval', $default_candidates))));
+							if (!empty($default_candidates)) {
+								wp_remove_object_terms($pID, $default_candidates, 'product_cat');
+							}
+						}
+					}
 					break;
 				case 'event_tags':
 					$eventtags [$termKey] = $data_array [$termKey];
@@ -224,225 +248,94 @@ class TermsandTaxonomiesImport {
 			$lang_list = pll_languages_list();
 		}
 		
-		$get_category_list = $category_list = array();
-		// Create / Assign categories to the post types
-		if (!empty($categories)) {
-    
-			foreach ( $categories as $cat_key => $cat_value ) {
-				if (strpos($cat_value, ',') !== false) {
-					$get_category_list = explode(',', $cat_value);
-				} else {
-					$get_category_list[] = $cat_value;
-				}
-            }
-        
-		}
-		if(!empty($get_category_list)) {
-			$i = 0;
-			foreach($get_category_list as $key => $value) {
-				if (strpos($value, '>') !== false) {
-					$split_line = explode('>', $value);
-					if(is_array($split_line)) {
-						foreach($split_line as $category) {
-							$category_list[$i][] = $category;
-						}
-					}
-				} else {
-					$category_list[$i][] = $value;
-				}
-				$i++;
-            }
-
-		}
-		foreach($category_list as $index => $category_set) {
-        
-			foreach ( $category_set as $item => $category_value ) {
-				$term_children_options= get_option( "$category_name" . "_children" );
-				$parentTerm           = $item;
-				$termName             = trim( $category_value );
-				$_name                = (string) $termName;
-				$_slug                = preg_replace( '/\s\s+/', '-', strtolower( $_name ) );
-				  // Check if the current category is a parent
-				$is_parent = true;
-				if (!empty($category_set[1]) && isset($category_set[1]) && $item == 0) {
-					// The first category in the set is a parent
-					$is_parent = false;
-				}
-				$checkAvailable       = array();
-				$checkSuperParent     = $checkParent1 = $checkParent2 = null;
-				$super_parent_term_id = $parent_term_id1 = $parent_term_id2 = 0;
-				if ( $parentTerm != 0 ) {
-            
-					if ( isset( $category_set[ $item - 1 ] ) ) {
-						$checkParent1 = trim( $category_set[ $item - 1 ] );
-						$checkParent1 = (string) $checkParent1;
-						// $parent_term  = term_exists( "$checkParent1", "$category_name" );
-						$parent_new =get_term_by('name',$category_set[ $item - 2],$category_name);
-						$parents_id=$parent_new->term_id;
-						$parent_term  = term_exists( "$checkParent1", "$category_name", $parents_id);
-						if ( isset( $parent_term['term_id'] ) ) {
-							$parent_term_id1 = $parent_term['term_id'];
-                        }
-                        
-					}
-					if ( isset( $category_set[ $item - 2 ] ) ) {
-						// $parent_term_id1   = 0;
-						$checkSuperParent  = trim( $category_set[ $item - 2 ] );
-						$checkSuperParent  = (string) $checkSuperParent;
-						$super_parent_term = term_exists( "$checkSuperParent", "$category_name" );
-						if ( isset( $super_parent_term['term_id'] ) ) {
-							$super_parent_term_id = $super_parent_term['term_id'];
-						}
-						$checkParent2 = trim( $category_set[ $item - 1 ] );
-						$checkParent2 = (string) $checkParent2;
-						$parent_term  = term_exists( "$checkParent2", "$category_name", $super_parent_term_id );
-						if ( isset( $parent_term['term_id'] ) ) {
-							$parent_term_id2 = $parent_term['term_id'];
-                        }
-                
-					}
-				}
-				if ( $super_parent_term_id != 0 ) {
-        
-					if ( $parent_term_id2 == 0 ) {
-                        $checkAvailable = term_exists( "$checkParent2", "$category_name" );
-            
-						if ( ! is_array( $checkAvailable ) ) {
-							$taxonomyID          = wp_insert_term( "$checkParent2", "$category_name", array(
-								'description' => '',
-								'slug'        => $_slug,
-								'parent'      => $super_parent_term_id
-							) );
-
-							if(!is_wp_error($taxonomyID)){
-								$parent_term_id2 = $retID = $taxonomyID['term_id'];
-								wp_set_object_terms( $pID, $retID, $category_name, true );
-								if(!empty($poly_values)){
-									$lang = $poly_values['language_code'];
-									if(empty($lang) || !in_array($lang,$lang_list)){
-										$lang=pll_default_language();
-									}
-									$t_id=$taxonomyID['term_id'];
-									pll_set_term_language($t_id,$lang);
-								}
-							}
-                            
-						} else {
-							$exist_term_id = array( $checkAvailable['term_id'] );
-							$exist_term_id = array_map( 'intval', $exist_term_id );
-							$exist_term_id = array_unique( $exist_term_id );
-							$parent_term_id2 = $checkAvailable['term_id'];
-                            wp_set_object_terms( $pID, $exist_term_id, $category_name, true );
-						}
-					}
-					unset( $checkAvailable );
-					$checkAvailable = term_exists( "$_name", "$category_name", $parent_term_id2 );
-					if ( ! is_array( $checkAvailable ) ) {
-						$taxonomyID = wp_insert_term( "$_name", "$category_name", array(
-							'description' => '',
-							'slug'        => $_slug,
-							'parent'      => $parent_term_id2
-						) );
-
-						if(!is_wp_error($taxonomyID)){
-							$retID  = $taxonomyID['term_id'];
-                        	wp_set_object_terms( $pID, $retID, $category_name, true );
-							if(!empty($poly_values)){
-								$lang = $poly_values['language_code'];
-								if(empty($lang) || !in_array($lang,$lang_list)){
-									$lang=pll_default_language();
-								}
-								$t_id=$taxonomyID['term_id'];
-								pll_set_term_language($t_id,$lang);
-							}
-						}
-						    
-					} else {
-						$exist_term_id = array( $checkAvailable['term_id'] );
-						$exist_term_id = array_map( 'intval', $exist_term_id );
-						$exist_term_id = array_unique( $exist_term_id );
-                        wp_set_object_terms( $pID, $exist_term_id, $category_name, true );
-                        
-					}
-					unset( $checkAvailable );
-				}
-				elseif ( $parent_term_id1 != 0 ) {
-                
-                    $checkAvailable = term_exists( "$_name", "$category_name", $parent_term_id1 );
-					if ( ! is_array( $checkAvailable ) ) {
-                
-						$taxonomyID = wp_insert_term( "$_name", "$category_name", array(
-							'description' => '',
-							'slug'        => $_slug,
-							'parent'      => $parent_term_id1
-						) );
-
-						if(!is_wp_error($taxonomyID)){
-							$retID  = $taxonomyID['term_id'];
-                        	wp_set_object_terms( $pID, $retID, $category_name, true );
-							if(!empty($poly_values)){
-								$lang = $poly_values['language_code'];
-								if(empty($lang) || !in_array($lang,$lang_list)){
-									$lang=pll_default_language();
-								}
-								$t_id=$taxonomyID['term_id'];
-								pll_set_term_language($t_id,$lang);
-							}
-						}    
-                        
-					} else {
-                    
-						$exist_term_id = array( $checkAvailable['term_id'] );
-						$exist_term_id = array_map( 'intval', $exist_term_id );
-						$exist_term_id = array_unique( $exist_term_id );
-                        wp_set_object_terms( $pID, $exist_term_id, $category_name, true );
-						
-					}
-					unset( $checkAvailable );
-				}
-				elseif ( $super_parent_term_id == 0 && $parent_term_id2 == 0 && $parent_term_id1 == 0 ) {
-					$checkAvailable = term_exists( "$_name", "$category_name" );
-					if(!empty($_name)){
-						if ( !is_array( $checkAvailable ) ) {
-							$taxonomyID = wp_insert_term( "$_name", "$category_name", array(
-								'description' => '',
-								'slug'        => $_slug,
-							) );
-	
-							if(!is_wp_error($taxonomyID) && $is_parent){
-								$retID  = $taxonomyID['term_id'];
-								wp_set_object_terms( $pID, $retID, $category_name, true );
-								if(!empty($poly_values)){
-									$lang = $poly_values['language_code'];
-									if(empty($lang) || !in_array($lang,$lang_list)){
-										$lang=pll_default_language();
-									}
-									$t_id=$taxonomyID['term_id'];
-									pll_set_term_language($t_id,$lang);
-								}
-							}	
-							
-						} else {
-							if($is_parent){
-								$exist_term_id = array( $checkAvailable['term_id'] );
-								$exist_term_id = array_map( 'intval', $exist_term_id );
-								$exist_term_id = array_unique( $exist_term_id );
-								wp_set_object_terms( $pID, $exist_term_id, $category_name, true );
-							}
-							
-						}
-					}
-					
-					unset( $checkAvailable );
-				}
-				#if ( ! is_wp_error( $retID ) ) {
-				update_option( "$category_name" . "_children", $term_children_options );
-				delete_option( $category_name . "_children" );
-				#}
-				$categoryData[] = (string) $category_value;
+		$raw_input = '';
+		foreach ($categories as $cat_value) {
+			if (!empty($cat_value)) {
+				$raw_input = $cat_value;
+				break;
 			}
 		}
-        
-		return $categoryData;
+
+		$term_ids_to_assign = [];
+
+		// Normalize and split: support ',', '|', and '>' (hierarchy).
+		$raw_input = is_array($raw_input) ? implode('|', $raw_input) : (string) $raw_input;
+		$raw_input = html_entity_decode($raw_input, ENT_QUOTES, get_bloginfo('charset'));
+		$raw_input = trim((string) $raw_input);
+		if ($raw_input === '') {
+			return [];
+		}
+
+		// Split multiple categories by comma or pipe.
+		$paths = preg_split('/\s*[,\|]\s*/', $raw_input, -1, PREG_SPLIT_NO_EMPTY);
+		if (!is_array($paths)) {
+			$paths = [$raw_input];
+		}
+
+		foreach ($paths as $path) {
+			$path = trim((string) $path);
+			if ($path === '') {
+				continue;
+			}
+
+			// Split hierarchical chain by '>'.
+			$parts = preg_split('/\s*>\s*/', $path, -1, PREG_SPLIT_NO_EMPTY);
+			if (!is_array($parts) || empty($parts)) {
+				$parts = [$path];
+			}
+
+			$parent_id = 0;
+			$last_term_id = 0;
+			foreach ($parts as $part_name) {
+				$term_name = sanitize_text_field(trim((string) $part_name));
+				if ($term_name === '') {
+					continue;
+				}
+
+				$exists = term_exists($term_name, $category_name, $parent_id ?: 0);
+				if (is_array($exists) && !empty($exists['term_id'])) {
+					$last_term_id = (int) $exists['term_id'];
+				} elseif (is_int($exists) && $exists > 0) {
+					$last_term_id = (int) $exists;
+				} else {
+					$insert_args = [];
+					if ($parent_id > 0) {
+						$insert_args['parent'] = $parent_id;
+					}
+					$created = wp_insert_term($term_name, $category_name, $insert_args);
+					if (is_wp_error($created) || empty($created['term_id'])) {
+						// Skip this chain if we couldn't create the term.
+						$last_term_id = 0;
+						break;
+					}
+					$last_term_id = (int) $created['term_id'];
+				}
+
+				// Polylang term language (if provided).
+				if (!empty($poly_values) && !empty($last_term_id) && function_exists('pll_set_term_language')) {
+					$lang = $poly_values['language_code'] ?? '';
+					if (empty($lang) || (isset($lang_list) && is_array($lang_list) && !in_array($lang, $lang_list, true))) {
+						$lang = function_exists('pll_default_language') ? pll_default_language() : $lang;
+					}
+					if (!empty($lang)) {
+						pll_set_term_language($last_term_id, $lang);
+					}
+				}
+
+				$parent_id = $last_term_id;
+			}
+
+			if (!empty($last_term_id)) {
+				$term_ids_to_assign[] = $last_term_id;
+			}
+		}
+
+		$term_ids_to_assign = array_values(array_unique(array_map('intval', $term_ids_to_assign)));
+
+		if (!empty($term_ids_to_assign)) {
+			wp_set_object_terms($pID, $term_ids_to_assign, $category_name, true);
+		}
+
+		return $term_ids_to_assign;
 	}
 }

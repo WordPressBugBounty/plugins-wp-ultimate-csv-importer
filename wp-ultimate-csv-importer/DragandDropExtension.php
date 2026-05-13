@@ -5,7 +5,7 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 if ( ! defined( 'ABSPATH' ) )
     exit; // Exit if accessed directly
@@ -42,7 +42,7 @@ class DragandDropExtension {
 			$hashkey = $get_detail[0]->eventKey;
         }
 
-        $smackcsv_instance = SmackCSV::getInstance();
+        $smackcsv_instance = UCICore::getInstance();
 		$upload_dir = $smackcsv_instance->create_upload_dir();
 
         ini_set("auto_detect_line_endings", true);

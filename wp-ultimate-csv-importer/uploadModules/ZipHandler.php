@@ -5,7 +5,7 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 if ( ! defined( 'ABSPATH' ) )
     exit; // Exit if accessed directly
@@ -18,7 +18,7 @@ class ZipHandler {
     public static function getInstance() {
 		if (ZipHandler::$instance == null) {
 			ZipHandler::$instance = new ZipHandler;
-            ZipHandler::$smack_csv_instance = SmackCSV::getInstance();
+            ZipHandler::$smack_csv_instance = UCICore::getInstance();
 			return ZipHandler::$instance;
 		}
 		return ZipHandler::$instance;

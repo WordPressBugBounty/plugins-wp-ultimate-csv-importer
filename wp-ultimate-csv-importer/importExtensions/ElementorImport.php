@@ -6,7 +6,7 @@
  * You can contact Smackcoders at email address info@smackcoders.com.
  *******************************************************************************************/
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 if ( ! defined( 'ABSPATH' ) )
 	exit; // Exit if accessed directly
@@ -50,7 +50,7 @@ class ElementorImport {
 	function set_elementor_values($header_array ,$value_array , $map, $post_id , $type, $mode, $line_number , $hash_key){	
 
 		global $wpdb;
-        $smackcsv_instance = SmackCSV::getInstance();
+        $smackcsv_instance = UCICore::getInstance();
 		$core_instance = CoreFieldsImport::getInstance();
 		$upload_dir = $smackcsv_instance->create_upload_dir();
 		$file_table_name = $wpdb->prefix . "smackcsv_file_events";

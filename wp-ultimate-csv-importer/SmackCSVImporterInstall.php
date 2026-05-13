@@ -5,7 +5,7 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 if ( ! defined( 'ABSPATH' ) )
 exit; // Exit if accessed directly
@@ -18,7 +18,7 @@ class SmackCSVInstall {
 	 * SmackCSVInstall Constructor
 	 */
 	public function __construct() {
-		$plugin = Plugin::getInstance();
+		$plugin = UCICore::getInstance();
 		self::$tables_instance = new Tables();
 	}
 
@@ -49,7 +49,7 @@ class SmackCSVInstall {
 	 * Check WPUltimateCSVImporterPro version.
 	 */
 	public static function check_version() {
-		if ( get_option( 'ULTIMATE_CSV_IMP_VERSION' ) != SmackUCI()->version )  {
+		if ( get_option( 'ULTIMATE_CSV_IMP_VERSION' ) != Smackcoders\UCI\Core\UCICore::getInstance()->version )  {
 			self::install();
 			do_action( 'sm_uci_pro_updated' );
 		}
@@ -162,7 +162,7 @@ class SmackCSVInstall {
 	 */
 	private static function update_db_version( $version = null ) {
 		delete_option( 'sm_uci_db_version' );
-		add_option( 'sm_uci_db_version', is_null( $version ) ? SmackUCI()->version : $version );
+		add_option( 'sm_uci_db_version', is_null( $version ) ? Smackcoders\UCI\Core\UCICore::getInstance()->version : $version );
 	}
 
 	/**

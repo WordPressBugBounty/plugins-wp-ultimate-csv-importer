@@ -5,7 +5,7 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 use PhpParser\Error;
 use PhpParser\ParserFactory;
@@ -410,7 +410,7 @@ $value_assoc = array_combine($header_array, $value_array);
 
 
 	public function get_post_ids($post_id , $eventKey,$templatekey = null){
-		$smack_instance = SmackCSV::getInstance();
+		$smack_instance = UCICore::getInstance();
 		$recordId = array($post_id);
 		if($templatekey != null) {
 			$upload_dir = $smack_instance->create_upload_dir('CLI');

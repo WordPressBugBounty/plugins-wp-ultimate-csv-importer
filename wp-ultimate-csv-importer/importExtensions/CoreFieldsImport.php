@@ -5,10 +5,10 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
-use Smackcoders\FCSV\MediaImport;
-use Smackcoders\FCSV\WooCommerceCoreImport;
+use Smackcoders\UCI\Core\MediaImport;
+use Smackcoders\UCI\Core\WooCommerceCoreImport;
 
 if (!defined('ABSPATH'))
 	exit; // Exit if accessed directly

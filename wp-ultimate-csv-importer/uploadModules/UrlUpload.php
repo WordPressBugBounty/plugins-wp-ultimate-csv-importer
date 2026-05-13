@@ -5,7 +5,7 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 require_once(__DIR__ . '/../vendor/autoload.php');
 
 use League\Csv\Writer;
@@ -29,7 +29,7 @@ class UrlUpload implements Uploads
 	{
 		if (UrlUpload::$instance == null) {
 			UrlUpload::$instance = new UrlUpload;
-			UrlUpload::$smack_csv_instance = SmackCSV::getInstance();
+			UrlUpload::$smack_csv_instance = UCICore::getInstance();
 			return UrlUpload::$instance;
 		}
 		return UrlUpload::$instance;
@@ -256,8 +256,8 @@ class UrlUpload implements Uploads
 					}
 					$real_path = $path;
 					if (file_exists($real_path) && ($file_extension === 'csv' || $file_extension === 'tsv')) {
-						if (class_exists('\Smackcoders\FCSV\DesktopUpload')) {
-							$delimiter = \Smackcoders\FCSV\DesktopUpload::detect_csv_delimiter($real_path);
+						if (class_exists('\Smackcoders\UCI\Core\DesktopUpload')) {
+							$delimiter = \Smackcoders\UCI\Core\DesktopUpload::detect_csv_delimiter($real_path);
 							update_option("smack_csv_delimiter_{$event_key}", $delimiter);
 						}
 					}

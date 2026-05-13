@@ -5,7 +5,7 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 if ( ! defined( 'ABSPATH' ) )
 exit; // Exit if accessed directly
@@ -13,12 +13,10 @@ exit; // Exit if accessed directly
 class Tables {
 
 	private static $instance = null;
-	private static $smack_csv_instance = null;
 
 	public static function getInstance() {
 		if (Tables::$instance == null) {
 			Tables::$instance = new Tables;
-			Tables::$smack_csv_instance = SmackCSV::getInstance();
 			Tables::$instance->create_tables();
 			return Tables::$instance;
 		}
@@ -290,7 +288,7 @@ class Tables {
 			$wpdb->query("ALTER table `{$wpdb->prefix}ultimate_csv_importer_shortcode_manager` ADD COLUMN import_type VARCHAR(10);");
 		}
 		$result_3 =  $wpdb->query("SHOW COLUMNS FROM `{$wpdb->prefix}ultimate_csv_importer_shortcode_manager` LIKE 'templatekey'");
-		if($result_3 == 0){
+		if($result_3 == 1){
 			$res = $wpdb->query("ALTER TABLE {$wpdb->prefix}ultimate_csv_importer_shortcode_manager DROP COLUMN templatekey");     
 		}
 		$result_4 = $wpdb->query("SHOW COLUMNS FROM `{$wpdb->prefix}ultimate_csv_importer_shortcode_manager` LIKE 'file_name'");
@@ -301,9 +299,9 @@ class Tables {
 		if($result_5 == 0){
 			$wpdb->query("ALTER TABLE `{$wpdb->prefix}ultimate_csv_importer_shortcode_manager` ADD COLUMN post_title varchar(255)");
 		}
-		$result_6 = $wpdb->query("SHOW COLUMNS FROM `{$wpdb->prefix}ultimate_csv_importer_shortcode_manager` LIKE 'media_id'");
+		$result_6 = $wpdb->query("SHOW COLUMNS FROM `{$wpdb->prefix}ultimate_csv_importer_shortcode_manager` LIKE 'medi-id'");
 		if($result_6 == 0){
-			$wpdb->query("ALTER TABLE `{$wpdb->prefix}ultimate_csv_importer_shortcode_manager` ADD COLUMN media_id INT(6)");
+			$wpdb->query("ALTER TABLE `{$wpdb->prefix}ultimate_csv_importer_shortcode_manager` ADD COLUMN `medi-id` INT(6)");
 		}
 		$result_7 = $wpdb->query("SHOW COLUMNS FROM `{$wpdb->prefix}ultimate_csv_importer_shortcode_manager` LIKE 'status'");
 		if($result_7 == 1){
@@ -313,5 +311,6 @@ class Tables {
 		if($result_8 == 1){
 			$wpdb->query("ALTER TABLE `{$wpdb->prefix}ultimate_csv_importer_shortcode_manager` Modify COLUMN hash_key VARCHAR(255) DEFAULT NULL ");
 		}
+		do_action('sm_uci_create_addon_tables');
 	}
 }

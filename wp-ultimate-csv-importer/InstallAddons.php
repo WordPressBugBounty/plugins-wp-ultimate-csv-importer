@@ -5,14 +5,14 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 if ( ! defined( 'ABSPATH' ) )
 exit; // Exit if accessed directly
 
 /**
  * Class InstallAddons
- * @package Smackcoders\FCSV
+ * @package Smackcoders\UCI\Core
  */
 
 class InstallAddons {
@@ -27,7 +27,7 @@ class InstallAddons {
 		public static function getInstance() {
 			if ( InstallAddons::$instance == null ) {
 							InstallAddons::$instance = new InstallAddons;
-							InstallAddons::$smack_csv_instance = SmackCSV::getInstance();
+							InstallAddons::$smack_csv_instance = UCICore::getInstance();
 							InstallAddons::$instance->doHooks();
 			}
         return InstallAddons::$instance;

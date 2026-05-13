@@ -5,7 +5,7 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 if ( ! defined( 'ABSPATH' ) )
 	exit; // Exit if accessed directly
@@ -52,7 +52,7 @@ class MediaHandling{
 	{
 		if (MediaHandling::$instance == null) {
 			MediaHandling::$instance = new MediaHandling;
-			MediaHandling::$smack_instance = SmackCSV::getInstance();
+			MediaHandling::$smack_instance = UCICore::getInstance();
 			return MediaHandling::$instance;
 		}
 		return MediaHandling::$instance;
@@ -157,7 +157,7 @@ class MediaHandling{
 		echo wp_json_encode($result);
 		wp_die();
 	}
-	private function ImageFileSizeAdded($filenames, $sizes)
+	public function ImageFileSizeAdded($filenames, $sizes)
 	{
 		$newSizes = [];
 		$sizes = array_values($sizes);
@@ -175,7 +175,7 @@ class MediaHandling{
 		}
 		return $newSizes;
 	}
-	private function ValidImageFileAdded($filename)
+	public function ValidImageFileAdded($filename)
 	{
 		$validExtensions = ['jpg', 'jpeg', 'png', 'svg','webp','bmp'];
 		$filteredFiles = [];
@@ -192,7 +192,7 @@ class MediaHandling{
 		$filenames = array_values($filteredFiles);
 		return $filenames;
 	}
-	private function isValidImageFile($filename)
+	public function isValidImageFile($filename)
 	{
 		$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 		if (in_array($ext, ['jpg', 'jpeg', 'png', 'svg','webp', 'bmp'])) {

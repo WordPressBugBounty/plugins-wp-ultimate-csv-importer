@@ -2,16 +2,14 @@
  
 // wp-csv-hooks.php
  
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 
 if ( ! defined( 'ABSPATH' ) ) {
         die;
 }
 
 global $plugin_ajax_hooks;
-global $smackCLI;
 
-if($smackCLI || (is_user_logged_in() && current_user_can('edit_published_posts'))){
 $plugin_ajax_hooks = [
 
     'security_performance',
@@ -71,9 +69,59 @@ $plugin_ajax_hooks = [
     'helperImport',
     'helperSearch',
     'needHelper',
-    'wpquery_data'
-];  
-}
-else {
-    $plugin_ajax_hooks = [];
-}
+    'wpquery_data',
+    // Custom-Fields-Pro hooks
+    'database_optimization_process',
+    'send_login_credentials_to_users',
+    'getfields',
+    'templateinfo',
+    'search_template',
+    'zip_ngg_upload',
+    'download_file',
+    'download_all_file',
+    'delete_file',
+    'delete_all_records',
+    'delete_all_file',
+    'trash_records',
+    'display_events',
+    'display_schedule',
+    'delete_schedule',
+    'edit_schedule',
+    'update_schedule',
+    'displayTemplates',
+    'saveTemplate',
+    'deleteTemplate',
+    'parseDataToScheduleExport',
+    'save_schedule_info',
+    'timezone',
+    'get_server',
+    'get_sftp_url',
+    'PieChart',
+    'checkExtensions',
+    'listuploads',
+    'locklist',
+    'rollback_now',
+    'clear_rollback',
+    'disable_main_mode',
+    'csv_options',
+    'send_error_status',
+    // Ultimate-Pro hooks
+    'delete_dropbox_credentials',
+    'delete_gsheet_credentials',
+    'get_service_provider',
+    'get_bucket_details',
+    'get_storage_settings',
+    'storage_settings_details',
+    'get_total_records',
+    'get_category',
+    'get_export_fields',
+    'DeleteExportTemplate',
+    'handle_google_oauth_request',
+    'handle_google_oauth_callback',
+    'get_post_content',
+    'get_image_url',
+    'get_test_result',
+    'get_export_template',
+    'delete_mapping_template_by_hashkey',
+    'get_ai_import_context'
+];

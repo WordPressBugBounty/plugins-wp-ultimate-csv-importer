@@ -1,6 +1,6 @@
 <?php
 
-namespace Smackcoders\FCSV;
+namespace Smackcoders\UCI\Core;
 if (!defined('ABSPATH')) exit; // Exit if accessed directly
 /**
  * 

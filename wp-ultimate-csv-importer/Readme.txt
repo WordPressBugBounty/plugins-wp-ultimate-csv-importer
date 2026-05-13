@@ -3,8 +3,8 @@ Contributors: smackcoders, premairuthayarajan
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 7.40
-Version: 7.40
+Stable tag: 7.41
+Version: 7.41
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
 Tags: csv importer, xml importer, woocommerce import, wordpress import, import export, excel import, wp import, data migration, wordpress csv import, wordpress xml import, xml, all import, import all, export woocommerce products, product export, product import, woocommerce product import, wordpress csv importer, xml import, importer, migrate, datafeed, wordpress importer
@@ -386,6 +386,12 @@ This method ensures a hassle-free setup directly from your WordPress dashboard.
 
 
 == Changelog ==
+
+= 7.41 =
+Fix : category import mapping issue causing fallback to "Uncategorized" during taxonomy imports
+Added: refactor(core): introduce Smackcoders\UCI\Core namespace and restructure plugin bootstrap architecture
+Added: refactor(core): improve file loading, maintainability, performance, and third-party compatibility across plugin core
+Added: feat(pro-core): establish shared architectural foundation for CSV Pro, CF Pro, and WPML Pro addons
 
 = 7.40 =
 Fix : feat: implement record count retrieval for WooCommerce customers in export

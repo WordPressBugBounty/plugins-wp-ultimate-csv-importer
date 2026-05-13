@@ -5,8 +5,8 @@
  * Copyright (C) 2010-2020, Smackcoders Inc - info@smackcoders.com
  */
 
-namespace Smackcoders\FCSV;
-use Smackcoders\FCSV\WooCommerceMetaImport;
+namespace Smackcoders\UCI\Core;
+use Smackcoders\UCI\Core\WooCommerceMetaImport;
 
 if (!defined( 'ABSPATH' ) )
     exit; // Exit if accessed directly
