@@ -193,6 +193,7 @@ class LangNL {
                         'Schedule' => 'Schema',
                         'Scheduled' => 'Gepland',
                         'Import' => 'Importeren',
+                        'Update' => 'Bijwerken',
                         'Format' => 'Formaat',
                         'OneTime' => 'Een keer',
                         'Daily' => 'Dagelijks',

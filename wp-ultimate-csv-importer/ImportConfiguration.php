@@ -64,27 +64,44 @@ class ImportConfiguration {
 				$fields = array('review_id');
 			}
 			elseif (in_array($import_type, $taxonomies)){
-				$fields = array('slug','termid');
+				$fields = array('TERMID', 'slug');
 			}
-			elseif($import_type == 'Users'){
+			elseif($import_type == 'Users' || $import_type == 'WooCommerce Customer'){
 				$fields = array('user_email','ID');
+			}
+			elseif($import_type == 'Comments'){
+				$fields = array('comment_ID');
 			}
 		}
 		else {
 			if (in_array($import_type, $taxonomies)){
-				$fields = array('slug');
+				$fields = array('TERMID', 'slug');
 			}
-			if($import_type == 'WooCommerce Product Variations'){
+			elseif($import_type == 'WooCommerce Product Variations'){
 				if(is_plugin_active('woocommerce/woocommerce.php') && is_plugin_active('import-woocommerce/import-woocommerce.php')){
 					$fields = array('VARIATIONSKU');
 				}
 			}
-			elseif($import_type == 'Users'){
-				$fields = array('user_email');
+			elseif($import_type == 'Users' || $import_type == 'WooCommerce Customer'){
+				$fields = array('ID', 'user_email');
+			}
+			elseif($import_type == 'WooCommerce Orders'){
+				$fields = array('ORDERID');
+			}
+			elseif($import_type == 'Comments'){
+				$fields = array('comment_ID');
 			}
 			else{
 				$fields = array( 'ID', 'post_title', 'post_name' );
 		    }
+			if ($import_type === 'WooCommerce Product') {
+				if (!isset($fields)) {
+					$fields = array('ID', 'post_title', 'post_name');
+				}
+				if (!in_array('PRODUCTSKU', $fields, true)) {
+					$fields[] = 'PRODUCTSKU';
+				}
+			}
 		}
 		global $wpdb;
 		$file_table_name = $wpdb->prefix ."smackcsv_file_events";
@@ -93,6 +110,8 @@ class ImportConfiguration {
 
 		$response['total_records'] = $total_rows;
         $response['update_fields'] = $fields;
+		$mapping_extension = MappingExtension::getInstance();
+		$response['CustomPostCheck'] = $mapping_extension->is_bulk_update_eligible_type($import_type);
         echo wp_json_encode($response);
         wp_die();
 		

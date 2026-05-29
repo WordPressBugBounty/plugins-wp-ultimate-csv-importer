@@ -3184,7 +3184,7 @@ i#smsumicon {
 }
 
 .wp-ultimate-csv-importer #v-pills-tabContent .filepond--wrapper .filepond--drop-label label:after {
-  content: "Supported file types .csv .xml .xlsx .xls .txt .zip .tsv";
+  content: var(--uci-supported-file-types-1, "Supported file types .csv .xml .xlsx .xls .txt .zip .tsv");
   position: absolute;
   bottom: -20px;
   z-index: 1000;
@@ -3199,7 +3199,7 @@ i#smsumicon {
 }
 
 .wp-ultimate-csv-importer #v-pills-tabContent1 .filepond--wrapper .filepond--drop-label label:after {
-  content: "Supported file types .csv .xml .xlsx .xls \A .txt .zip";
+  content: var(--uci-supported-file-types-2, "Supported file types .csv .xml .xlsx .xls \A .txt .zip");
   position: absolute;
   bottom: -46px;
   z-index: 1000;
@@ -3215,7 +3215,7 @@ i#smsumicon {
 }
 
 .wp-ultimate-csv-importer #v-pills-tabContent2 .filepond--wrapper .filepond--drop-label label:after {
-  content: "Supported file types .zip";
+  content: var(--uci-supported-file-types-3, "Supported file types .zip");
   position: absolute;
   bottom: -20px;
   z-index: 1000;

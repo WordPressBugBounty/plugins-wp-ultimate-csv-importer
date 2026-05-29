@@ -181,6 +181,7 @@ class LangAR
 					'ScheduleTime' => 'الجدول الزمني',
 					'Schedule' => 'برنامج',
 					'Import' => 'يستورد',
+					'Update' => 'تحديث',
 					'Format' => 'شكل',
 					'OneTime' => 'مره واحده',
 					'Daily' => 'اليومي',

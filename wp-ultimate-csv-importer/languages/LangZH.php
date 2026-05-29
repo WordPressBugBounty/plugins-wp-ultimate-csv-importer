@@ -182,6 +182,7 @@ class LangZH
 					'ScheduleTime' => '计划时间',
 					'Schedule' => '日程',
 					'Import' => '进口',
+					'Update' => '更新',
 					'Format' => '格式',
 					'OneTime' => '一度',
 					'Daily' => '日常的',

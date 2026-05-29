@@ -180,6 +180,7 @@ class LangPT {
                         'ScheduleTime' => 'Hora agendada',
                         'Schedule' => 'Cronograma',
                         'Import' => 'Iniciar importação',
+                        'Update' => 'Atualizar',
                         'Format' => 'Formato',
                         'OneTime' => 'Um tempo',
                         'Daily' => 'Diariamente',

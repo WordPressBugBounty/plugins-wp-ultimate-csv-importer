@@ -64,6 +64,11 @@ class ExtensionHandler{
 		return $active_plugins;
 	}
 
+	/**
+	 * Custom post types for import dropdown (filtered via wpucsv_custom_post_type_support).
+	 *
+	 * @since 7.42.0
+	 */
 	public function get_import_custom_post_types(){
 		$custompost = array();
 		$custom_array = array('post', 'page', 'wpsc-product', 'product_variation', 'shop_order', 'shop_coupon', 'shop_order_refund', 'mp_product_variation', 'ngg_pictures');
@@ -79,9 +84,14 @@ class ExtensionHandler{
 				$custompost[$value] = $value;
 			}
 		}
-		return $custompost;
+		return WpucsvHooks::filter_post_types( $custompost );
 	}
 
+	/**
+	 * All import module types for admin dropdown (filtered via wpucsv_custom_post_type_support).
+	 *
+	 * @since 7.42.0
+	 */
 	public function get_import_post_types(){
 		global $wpdb;
 		$custom_array = array('post', 'page', 'wpsc-product', 'product_variation', 'shop_order', 'shop_coupon', 'shop_order_refund','mp_product_variation');
@@ -193,7 +203,7 @@ class ExtensionHandler{
 		if(is_plugin_active('jet-booking/jet-booking.php')){
 			$importas['JetBooking'] ='JetBooking';
 		}
-		return $importas;	
+		return WpucsvHooks::filter_post_types( $importas );
 		
 	}
 
@@ -226,9 +236,18 @@ class ExtensionHandler{
 
 	public function import_type_as($import_type){
 		$import_type_as = $this->get_import_post_types();
+		$trim_type      = trim( $import_type );
 
-		if(array_key_exists(trim($import_type) , $import_type_as )){	
-			$import_type = $import_type_as[trim($import_type)];
+		if ( array_key_exists( $trim_type, $import_type_as ) ) {
+			// Prefer registered post type slug (dropdown key or mapped value).
+			if ( post_type_exists( $trim_type ) ) {
+				return $trim_type;
+			}
+			$mapped = $import_type_as[ $trim_type ];
+			if ( is_string( $mapped ) && post_type_exists( $mapped ) ) {
+				return $mapped;
+			}
+			$import_type = $mapped;
 		}
 
 		return $import_type;

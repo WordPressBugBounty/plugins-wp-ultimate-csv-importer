@@ -22,14 +22,18 @@ class CommentsImport {
 		return CommentsImport::$comments_instance;
     }
 
-    public function comments_import_function($data_array , $mode , $unikey_value,$unikey_name , $line_number, $type) {
+    public function comments_import_function($data_array, $mode, $unikey_value, $unikey_name, $line_number, $type, $check = '', $update_based_on = 'normal', $duplicate_action = 'skip') {
 
 		global $wpdb;
 		$core_instance = CoreFieldsImport::getInstance();
 		global $core_instance;
 		$helpers_instance = ImportHelpers::getInstance();
 		$log_table_name = $wpdb->prefix ."import_detail_log";
-		$returnArr = [];
+		$returnArr = array();
+
+		$update_based_on = in_array($update_based_on, array('normal', 'skip'), true) ? $update_based_on : 'normal';
+		$duplicate_action = in_array($duplicate_action, array('skip', 'update', 'create'), true) ? $duplicate_action : 'skip';
+		$comment_match_fields = array('comment_ID');
 
 		$updated_row_counts = $helpers_instance->update_count($unikey_value,$unikey_name);
 		$created_count = $updated_row_counts['created'];
@@ -95,53 +99,107 @@ class CommentsImport {
 				$data_array['comment_type'] = 'review';
 			}
 			if ($post_exists) {
-			if($mode == 'Insert'){
-				if(empty( $data_array['comment_date'] )) {
-					$data_array['comment_date'] = current_time('mysql', 0);
-				}else{
-					$data_array['comment_date'] = date( 'Y-m-d H:i:s', strtotime( $data_array['comment_date'] ) );
-				}
-				$retID = wp_insert_comment($data_array);
-				$mode_of_affect = 'Inserted';
-				
-				if(is_wp_error($retID) || $retID == '') {
-					
-					$core_instance->detailed_log[$line_number]['Message'] = "Skipped, Due to unknown post ID.";	
-					$fields = $wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
-				
-					$returnArr['MODE'] = $mode_of_affect;
+			$existing_id = ($type === 'Comments') ? $this->find_existing_comment_id($data_array, $check) : 0;
+			$has_match = $existing_id > 0;
+			$duplicate_handling_active = (
+				$type === 'Comments'
+				&& $update_based_on === 'normal'
+				&& !empty($check)
+				&& in_array($check, $comment_match_fields, true)
+			);
+
+			if ($type === 'Comments' && $update_based_on === 'skip' && !empty($check) && in_array($check, $comment_match_fields, true) && !$has_match) {
+				$core_instance->detailed_log[$line_number]['Message'] = 'Skipped. No matching record found.';
+				$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
+				$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+				$returnArr['MODE'] = $mode;
+				return $returnArr;
+			}
+
+			if ($duplicate_handling_active && $has_match && $duplicate_action === 'skip') {
+				$core_instance->detailed_log[$line_number]['Message'] = 'Skipped, Due to duplicate Comment found!.';
+				$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
+				$core_instance->detailed_log[$line_number]['id'] = $existing_id;
+				$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+				$returnArr['MODE'] = $mode;
+				$returnArr['ID'] = $existing_id;
+				return $returnArr;
+			}
+
+			$retID = 0;
+			$mode_of_affect = '';
+
+			if ($duplicate_handling_active && $has_match && $duplicate_action === 'update') {
+				$result = $this->update_existing_comment($data_array, $existing_id, $line_number, $log_table_name, $unikey_name, $unikey_value, $updated_count);
+				if ($result === false) {
+					$core_instance->detailed_log[$line_number]['Message'] = 'Skipped, Due to duplicate Comment update failed!.';
+					$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
+					$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+					$returnArr['MODE'] = $mode;
 					return $returnArr;
 				}
-				$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Comment ID: ' . $retID;	
-				$core_instance->detailed_log[$line_number]['id'] =  $retID;			
-				$fields = $wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
-			}
-			if($mode == 'Update'){
-				$ID_result =  $wpdb->get_results("SELECT comment_ID FROM {$wpdb->prefix}comments WHERE comment_post_ID = $post_id order by comment_ID DESC ");		
-				if ( is_array( $ID_result ) && ! empty( $ID_result ) ) {
-
-					$retID = $ID_result[0]->comment_ID;		
-					$data_array['comment_ID'] = $retID;
-					wp_update_comment( $data_array );
-					$mode_of_affect = 'Updated';
-
-					$core_instance->detailed_log[$line_number]['Message'] = 'Updated Comment ID: ' . $retID;	
-					$fields = $wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
-				}else{
-					
-					$retID = wp_insert_comment($data_array);
-					$mode_of_affect = 'Inserted';
-					
-					if(is_wp_error($retID) || $retID == '') {	
-						$core_instance->detailed_log[$line_number]['Message'] = "Skipped, Due to unknown post ID.";
-						$fields = $wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
-						
-						$returnArr['MODE'] = $mode_of_affect;
+				$retID = $result['ID'];
+				$mode_of_affect = $result['MODE'];
+			} elseif ($duplicate_handling_active && $has_match && $duplicate_action === 'create') {
+				$result = $this->insert_new_comment($data_array, $line_number, $log_table_name, $unikey_name, $unikey_value, $created_count, $skipped_count);
+				if ($result === false) {
+					$returnArr['MODE'] = $mode;
+					return $returnArr;
+				}
+				$retID = $result['ID'];
+				$mode_of_affect = $result['MODE'];
+			} elseif ($mode === 'Update' && $has_match) {
+				$result = $this->update_existing_comment($data_array, $existing_id, $line_number, $log_table_name, $unikey_name, $unikey_value, $updated_count);
+				if ($result === false) {
+					$core_instance->detailed_log[$line_number]['Message'] = 'Skipped, Due to duplicate Comment update failed!.';
+					$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
+					$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+					$returnArr['MODE'] = $mode;
+					return $returnArr;
+				}
+				$retID = $result['ID'];
+				$mode_of_affect = $result['MODE'];
+			} elseif ($mode === 'Update' && !$has_match && $update_based_on === 'skip') {
+				$core_instance->detailed_log[$line_number]['Message'] = 'Skipped. No matching record found.';
+				$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
+				$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+				$returnArr['MODE'] = $mode;
+				return $returnArr;
+			} elseif ($mode === 'Update' && !$has_match && empty($check)) {
+				$ID_result = $wpdb->get_results("SELECT comment_ID FROM {$wpdb->prefix}comments WHERE comment_post_ID = $post_id order by comment_ID DESC ");
+				if (is_array($ID_result) && !empty($ID_result)) {
+					$result = $this->update_existing_comment($data_array, $ID_result[0]->comment_ID, $line_number, $log_table_name, $unikey_name, $unikey_value, $updated_count);
+					if ($result === false) {
+						$returnArr['MODE'] = $mode;
 						return $returnArr;
 					}
-					$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Comment ID: ' . $retID;		
-					$fields = $wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
+					$retID = $result['ID'];
+					$mode_of_affect = $result['MODE'];
+				} else {
+					$result = $this->insert_new_comment($data_array, $line_number, $log_table_name, $unikey_name, $unikey_value, $created_count, $skipped_count);
+					if ($result === false) {
+						$returnArr['MODE'] = $mode;
+						return $returnArr;
+					}
+					$retID = $result['ID'];
+					$mode_of_affect = $result['MODE'];
 				}
+			} elseif ($mode === 'Update' && !$has_match) {
+				$result = $this->insert_new_comment($data_array, $line_number, $log_table_name, $unikey_name, $unikey_value, $created_count, $skipped_count);
+				if ($result === false) {
+					$returnArr['MODE'] = $mode;
+					return $returnArr;
+				}
+				$retID = $result['ID'];
+				$mode_of_affect = $result['MODE'];
+			} else {
+				$result = $this->insert_new_comment($data_array, $line_number, $log_table_name, $unikey_name, $unikey_value, $created_count, $skipped_count);
+				if ($result === false) {
+					$returnArr['MODE'] = $mode;
+					return $returnArr;
+				}
+				$retID = $result['ID'];
+				$mode_of_affect = $result['MODE'];
 			}
 			if(isset($data_array['comment_rating'])){
 				$rating_range = range(1,5);
@@ -159,6 +217,112 @@ class CommentsImport {
 		$returnArr['MODE'] = isset($mode_of_affect) ? $mode_of_affect :'';
 		return $returnArr;
 		}
+
+	private function find_existing_comment_id($data_array, $check) {
+		if ($check !== 'comment_ID') {
+			return 0;
+		}
+		$comment_id = isset($data_array['comment_ID']) ? trim((string) $data_array['comment_ID']) : '';
+		if ($comment_id === '' || !is_numeric($comment_id)) {
+			return 0;
+		}
+		$comment_id = absint($comment_id);
+		if ($comment_id <= 0) {
+			return 0;
+		}
+		$comment = get_comment($comment_id);
+		return $comment ? (int) $comment->comment_ID : 0;
+	}
+
+	private function prepare_comment_date(&$data_array) {
+		if (empty($data_array['comment_date'])) {
+			$data_array['comment_date'] = current_time('mysql', 0);
+		} else {
+			$timestamp = strtotime($data_array['comment_date']);
+			$data_array['comment_date'] = $timestamp ? date('Y-m-d H:i:s', $timestamp) : current_time('mysql', 0);
+		}
+	}
+
+	private function resolve_comment_user_id(&$data_array) {
+		global $wpdb;
+		if (empty($data_array['user_id'])) {
+			return;
+		}
+		if (is_numeric($data_array['user_id'])) {
+			$data_array['user_id'] = absint($data_array['user_id']);
+			return;
+		}
+		$user_login = $data_array['user_id'];
+		$user_row = $wpdb->get_row($wpdb->prepare(
+			"SELECT ID FROM {$wpdb->prefix}users WHERE user_login = %s LIMIT 1",
+			$user_login
+		));
+		if ($user_row) {
+			$data_array['user_id'] = (int) $user_row->ID;
+		} else {
+			unset($data_array['user_id']);
+		}
+	}
+
+	private function prepare_comment_payload($data_array, $comment_id = 0) {
+		$this->resolve_comment_user_id($data_array);
+		$this->prepare_comment_date($data_array);
+		$allowed = array(
+			'comment_post_ID',
+			'comment_author',
+			'comment_author_email',
+			'comment_author_url',
+			'comment_content',
+			'comment_author_IP',
+			'comment_date',
+			'comment_approved',
+			'comment_parent',
+			'user_id',
+			'comment_type',
+		);
+		$payload = array();
+		foreach ($allowed as $field) {
+			if (array_key_exists($field, $data_array)) {
+				$payload[$field] = $data_array[$field];
+			}
+		}
+		if ($comment_id > 0) {
+			$payload['comment_ID'] = $comment_id;
+		}
+		return $payload;
+	}
+
+	private function insert_new_comment($data_array, $line_number, $log_table_name, $unikey_name, $unikey_value, $created_count, $skipped_count) {
+		global $wpdb, $core_instance;
+		$payload = $this->prepare_comment_payload($data_array, 0);
+		$retID = wp_insert_comment($payload);
+		if (is_wp_error($retID) || $retID == '') {
+			$core_instance->detailed_log[$line_number]['Message'] = 'Skipped, Due to unknown post ID.';
+			$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
+			$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+			return false;
+		}
+		$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Comment ID: ' . $retID;
+		$core_instance->detailed_log[$line_number]['id'] = $retID;
+		$core_instance->detailed_log[$line_number]['state'] = 'Inserted';
+		$wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
+		return array('ID' => $retID, 'MODE' => 'Inserted');
+	}
+
+	private function update_existing_comment($data_array, $comment_id, $line_number, $log_table_name, $unikey_name, $unikey_value, $updated_count) {
+		global $wpdb, $core_instance;
+		$payload = $this->prepare_comment_payload($data_array, $comment_id);
+		$updated = wp_update_comment($payload);
+		// wp_update_comment returns 1 when rows changed, 0 when unchanged — both are success.
+		if ($updated === false || is_wp_error($updated)) {
+			return false;
+		}
+		$core_instance->detailed_log[$line_number]['Message'] = 'Updated Comment ID: ' . $comment_id;
+		$core_instance->detailed_log[$line_number]['id'] = $comment_id;
+		$core_instance->detailed_log[$line_number]['state'] = 'Updated';
+		$wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
+		return array('ID' => $comment_id, 'MODE' => 'Updated');
+	}
 		
 		public function menu_import_function($data_array , $mode , $unikey_value,$unikey_name , $line_number){
 			global $wpdb;

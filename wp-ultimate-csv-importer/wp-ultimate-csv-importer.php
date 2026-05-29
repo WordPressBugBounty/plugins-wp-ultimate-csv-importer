@@ -10,7 +10,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: WP Ultimate CSV Importer
- * Version:     7.41
+ * Version:     8.0
  * Plugin URI:  https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
  * Description: Seamlessly create posts, custom posts, pages, media, SEO and more from your CSV data with ease.
  * Author:      Smackcoders
@@ -38,6 +38,18 @@ namespace Smackcoders\UCI\Core;
 
 if ( ! defined( 'ABSPATH' ) )
 	exit; // Exit if accessed directly
+
+/**
+ * Load plugin translations for PHP UI strings.
+ */
+function uci_load_textdomain() {
+	load_plugin_textdomain(
+		'wp-ultimate-csv-importer',
+		false,
+		dirname( plugin_basename( __FILE__ ) ) . '/languages'
+	);
+}
+add_action( 'plugins_loaded', __NAMESPACE__ . '\\uci_load_textdomain' );
 
 
 $extension_uploader = glob( __DIR__ . '/extensionUploader/*.php');
@@ -72,6 +84,8 @@ $import_extensions = glob( __DIR__ . '/importExtensions/*.php');
 foreach ($import_extensions as $import_extension_value) {
 	include_once($import_extension_value);
 }
+
+require_once __DIR__ . '/includes/WpucsvHooks.php';
 
 $export_extensions = glob( __DIR__ . '/exportExtensions/*.php');
 foreach ($export_extensions as $export_extension_value) {
@@ -139,7 +153,7 @@ class UCICore{
 	public static $persian_instance = null;
 	public static $chinese_instance = null;
 	private static $addon_instance = null;
-	public $version = '7.41';
+	public $version = '8.0';
 
 	/**
 	 * UCICore Instance
@@ -258,9 +272,9 @@ public function render_review_notice() {
         </p>
         <p>
             <a href="https://wordpress.org/support/plugin/wp-ultimate-csv-importer/reviews/?filter=5"
-               target="_blank" class="button button-primary">⭐ Sure, I’ll Rate It</a>
-            <a href="<?php echo esc_url(add_query_arg('wcsv_review_later', '1')); ?>" class="button">Maybe Later</a>
-            <a href="<?php echo esc_url(add_query_arg('wcsv_review_dismiss', '1')); ?>" class="button">No,Thanks</a>
+               target="_blank" class="button button-primary"><?php echo esc_html__( "⭐ Sure, I’ll Rate It", 'wp-ultimate-csv-importer' ); ?></a>
+            <a href="<?php echo esc_url(add_query_arg('wcsv_review_later', '1')); ?>" class="button"><?php echo esc_html__( 'Maybe Later', 'wp-ultimate-csv-importer' ); ?></a>
+            <a href="<?php echo esc_url(add_query_arg('wcsv_review_dismiss', '1')); ?>" class="button"><?php echo esc_html__( 'No, Thanks', 'wp-ultimate-csv-importer' ); ?></a>
         </p>
     </div>
     <?php
@@ -324,7 +338,9 @@ public function handle_review_notice_actions() {
         do_action('sm_uci_enqueue_styles');
 
         if ($page === 'com.smackcoders.csvimporternew.menu' || $single_import == 'true') {
-            wp_register_script('react-js', plugins_url('assets/js/admin-v6.1.js', __FILE__), array('wp-element', 'wp-components', 'wp-i18n', 'jquery'));
+            $react_js_path = plugin_dir_path(__FILE__) . 'assets/js/admin-v6.1.js';
+            $react_js_version = file_exists($react_js_path) ? (string) filemtime($react_js_path) : $plugin_instance->version;
+            wp_register_script('react-js', plugins_url('assets/js/admin-v6.1.js', __FILE__), array('wp-element', 'wp-components', 'wp-i18n', 'jquery'), $react_js_version);
             wp_enqueue_script('react-js');
         }
 
@@ -342,7 +358,8 @@ public function handle_review_notice_actions() {
         wp_enqueue_style(wp_unique_handle($plugin_slug . '_react-confirm-alert-css'), plugins_url('assets/css/deps/react-confirm-alert.css', __FILE__));
 
         // Language localization script
-        $language = get_locale();
+        // Use the admin/user locale for admin UI.
+        $language = function_exists( 'determine_locale' ) ? determine_locale() : get_locale();
         $user_id = get_current_user_id();
         $contents = array();
         if($language == 'it_IT'){
@@ -373,7 +390,7 @@ public function handle_review_notice_actions() {
             $contents = \Smackcoders\UCI\Core\LangRU::getInstance()->contents();
         } elseif($language == 'pt_BR') {
             $contents = \Smackcoders\UCI\Core\LangPT::getInstance()->contents();
-        } elseif ($language == 'ja') {
+        } elseif (strpos($language, 'ja') === 0) {
             $contents = \Smackcoders\UCI\Core\LangJA::getInstance()->contents();
         } elseif ($language == 'nl_NL') {
             $contents = \Smackcoders\UCI\Core\LangNL::getInstance()->contents();
@@ -482,14 +499,14 @@ public function handle_review_notice_actions() {
 			'id'     => 'debug-bar',
 			'href' => admin_url().'admin.php?page=com.smackcoders.csvimporternew.menu',
 			'parent' => 'top-secondary',
-			'title'  => apply_filters( 'debug_bar_title', __('Maintenance Mode', 'ultimate-maintenance-mode') ),
+			'title'  => apply_filters( 'debug_bar_title', __( 'Maintenance Mode', 'wp-ultimate-csv-importer' ) ),
 			'meta'   => array( 'class' => 'smack-main-mode' ),
 		) );
 	}
 
 	public function activate_maintenance_mode() { 		
 		global $maintainance_text;
-		$maintainance_text = "Site is under maintenance mode. Please wait few min!";
+		$maintainance_text = __( 'Site is under maintenance mode. Please wait a few minutes!', 'wp-ultimate-csv-importer' );
 		if(!current_user_can('manage_options')) {
 ?> 
 			<div class="main-mode-front"> <span> <?php echo esc_html($maintainance_text); ?> </span> </div> 
@@ -497,9 +514,19 @@ public function handle_review_notice_actions() {
 	} 
 	public static function testing_function (){
 		remove_menu_page('com.smackcoders.csvimporternew.menu');
-		$my_page = add_menu_page('Ultimate CSV Importer Free', 'Ultimate CSV Importer Free', 'manage_options',
+		$my_page = add_menu_page(
+			__( 'Ultimate CSV Importer Free', 'wp-ultimate-csv-importer' ),
+			__( 'Ultimate CSV Importer Free', 'wp-ultimate-csv-importer' ),
+			'manage_options',
 			'com.smackcoders.csvimporternew.menu',array(__CLASS__,'render_main_page'),plugins_url("assets/images/wp-ultimate-csv-importer.png",__FILE__));
-		add_submenu_page( "com.smackcoders.csvimporternew.menu", "Manage Addons", '<span style="color:#00a699">'.__('Manage Addons').'</span>', "manage_options", "wp-addons-page", array(__CLASS__,'importer_addons_page') );
+		add_submenu_page(
+			'com.smackcoders.csvimporternew.menu',
+			__( 'Manage Addons', 'wp-ultimate-csv-importer' ),
+			'<span style="color:#00a699">' . esc_html__( 'Manage Addons', 'wp-ultimate-csv-importer' ) . '</span>',
+			'manage_options',
+			'wp-addons-page',
+			array(__CLASS__,'importer_addons_page')
+		);
 	}
 
 	public static function importer_addons_page(){		
@@ -566,8 +593,8 @@ if (is_plugin_active('wp-ultimate-csv-importer/wp-ultimate-csv-importer.php')) {
 	global $csv_class;
 	$csv_class = new UCICore();
 	// For CLI
-	include_once('SmackcliHandler.php');
 	include_once('SingleImportExport.php');
+	include_once('SmackcliHandler.php');
 	$singlecsv_class = new \Smackcoders\UCI\Core\SingleImportExport();
 																
 }

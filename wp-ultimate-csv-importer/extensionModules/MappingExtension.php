@@ -64,6 +64,7 @@ class MappingExtension {
 		$response['currentuser']   = $current_user_role;
 		$response['configured']   = $ai_status['configured'];
 		$response['settings_url'] = $ai_status['settings_url'];
+		$response['CustomPostCheck'] = $this->is_bulk_update_eligible_type($import_type);
 		$details = [];
 		$info = [];
 		$filename = '';
@@ -314,5 +315,72 @@ class MappingExtension {
 		$wordpress_value = MappingExtension::$extension_handler->convert_static_fields_to_array($wordpressfields);
 		$response[]['core_fields'] = $wordpress_value ;
 		return $response;
+	}
+
+	/**
+	 * Whether import type supports bulk update / duplicate handling (Posts, Pages, CPT).
+	 *
+	 * @param string $import_type Selected type from importer UI.
+	 * @return bool
+	 */
+	public function is_bulk_update_eligible_type($import_type)
+	{
+		if ($import_type === 'WooCommerce Product' && $this->is_woocommerce_bulk_update_addon_active()) {
+			return true;
+		}
+		if ($import_type === 'Users' && $this->is_users_bulk_update_addon_active()) {
+			return true;
+		}
+		if ($import_type === 'WooCommerce Customer' && $this->is_woocommerce_bulk_update_addon_active()) {
+			return true;
+		}
+		if ($import_type === 'WooCommerce Orders' && $this->is_woocommerce_bulk_update_addon_active()) {
+			return true;
+		}
+		if ($import_type === 'Comments') {
+			return true;
+		}
+		if ($this->is_taxonomy_bulk_update_eligible($import_type)) {
+			return true;
+		}
+		$handler = new ExtensionHandler();
+		$resolved = $handler->import_name_as($import_type);
+		return in_array($resolved, array('Posts', 'Pages', 'CustomPosts'), true);
+	}
+
+	/**
+	 * WooCommerce product bulk update requires WooCommerce + import-woocommerce addons.
+	 *
+	 * @return bool
+	 */
+	private function is_woocommerce_bulk_update_addon_active()
+	{
+		if (!function_exists('is_plugin_active')) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		return is_plugin_active('woocommerce/woocommerce.php')
+			&& is_plugin_active('import-woocommerce/import-woocommerce.php');
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function is_users_bulk_update_addon_active()
+	{
+		if (!function_exists('is_plugin_active')) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		return is_plugin_active('import-users/import-users.php');
+	}
+
+	/**
+	 * @param string $import_type
+	 * @return bool
+	 */
+	private function is_taxonomy_bulk_update_eligible($import_type)
+	{
+		$slugs = array('category', 'post_tag', 'product_cat', 'product_brand', 'product_tag');
+		return in_array($import_type, array('Categories', 'Tags', 'Taxonomies'), true)
+			|| in_array($import_type, $slugs, true);
 	}
 }		

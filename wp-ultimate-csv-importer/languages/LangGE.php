@@ -175,6 +175,7 @@ class LangGE {
                 'ScheduleTime' => 'Planmäßige Zeit',
                 'Schedule' => 'Zeitplan',
                 'Import' => 'Einführen',
+                'Update' => 'Aktualisieren',
                 'Format' => 'Format',
                 'OneTime' => 'Einmal',
                 'Daily' => 'Täglich',

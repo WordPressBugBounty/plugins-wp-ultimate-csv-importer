@@ -175,6 +175,7 @@ class LangIT {
 		'ScheduleTime' => 'Orario',
 		'Schedule' => 'Programma',
 		'Import' => 'Importare',
+		'Update' => 'Aggiorna',
 		'Format' => 'Formato',
 		'OneTime' => 'Una volta',
 		'Daily' => 'Quotidiano',

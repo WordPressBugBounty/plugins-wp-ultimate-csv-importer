@@ -166,7 +166,21 @@ class Smackuci_Cli{
       function importcsv($all_value_array,$map,$header_array,$selected_type,$get_mode,$hash_key,$templatekey,$gmode,$progress,$file_name,$total_rows){
         global $wpdb;
         $save_mapping_instance = SaveMapping::getInstance();  
-        $smackcsv_instance = UCICore::getInstance();                                      
+        $smackcsv_instance = UCICore::getInstance();
+
+        $import_session_context = WpucsvHooks::build_context(
+            array(
+                'hash_key'      => $hash_key,
+                'selected_type' => $selected_type,
+                'mode'          => $get_mode,
+                'total_rows'    => $total_rows,
+                'file_name'     => $file_name,
+                'gmode'         => $gmode,
+                'templatekey'   => $templatekey,
+            )
+        );
+        WpucsvHooks::before_import( $import_session_context );
+
         foreach($all_value_array as $line_number => $value_array){
             if(!empty($value_array)){                                                                               
                 $this->maintainlog($templatekey,$hash_key,$file_name,$total_rows,$line_number,'Processing');                   
@@ -191,6 +205,7 @@ class Smackuci_Cli{
             }      
                     
         }
+        WpucsvHooks::after_import( $import_session_context, 'complete' );
         return $get_arr;
       }
 

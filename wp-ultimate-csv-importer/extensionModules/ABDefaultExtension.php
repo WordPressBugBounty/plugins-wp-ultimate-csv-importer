@@ -110,9 +110,6 @@ class DefaultExtension extends ExtensionHandler
 				$wordpressfields['Ping Status'] = 'ping_status';
 			}
 
-			if ($mode == 'Insert') {
-				unset($wordpressfields['ID']);
-			}
 			//WooCommerceOrders
 
 			if ($import_types == 'lp_lesson') {
@@ -172,14 +169,11 @@ class DefaultExtension extends ExtensionHandler
 		// 	   }
 		if ($import_type == 'WooCommerceOrders') {
 			$wordpressfields = array(
+				'Order Id' => 'ORDERID',
 				'Customer Note' => 'customer_note',
 				'Order Status' => 'order_status',
 				'Order Date' => 'order_date',
-				'Order Id' => 'ORDERID'
 			);
-			if ($mode == 'Insert') {
-				unset($wordpressfields['Order Id']);
-			}
 		}
 		if ($import_type === 'WooCommerceCoupons') {
 			$wordpressfields = array(
@@ -269,9 +263,6 @@ class DefaultExtension extends ExtensionHandler
 				'Parent' => 'parent',
 				'Term ID' => 'TERMID'
 			);
-			if ($mode == 'Insert') {
-				unset($wordpressfields['Term ID']);
-			}
 			if ($import_types == 'product_cat') {
 				$wordpressfields['Category Image'] = 'image';
 				$wordpressfields['Display type'] = 'display_type';
@@ -291,9 +282,6 @@ class DefaultExtension extends ExtensionHandler
 				'Tag Description' => 'description',
 				'Term ID' => 'TERMID',
 			);
-			if ($mode == 'Insert') {
-				unset($wordpressfields['Term ID']);
-			}
 			if ($import_types == 'event-tags') {
 				$wordpressfields['Tag Image'] = 'image';
 				$wordpressfields['Tag Color'] = 'color';
@@ -302,6 +290,7 @@ class DefaultExtension extends ExtensionHandler
 
 		if ($import_type == 'Users' || $import_type == 'WooCommerceCustomer') {
 			$wordpressfields = array(
+				'ID' => 'ID',
 				'User Login' => 'user_login',
 				'User Pass' => 'user_pass',
 				'First Name' => 'first_name',
@@ -322,6 +311,7 @@ class DefaultExtension extends ExtensionHandler
 		}
 		if ($import_type === 'Comments') {
 			$wordpressfields = array(
+				'Comment Id' => 'comment_ID',
 				'Comment Post Id' => 'comment_post_ID',
 				'Comment Author' => 'comment_author',
 				'Comment Author Email' => 'comment_author_email',
@@ -359,9 +349,6 @@ class DefaultExtension extends ExtensionHandler
 				'Taxonomy Description' => 'description',
 				'Term ID' => 'TERMID',
 			);
-			if ($mode == 'Insert') {
-				unset($wordpressfields['Term ID']);
-			}
 		}
 
 		if ($import_type === 'CustomerReviews') {

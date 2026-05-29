@@ -31,7 +31,7 @@ class CoreFieldsImport
 		return CoreFieldsImport::$core_instance;
 	}
 
-	function set_core_values($header_array, $value_array, $map, $type, $mode, $line_number, $check, $hash_key, $unmatched_row, $gmode, $templatekey, $wpml_array = null, $media_meta = null, $media_type = null, $order_meta = null, $meta_data = null, $attr_data = null, $bsi_data = null)
+	function set_core_values($header_array, $value_array, $map, $type, $mode, $line_number, $check, $hash_key, $unmatched_row, $gmode, $templatekey, $wpml_array = null, $media_meta = null, $media_type = null, $order_meta = null, $meta_data = null, $attr_data = null, $bsi_data = null, $update_based_on = 'normal', $duplicate_action = 'skip')
 	{
 		global $wpdb;
 		global $uci_woocomm_instance, $woocommerce_core_instance;
@@ -55,6 +55,9 @@ class CoreFieldsImport
 		$updated_row_counts = $helpers_instance->update_count($unikey_value, $unikey_name);
 		$created_count = $updated_row_counts['created'];
 		$skipped_count = $updated_row_counts['skipped'];
+		$updated_count = $updated_row_counts['updated'];
+		$update_based_on = in_array($update_based_on, array('normal', 'skip'), true) ? $update_based_on : 'normal';
+		$duplicate_action = in_array($duplicate_action, array('skip', 'update', 'create'), true) ? $duplicate_action : 'skip';
 
 		$taxonomies = get_taxonomies();
 		if (in_array($type, $taxonomies)) {
@@ -112,7 +115,7 @@ class CoreFieldsImport
 			if ($type == 'WooCommerce Product') {
 				$product_meta_data = $helpers_instance->get_header_values($meta_data, $header_array, $value_array);
 				//$result = $uci_woocomm_instance->woocommerce_product_import_new($post_values , $mode , $type, $unmatched_row, $check , $unikey_value , $unikey_name, $line_number, $acf ,$pods, $toolset,$header_array, $value_array,  $wpml_values,$poly_values,$update_based_on,$product_meta_data,$attr_data,$image_meta);	
-				$result = $uci_woocomm_instance->woocommerce_product_import($post_values, $mode, $check, $unikey_value, $unikey_name, $hash_key, $line_number, $unmatched_row, $header_array, $value_array, $wpml_values, $product_meta_data, $attr_data);
+				$result = $uci_woocomm_instance->woocommerce_product_import($post_values, $mode, $check, $unikey_value, $unikey_name, $hash_key, $line_number, $unmatched_row, $header_array, $value_array, $wpml_values, $product_meta_data, $attr_data, $update_based_on, $duplicate_action);
 			}
 			if ($type == 'JetBooking') {
 
@@ -127,7 +130,13 @@ class CoreFieldsImport
 			}
 			if ($type == 'WooCommerce Orders') {
 				$order_meta_data = $helpers_instance->get_header_values($order_meta, $header_array, $value_array);
-				$result = $uci_woocomm_instance->woocommerce_orders_import($post_values, $mode, $check, $unikey_value, $unikey_name, $line_number, $order_meta_data, '');
+				if ($check === 'ORDERID') {
+					$resolved_match = $this->resolve_match_field_value($check, $map, $header_array, $value_array, $post_values, $helpers_instance);
+					if ($resolved_match !== '' && $resolved_match !== null) {
+						$post_values['ORDERID'] = $resolved_match;
+					}
+				}
+				$result = $uci_woocomm_instance->woocommerce_orders_import($post_values, $mode, $check, $unikey_value, $unikey_name, $line_number, $order_meta_data, $update_based_on, $duplicate_action);
 			}
 			if ($type == 'WooCommerce Product Variations') {
 				$result = $uci_woocomm_instance->woocommerce_variations_import($post_values, $mode, $check, $unikey_value, $unikey_name, $line_number, $variation_count = null);
@@ -139,16 +148,44 @@ class CoreFieldsImport
 				$result = $woocommerce_core_instance->woocommerce_refunds_import($post_values, $mode, $check, $unikey_value, $unikey_name, $line_number);
 			}
 			if (($type == 'Categories') || ($type == 'Tags') || ($type == 'Taxonomies')) {
-				$result = $taxonomies_instance->taxonomies_import_function($post_values, $mode, $import_type, $unmatched_row, $check, $unikey_value, $unikey_name, $line_number, $header_array, $value_array);
+				$term_match_fields = array('TERMID', 'slug', 'termid');
+				if (!empty($check) && in_array($check, $term_match_fields, true)) {
+					$match_field = ($check === 'termid') ? 'TERMID' : $check;
+					$resolved_match = $this->resolve_match_field_value($match_field, $map, $header_array, $value_array, $post_values, $helpers_instance);
+					if ($resolved_match !== '' && $resolved_match !== null) {
+						$post_values[$match_field] = $resolved_match;
+					}
+				}
+				$result = $taxonomies_instance->taxonomies_import_function($post_values, $mode, $import_type, $unmatched_row, $check, $unikey_value, $unikey_name, $line_number, $header_array, $value_array, $update_based_on, $duplicate_action);
 			}
 			if ($type == 'WooCommerce Customer') {
-				$result = $uci_woocomm_customer_instance->users_import_function($post_values, $mode, $unikey_value, $unikey_name, $line_number);
+				$user_match_fields = array('ID', 'user_email');
+				if (!empty($check) && in_array($check, $user_match_fields, true)) {
+					$resolved_match = $this->resolve_match_field_value($check, $map, $header_array, $value_array, $post_values, $helpers_instance);
+					if ($resolved_match !== '' && $resolved_match !== null) {
+						$post_values[$check] = $resolved_match;
+					}
+				}
+				$result = $uci_woocomm_customer_instance->users_import_function($post_values, $mode, $unikey_value, $unikey_name, $line_number, $check, $update_based_on, $duplicate_action);
 			}
 			if ($type == 'Users') {
-				$result = $userimp_class->users_import_function($post_values, $mode, $unikey_value, $line_number);
+				$user_match_fields = array('ID', 'user_email');
+				if (!empty($check) && in_array($check, $user_match_fields, true)) {
+					$resolved_match = $this->resolve_match_field_value($check, $map, $header_array, $value_array, $post_values, $helpers_instance);
+					if ($resolved_match !== '' && $resolved_match !== null) {
+						$post_values[$check] = $resolved_match;
+					}
+				}
+				$result = $userimp_class->users_import_function($post_values, $mode, $unikey_value, $line_number, $check, $update_based_on, $duplicate_action);
 			}
 			if ($type == 'Comments' || $type == 'WooCommerce Reviews') {
-				$result = $comments_instance->comments_import_function($post_values, $mode, $unikey_value, $unikey_name, $line_number, $type);
+				if ($type === 'Comments' && !empty($check) && $check === 'comment_ID') {
+					$resolved_match = $this->resolve_match_field_value($check, $map, $header_array, $value_array, $post_values, $helpers_instance);
+					if ($resolved_match !== '' && $resolved_match !== null) {
+						$post_values[$check] = $resolved_match;
+					}
+				}
+				$result = $comments_instance->comments_import_function($post_values, $mode, $unikey_value, $unikey_name, $line_number, $type, $check, $update_based_on, $duplicate_action);
 			}
 			if ($type == 'Customer Reviews') {
 				$result = $customer_reviews_instance->customer_reviews_import($post_values, $mode, $check, $unikey_value, $line_number);
@@ -461,7 +498,7 @@ class CoreFieldsImport
 							}
 							$wp_element = trim($key);
 							if (!empty($csv_element) && !empty($wp_element)) {
-								$post_values[$wp_element] = $csv_element;
+								$post_values[$wp_element] = $helpers_instance->apply_field_override( $wp_element, $csv_element, $csv_value );
 								$post_values['post_type'] = $import_as;
 								//$post_values = $this->import_core_fields($post_values);
 							}
@@ -472,10 +509,12 @@ class CoreFieldsImport
 
 							$wp_element = trim($key);
 							//	$csv_element1 = $helpers_instance->evalPhp($matched_element);
-							$post_values[$wp_element] = $csv_element1;
+							if ( ! empty( $wp_element ) && isset( $csv_element1 ) ) {
+								$post_values[ $wp_element ] = $helpers_instance->apply_field_override( $wp_element, $csv_element1, $csv_value );
+							}
 						} elseif (!in_array($csv_value, $header_array)) {
 							$wp_element = trim($key);
-							$post_values[$wp_element] = $csv_value;
+							$post_values[$wp_element] = $helpers_instance->apply_field_override( $wp_element, $csv_value, $csv_value );
 							$post_values['post_type'] = $import_as;
 							//$post_values = $this->import_core_fields($post_values,$mode);
 						} else {
@@ -488,7 +527,7 @@ class CoreFieldsImport
 								$import_type = $extension_object->import_type_as($type);
 								$import_as = $extension_object->import_post_types($import_type);
 								if (!empty($csv_element) && !empty($wp_element)) {
-									$post_values[$wp_element] = $csv_element;
+									$post_values[$wp_element] = $helpers_instance->apply_field_override( $wp_element, $csv_element, $csv_value );
 									$post_values['post_type'] = $import_as;
 									//	$post_values = $this->import_core_fields($post_values);
 									//if(!is_numeric($post_values['post_parent'])&&!empty($post_values['post_parent'])){
@@ -504,19 +543,27 @@ class CoreFieldsImport
 					}
 				}
 				$post_values = $this->import_core_fields($post_values);
-				if ($check == 'ID') {
-					if (isset($post_values['ID'])) {
-						$ID = $post_values['ID'];
-						$get_result = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE ID = '$ID' AND post_type = '$import_as' AND post_status != 'trash' order by ID DESC ");
-					}
-				}
-				if ($check == 'post_title') {
-					if (isset($post_values['post_title'])) {
-						$title = $post_values['post_title'];
-						$title = $wpdb->_real_escape($title);
-
+				$get_result = array();
+				$core_match_checks = array('ID', 'post_title', 'post_name', 'post_content');
+				if (!empty($check) && in_array($check, $core_match_checks, true)) {
+					$match_value = $this->resolve_match_field_value($check, $map, $header_array, $value_array, $post_values, $helpers_instance);
+					if ($check === 'ID' && $match_value !== '') {
+						$ID = absint($match_value);
+						if ($ID > 0) {
+							$get_result = $wpdb->get_results($wpdb->prepare(
+								"SELECT ID FROM {$wpdb->prefix}posts WHERE ID = %d AND post_status != 'trash' ORDER BY ID DESC",
+								$ID
+							));
+						}
+					} elseif ($check === 'post_title' && $match_value !== '') {
+						$title = trim((string) $match_value);
 						if ($sitepress != null && is_plugin_active('wpml-ultimate-importer/wpml-ultimate-importer.php')) {
-							$get_result = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = '$title' AND post_type = '$import_as' AND post_status != 'trash' order by ID DESC ");
+							$get_result = $wpdb->get_results($wpdb->prepare(
+								"SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_type = %s AND post_status != 'trash' ORDER BY ID DESC",
+								$title,
+								$import_as
+							));
+							$wpml_id = array();
 							foreach ($get_result as $wpml_result) {
 								$wpml_id[] = $wpml_result->ID;
 							}
@@ -538,27 +585,34 @@ class CoreFieldsImport
 									$w++;
 								}
 							}
+							$getresult = array();
 							foreach ($get_results as $g_result) {
 								$getresult[] = (object) $g_result;
 							}
+							$get_result = $getresult;
 						} else {
-							$get_result = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = '$title' AND post_type = '$import_as' AND post_status != 'trash' order by ID DESC ");
+							$get_result = $wpdb->get_results($wpdb->prepare(
+								"SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_type = %s AND post_status != 'trash' ORDER BY ID DESC",
+								$title,
+								$import_as
+							));
 						}
+					} elseif ($check === 'post_name' && $match_value !== '') {
+						$name = sanitize_title($match_value);
+						if ($name !== '') {
+							$get_result = $wpdb->get_results($wpdb->prepare(
+								"SELECT ID FROM {$wpdb->prefix}posts WHERE post_name = %s AND post_type = %s AND post_status != 'trash' ORDER BY ID DESC",
+								$name,
+								$import_as
+							));
+						}
+					} elseif ($check === 'post_content' && $match_value !== '') {
+						$get_result = $wpdb->get_results($wpdb->prepare(
+							"SELECT ID FROM {$wpdb->prefix}posts WHERE post_content = %s AND post_type = %s AND post_status != 'trash' ORDER BY ID DESC",
+							$match_value,
+							$import_as
+						));
 					}
-				}
-				if ($check == 'post_name') {
-					if (isset($post_values['post_name'])) {
-						$name = $post_values['post_name'];
-						$get_result = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_name = '$name' AND post_type = '$import_as' AND post_status != 'trash' order by ID DESC ");
-					}
-
-				}
-				if ($check == 'post_content') {
-					if (isset($post_values['post_content'])) {
-						$content = $post_values['post_content'];
-						$get_result = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_content = '$content' AND post_type = '$import_as' AND post_status != 'trash' order by ID DESC ");
-					}
-
 				}
 
 				if ($this->generated_content) {
@@ -574,13 +628,39 @@ class CoreFieldsImport
 					}
 				}
 
-				if ($mode == 'Insert') {
+				$core_match_fields = array('ID', 'post_title', 'post_name', 'post_content');
+				$has_match = is_array($get_result) && !empty($get_result);
+				$import_row_finished = false;
+
+				if ($update_based_on === 'skip' && !empty($check) && in_array($check, $core_match_fields, true) && !$has_match) {
+					$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+					$this->detailed_log[$line_number]['Message'] = 'Skipped. No matching record found.';
+					$this->detailed_log[$line_number]['state'] = 'Skipped';
+					$import_row_finished = true;
+				}
+
+				if (!$import_row_finished && $mode == 'Insert' && $update_based_on === 'normal') {
 					$orig_img_src = [];
-					if (is_array($get_result) && !empty($get_result)) {
-						$fields = $wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+					if ($has_match && !empty($check) && $duplicate_action === 'skip') {
+						$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 						$this->detailed_log[$line_number]['Message'] = "Skipped, Due to duplicate found!.";
 						$this->detailed_log[$line_number]['state'] = 'Skipped';
-					} else {
+						$import_row_finished = true;
+					} elseif ($has_match && !empty($check) && $duplicate_action === 'update') {
+						$post_id = $get_result[0]->ID;
+						$post_values['ID'] = $post_id;
+						if (isset($post_values['post_format'])) {
+							$format = str_replace("post-format-", "", $post_values['post_format']);
+							set_post_format($post_id, $format);
+						}
+						wp_update_post($post_values);
+						$wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
+						$post_values['specific_author'] = isset($post_values['specific_author']) ? $post_values['specific_author'] : '';
+						$this->detailed_log[$line_number]['Message'] = 'Updated ' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'];
+						$this->detailed_log[$line_number]['id'] = $post_id;
+						$this->detailed_log[$line_number]['state'] = 'Updated';
+						$import_row_finished = true;
+					} elseif (!$has_match || empty($check) || $duplicate_action === 'create') {
 						if ($post_values['post_status'] != 'delete') {
 							if (is_plugin_active('multilanguage/multilanguage.php')) {
 								$post_id = $this->multiLang($post_values);
@@ -717,15 +797,29 @@ class CoreFieldsImport
 						$fields = $wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
 						if (is_wp_error($post_id) || $post_id == '') {
 							if (is_wp_error($post_id)) {
-								$this->detailed_log[$line_number]['Message'] = "Can't insert this " . $post_values['post_type'] . ". " . $post_id->get_error_message();
+								$this->detailed_log[$line_number]['Message'] = sprintf(
+									/* translators: 1: post type, 2: error message */
+									__( "Can't insert this %1\$s. %2\$s", 'wp-ultimate-csv-importer' ),
+									$post_values['post_type'],
+									$post_id->get_error_message()
+								);
 								$this->detailed_log[$line_number]['state'] = 'Skipped';
 							} else {
 								$wpml_message = isset($wpml_message) ? $wpml_message : '';
 								if ($sitepress != null && is_plugin_active('wpml-ultimate-importer/wpml-ultimate-importer.php')) {
-									$this->detailed_log[$line_number]['Message'] = "Can't insert this " . $post_values['post_type'] . '. ' . $wpml_message;
+									$this->detailed_log[$line_number]['Message'] = sprintf(
+										/* translators: 1: post type, 2: extra message */
+										__( "Can't insert this %1\$s. %2\$s", 'wp-ultimate-csv-importer' ),
+										$post_values['post_type'],
+										$wpml_message
+									);
 									$this->detailed_log[$line_number]['state'] = 'Skipped';
 								} else {
-									$this->detailed_log[$line_number]['Message'] = "Can't insert this " . $post_values['post_type'];
+									$this->detailed_log[$line_number]['Message'] = sprintf(
+										/* translators: %s: post type */
+										__( "Can't insert this %s", 'wp-ultimate-csv-importer' ),
+										$post_values['post_type']
+									);
 									$this->detailed_log[$line_number]['state'] = 'Skipped';
 								}
 							}
@@ -736,34 +830,126 @@ class CoreFieldsImport
 							$content = $this->openAI_response;
 							if (!empty($content)) {
 								if ($generated_content == 401) {
-									$this->detailed_log[$line_number]['Message'] = 'Inserted ' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'] . "<b style='color: red;'> Notice : </b>Cannot create Content. Invalid API key provided. Please check your API key.";
+									$this->detailed_log[$line_number]['Message'] =
+										sprintf(
+											/* translators: 1: post type, 2: inserted post ID, 3: author info */
+											__( 'Inserted %1$s ID: %2$d, %3$s', 'wp-ultimate-csv-importer' ),
+											$post_values['post_type'],
+											(int) $post_id,
+											$post_values['specific_author']
+										) .
+										' ' .
+										__( "<b style='color: red;'>Notice:</b> Cannot create content. Invalid API key provided. Please check your API key.", 'wp-ultimate-csv-importer' );
 								} else if ($generated_content == 429) {
-									$this->detailed_log[$line_number]['Message'] = 'Inserted ' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'] . "<b style='color: red;'> Notice : </b>Cannot create Content. Rate limit reached for requests or You exceeded your current quota.";
+									$this->detailed_log[$line_number]['Message'] =
+										sprintf(
+											__( 'Inserted %1$s ID: %2$d, %3$s', 'wp-ultimate-csv-importer' ),
+											$post_values['post_type'],
+											(int) $post_id,
+											$post_values['specific_author']
+										) .
+										' ' .
+										__( "<b style='color: red;'>Notice:</b> Cannot create content. Rate limit reached for requests or you exceeded your current quota.", 'wp-ultimate-csv-importer' );
 								} else if ($generated_content == 400) {
-									$this->detailed_log[$line_number]['Message'] = 'Inserted ' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'] . "<b style='color: red;'> Notice : </b>Cannot create Content. Please check your Inputs.";
+									$this->detailed_log[$line_number]['Message'] =
+										sprintf(
+											__( 'Inserted %1$s ID: %2$d, %3$s', 'wp-ultimate-csv-importer' ),
+											$post_values['post_type'],
+											(int) $post_id,
+											$post_values['specific_author']
+										) .
+										' ' .
+										__( "<b style='color: red;'>Notice:</b> Cannot create content. Please check your inputs.", 'wp-ultimate-csv-importer' );
 								} else if ($generated_content == 500) {
-									$this->detailed_log[$line_number]['Message'] = 'Inserted ' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'] . "<b style='color: red;'> Notice : </b>Cannot create Content. The server had an error while processing your request.";
+									$this->detailed_log[$line_number]['Message'] =
+										sprintf(
+											__( 'Inserted %1$s ID: %2$d, %3$s', 'wp-ultimate-csv-importer' ),
+											$post_values['post_type'],
+											(int) $post_id,
+											$post_values['specific_author']
+										) .
+										' ' .
+										__( "<b style='color: red;'>Notice:</b> Cannot create content. The server had an error while processing your request.", 'wp-ultimate-csv-importer' );
 								} else if ($generated_content == 503) {
-									$this->detailed_log[$line_number]['Message'] = 'Inserted ' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'] . "<b style='color: red;'> Notice : </b>Cannot create Content. The engine is currently overloaded, please try again later.";
+									$this->detailed_log[$line_number]['Message'] =
+										sprintf(
+											__( 'Inserted %1$s ID: %2$d, %3$s', 'wp-ultimate-csv-importer' ),
+											$post_values['post_type'],
+											(int) $post_id,
+											$post_values['specific_author']
+										) .
+										' ' .
+										__( "<b style='color: red;'>Notice:</b> Cannot create content. The engine is currently overloaded, please try again later.", 'wp-ultimate-csv-importer' );
 								} else if ($generated_short_description == 401) {
-									$this->detailed_log[$line_number]['Message'] = 'Inserted ' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'] . "<b style='color: red;'> Notice : </b>Cannot create short description. Invalid API key provided. Please check your API key.";
+									$this->detailed_log[$line_number]['Message'] =
+										sprintf(
+											__( 'Inserted %1$s ID: %2$d, %3$s', 'wp-ultimate-csv-importer' ),
+											$post_values['post_type'],
+											(int) $post_id,
+											$post_values['specific_author']
+										) .
+										' ' .
+										__( "<b style='color: red;'>Notice:</b> Cannot create short description. Invalid API key provided. Please check your API key.", 'wp-ultimate-csv-importer' );
 								} else if ($generated_short_description == 429) {
-									$this->detailed_log[$line_number]['Message'] = 'Inserted ' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'] . "<b style='color: red;'> Notice : </b>Cannot create short description. Rate limit reached for requests or You exceeded your current quota.";
+									$this->detailed_log[$line_number]['Message'] =
+										sprintf(
+											__( 'Inserted %1$s ID: %2$d, %3$s', 'wp-ultimate-csv-importer' ),
+											$post_values['post_type'],
+											(int) $post_id,
+											$post_values['specific_author']
+										) .
+										' ' .
+										__( "<b style='color: red;'>Notice:</b> Cannot create short description. Rate limit reached for requests or you exceeded your current quota.", 'wp-ultimate-csv-importer' );
 								} else if ($generated_short_description == 400) {
-									$this->detailed_log[$line_number]['Message'] = 'Inserted ' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'] . "<b style='color: red;'> Notice : </b>Cannot create short description. Please check your Inputs.";
+									$this->detailed_log[$line_number]['Message'] =
+										sprintf(
+											__( 'Inserted %1$s ID: %2$d, %3$s', 'wp-ultimate-csv-importer' ),
+											$post_values['post_type'],
+											(int) $post_id,
+											$post_values['specific_author']
+										) .
+										' ' .
+										__( "<b style='color: red;'>Notice:</b> Cannot create short description. Please check your inputs.", 'wp-ultimate-csv-importer' );
 								} else if ($generated_short_description == 500) {
-									$this->detailed_log[$line_number]['Message'] = 'Inserted ' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'] . "<b style='color: red;'> Notice : </b>Cannot create short description. The server had an error while processing your request.";
+									$this->detailed_log[$line_number]['Message'] =
+										sprintf(
+											__( 'Inserted %1$s ID: %2$d, %3$s', 'wp-ultimate-csv-importer' ),
+											$post_values['post_type'],
+											(int) $post_id,
+											$post_values['specific_author']
+										) .
+										' ' .
+										__( "<b style='color: red;'>Notice:</b> Cannot create short description. The server had an error while processing your request.", 'wp-ultimate-csv-importer' );
 								} else if ($generated_short_description == 503) {
-									$this->detailed_log[$line_number]['Message'] = 'Inserted ' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'] . "<b style='color: red;'> Notice : </b>Cannot create short description. The engine is currently overloaded, please try again later.";
+									$this->detailed_log[$line_number]['Message'] =
+										sprintf(
+											__( 'Inserted %1$s ID: %2$d, %3$s', 'wp-ultimate-csv-importer' ),
+											$post_values['post_type'],
+											(int) $post_id,
+											$post_values['specific_author']
+										) .
+										' ' .
+										__( "<b style='color: red;'>Notice:</b> Cannot create short description. The engine is currently overloaded, please try again later.", 'wp-ultimate-csv-importer' );
 								} else {
-									$this->detailed_log[$line_number]['Message'] = 'Inserted ' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'];
+									$this->detailed_log[$line_number]['Message'] = sprintf(
+										/* translators: 1: post type, 2: inserted post ID, 3: author info */
+										__( 'Inserted %1$s ID: %2$d, %3$s', 'wp-ultimate-csv-importer' ),
+										$post_values['post_type'],
+										(int) $post_id,
+										$post_values['specific_author']
+									);
 									$author = explode('</b>', $post_values['specific_author']);
 									$this->detailed_log[$line_number]['id'] = $post_id;
 									$this->detailed_log[$line_number]['state'] = 'Inserted';
 									$this->detailed_log[$line_number]['author'] = end($author);
 								}
 							} else {
-								$this->detailed_log[$line_number]['Message'] = 'Inserted ' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'];
+								$this->detailed_log[$line_number]['Message'] = sprintf(
+									__( 'Inserted %1$s ID: %2$d, %3$s', 'wp-ultimate-csv-importer' ),
+									$post_values['post_type'],
+									(int) $post_id,
+									$post_values['specific_author']
+								);
 								$author = explode('</b>', $post_values['specific_author']);
 								$this->detailed_log[$line_number]['id'] = $post_id;
 								$this->detailed_log[$line_number]['state'] = 'Inserted';
@@ -778,10 +964,11 @@ class CoreFieldsImport
 							$status = $post_values['post_status'];
 							$wpdb->get_results("UPDATE {$wpdb->prefix}posts set post_status = '$status' where id = $post_id");
 						}
+						$import_row_finished = true;
 					}
 				}
 
-				if ($mode == 'Update') {
+				if (!$import_row_finished && $mode == 'Update') {
 					if (is_array($get_result) && !empty($get_result)) {
 						$post_id = $get_result[0]->ID;
 						$post_values['ID'] = $post_id;
@@ -802,7 +989,19 @@ class CoreFieldsImport
 						}
 
 						$fields = $wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
-						$this->detailed_log[$line_number]['Message'] = 'Updated' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'];
+						$this->detailed_log[$line_number]['Message'] = sprintf(
+							/* translators: 1: post type, 2: updated post ID, 3: author info */
+							__( 'Updated %1$s ID: %2$d, %3$s', 'wp-ultimate-csv-importer' ),
+							$post_values['post_type'],
+							(int) $post_id,
+							$post_values['specific_author']
+						);
+						$this->detailed_log[$line_number]['id'] = $post_id;
+						$this->detailed_log[$line_number]['state'] = 'Updated';
+					} elseif ($update_based_on === 'skip') {
+						$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+						$this->detailed_log[$line_number]['Message'] = __( 'Skipped. No matching record found.', 'wp-ultimate-csv-importer' );
+						$this->detailed_log[$line_number]['state'] = 'Skipped';
 					} else {
 
 						unset($post_values['ID']);
@@ -1059,6 +1258,55 @@ class CoreFieldsImport
 		return $id;
 	}
 
+
+	/**
+	 * Resolve duplicate-match value from mapped row data (works when Insert mode omits ID from mapping UI).
+	 */
+	private function resolve_match_field_value($field, $map, $header_array, $value_array, $post_values, $helpers_instance)
+	{
+		if (!empty($post_values[$field])) {
+			return is_string($post_values[$field]) ? trim($post_values[$field]) : $post_values[$field];
+		}
+
+		if (is_array($map)) {
+			foreach ($map as $map_key => $csv_mapping) {
+				$trim_key = preg_replace('/->(static|math|cus1|openAI)$/', '', (string) $map_key);
+				if ($trim_key === $field && !empty($csv_mapping)) {
+					$subset = array($field => $csv_mapping);
+					$resolved = $helpers_instance->get_header_values($subset, $header_array, $value_array);
+					if (!empty($resolved[$field])) {
+						return is_string($resolved[$field]) ? trim($resolved[$field]) : $resolved[$field];
+					}
+				}
+			}
+		}
+
+		if (is_array($header_array) && is_array($value_array)) {
+			$header_lookup = array();
+			foreach ($header_array as $idx => $header_name) {
+				$header_lookup[strtolower(trim((string) $header_name))] = $idx;
+			}
+			$aliases = array(
+				'ID' => array('id'),
+				'post_title' => array('post_title', 'title', 'post title'),
+				'post_name' => array('post_name', 'slug', 'post slug'),
+				'post_content' => array('post_content', 'content'),
+				'user_email' => array('user_email', 'email'),
+			);
+			if (isset($aliases[$field])) {
+				foreach ($aliases[$field] as $alias) {
+					if (isset($header_lookup[$alias])) {
+						$idx = $header_lookup[$alias];
+						if (isset($value_array[$idx]) && $value_array[$idx] !== '') {
+							return trim((string) $value_array[$idx]);
+						}
+					}
+				}
+			}
+		}
+
+		return '';
+	}
 
 	function import_core_fields($data_array)
 	{

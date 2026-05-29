@@ -183,6 +183,7 @@ class LangTA
 						'ScheduleTime' => 'அட்டவணை நேரம்',
 						'Schedule' => 'அட்டவணை',
 						'Import' => 'இறக்குமதி',
+						'Update' => 'புதுப்பிக்க',
 						'Format' => 'வடிவம்',
 						'OneTime' => 'ஒரு முறை',
 						'Daily' => 'தினசரி',

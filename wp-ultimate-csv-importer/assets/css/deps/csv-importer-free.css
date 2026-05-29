@@ -3050,7 +3050,7 @@ Author: Mohamed Fariz
   .filepond--wrapper
   .filepond--drop-label
   label:after {
-    content: "Supported file types .csv .txt .xml .xlsx .xls .zip .tsv";
+    content: var(--uci-supported-file-types-legacy, "Supported file types .csv .txt .xml .xlsx .xls .zip .tsv");
   position: absolute;
   bottom: -20px;
   z-index: 1000;

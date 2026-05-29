@@ -1,0 +1,87 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Ultimate CSV Importer 7.42.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-28 00:00+0000\n"
+"PO-Revision-Date: 2026-05-28 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Domain: wp-ultimate-csv-importer\n"
+
+msgid "Loving WP Ultimate CSV Importer? 💙"
+msgstr "WP Ultimate CSV Importer を気に入っていただけましたか？"
+
+msgid "We’d be so grateful if you could share your experience in a quick review. It only takes a minute, and it really helps us reach more WordPress users like you."
+msgstr "よろしければ、簡単なレビューでご感想をお聞かせください。1分ほどで終わり、同じような WordPress ユーザーの方々に届きやすくなります。"
+
+msgid "⭐ Sure, I’ll Rate It"
+msgstr "⭐ はい、評価します"
+
+msgid "Maybe Later"
+msgstr "後で"
+
+msgid "No, Thanks"
+msgstr "いいえ、結構です"
+
+msgid "Maintenance Mode"
+msgstr "メンテナンスモード"
+
+msgid "Site is under maintenance mode. Please wait a few minutes!"
+msgstr "サイトはメンテナンスモードです。しばらくお待ちください。"
+
+msgid "Ultimate CSV Importer Free"
+msgstr "Ultimate CSV Importer Free"
+
+msgid "Manage Addons"
+msgstr "アドオンの管理"
+
+msgid "Can't insert this %s"
+msgstr "%s を挿入できません"
+
+msgid "Can't insert this %1$s. %2$s"
+msgstr "%1$s を挿入できません。%2$s"
+
+msgid "Inserted %1$s ID: %2$d, %3$s"
+msgstr "%1$s を挿入しました ID: %2$d、%3$s"
+
+msgid "Updated %1$s ID: %2$d, %3$s"
+msgstr "%1$s を更新しました ID: %2$d、%3$s"
+
+msgid "Skipped. No matching record found."
+msgstr "スキップしました。一致するレコードが見つかりません。"
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create content. Invalid API key provided. Please check your API key."
+msgstr "<b style='color: red;'>通知:</b> コンテンツを作成できません。無効な API キーが指定されています。API キーをご確認ください。"
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create content. Rate limit reached for requests or you exceeded your current quota."
+msgstr "<b style='color: red;'>通知:</b> コンテンツを作成できません。リクエストのレート制限に達したか、現在のクォータを超えました。"
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create content. Please check your inputs."
+msgstr "<b style='color: red;'>通知:</b> コンテンツを作成できません。入力内容をご確認ください。"
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create content. The server had an error while processing your request."
+msgstr "<b style='color: red;'>通知:</b> コンテンツを作成できません。リクエスト処理中にサーバーエラーが発生しました。"
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create content. The engine is currently overloaded, please try again later."
+msgstr "<b style='color: red;'>通知:</b> コンテンツを作成できません。現在エンジンが混雑しています。後ほど再試行してください。"
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create short description. Invalid API key provided. Please check your API key."
+msgstr "<b style='color: red;'>通知:</b> 短い説明を作成できません。無効な API キーが指定されています。API キーをご確認ください。"
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create short description. Rate limit reached for requests or you exceeded your current quota."
+msgstr "<b style='color: red;'>通知:</b> 短い説明を作成できません。リクエストのレート制限に達したか、現在のクォータを超えました。"
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create short description. Please check your inputs."
+msgstr "<b style='color: red;'>通知:</b> 短い説明を作成できません。入力内容をご確認ください。"
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create short description. The server had an error while processing your request."
+msgstr "<b style='color: red;'>通知:</b> 短い説明を作成できません。リクエスト処理中にサーバーエラーが発生しました。"
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create short description. The engine is currently overloaded, please try again later."
+msgstr "<b style='color: red;'>通知:</b> 短い説明を作成できません。現在エンジンが混雑しています。後ほど再試行してください。"
+

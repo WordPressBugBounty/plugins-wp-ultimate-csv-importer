@@ -182,6 +182,7 @@ class LangFA
 					'ScheduleTime' => 'ScheduleTime',
 					'Schedule' => 'برنامه',
 					'Import' => 'وارد كردن',
+					'Update' => 'به‌روزرسانی',
 					'Format' => 'قالب',
 					'OneTime' => 'سر وقت',
 					'Daily' => 'روزانه',

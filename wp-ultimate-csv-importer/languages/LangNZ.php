@@ -223,6 +223,7 @@ class LangNZ {
                 'ScheduleTime' => 'Schedule Time',
                 'Schedule' => 'Schedule',
                 'Import' => 'Start Import',
+                'Update' => 'Update',
                 'Format' => 'Format',
                 'OneTime' => 'OneTime',
                 'Daily' => 'Daily',

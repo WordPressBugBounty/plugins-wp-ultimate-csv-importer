@@ -840,7 +840,175 @@ class MediaHandling{
 		return is_wp_error($last) ? $last : (isset($response) ? $response : new \WP_Error('http_request_failed', 'No response'));
 	}
 
+	/**
+	 * Row context for media hooks when not inside main_import_process.
+	 *
+	 * @since 7.42.0
+	 */
+	private function build_media_hook_context( $line_number, $hashkey, $import_type ) {
+		$context = WpucsvHooks::get_current_context();
+		if ( ! empty( $context ) ) {
+			return $context;
+		}
+		return WpucsvHooks::build_context(
+			array(
+				'line_number'   => $line_number,
+				'hash_key'      => $hashkey,
+				'selected_type' => $import_type,
+			)
+		);
+	}
+
+	/**
+	 * @since 7.42.0
+	 */
+	private function build_media_hook_args( $url, $post_id, $line_number, $hashkey, $featured, $import_type, $media_type ) {
+		return array(
+			'url'         => $url,
+			'post_id'     => $post_id,
+			'line_number' => $line_number,
+			'hash_key'    => $hashkey,
+			'featured'    => $featured,
+			'import_type' => $import_type,
+			'media_type'  => $media_type,
+		);
+	}
+
+	/**
+	 * Resolve disk path and public URL for imported media.
+	 *
+	 * Honors WordPress upload_dir filter and wpucsv_before_media_upload overrides:
+	 * upload_subdir (e.g. "2025/05"), or upload_year + upload_month.
+	 *
+	 * @since 7.42.0
+	 *
+	 * @param string               $f_img      Image source URL (optional, for legacy fallback).
+	 * @param array<string,mixed>  $media_args From wpucsv_before_media_upload.
+	 * @return array{path: string, url: string, subdir: string}
+	 */
+	private function resolve_media_upload_paths( $f_img = '', $media_args = array() ) {
+		$dir = wp_upload_dir();
+
+		if ( ! empty( $media_args['upload_subdir'] ) ) {
+			$subdir = '/' . ltrim( (string) $media_args['upload_subdir'], '/' );
+			return array(
+				'path'   => $dir['basedir'] . $subdir,
+				'url'    => $dir['baseurl'] . $subdir,
+				'subdir' => $subdir,
+			);
+		}
+
+		if ( ! empty( $media_args['upload_year'] ) && ! empty( $media_args['upload_month'] ) ) {
+			$subdir = '/' . $media_args['upload_year'] . '/' . $media_args['upload_month'];
+			return array(
+				'path'   => $dir['basedir'] . $subdir,
+				'url'    => $dir['baseurl'] . $subdir,
+				'subdir' => $subdir,
+			);
+		}
+
+		if ( empty( $dir['error'] ) && ! empty( $dir['path'] ) && ! empty( $dir['url'] ) ) {
+			return array(
+				'path'   => $dir['path'],
+				'url'    => $dir['url'],
+				'subdir' => isset( $dir['subdir'] ) ? (string) $dir['subdir'] : '',
+			);
+		}
+
+		$uploads_use_yearmonth = (int) get_option( 'uploads_use_yearmonth_folders' );
+		if ( 1 === $uploads_use_yearmonth ) {
+			$dirname = date( 'Y' ) . '/' . date( 'm' );
+		} else {
+			$parsed_url = parse_url( $f_img, PHP_URL_PATH );
+			if ( preg_match( '#uploads/(\d{4}/\d{2})/#', (string) $parsed_url, $matches ) ) {
+				$dirname = $matches[1];
+			} else {
+				$dirname = '';
+			}
+		}
+
+		if ( $dirname !== '' ) {
+			$subdir = '/' . $dirname;
+			return array(
+				'path'   => $dir['basedir'] . $subdir,
+				'url'    => $dir['baseurl'] . $subdir,
+				'subdir' => $subdir,
+			);
+		}
+
+		return array(
+			'path'   => $dir['basedir'],
+			'url'    => $dir['baseurl'],
+			'subdir' => '',
+		);
+	}
+
+	/**
+	 * @since 7.42.0
+	 */
+	private function complete_media_upload_hook( array $hook_context, array $media_args, $attach_id ) {
+		$error = null;
+		if ( empty( $attach_id ) ) {
+			$fail = self::get_last_image_import_failure();
+			if ( is_string( $fail ) && $fail !== '' ) {
+				$error = $fail;
+			}
+		}
+		WpucsvHooks::after_media_upload( $hook_context, $media_args, $attach_id ? $attach_id : 0, $error );
+	}
+
+	/**
+	 * Download / attach one image with developer API hooks (Issue #395).
+	 *
+	 * @since 7.42.0
+	 */
 	public function image_function($f_img, $post_id, $data_array = null, $option_name = null, $use_existing_image = false, $header_array = null, $value_array = null, $wpml_array = null, $unikey = null, $image_metas = null, $line_number = null, $plugin = null, $import_type = null, $acf_wpname_element = null, $hashkey = null, $indexs = null, $acf_image_meta = null, $media_type = null, $media_id = null, $jet_child_object_id = null, $parent_object_id = null, $media_mode = null,$featured = false)
+	{
+		$hook_context = $this->build_media_hook_context( $line_number, $hashkey, $import_type );
+		$media_args   = $this->build_media_hook_args( $f_img, $post_id, $line_number, $hashkey, $featured, $import_type, $media_type );
+		$media_args   = WpucsvHooks::before_media_upload( $hook_context, $media_args );
+		if ( ! empty( $media_args['url'] ) ) {
+			$f_img = $media_args['url'];
+		}
+		if ( isset( $media_args['post_id'] ) ) {
+			$post_id = (int) $media_args['post_id'];
+		}
+
+		$attach_id = $this->image_function_import(
+			$f_img,
+			$post_id,
+			$data_array,
+			$option_name,
+			$use_existing_image,
+			$header_array,
+			$value_array,
+			$wpml_array,
+			$unikey,
+			$image_metas,
+			$line_number,
+			$plugin,
+			$import_type,
+			$acf_wpname_element,
+			$hashkey,
+			$indexs,
+			$acf_image_meta,
+			$media_type,
+			$media_id,
+			$jet_child_object_id,
+			$parent_object_id,
+			$media_mode,
+			$featured,
+			$media_args
+		);
+
+		$this->complete_media_upload_hook( $hook_context, $media_args, $attach_id );
+		return $attach_id;
+	}
+
+	/**
+	 * Core image download / attach (no hook wrapper).
+	 */
+	private function image_function_import($f_img, $post_id, $data_array = null, $option_name = null, $use_existing_image = false, $header_array = null, $value_array = null, $wpml_array = null, $unikey = null, $image_metas = null, $line_number = null, $plugin = null, $import_type = null, $acf_wpname_element = null, $hashkey = null, $indexs = null, $acf_image_meta = null, $media_type = null, $media_id = null, $jet_child_object_id = null, $parent_object_id = null, $media_mode = null,$featured = false, $media_args = array())
 	{
 		global $wpdb;
 
@@ -1081,25 +1249,9 @@ class MediaHandling{
 		$attachment_title = sanitize_file_name(pathinfo($fimg_name, PATHINFO_FILENAME));
 
 		$file_type = wp_check_filetype($fimg_name, null);
-		$dir = wp_upload_dir();
-		$dirname = date('Y') . '/' . date('m');
-		$uploads_use_yearmonth = get_option('uploads_use_yearmonth_folders');
-		if ($uploads_use_yearmonth == 1) {
-			$uploaddir_paths = $dir['basedir'] . '/' . $dirname;
-			$uploaddir_url = $dir['baseurl'] . '/' . $dirname;
-		} else {
-
-			$parsed_url = parse_url($f_img, PHP_URL_PATH);
-
-			if (preg_match('#/uploads/(\d{4}/\d{2})/#', (string) $parsed_url, $matches)) {
-				$dirname = $matches[1];
-			} else {
-				$dirname = date('Y') . '/' . date('m');
-			}
-			$uploaddir_paths = $dir['basedir'] . '/' . $dirname;
-			$uploaddir_url = $dir['baseurl'] . '/' . $dirname;
-
-		}
+		$upload_paths    = $this->resolve_media_upload_paths( $f_img, is_array( $media_args ) ? $media_args : array() );
+		$uploaddir_paths = $upload_paths['path'];
+		$uploaddir_url   = $upload_paths['url'];
 		$f_img = str_replace(" ", "%20", $f_img);
 		if (!empty($media_handle['media_settings']['file_name']) && isset($media_handle['media_settings']['file_name'])) {
 			$file_type = wp_check_filetype($f_img, null);
@@ -1214,7 +1366,7 @@ class MediaHandling{
 			$response = $this->remote_get_with_retries($meta_val, array(
 				'timeout' => 60,
 				'user-agent' => $user_agent,
-				'sslverify' => apply_filters('smack_csv_importer_image_download_sslverify', true, $f_img),
+				'sslverify' => WpucsvHooks::media_download_sslverify( true, $f_img ),
 				'redirection' => 5,
 			));
 			$rawdata = is_wp_error($response) ? '' : wp_remote_retrieve_body($response);
@@ -1249,7 +1401,7 @@ class MediaHandling{
 			$req_args = array(
 				'timeout' => $timeout,
 				'user-agent' => $user_agent,
-				'sslverify' => apply_filters('smack_csv_importer_image_download_sslverify', true, $fetch_url),
+				'sslverify' => WpucsvHooks::media_download_sslverify( true, $fetch_url ),
 				'redirection' => 5,
 			);
 			$response = $this->remote_get_with_retries($fetch_url, $req_args);
@@ -1281,7 +1433,7 @@ class MediaHandling{
 			$response = $this->remote_get_with_retries($urls, array(
 				'timeout' => 60,
 				'user-agent' => $user_agent,
-				'sslverify' => apply_filters('smack_csv_importer_image_download_sslverify', true, $urls),
+				'sslverify' => WpucsvHooks::media_download_sslverify( true, $urls ),
 				'redirection' => 5,
 			));
 			if (is_wp_error($response)) {
@@ -1856,16 +2008,9 @@ class MediaHandling{
 			$fimg_name = $media_handle['media_settings']['file_name'];
 			$fimg_name = str_replace(' ', '-', trim($fimg_name));
 			$fimg_name = preg_replace('/[^a-zA-Z0-9._\-\s]/', '', $fimg_name);
-			$dir = wp_upload_dir();
-			$dirname = date('Y') . '/' . date('m');
-			$uploads_use_yearmonth = get_option('uploads_use_yearmonth_folders');
-			if ($uploads_use_yearmonth == 1) {
-				$uploaddir_paths = $dir['basedir'] . '/' . $dirname;
-				$uploaddir_url = $dir['baseurl'] . '/' . $dirname;
-			} else {
-				$uploaddir_paths = $dir['basedir'];
-				$uploaddir_url = $dir['baseurl'];
-			}
+			$upload_paths    = $this->resolve_media_upload_paths( $image_url );
+			$uploaddir_paths = $upload_paths['path'];
+			$uploaddir_url   = $upload_paths['url'];
 			if ($uploaddir_paths != "" && $uploaddir_paths) {
 				$uploaddir_path = $uploaddir_paths . "/" . $fimg_name;
 			}
@@ -1888,16 +2033,9 @@ class MediaHandling{
 				preg_match('/[?&]id=([^&]+)/', $image_url, $matches);
 				$fimg_name = isset($matches[1]) ? $matches[1] : basename($image_url);
 			}
-			$dir = wp_upload_dir();
-			$dirname = date('Y') . '/' . date('m');
-			$uploads_use_yearmonth = get_option('uploads_use_yearmonth_folders');
-			if ($uploads_use_yearmonth == 1) {
-				$uploaddir_paths = $dir['basedir'] . '/' . $dirname;
-				$uploaddir_url = $dir['baseurl'] . '/' . $dirname;
-			} else {
-				$uploaddir_paths = $dir['basedir'];
-				$uploaddir_url = $dir['baseurl'];
-			}
+			$upload_paths    = $this->resolve_media_upload_paths( $image_url );
+			$uploaddir_paths = $upload_paths['path'];
+			$uploaddir_url   = $upload_paths['url'];
 			if ($uploaddir_paths != "" && $uploaddir_paths) {
 				$uploaddir_path = $uploaddir_paths . "/" . $fimg_name;
 			}

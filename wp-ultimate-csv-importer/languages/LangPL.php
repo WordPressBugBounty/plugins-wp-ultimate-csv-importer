@@ -219,6 +219,7 @@ class LangPL {
                 'ScheduleTime' => 'Czas harmonogramu',
                 'Schedule' => 'Harmonogram',
                 'Import' => 'Rozpocznij import',
+                'Update' => 'Aktualizuj',
                 'Format' => 'Format',
                 'OneTime' => 'Jeden raz',
                 'Daily' => 'Codziennie',

@@ -3,8 +3,8 @@
 Contributors: smackcoders, smacksupport
 Requires at least: 5.0
 Tested up to: 6.0
-Stable tag: 6.5.4
-Version: 6.5.4
+Stable tag: 8.0
+Version: 8.0
 Requires PHP: 5.2.4
 Author: smackcoders
 Author URI: https://profiles.wordpress.org/smackcoders/
@@ -205,6 +205,26 @@ If you'd like to help out by translating this plugin, please [sign up for an acc
 [youtube https://www.youtube.com/watch?v=8P8xtRY3bCM&feature=youtu.be]
 
 ## Changelog
+### 8.0
+- Added: Developer API — centralized wpucsv hook system for import lifecycle events (wpucsv_before_import, wpucsv_before_row, wpucsv_modify_row_data, wpucsv_skip_row, and more)
+- Added: Content Update and duplicate handling across free importer types
+- Added: Complete Japanese localization across the admin UI
+- Fixed: override_field_value hook wired for Posts import; custom post type slug resolution in Developer API
+- Fixed: SingleImportExport class loading issue
+- Fixed: Removed empty notice displayed at the top of the plugin page
+
+### 7.41
+- Fixed: Category import mapping issue causing fallback to "Uncategorized" during taxonomy imports
+- Added: refactor(core): introduce Smackcoders\UCI\Core namespace and restructure plugin bootstrap architecture
+- Added: refactor(core): improve file loading, maintainability, performance, and third-party compatibility across plugin core
+- Added: feat(pro-core): establish shared architectural foundation for CSV Pro, CF Pro, and WPML Pro addons
+
+### 7.40
+- Fixed: feat: implement record count retrieval for WooCommerce customers in export
+- Added: Resolve images in import hash folder and smack_uci_uploads/import_images
+- Added: feat(wp70): implement Phases 1–6 WordPress 7.0 compatibility updates
+- Added: feat(ai): migrate WP Ultimate CSV Importer to WordPress 7.0 Global AI
+
 ### 6.5.3 
 * Fixed : Added import support for default Categories and Tags
 

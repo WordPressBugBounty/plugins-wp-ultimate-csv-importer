@@ -248,6 +248,7 @@ class LangES
                         'ScheduleTime' => 'Tiempo programado',
                         'Schedule' => 'Calendario',
                         'Import' => 'Importar',
+                        'Update' => 'Actualizar',
                         'Format' => 'Formato',
                         'OneTime' => 'Una vez',
                         'Daily' => 'Diario',

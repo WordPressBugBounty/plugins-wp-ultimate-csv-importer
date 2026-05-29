@@ -221,6 +221,7 @@ class LangFR {
                         'ScheduleTime' => 'Horaire',
                         'Schedule' => 'Programme',
                         'Import' => 'Importation',
+                        'Update' => 'Mettre à jour',
                         'Format' => 'Format',
                         'OneTime' => 'Une fois',
                         'Daily' => 'du quotidien',

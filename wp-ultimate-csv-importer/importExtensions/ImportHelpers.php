@@ -231,6 +231,28 @@ class ImportHelpers {
 		}
 	}
 
+	/**
+	 * Apply wpucsv_override_field_value when a developer overrides a mapped field.
+	 *
+	 * @since 7.42.0
+	 *
+	 * @param string $field_key   WordPress field key (e.g. post_title).
+	 * @param mixed  $value       Resolved value for the field.
+	 * @param string $csv_column  CSV column / mapping source label.
+	 * @return mixed
+	 */
+	public function apply_field_override( $field_key, $value, $csv_column ) {
+		$context  = WpucsvHooks::get_current_context();
+		$override = WpucsvHooks::override_field_value(
+			null,
+			$field_key,
+			$csv_column,
+			$value,
+			is_array( $context ) ? $context : array()
+		);
+		return ( null !== $override ) ? $override : $value;
+	}
+
 	public function get_header_values($map , $header_array , $value_array){
 		$current_user = wp_get_current_user();
 		$current_user_role = $current_user->roles[0];
@@ -313,7 +335,7 @@ $value_assoc = array_combine($header_array, $value_array);
 						}
 						$wp_element= trim($key);
 						if(!empty($csv_element) && !empty($wp_element)){
-							$post_values[$wp_element] = $csv_element;
+							$post_values[ $wp_element ] = $this->apply_field_override( $wp_element, $csv_element, $csv_value );
 						}	
 					}
 
@@ -341,7 +363,7 @@ $value_assoc = array_combine($header_array, $value_array);
     }
 
     if (!empty($csv_element1) && !empty($wp_element)) {
-        $post_values[$wp_element] = $csv_element1;
+        $post_values[ $wp_element ] = $this->apply_field_override( $wp_element, $csv_element1, $csv_value );
     }
 
 }
@@ -349,7 +371,7 @@ $value_assoc = array_combine($header_array, $value_array);
 					
 					elseif(!in_array($csv_value , $header_array)){
 						$wp_element= trim($key);
-						$post_values[$wp_element] = $csv_value;
+						$post_values[ $wp_element ] = $this->apply_field_override( $wp_element, $csv_value, $csv_value );
 					}
 
 					else{
@@ -360,7 +382,7 @@ $value_assoc = array_combine($header_array, $value_array);
 							//}
 							$wp_element = trim($key);
 							if(isset($csv_element) && !empty($wp_element)){
-								$post_values[$wp_element] = $csv_element;
+								$post_values[ $wp_element ] = $this->apply_field_override( $wp_element, $csv_element, $csv_value );
 							}
 						}
 					}

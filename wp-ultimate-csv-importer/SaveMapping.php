@@ -235,6 +235,14 @@ class SaveMapping
 				$map_data[$key] = $value;
 			}
 		}
+		$import_mode_row = $wpdb->get_row($wpdb->prepare("SELECT mode FROM $file_table_name WHERE hash_key = %s", $hash_key));
+		$import_mode = $import_mode_row ? $import_mode_row->mode : '';
+		$id_validation = $this->validate_update_mode_core_id_mapping($import_mode, $type, $map_data);
+		if ($id_validation !== true) {
+			echo wp_json_encode($id_validation);
+			wp_die();
+		}
+
 		$get_detail = $wpdb->get_results("SELECT file_name FROM $file_table_name WHERE `hash_key` = '$hash_key'");
 		$get_file_name = $get_detail[0]->file_name;
 		$get_hash = $wpdb->get_results("SELECT eventKey FROM $template_table_name");
@@ -318,7 +326,7 @@ class SaveMapping
 			$method = 'Update';
 		}
 
-		$total_records = $wpdb->get_results("SELECT file_name , total_records , processing_records ,status ,remaining_records , filesize FROM $log_table_name WHERE hash_key = '$hash_key' ", ARRAY_A);
+		$total_records = $wpdb->get_results("SELECT file_name , total_records , processing_records ,status ,remaining_records , filesize , created , updated , skipped , failed FROM $log_table_name WHERE hash_key = '$hash_key' ", ARRAY_A);
 		$log_records = $wpdb->get_results("SELECT message , status , verify , categories , tags FROM $importlog_table_name WHERE  hash_key = '$hash_key' ", ARRAY_A);
 
 		$response['success'] = true;
@@ -329,6 +337,10 @@ class SaveMapping
 		$response['status'] = $total_records[0]['status'];
 		$response['filesize'] = $total_records[0]['filesize'];
 		$response['method'] = $method;
+		$response['created_count'] = (int) $total_records[0]['created'];
+		$response['updated_count'] = (int) $total_records[0]['updated'];
+		$response['skipped_count'] = (int) $total_records[0]['skipped'];
+		$response['failed_count'] = (int) $total_records[0]['failed'];
 
 		if ($total_records[0]['status'] == 'Completed') {
 			$response['progress'] = false;
@@ -441,8 +453,22 @@ class SaveMapping
 		$upload_dir = SaveMapping::$smackcsv_instance->create_upload_dir();
 		$hash_key = sanitize_key($_POST['HashKey']);
 		$check = sanitize_text_field($_POST['Check']);
+		$update_based_on = isset($_POST['UpdateUsing']) ? sanitize_text_field(wp_unslash($_POST['UpdateUsing'])) : 'normal';
+		$duplicate_action = isset($_POST['DuplicateAction']) ? sanitize_text_field(wp_unslash($_POST['DuplicateAction'])) : 'skip';
+		if (!in_array($update_based_on, array('normal', 'skip'), true)) {
+			$update_based_on = 'normal';
+		}
+		if (!in_array($duplicate_action, array('skip', 'update', 'create'), true)) {
+			$duplicate_action = 'skip';
+		}
 		$media_type = sanitize_text_field($_POST['MediaType']);
 		$selected_type = sanitize_text_field($_POST['Types']);
+		if ($this->is_free_bulk_update_eligible($selected_type) && $update_based_on === 'skip' && $check === '') {
+			$response['success'] = false;
+			$response['message'] = 'Please select a match field.';
+			echo wp_json_encode($response);
+			wp_die();
+		}
 		$page_number = isset($_POST['PageNumber']) ? intval(sanitize_text_field($_POST['PageNumber'])) : 0;
 		$rollback_option = sanitize_text_field($_POST['RollBack']);
 		$check_filter = isset($_POST['mappingFilterCheck']) ? sanitize_text_field(wp_unslash($_POST['mappingFilterCheck'])) : 'true';
@@ -484,11 +510,32 @@ class SaveMapping
 			$selected_type = $values->module;
 		}
 		$map = unserialize($mapped_fields_values);
+		$id_validation = $this->validate_update_mode_core_id_mapping($get_mode, $selected_type, $map);
+		if ($id_validation !== true) {
+			echo wp_json_encode($id_validation);
+			wp_die();
+		}
+		$match_field_validation = $this->validate_match_field_mapped_in_core($check, $selected_type, $map);
+		if ($match_field_validation !== true) {
+			echo wp_json_encode($match_field_validation);
+			wp_die();
+		}
 		$this->manage_filter = unserialize($mapping_filter);
 		if ($rollback_option == 'true') {
 			$tables = $import_config_instance->get_rollback_tables($selected_type);
 			$import_config_instance->set_backup_restore($tables, $hash_key, 'backup');
 		}
+
+		$import_session_context = WpucsvHooks::build_context(
+			array(
+				'hash_key'      => $hash_key,
+				'selected_type' => $selected_type,
+				'mode'          => $get_mode,
+				'total_rows'    => $total_rows,
+				'file_name'     => $file_name,
+			)
+		);
+		WpucsvHooks::before_import( $import_session_context );
 
 		$addHeader = false;
 		$file_iteration = get_option('sm_bulk_import_free_iteration_limit');
@@ -685,7 +732,7 @@ class SaveMapping
 										}
 									}
 								}
-								$get_arr = $this->main_import_process($map, $header_array, $value_array, $selected_type, $get_mode, $i, $check, $hash_key, $unmatched_row, '', '', $media_type);
+								$get_arr = $this->main_import_process($map, $header_array, $value_array, $selected_type, $get_mode, $i, $check, $hash_key, $unmatched_row, '', '', $media_type, $update_based_on, $duplicate_action);
 								$post_id = $get_arr['id'];
 								$core_instance->detailed_log = $get_arr['detail_log'];
 								$failed_media_log = $get_arr['failed_media_log'];
@@ -888,7 +935,7 @@ class SaveMapping
 									}
 								}
 							}
-							$get_arr = $this->main_import_process($map, $header_array, $value_array, $selected_type, $get_mode, $i, $check, $hash_key, $unmatched_row, '', '', $media_type);
+							$get_arr = $this->main_import_process($map, $header_array, $value_array, $selected_type, $get_mode, $i, $check, $hash_key, $unmatched_row, '', '', $media_type, $update_based_on, $duplicate_action);
 							$post_id = $get_arr['id'];
 							$core_instance->detailed_log = $get_arr['detail_log'];
 							$failed_media_log = $get_arr['failed_media_log'];
@@ -1116,7 +1163,7 @@ class SaveMapping
 								}
 							}
 						}
-						$get_arr = $this->main_import_process($map, $header_array, $value_array, $selected_type, $get_mode, $i, $check, $hash_key, $unmatched_row, '', '', $media_type);
+						$get_arr = $this->main_import_process($map, $header_array, $value_array, $selected_type, $get_mode, $i, $check, $hash_key, $unmatched_row, '', '', $media_type, $update_based_on, $duplicate_action);
 						$post_id = $get_arr['id'];
 						$core_instance->detailed_log = $get_arr['detail_log'];
 						$failed_media_log = $get_arr['failed_media_log'];
@@ -1222,7 +1269,7 @@ class SaveMapping
 					}
 
 					array_push($info, $value_array['value']);
-					$get_arr = $this->main_import_process($mapping, $header_array['header'], $value_array['value'], $selected_type, $get_mode, $i, $check, $hash_key, $unmatched_row, '', '', '');
+					$get_arr = $this->main_import_process($mapping, $header_array['header'], $value_array['value'], $selected_type, $get_mode, $i, $check, $hash_key, $unmatched_row, '', '', '', $update_based_on, $duplicate_action);
 					$post_id = $get_arr['id'];
 					$core_instance->detailed_log = $get_arr['detail_log'];
 					$failed_media_log = $get_arr['failed_media_log'];
@@ -1479,8 +1526,15 @@ class SaveMapping
 		if ($rollback_option == 'true') {
 			$response['rollback'] = true;
 		}
-		$total_records = $wpdb->get_results($wpdb->prepare("SELECT status FROM $log_table_name WHERE hash_key = %s ", $hash_key), ARRAY_A);
-		if ($total_records[0]['status'] == 'Completed') {
+		$import_log_row = $wpdb->get_row($wpdb->prepare("SELECT created, updated, skipped, failed, status FROM $log_table_name WHERE hash_key = %s", $hash_key), ARRAY_A);
+		if (!empty($import_log_row)) {
+			$response['created_count'] = (int) $import_log_row['created'];
+			$response['updated_count'] = (int) $import_log_row['updated'];
+			$response['skipped_count'] = (int) $import_log_row['skipped'];
+			$response['failed_count'] = (int) $import_log_row['failed'];
+			$response['import_status'] = $import_log_row['status'];
+		}
+		if (!empty($import_log_row['status']) && $import_log_row['status'] == 'Completed') {
 			if (get_option('failed_line_number')) {
 				delete_option('failed_line_number');
 			}
@@ -1491,6 +1545,9 @@ class SaveMapping
 				delete_option('failed_attachment_ids');
 			}
 		}
+
+		$import_phase = ( ! empty( $import_log_row['status'] ) && $import_log_row['status'] === 'Completed' ) ? 'complete' : 'batch';
+		WpucsvHooks::after_import( $import_session_context, $import_phase );
 
 		echo wp_json_encode($response);
 
@@ -1507,6 +1564,14 @@ class SaveMapping
 		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
 		$hash_key = sanitize_key($_POST['HashKey']);
 		$check = sanitize_text_field($_POST['Check']);
+		$update_based_on = isset($_POST['UpdateUsing']) ? sanitize_text_field(wp_unslash($_POST['UpdateUsing'])) : 'normal';
+		$duplicate_action = isset($_POST['DuplicateAction']) ? sanitize_text_field(wp_unslash($_POST['DuplicateAction'])) : 'skip';
+		if (!in_array($update_based_on, array('normal', 'skip'), true)) {
+			$update_based_on = 'normal';
+		}
+		if (!in_array($duplicate_action, array('skip', 'update', 'create'), true)) {
+			$duplicate_action = 'skip';
+		}
 		$unmatched_row_value = get_option('sm_uci_pro_settings');
 		$unmatched_row = $unmatched_row_value['unmatchedrow'];
 		$file_iteration = get_option('sm_bulk_import_free_iteration_limit');
@@ -1542,6 +1607,12 @@ class SaveMapping
 			$mapped_fields_values = $values->mapping;
 			$selected_type = $values->module;
 		}
+		if ($this->is_free_bulk_update_eligible($selected_type) && $update_based_on === 'skip' && $check === '') {
+			$response['success'] = false;
+			$response['message'] = 'Please select a match field.';
+			echo wp_json_encode($response);
+			wp_die();
+		}
 
 		$get_id = $wpdb->get_results($wpdb->prepare("SELECT id , mode ,file_name , total_rows FROM $file_table_name WHERE `hash_key` = %s", $hash_key));
 		$get_mode = $get_id[0]->mode;
@@ -1561,6 +1632,28 @@ class SaveMapping
 		$fields = $wpdb->insert($log_table_name, array('file_name' => $file_name, 'hash_key' => $hash_key, 'total_records' => $total_rows, 'filesize' => $filesize, 'processing_records' => 1, 'remaining_records' => $remain_records));
 
 		$map = unserialize($mapped_fields_values);
+		$id_validation = $this->validate_update_mode_core_id_mapping($get_mode, $selected_type, $map);
+		if ($id_validation !== true) {
+			echo wp_json_encode($id_validation);
+			wp_die();
+		}
+		$match_field_validation = $this->validate_match_field_mapped_in_core($check, $selected_type, $map);
+		if ($match_field_validation !== true) {
+			echo wp_json_encode($match_field_validation);
+			wp_die();
+		}
+
+		$import_session_context = WpucsvHooks::build_context(
+			array(
+				'hash_key'      => $hash_key,
+				'selected_type' => $selected_type,
+				'mode'          => $get_mode,
+				'total_rows'    => $total_rows,
+				'file_name'     => $file_name,
+			)
+		);
+		WpucsvHooks::before_import( $import_session_context );
+
 		if ($file_extension == 'csv' || $file_extension == 'txt') {
 			if (!ini_get("auto_detect_line_endings")) {
 				ini_set("auto_detect_line_endings", true);
@@ -1588,7 +1681,7 @@ class SaveMapping
 						$header_array = $info[$line_number];
 					} else {
 						$value_array = $info[$line_number];
-						$get_arr = $this->main_import_process($map, $header_array, $value_array, $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, '', '', '');
+						$get_arr = $this->main_import_process($map, $header_array, $value_array, $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, '', '', '', $update_based_on, $duplicate_action);
 						$post_id = $get_arr['id'];
 						$core_instance->detailed_log = $get_arr['detail_log'];
 						$media_log = $get_arr['media_log'];
@@ -1664,7 +1757,7 @@ class SaveMapping
 						$header_array = $info[$line_number];
 					} else {
 						$value_array = $info[$line_number];
-						$get_arr = $this->main_import_process($map, $header_array, $value_array, $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, '', '', '');
+						$get_arr = $this->main_import_process($map, $header_array, $value_array, $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, '', '', '', $update_based_on, $duplicate_action);
 						$post_id = $get_arr['id'];
 						$core_instance->detailed_log = $get_arr['detail_log'];
 						$media_log = $get_arr['media_log'];
@@ -1773,7 +1866,7 @@ class SaveMapping
 						}
 					}
 				}
-				$get_arr = $this->main_import_process($mapping, $header_array['header'], $value_array['value'], $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, '', '', '');
+				$get_arr = $this->main_import_process($mapping, $header_array['header'], $value_array['value'], $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, '', '', '', $update_based_on, $duplicate_action);
 				$post_id = $get_arr['id'];
 				$core_instance->detailed_log = $get_arr['detail_log'];
 				$media_log = $get_arr['media_log'];
@@ -1851,6 +1944,7 @@ class SaveMapping
 		$upload_url = $upload_base_url . '/smack_uci_uploads/imports/';
 		$response['success'] = true;
 		$result['url'] = $upload_url;
+		WpucsvHooks::after_import( $import_session_context, 'complete' );
 		unlink($import_txt_path);
 		echo wp_json_encode($response);
 		wp_die();
@@ -1979,7 +2073,15 @@ class SaveMapping
 			$wpdb->query($wpdb->prepare("UPDATE $log_table_name SET skipped = %d WHERE $unikey_name = %s", $skipped_count, $unikey_value));
 		}
 	}
-	public function main_import_process($map, $header_array, $value_array, $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, $gmode = null, $templatekey = null, $media_type = null)
+	/**
+	 * Process one CSV/XML row through CORE and extension adapters.
+	 *
+	 * Fires developer API hooks (since 7.42.0): wpucsv_modify_row_data, wpucsv_skip_row,
+	 * wpucsv_before_row, wpucsv_after_row, wpucsv_on_row_error via WpucsvHooks.
+	 *
+	 * @since 7.42.0 Developer API row hooks wired (Issue #395).
+	 */
+	public function main_import_process($map, $header_array, $value_array, $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, $gmode = null, $templatekey = null, $media_type = null, $update_based_on = 'normal', $duplicate_action = 'skip')
 	{
 		$return_arr = [];
 		$core_instance = CoreFieldsImport::getInstance();
@@ -1991,9 +2093,48 @@ class SaveMapping
 		$bsi_data = '';
 		$post_id = '';
 		global $core_instance, $uci_woocomm_meta, $uci_woocomm_bundle_meta, $product_attr_instance, $wpmlimp_class;
+
+		$hook_context = WpucsvHooks::build_context(
+			array(
+				'hash_key'         => $hash_key,
+				'selected_type'    => $selected_type,
+				'mode'             => $get_mode,
+				'line_number'      => $line_number,
+				'check'            => $check,
+				'duplicate_action' => $duplicate_action,
+				'update_based_on'  => $update_based_on,
+				'gmode'            => $gmode,
+				'templatekey'      => $templatekey,
+				'header_array'     => $header_array,
+				'value_array'      => $value_array,
+				'map'              => $map,
+				'media_type'       => $media_type,
+			)
+		);
+
+		$row_data       = WpucsvHooks::modify_row_data( $header_array, $value_array, $hook_context );
+		$header_array   = $row_data['header'];
+		$value_array    = $row_data['values'];
+		$hook_context['header_array'] = $header_array;
+		$hook_context['value_array']  = $value_array;
+
+		$row_skipped_by_hook = false;
+		if ( WpucsvHooks::should_skip_row( $hook_context ) ) {
+			$core_instance->detailed_log[ $line_number ] = array(
+				'Message' => 'Skipped: Hook wpucsv_skip_row.',
+				'state'   => 'Skipped',
+			);
+			$row_skipped_by_hook = true;
+		}
+
 		/*** check manage filteration */
-		$this->check_manage_filter ? $this->manage_filteration($this->manage_filter, $header_array, $value_array, $core_instance, $line_number, $hash_key) : '';
-		if (preg_match("/(Can't|Skipped|Duplicate)/", (string) ($core_instance->detailed_log[$line_number]['Message'] ?? '')) === 0) {
+		if ( ! $row_skipped_by_hook ) {
+			$this->check_manage_filter ? $this->manage_filteration( $this->manage_filter, $header_array, $value_array, $core_instance, $line_number, $hash_key ) : '';
+		}
+
+		WpucsvHooks::before_row( $hook_context );
+
+		if ( ! $row_skipped_by_hook && ! WpucsvHooks::is_row_blocked( (string) ( $core_instance->detailed_log[ $line_number ]['Message'] ?? '' ) ) ) {
 			foreach ($map as $group_name => $group_value) {
 				if ($group_name == 'CORE') {
 					$wpml_map = isset($map['WPML']) ? $map['WPML'] : '';
@@ -2009,7 +2150,7 @@ class SaveMapping
 					if ($selected_type == 'WooCommerce Customer') {
 						$bsi_data = isset($map['BSI']) ? $map['BSI'] : '';
 					}
-					$post_id = $core_instance->set_core_values($header_array, $value_array, $map['CORE'], $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, $gmode, $templatekey, $wpml_map, $media_map, $media_type, $order_meta, $meta_data, $attr_data, $bsi_data);
+					$post_id = $core_instance->set_core_values($header_array, $value_array, $map['CORE'], $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, $gmode, $templatekey, $wpml_map, $media_map, $media_type, $order_meta, $meta_data, $attr_data, $bsi_data, $update_based_on, $duplicate_action);
 				}
 			}
 			foreach ($map as $group_name => $group_value) {
@@ -2389,6 +2530,22 @@ class SaveMapping
 			$return_arr['media_log'] = !empty($core_instance->media_log) ? $core_instance->media_log : [];
 			$return_arr['id'] = $post_id;
 		}
+
+		$hook_context['post_id']    = $post_id;
+		$hook_context['record_id']  = $post_id;
+		$hook_context['record_type'] = WpucsvHooks::resolve_record_type( $selected_type, $post_id );
+		if ( isset( $core_instance->detailed_log[ $line_number ] ) ) {
+			$hook_context['log'] = $core_instance->detailed_log[ $line_number ];
+		}
+
+		WpucsvHooks::after_row( $hook_context );
+
+		$row_message = (string) ( $core_instance->detailed_log[ $line_number ]['Message'] ?? '' );
+		if ( WpucsvHooks::is_row_blocked( $row_message ) ) {
+			$severity = ( stripos( $row_message, 'Skipped' ) !== false ) ? 'skipped' : 'error';
+			WpucsvHooks::on_row_error( $hook_context, $row_message, $severity );
+		}
+
 		$return_arr['detail_log'] = $core_instance->detailed_log;
 		return $return_arr;
 	}
@@ -2428,6 +2585,165 @@ class SaveMapping
 		}
 		echo wp_json_encode($response);
 		wp_die();
+	}
+
+	/**
+	 * Posts, Pages, or custom post type slug from importer dropdown.
+	 *
+	 * @param string $selected_type Import module type.
+	 * @return bool
+	 */
+	private function is_free_bulk_update_eligible($selected_type)
+	{
+		if ($selected_type === 'WooCommerce Product' && $this->is_woocommerce_bulk_update_addon_active()) {
+			return true;
+		}
+		if ($selected_type === 'Users' && $this->is_users_bulk_update_addon_active()) {
+			return true;
+		}
+		if ($selected_type === 'WooCommerce Customer' && $this->is_woocommerce_bulk_update_addon_active()) {
+			return true;
+		}
+		if ($selected_type === 'WooCommerce Orders' && $this->is_woocommerce_bulk_update_addon_active()) {
+			return true;
+		}
+		if ($selected_type === 'Comments') {
+			return true;
+		}
+		if ($this->is_taxonomy_bulk_update_eligible($selected_type)) {
+			return true;
+		}
+		$handler = new ExtensionHandler();
+		$resolved = $handler->import_name_as($selected_type);
+		return in_array($resolved, array('Posts', 'Pages', 'CustomPosts'), true);
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function is_woocommerce_bulk_update_addon_active()
+	{
+		if (!function_exists('is_plugin_active')) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		return is_plugin_active('woocommerce/woocommerce.php')
+			&& is_plugin_active('import-woocommerce/import-woocommerce.php');
+	}
+
+	/**
+	 * @return bool
+	 */
+	private function is_users_bulk_update_addon_active()
+	{
+		if (!function_exists('is_plugin_active')) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		return is_plugin_active('import-users/import-users.php');
+	}
+
+	/**
+	 * @param string $selected_type
+	 * @return bool
+	 */
+	private function is_taxonomy_bulk_update_eligible($selected_type)
+	{
+		$slugs = array('category', 'post_tag', 'product_cat', 'product_brand', 'product_tag');
+		return in_array($selected_type, array('Categories', 'Tags', 'Taxonomies'), true)
+			|| in_array($selected_type, $slugs, true);
+	}
+
+	/**
+	 * Update mode on Posts/Pages/CPT requires CORE ID mapping.
+	 *
+	 * @param string $import_mode Insert|Update
+	 * @param string $selected_type Import module type
+	 * @param array  $map_data      Serialized mapping groups
+	 * @return true|array True when valid, error payload otherwise
+	 */
+	private function validate_update_mode_core_id_mapping($import_mode, $selected_type, $map_data)
+	{
+		if ($selected_type === 'WooCommerce Product' && $this->is_woocommerce_bulk_update_addon_active()) {
+			return true;
+		}
+		if ($selected_type === 'WooCommerce Customer' && $this->is_woocommerce_bulk_update_addon_active()) {
+			return true;
+		}
+		if ($selected_type === 'WooCommerce Orders' && $this->is_woocommerce_bulk_update_addon_active()) {
+			return true;
+		}
+		if ($selected_type === 'Comments') {
+			return true;
+		}
+		if ($this->is_taxonomy_bulk_update_eligible($selected_type)) {
+			return true;
+		}
+		if ($import_mode !== 'Update' || !$this->is_free_bulk_update_eligible($selected_type)) {
+			return true;
+		}
+		$core_map = (is_array($map_data) && isset($map_data['CORE']) && is_array($map_data['CORE'])) ? $map_data['CORE'] : array();
+		if (empty($core_map['ID'])) {
+			return array(
+				'success' => false,
+				'message' => 'ID is a mandatory field for Update mode. Please map ID in WordPress Core Fields.',
+			);
+		}
+		return true;
+	}
+
+	/**
+	 * Match-by field (ID, post_title, post_name) must be mapped in CORE when duplicate handling is enabled.
+	 *
+	 * @param string $check         Match field from import configuration
+	 * @param string $selected_type Import module type
+	 * @param array  $map_data      Serialized mapping groups
+	 * @return true|array
+	 */
+	private function validate_match_field_mapped_in_core($check, $selected_type, $map_data)
+	{
+		$match_fields = array('ID', 'post_title', 'post_name');
+		if ($selected_type === 'WooCommerce Product' && $this->is_woocommerce_bulk_update_addon_active()) {
+			$match_fields[] = 'PRODUCTSKU';
+		}
+		if ($selected_type === 'Users' && $this->is_users_bulk_update_addon_active()) {
+			$match_fields = array('ID', 'user_email');
+		}
+		if ($selected_type === 'WooCommerce Customer' && $this->is_woocommerce_bulk_update_addon_active()) {
+			$match_fields = array('ID', 'user_email');
+		}
+		if ($selected_type === 'WooCommerce Orders' && $this->is_woocommerce_bulk_update_addon_active()) {
+			$match_fields = array('ORDERID');
+		}
+		if ($selected_type === 'Comments') {
+			$match_fields = array('comment_ID');
+		}
+		if ($this->is_taxonomy_bulk_update_eligible($selected_type)) {
+			$match_fields = array('TERMID', 'termid', 'slug');
+		}
+		if (empty($check) || !$this->is_free_bulk_update_eligible($selected_type) || !in_array($check, $match_fields, true)) {
+			return true;
+		}
+		$core_map = (is_array($map_data) && isset($map_data['CORE']) && is_array($map_data['CORE'])) ? $map_data['CORE'] : array();
+		$core_field = ($check === 'termid') ? 'TERMID' : $check;
+		if (empty($core_map[$core_field])) {
+			$labels = array(
+				'ID' => 'ID',
+				'post_title' => 'Title',
+				'post_name' => 'Slug',
+				'PRODUCTSKU' => 'Product SKU',
+				'user_email' => 'Email',
+				'ORDERID' => 'Order ID',
+				'comment_ID' => 'Comment ID',
+				'TERMID' => 'Term ID',
+				'termid' => 'Term ID',
+				'slug' => 'Slug',
+			);
+			$label = isset($labels[$check]) ? $labels[$check] : $check;
+			return array(
+				'success' => false,
+				'message' => $label . ' field is not mapped in the mapping section. Please map it in WordPress Core Fields.',
+			);
+		}
+		return true;
 	}
 
 	public function deactivate_mail()

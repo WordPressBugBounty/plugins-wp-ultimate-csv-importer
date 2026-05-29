@@ -173,6 +173,7 @@ class LangRU {
                         'ScheduleTime' => 'График времени',
                         'Schedule' => 'График',
                         'Import' => 'Начать импорт',
+                        'Update' => 'Обновить',
                         'Format' => 'Формат',
                         'OneTime' => 'Один раз',
                         'Daily' => 'Повседневная',

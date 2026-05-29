@@ -171,6 +171,7 @@ class LangTR {
 		'ScheduleTime' => 'Zaman Çizelgesi',
 		'Schedule' => 'Program',
 		'Import' => 'İthalat',
+		'Update' => 'Güncelle',
 		'Format' => 'Biçim',
 		'OneTime' => 'Bir kere',
 		'Daily' => 'Günlük',
