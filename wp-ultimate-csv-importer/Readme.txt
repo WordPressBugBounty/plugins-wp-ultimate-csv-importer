@@ -3,8 +3,8 @@ Contributors: smackcoders, premairuthayarajan
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 8.0
-Version: 8.0
+Stable tag: 8.0.1
+Version: 8.0.1
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
 Tags: csv importer, import export, wordpress import, woocommerce import, xml importer, excel import, wp import, data migration, wordpress csv import, wordpress xml import, xml, all import, import all, export woocommerce products, product export, product import, woocommerce product import, wordpress csv importer, xml import, importer, migrate, datafeed, wordpress importer
@@ -178,20 +178,6 @@ Expand your global reach with multilingual content management. The plugin integr
 * **Time-Saving Automation:** Eliminate manual translation uploads, focusing on your global strategy.
 * **Export with language-based records filtering(PRO feature):** Exporter records in specific languages of particular post type from WordPress. 
 
-= What's New in Version 8.0 =
-
-Version 8.0 is a significant release focused on import reliability, developer experience, and multilingual stability. Here's a quick look at what's new:
-
-* **Improved Duplicate Handling for Posts, Pages & Users:** The import workflow now handles duplicate detection more reliably across all major content types. Whether you're importing posts, pages, or users, the plugin intelligently identifies and resolves duplicates, giving you a cleaner, more predictable update experience without manual cleanup.
-
-* **Enhanced Developer API with Centralized Lifecycle Hooks:** Developers now have a unified hook system for the import/export lifecycle, making it easier to extend, customize, and integrate the plugin with custom workflows or third-party services.
-
-* **Full WordPress 7.0 Compatibility:** This release has been fully tested against WordPress 7.0 and is optimized for the latest core architecture changes.
-
-* **Improved Multilingual & Localization Support:** Significant improvements across locale handling, admin UI translations, and overall multilingual compatibility for sites running in non-English environments.
-
-* **Stability & Navigation Improvements:** Plugin activation is smoother, addon menu visibility is improved, and the overall admin experience has been refined for consistency.
-
 = Premium Features =
 
 Upgrade to the Pro version to unlock more powerful features such as:
@@ -217,7 +203,13 @@ Upgrade to the Pro version to unlock more powerful features such as:
 
 = Trusted by a Leading WordPress Voice =
 
+== WP Mayor ==
+
 Recognized by one of the most respected sources in the WordPress community, WP Mayor recommends WP Ultimate CSV Importer as a powerful and reliable solution for seamless WordPress data migration. [Read the full review article](https://wpmayor.com/wp-ultimate-csv-importer-pro-review)
+
+== Kinsta ==
+
+Featured by Kinsta, one of the most trusted names in managed WordPress hosting. WP Ultimate CSV Importer Pro is highlighted as a recommended solution for WooCommerce product, order, customer, coupon, and review import and export. [Read the full article](https://kinsta.com/blog/woocommerce-export-products/#plugins-for-exporting-woocommerce-products)
 
 = Ready to Get Started? =
 
@@ -407,6 +399,9 @@ This method ensures a hassle-free setup directly from your WordPress dashboard.
 
 
 == Changelog ==
+
+= 8.0.1 = 
+Improved : Latest version of JetEngine and MetaBox plugin compatibility
 
 = 8.0 =
 Added: Improved import workflow and duplicate handling for posts, pages, and users — the plugin now detects and resolves duplicates more reliably across all major content types
@@ -975,10 +970,8 @@ Fixed: Term & Taxonomies Hierarchy import issue
 
 == Upgrade Notice ==
 
-= 8.0 =
-Update to version 8.0 for improved duplicate handling across posts, pages, and users, enhanced multilingual compatibility, and full WordPress 7.0 support.
-
-= 7.39.2 =
+= 8.0.1 =
+Update to version 8.0 for improved thirdparty compatibility support
 Update to ensure compatibility with WordPress 6.9.3 and to resolve issues related to Simple Mode imports.
 
 
