@@ -33,7 +33,10 @@ class ImportHelpers {
 	}
 
 	public function checkImport(){
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		if(\is_plugin_active('import-users/import-users/.php')){
 			$result['success'] =true;
 		}
@@ -123,8 +126,7 @@ class ImportHelpers {
 		// }
 		if($data_array['post_status'] == 'trash'){
 				$title=$data_array['post_title'];
-				$trash = $wpdb->get_results(
-					"DELETE FROM {$wpdb->prefix}posts WHERE post_title = '$title' AND post_status='publish' "
+				$trash = $wpdb->query( "DELETE FROM {$wpdb->prefix}posts WHERE post_title = '$title' AND post_status='publish' "
 						);		
 		}
 		elseif($data_array['post_status'] == 'delete'){
@@ -416,18 +418,8 @@ $value_assoc = array_combine($header_array, $value_array);
 	/**
 	 * Function to evaluate PHP expressions
 	 */
-	public function evalPhp($expression)	{
-		$parser = (new ParserFactory)->createForNewestSupportedVersion();
-		try {
-    		$parser->parse($expression);
-			$value=$parser->parse($expression);
-			if(!empty($value)){
-				$expression=sanitize_text_field($expression);
-				return eval('return '.$expression.';');
-			}
-    	} catch (Error $error) {
-    		return 'Parse Error: '. $error->getMessage();
-		}
+	public function evalPhp( $expression ) {
+		return SafeExpressionEvaluator::evaluate_return( $expression );
 	}
 
 
@@ -660,5 +652,46 @@ $value_assoc = array_combine($header_array, $value_array);
 			$csv_value = $value_array[$get_key];
 		}
 		return $csv_value;
+	}
+
+	/**
+	 * Decode MappedFields from admin-ajax (plain JSON or base64 to avoid WAF blocks on formulas).
+	 *
+	 * @param string      $map_fields Raw POST value.
+	 * @param string|null $encoding   Optional encoding hint; defaults to $_POST['MappedFieldsEncoding'].
+	 * @return array|null
+	 */
+	public static function decode_mapping_payload( $map_fields, $encoding = null ) {
+		if ( ! is_string( $map_fields ) ) {
+			return null;
+		}
+
+		$payload = wp_unslash( $map_fields );
+
+		if ( null === $encoding && isset( $_POST['MappedFieldsEncoding'] ) ) {
+			$encoding = sanitize_text_field( wp_unslash( $_POST['MappedFieldsEncoding'] ) );
+		}
+
+		if ( 'base64' === $encoding ) {
+			$decoded_raw = base64_decode( $payload, true );
+			if ( false !== $decoded_raw ) {
+				$payload = $decoded_raw;
+			}
+		}
+
+		$decoded = json_decode( $payload, true );
+		if ( JSON_ERROR_NONE === json_last_error() && is_array( $decoded ) ) {
+			return $decoded;
+		}
+
+		$fallback_payload = stripslashes( $payload );
+		if ( $fallback_payload !== $payload ) {
+			$decoded = json_decode( $fallback_payload, true );
+			if ( JSON_ERROR_NONE === json_last_error() && is_array( $decoded ) ) {
+				return $decoded;
+			}
+		}
+
+		return null;
 	}
 }

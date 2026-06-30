@@ -3,8 +3,8 @@
 Contributors: smackcoders, smacksupport
 Requires at least: 5.0
 Tested up to: 6.0
-Stable tag: 8.0
-Version: 8.0
+Stable tag: 8.1
+Version: 8.1
 Requires PHP: 5.2.4
 Author: smackcoders
 Author URI: https://profiles.wordpress.org/smackcoders/
@@ -205,6 +205,16 @@ If you'd like to help out by translating this plugin, please [sign up for an acc
 [youtube https://www.youtube.com/watch?v=8P8xtRY3bCM&feature=youtu.be]
 
 ## Changelog
+### 8.1
+- Security: Hardened AJAX authorization, nonce handling, and import workflows; remediated CVE-2026-13353 related vulnerabilities
+- Improved: Content Update UI — disabled button and added PRO tag for restricted importer types
+- Improved: Free Content Update restricted to Posts, Pages, and Users only
+- Fixed: Incomplete Japanese localization across the admin UI
+- Updated: Plugin version, changelog, and readme documentation
+
+### 8.0.1
+- Improved: Latest version of JetEngine and MetaBox plugin compatibility
+
 ### 8.0
 - Added: Developer API — centralized wpucsv hook system for import lifecycle events (wpucsv_before_import, wpucsv_before_row, wpucsv_modify_row_data, wpucsv_skip_row, and more)
 - Added: Content Update and duplicate handling across free importer types

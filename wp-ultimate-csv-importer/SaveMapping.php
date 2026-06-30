@@ -27,7 +27,8 @@ class SaveMapping
 
 	private function __construct()
 	{
-		add_action('wp_ajax_saveMappedFields', array($this, 'save_fields_function'));
+		add_action('wp_ajax_saveTemplateFields', array($this, 'save_template_fields'));
+		add_action('wp_ajax_saveMappedFields', array($this, 'check_templatename_exists'));
 		add_action('wp_ajax_StartImport', array($this, 'background_starts_function'));
 		add_action('wp_ajax_GetProgress', array($this, 'import_detail_function'));
 		add_action('wp_ajax_ImportState', array($this, 'import_state_function'));
@@ -40,7 +41,6 @@ class SaveMapping
 		add_action('wp_ajax_ResumeImport', array($this, 'resume_import'));
 		add_action('wp_ajax_DeactivateMail', array($this, 'deactivate_mail'));
 		add_action('wp_ajax_smackuci_check_review_popup', array($this, 'smackuci_check_review_popup'));
-		add_action('wp_ajax_nopriv_smackuci_check_review_popup', array($this, 'smackuci_check_review_popup'));
 
 
 	}
@@ -58,7 +58,10 @@ class SaveMapping
 
 	public function smackuci_check_review_popup()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 
 		global $wpdb;
 
@@ -95,7 +98,10 @@ class SaveMapping
 
 	public function handle_close_notification_action()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 
 		$get_option = get_option('updateMessageDisplay');
 		if ($get_option === 'true') {
@@ -107,7 +113,10 @@ class SaveMapping
 	}
 	public function checkmain_mode()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		$ucisettings = get_option('sm_uci_pro_settings');
 		if (isset($ucisettings['enable_main_mode']) && $ucisettings['enable_main_mode'] == 'true') {
 			$result['success'] = true;
@@ -158,12 +167,25 @@ class SaveMapping
 	 */
 	public function pause_import()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		global $wpdb;
 		$response = [];
 		$hash_key = sanitize_key($_POST['HashKey']);
+		$page_number = isset($_POST['PageNumber']) ? max(1, intval($_POST['PageNumber'])) : 0;
+		if ($page_number < 1) {
+			$page_number = max(1, (int) get_option('sm_bulk_import_page_number'));
+		}
+		update_option('sm_bulk_import_page_number', max(1, $page_number - 1));
+
+		if (class_exists(ImportResumeService::class)) {
+			ImportResumeService::getInstance()->mark_paused($hash_key, max(1, $page_number - 1));
+		}
+
 		$log_table_name = $wpdb->prefix . "import_detail_log";
-		$wpdb->get_results("UPDATE $log_table_name SET running = 0  WHERE hash_key = '$hash_key'");
+		$wpdb->query( "UPDATE $log_table_name SET running = 0  WHERE hash_key = '$hash_key'");
 		$response['pause_state'] = true;
 		echo wp_json_encode($response);
 		wp_die();
@@ -171,57 +193,326 @@ class SaveMapping
 
 	public function resume_import()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		global $wpdb;
 		$response = [];
 		$hash_key = sanitize_key($_POST['HashKey']);
 		$log_table_name = $wpdb->prefix . "import_detail_log";
-		$wpdb->get_results("UPDATE $log_table_name SET running = 1  WHERE hash_key = '$hash_key'");
+		$wpdb->query( "UPDATE $log_table_name SET running = 1  WHERE hash_key = '$hash_key'");
+
+		if (class_exists(ImportResumeService::class)) {
+			$resume_svc = ImportResumeService::getInstance();
+			$resume_svc->mark_running($hash_key);
+			$response['page_number'] = $resume_svc->get_page_number($hash_key);
+		} else {
+			$response['page_number'] = get_option('sm_bulk_import_page_number') + 1;
+		}
 		$response['resume_state'] = true;
-		$response['page_number'] = get_option('sm_bulk_import_page_number') + 1;
 		echo wp_json_encode($response);
 		wp_die();
 	}
-	public function save_fields_function()
+	public function save_template_fields()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
-		$hash_key = sanitize_key($_POST['HashKey']);
-		$type = sanitize_text_field($_POST['Types']);
-		$map_fields = sanitize_text_field($_POST['MappedFields']);
-		//$map_filter    = sanitize_text_field($_POST['MappedFilter']);
-		$mapping_type = sanitize_text_field($_POST['MappingType']);
-		$counter = isset($counter) ? $counter : 0;
-		$selected_mode = isset($_POST['selectedMode']) ? sanitize_text_field($_POST['selectedMode']) : '';
 		global $wpdb;
-		if ($selected_mode == 'simpleMode') {
-			$fileiteration = 5;
-			update_option('sm_bulk_import_free_iteration_limit', $fileiteration);
-			$media_settings['media_handle_option'] = 'true';
-			$media_settings['use_ExistingImage'] = 'true';
-			$image_info = array(
-				'media_settings' => $media_settings
-			);
-			update_option('smack_image_options', $image_info);
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
 		}
-		$template_table_name = $wpdb->prefix . "ultimate_csv_importer_mappingtemplate";
-		$file_table_name = $wpdb->prefix . "smackcsv_file_events";
+		$file_path = isset($_POST['file_path']) ? sanitize_text_field(wp_unslash($_POST['file_path'])) : '';
+		$extension = isset($_POST['extension']) ? sanitize_text_field(wp_unslash($_POST['extension'])) : '';
+		$response  = array();
 
-		$filters = json_decode(stripslashes((string) ($_POST['MappedFilter'] ?? '')), true);
-		$mapping_filter = serialize(is_array($filters) ? $filters : []);
+		if ($extension !== 'csv') {
+			wp_send_json_error(array('message' => __( 'Invalid file extension', 'wp-ultimate-csv-importer' )));
+		}
 
-		$mapped_fields = json_decode(stripslashes($map_fields), true);
-		$helpers_instance = ImportHelpers::getInstance();
-		$response = [];
-		$counter = 0;
-		foreach ($mapped_fields as $maps) {
-			foreach ($maps as $header_keys => $value) {
-				if (strpos($header_keys, '->cus2') !== false) {
-					if (!empty($value)) {
-						$helpers_instance->write_to_customfile($value);
+		if (($handle = fopen($file_path, 'r')) !== false) {
+			$header = fgetcsv($handle, 1000, ',', '"', '\\');
+			$template_name_index = array_search('template_name', $header, true);
+			$module_index        = array_search('module', $header, true);
+			$csv_name_index      = array_search('csv_name', $header, true);
+
+			if ($template_name_index === false || $module_index === false || $csv_name_index === false) {
+				wp_send_json_error(array('message' => __( 'CSV headers do not match the expected format.', 'wp-ultimate-csv-importer' )));
+			}
+
+			$mappings = array();
+			while (($row = fgetcsv($handle, 1000, ',', '"', '\\')) !== false) {
+				$template_name = $row[$template_name_index];
+				$module        = $row[$module_index];
+				$csv_name      = $row[$csv_name_index];
+				$mapping_data  = array();
+
+				for ($i = 3; $i < count($row); $i++) {
+					$map_parts = explode('->', $header[$i]);
+					if (count($map_parts) === 2) {
+						$section = trim($map_parts[0]);
+						$field   = trim($map_parts[1]);
+						if (!isset($mapping_data[$section])) {
+							$mapping_data[$section] = array();
+						}
+						$mapping_data[$section][$field] = $row[$i];
 					}
+				}
+
+				$mappings[] = array(
+					'templatename' => $template_name,
+					'module'       => $module,
+					'csvname'      => $csv_name,
+					'mapping'      => maybe_serialize($mapping_data),
+					'mapping_type' => 'mapping-section',
+				);
+			}
+			fclose($handle);
+
+			foreach ($mappings as $mapping) {
+				$existing = $wpdb->get_var(
+					$wpdb->prepare(
+						"SELECT COUNT(*) FROM {$wpdb->prefix}ultimate_csv_importer_mappingtemplate WHERE templatename = %s",
+						$mapping['templatename']
+					)
+				);
+				if ($existing > 0) {
+					wp_send_json_error(array('message' => __( 'Template already exists', 'wp-ultimate-csv-importer' )));
+				}
+
+				$wpdb->insert(
+					"{$wpdb->prefix}ultimate_csv_importer_mappingtemplate",
+					array(
+						'templatename' => $mapping['templatename'],
+						'module'       => $mapping['module'],
+						'csvname'      => $mapping['csvname'],
+						'mapping'      => $mapping['mapping'],
+						'mapping_type' => $mapping['mapping_type'],
+					),
+					array('%s', '%s', '%s', '%s', '%s')
+				);
+				$response['success'] = true;
+				$response['message'] = 'Template inserted successfully.';
+			}
+		} else {
+			wp_send_json_error(array('message' => __( 'Unable to open the file', 'wp-ultimate-csv-importer' )));
+		}
+
+		echo wp_json_encode($response);
+		wp_die();
+	}
+
+	public function check_templatename_exists()
+	{
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
+		$use_template  = isset($_POST['UseTemplateState']) ? sanitize_text_field(wp_unslash($_POST['UseTemplateState'])) : '';
+		$template_name = isset($_POST['TemplateName']) ? sanitize_text_field(wp_unslash($_POST['TemplateName'])) : '';
+		$hash_key      = isset($_POST['HashKey']) ? sanitize_key(wp_unslash($_POST['HashKey'])) : '';
+		$operation_mode = get_option('smack_operation_mode_' . $hash_key);
+		$response      = array();
+
+		if ($use_template === 'true') {
+			$response['success'] = $this->save_temp_fields();
+		} else {
+			global $wpdb;
+			$template_table_name = $wpdb->prefix . 'ultimate_csv_importer_mappingtemplate';
+			$get_template_names  = $wpdb->get_results("SELECT templatename FROM $template_table_name");
+			if (!empty($get_template_names)) {
+				$inserted_temp_names = array();
+				foreach ($get_template_names as $temp_names) {
+					$inserted_temp_names[] = $temp_names->templatename;
+				}
+				if (in_array($template_name, $inserted_temp_names, true) && $template_name !== '' && $operation_mode !== 'simpleMode') {
+					$response['success'] = false;
+					$response['message'] = 'Template Name Already Exists';
+					echo wp_json_encode($response);
+					wp_die();
+				}
+				$response = $this->save_fields_function();
+			} else {
+				$response = $this->save_fields_function();
+			}
+		}
+
+		if (!isset($response['success']) || $response['success'] !== true) {
+			echo wp_json_encode($response);
+			wp_die();
+		}
+
+		echo wp_json_encode($response);
+		wp_die();
+	}
+
+	public function save_temp_fields()
+	{
+		$type              = isset($_POST['Types']) ? sanitize_text_field(wp_unslash($_POST['Types'])) : '';
+		$map_fields        = isset($_POST['MappedFields']) ? wp_unslash($_POST['MappedFields']) : '';
+		$template_name     = isset($_POST['TemplateName']) ? sanitize_text_field(wp_unslash($_POST['TemplateName'])) : '';
+		$new_template_name = isset($_POST['NewTemplate']) ? sanitize_text_field(wp_unslash($_POST['NewTemplate'])) : '';
+		$mapping_type      = isset($_POST['MappingType']) ? sanitize_text_field(wp_unslash($_POST['MappingType'])) : '';
+		$hash_key          = isset($_POST['HashKey']) ? sanitize_key(wp_unslash($_POST['HashKey'])) : '';
+		$helpers_instance  = ImportHelpers::getInstance();
+		$mapping_filter    = null;
+		$filters           = !empty($_POST['MappedFilter']) ? json_decode(stripslashes(wp_unslash($_POST['MappedFilter'])), true) : '';
+		if (!empty($filters)) {
+			$mapping_filter = serialize($filters);
+		}
+		global $wpdb;
+		$template_table_name = $wpdb->prefix . 'ultimate_csv_importer_mappingtemplate';
+
+		$get_detail = $wpdb->get_results(
+			$wpdb->prepare(
+				"SELECT id FROM {$template_table_name} WHERE templatename = %s",
+				$template_name
+			)
+		);
+		if (empty($get_detail)) {
+			return false;
+		}
+		$get_id = $get_detail[0]->id;
+
+		$mapdata = $this->decode_mapping_payload($map_fields);
+		if (!is_array($mapdata)) {
+			wp_send_json_error(array('message' => __( 'Invalid mapping payload. Existing template mapping was not changed.', 'wp-ultimate-csv-importer' )));
+			return false;
+		}
+		$map_data = array();
+		$counter  = 0;
+
+		foreach ($mapdata as $maps) {
+			if (!is_array($maps)) {
+				continue;
+			}
+			foreach ($maps as $header_keys => $value) {
+				if (strpos($header_keys, '->cus2') !== false && !empty($value)) {
+					$helpers_instance->write_to_customfile($value);
 				}
 			}
 		}
+
+		$has_bundlemeta = array_key_exists('BUNDLEMETA', $mapdata);
+		foreach ($mapdata as $key => $value) {
+			if ($key === 'ECOMMETA') {
+				$map_data[$key] = $value;
+				if ($has_bundlemeta) {
+					$map_data['BUNDLEMETA'] = $mapdata['BUNDLEMETA'];
+				}
+			} elseif ($key === 'ATTRMETA') {
+				foreach ($value as $v_key => $val) {
+					preg_match('/\d+/', (string) $v_key, $matches);
+					$index = $matches[0] ?? $counter;
+					if (!isset($map_data['ATTRMETA'][$index])) {
+						$map_data['ATTRMETA'][$index] = array();
+					}
+					$map_data['ATTRMETA'][$index][$v_key] = $val;
+				}
+				if (is_array($map_data['ATTRMETA'])) {
+					$map_data['ATTRMETA'] = array_values($map_data['ATTRMETA']);
+				}
+			} elseif ($key !== 'BUNDLEMETA') {
+				$map_data[$key] = $value;
+			}
+		}
+
+		$mapping_fields = serialize($map_data);
+		$time           = gmdate('Y-m-d H:i:s');
+		if (!empty($new_template_name)) {
+			$wpdb->query(
+				$wpdb->prepare(
+					"UPDATE $template_table_name SET templatename = %s, mapping = %s, mapping_filter = %s, createdtime = %s, module = %s, eventKey = %s, mapping_type = %s WHERE id = %d",
+					$new_template_name,
+					$mapping_fields,
+					$mapping_filter,
+					$time,
+					$type,
+					$hash_key,
+					$mapping_type,
+					$get_id
+				)
+			);
+		} else {
+			$wpdb->query(
+				$wpdb->prepare(
+					"UPDATE $template_table_name SET mapping = %s, mapping_filter = %s, eventKey = %s, mapping_type = %s, module = %s WHERE id = %d",
+					$mapping_fields,
+					$mapping_filter,
+					$hash_key,
+					$mapping_type,
+					$type,
+					$get_id
+				)
+			);
+		}
+		return true;
+	}
+
+	private function decode_mapping_payload($map_fields)
+	{
+		return ImportHelpers::decode_mapping_payload($map_fields);
+	}
+
+	public function save_fields_function()
+	{
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
+		global $wpdb;
+
+		$hash_key      = sanitize_key($_POST['HashKey']);
+		$type          = sanitize_text_field($_POST['Types']);
+		$map_fields    = isset($_POST['MappedFields']) ? wp_unslash($_POST['MappedFields']) : '';
+		$template_name = isset($_POST['TemplateName']) ? sanitize_text_field(wp_unslash($_POST['TemplateName'])) : '';
+		$mapping_type  = sanitize_text_field($_POST['MappingType']);
+		$selected_mode = isset($_POST['selectedMode']) ? sanitize_text_field(wp_unslash($_POST['selectedMode'])) : '';
+		$mapping_filter = null;
+		$filters = !empty($_POST['MappedFilter']) ? json_decode(stripslashes(wp_unslash($_POST['MappedFilter'])), true) : '';
+		if (!empty($filters)) {
+			$mapping_filter = serialize($filters);
+		}
+
+		$operation_mode = get_option('smack_operation_mode_' . $hash_key);
+		if ($operation_mode === 'simpleMode') {
+			$template_name = '';
+		}
+
+		if ($selected_mode === 'simpleMode') {
+			$fileiteration = 5;
+			update_option('sm_bulk_import_free_iteration_limit', $fileiteration);
+			$media_settings = array(
+				'media_handle_option' => 'true',
+				'use_ExistingImage'   => 'true',
+			);
+			update_option('smack_image_options', array('media_settings' => $media_settings));
+		}
+
+		$template_table_name = $wpdb->prefix . 'ultimate_csv_importer_mappingtemplate';
+		$file_table_name     = $wpdb->prefix . 'smackcsv_file_events';
+		$mapped_fields       = $this->decode_mapping_payload($map_fields);
+		if (!is_array($mapped_fields)) {
+			return array(
+				'success' => false,
+				'message' => __( 'Invalid mapping payload. Template mapping was not saved.', 'wp-ultimate-csv-importer' ),
+			);
+		}
+
+		$helpers_instance = ImportHelpers::getInstance();
+		$map_data         = array();
+		$counter          = 0;
+
+		foreach ($mapped_fields as $maps) {
+			if (!is_array($maps)) {
+				continue;
+			}
+			foreach ($maps as $header_keys => $value) {
+				if (strpos($header_keys, '->cus2') !== false && !empty($value)) {
+					$helpers_instance->write_to_customfile($value);
+				}
+			}
+		}
+
 		$has_bundlemeta = array_key_exists('BUNDLEMETA', $mapped_fields);
 		foreach ($mapped_fields as $key => $value) {
 			if ($key === 'ECOMMETA') {
@@ -229,77 +520,92 @@ class SaveMapping
 				if ($has_bundlemeta) {
 					$map_data['BUNDLEMETA'] = $mapped_fields['BUNDLEMETA'];
 				}
-			}
-			if ($key !== 'BUNDLEMETA') {
-
+			} elseif ($key === 'ATTRMETA') {
+				foreach ($value as $v_key => $val) {
+					preg_match('/\d+/', (string) $v_key, $matches);
+					$index = $matches[0] ?? $counter;
+					if (!isset($map_data['ATTRMETA'][$index])) {
+						$map_data['ATTRMETA'][$index] = array();
+					}
+					$map_data['ATTRMETA'][$index][$v_key] = $val;
+				}
+				if (is_array($map_data['ATTRMETA'])) {
+					$map_data['ATTRMETA'] = array_values($map_data['ATTRMETA']);
+				}
+			} elseif ($key !== 'BUNDLEMETA') {
 				$map_data[$key] = $value;
 			}
 		}
+
 		$import_mode_row = $wpdb->get_row($wpdb->prepare("SELECT mode FROM $file_table_name WHERE hash_key = %s", $hash_key));
-		$import_mode = $import_mode_row ? $import_mode_row->mode : '';
-		$id_validation = $this->validate_update_mode_core_id_mapping($import_mode, $type, $map_data);
+		$import_mode     = $import_mode_row ? $import_mode_row->mode : '';
+		$id_validation   = $this->validate_update_mode_core_id_mapping($import_mode, $type, $map_data);
 		if ($id_validation !== true) {
-			echo wp_json_encode($id_validation);
-			wp_die();
+			return $id_validation;
 		}
 
-		$get_detail = $wpdb->get_results("SELECT file_name FROM $file_table_name WHERE `hash_key` = '$hash_key'");
-		$get_file_name = $get_detail[0]->file_name;
-		$get_hash = $wpdb->get_results("SELECT eventKey FROM $template_table_name");
 		$mapping_fields = serialize($map_data);
-		$time = date('Y-m-d h:i:s');
-		$get_file_name = $get_detail[0]->file_name;
+		$time           = gmdate('Y-m-d H:i:s');
+		$get_detail     = $wpdb->get_results($wpdb->prepare("SELECT file_name FROM $file_table_name WHERE hash_key = %s", $hash_key));
+		$get_file_name  = $get_detail[0]->file_name ?? '';
+		$get_hash       = $wpdb->get_results("SELECT eventKey FROM $template_table_name");
+		$inserted_hash_values = array();
 
-		// Using prepare to safely insert the values
 		if (!empty($get_hash)) {
 			foreach ($get_hash as $hash_values) {
 				$inserted_hash_values[] = $hash_values->eventKey;
 			}
-			if (in_array($hash_key, $inserted_hash_values)) {
-				$query = $wpdb->prepare(
-					"UPDATE $template_table_name SET mapping = %s, mapping_filter = %s, createdtime = %s, module = %s, mapping_type = %s WHERE eventKey = %s",
-					$mapping_fields,
-					$mapping_filter,
-					$time,
-					$type,
-					$mapping_type,
-					$hash_key
+			if (in_array($hash_key, $inserted_hash_values, true)) {
+				$wpdb->query(
+					$wpdb->prepare(
+						"UPDATE $template_table_name SET templatename = %s, mapping = %s, mapping_filter = %s, createdtime = %s, module = %s, mapping_type = %s WHERE eventKey = %s",
+						$template_name,
+						$mapping_fields,
+						$mapping_filter ?: null,
+						$time,
+						$type,
+						$mapping_type,
+						$hash_key
+					)
 				);
 			} else {
-				$query = $wpdb->prepare(
-					"INSERT INTO $template_table_name (mapping, mapping_filter , createdtime, module, csvname, eventKey, mapping_type) 
-					VALUES (%s, %s, %s, %s, %s, %s, %s)",
+				$wpdb->query(
+					$wpdb->prepare(
+						"INSERT INTO $template_table_name(templatename, mapping, mapping_filter, createdtime, module, csvname, eventKey, mapping_type) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)",
+						$template_name,
+						$mapping_fields,
+						$mapping_filter ?: null,
+						$time,
+						$type,
+						$get_file_name,
+						$hash_key,
+						$mapping_type
+					)
+				);
+			}
+		} else {
+			$wpdb->query(
+				$wpdb->prepare(
+					"INSERT INTO $template_table_name(templatename, mapping, mapping_filter, createdtime, module, csvname, eventKey, mapping_type) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)",
+					$template_name,
 					$mapping_fields,
-					$mapping_filter,
+					$mapping_filter ?: null,
 					$time,
 					$type,
 					$get_file_name,
 					$hash_key,
 					$mapping_type
-				);
-			}
-		} else {
-			$query = $wpdb->prepare(
-				"INSERT INTO $template_table_name (mapping, mapping_filter , createdtime, module, csvname, eventKey, mapping_type) 
-				VALUES (%s, %s, %s, %s, %s, %s, %s)",
-				$mapping_fields,
-				$mapping_filter,
-				$time,
-				$type,
-				$get_file_name,
-				$hash_key,
-				$mapping_type
+				)
 			);
 		}
 
-		$wpdb->query($query);
-
 		$fileiteration = '5';
 		update_option('sm_bulk_import_free_iteration_limit', $fileiteration);
-		$response['success'] = true;
-		$response['file_iteration'] = (int) $fileiteration;
-		echo wp_json_encode($response);
-		wp_die();
+		$response = array(
+			'success'        => true,
+			'file_iteration' => (int) $fileiteration,
+		);
+		return $response;
 	}
 
 	/**
@@ -307,7 +613,10 @@ class SaveMapping
 	 */
 	public function import_detail_function()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		$hash_key = sanitize_key($_POST['HashKey']);
 		$response = [];
 
@@ -358,7 +667,10 @@ class SaveMapping
 	 */
 	public function import_state_function()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		$response = [];
 		$hash_key = sanitize_key($_POST['HashKey']);
 
@@ -410,7 +722,10 @@ class SaveMapping
 	 */
 	public function import_stop_function()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		global $wpdb;
 		$upload_dir = SaveMapping::$smackcsv_instance->create_upload_dir();
 		/* Gets string 'false' when page is refreshed */
@@ -435,7 +750,20 @@ class SaveMapping
 
 	public function bulk_import()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
+
+		$hash_key = sanitize_key($_POST['HashKey']);
+		$page_number = isset($_POST['PageNumber']) ? intval(sanitize_text_field($_POST['PageNumber'])) : 0;
+		if ($page_number <= 1) {
+			$blocked = $this->maybe_block_import_preflight_validation($hash_key);
+			if ($blocked) {
+				echo wp_json_encode($blocked);
+				wp_die();
+			}
+		}
 
 		// Imports can legitimately take longer than default max_execution_time due to
 		// image downloads + resizing/thumbnail generation. Best-effort raise time limit.
@@ -470,6 +798,7 @@ class SaveMapping
 			wp_die();
 		}
 		$page_number = isset($_POST['PageNumber']) ? intval(sanitize_text_field($_POST['PageNumber'])) : 0;
+		$resume_svc = class_exists(ImportResumeService::class) ? ImportResumeService::getInstance() : null;
 		$rollback_option = sanitize_text_field($_POST['RollBack']);
 		$check_filter = isset($_POST['mappingFilterCheck']) ? sanitize_text_field(wp_unslash($_POST['mappingFilterCheck'])) : 'true';
 		$this->check_manage_filter = $check_filter == 'false' ? false : true;
@@ -500,16 +829,95 @@ class SaveMapping
 		$upload_dir = SaveMapping::$smackcsv_instance->create_upload_dir();
 		$file_size = filesize($upload_dir . $hash_key . '/' . $hash_key);
 		$filesize = $helpers_instance->formatSizeUnits($file_size);
+		$file_iteration = (int) get_option('sm_bulk_import_free_iteration_limit', 5);
 		update_option('sm_bulk_import_page_number', $page_number);
-		$remain_records = $total_rows - 1;
-		$wpdb->insert($log_table_name, array('file_name' => $file_name, 'hash_key' => $hash_key, 'total_records' => $total_rows, 'filesize' => $filesize, 'processing_records' => 1, 'remaining_records' => $remain_records, 'status' => 'Processing'));
-		$background_values = $wpdb->get_results("SELECT mapping , mapping_filter, module  FROM $template_table_name WHERE `eventKey` = '$hash_key' ");
-		foreach ($background_values as $values) {
-			$mapped_fields_values = $values->mapping;
-			$mapping_filter = $values->mapping_filter;
-			$selected_type = $values->module;
+
+		if ($resume_svc && 1 === $page_number && empty($_POST['uci_resume_session'])) {
+			$started = $resume_svc->start_checkpoint(
+				$hash_key,
+				array(
+					'import_mode'    => 'bulk',
+					'import_type'    => $file_extension,
+					'page_number'    => $page_number,
+					'file_name'      => $file_name,
+					'update_using'   => $update_based_on,
+					'rollback'       => ('true' === $rollback_option),
+					'check'          => $check,
+					'queue_snapshot' => array(
+						'update_using'   => $update_based_on,
+						'rollback'       => ('true' === $rollback_option),
+						'check'          => $check,
+						'total_records'  => (int) $total_rows,
+						'file_iteration' => (int) $file_iteration,
+					),
+				)
+			);
 		}
-		$map = unserialize($mapped_fields_values);
+
+		$remain_records = $total_rows - 1;
+		$log_payload = array(
+			'file_name' => $file_name,
+			'hash_key' => $hash_key,
+			'total_records' => $total_rows,
+			'filesize' => $filesize,
+			'processing_records' => 1,
+			'remaining_records' => $remain_records,
+			'status' => 'Processing',
+			'running' => 1,
+		);
+		if ($resume_svc) {
+			$existing_log = $wpdb->get_row($wpdb->prepare("SELECT processing_records, remaining_records FROM $log_table_name WHERE hash_key = %s ORDER BY id DESC LIMIT 1", $hash_key), ARRAY_A);
+			if (!empty($existing_log) && $page_number > 1) {
+				$log_payload['processing_records'] = (int) $existing_log['processing_records'];
+				$log_payload['remaining_records'] = max(0, (int) $existing_log['remaining_records']);
+			}
+			$resume_svc->upsert_import_detail_log($hash_key, $log_payload);
+			$resume_svc->update_checkpoint_progress(
+				$hash_key,
+				array(
+					'page_number' => $page_number,
+					'queue_snapshot' => array(
+						'total_records' => (int) $total_rows,
+						'file_iteration' => (int) $file_iteration,
+						'module' => '',
+					),
+				)
+			);
+		} else {
+			$wpdb->insert($log_table_name, $log_payload);
+		}
+		$mapped_fields_values = '';
+		$mapping_filter = '';
+		$background_values = $wpdb->get_results("SELECT mapping , mapping_filter, module  FROM $template_table_name WHERE `eventKey` = '$hash_key' ");
+		if (!empty($background_values)) {
+			foreach ($background_values as $values) {
+				$mapped_fields_values = $values->mapping;
+				$mapping_filter = $values->mapping_filter;
+				$selected_type = $values->module;
+			}
+		} elseif (class_exists(ImportResumeService::class)) {
+			$resolved_template = ImportResumeService::getInstance()->resolve_mapping_template($hash_key, $file_name);
+			if (!empty($resolved_template)) {
+				$mapped_fields_values = $resolved_template['mapping'];
+				$mapping_filter = isset($resolved_template['mapping_filter']) ? $resolved_template['mapping_filter'] : '';
+				if (!empty($resolved_template['module'])) {
+					$selected_type = $resolved_template['module'];
+				}
+			}
+		}
+		$map = !empty($mapped_fields_values) ? SecurityHelper::safe_unserialize($mapped_fields_values) : array();
+		if (!is_array($map)) {
+			$map = array();
+		}
+
+		if ($resume_svc && !empty($map)) {
+			$manage_filter_for_snapshot = !empty($mapping_filter) ? SecurityHelper::safe_unserialize($mapping_filter) : array();
+			if (!is_array($manage_filter_for_snapshot)) {
+				$manage_filter_for_snapshot = array();
+			}
+			$resume_svc->persist_mapping_snapshot($hash_key, $selected_type, $map, $manage_filter_for_snapshot);
+		}
+
 		$id_validation = $this->validate_update_mode_core_id_mapping($get_mode, $selected_type, $map);
 		if ($id_validation !== true) {
 			echo wp_json_encode($id_validation);
@@ -520,7 +928,10 @@ class SaveMapping
 			echo wp_json_encode($match_field_validation);
 			wp_die();
 		}
-		$this->manage_filter = unserialize($mapping_filter);
+		$this->manage_filter = !empty($mapping_filter) ? SecurityHelper::safe_unserialize($mapping_filter) : array();
+		if (!is_array($this->manage_filter)) {
+			$this->manage_filter = array();
+		}
 		if ($rollback_option == 'true') {
 			$tables = $import_config_instance->get_rollback_tables($selected_type);
 			$import_config_instance->set_backup_restore($tables, $hash_key, 'backup');
@@ -536,6 +947,13 @@ class SaveMapping
 			)
 		);
 		WpucsvHooks::before_import( $import_session_context );
+
+		if ($resume_svc) {
+			$resume_svc->heartbeat($hash_key);
+			if ($page_number > 1 || !empty($_POST['uci_resume_session'])) {
+				$resume_svc->mark_running($hash_key);
+			}
+		}
 
 		$addHeader = false;
 		$file_iteration = get_option('sm_bulk_import_free_iteration_limit');
@@ -743,10 +1161,10 @@ class SaveMapping
 								$helpers_instance->get_post_ids($post_id, $hash_key);
 
 								$remaining_records = $total_rows - $i;
-								$fields = $wpdb->get_results("UPDATE $log_table_name SET processing_records = $i , remaining_records = $remaining_records , status = 'Processing' WHERE hash_key = '$hash_key'");
+								$fields = $wpdb->query( "UPDATE $log_table_name SET processing_records = $i , remaining_records = $remaining_records , status = 'Processing' WHERE hash_key = '$hash_key'");
 
 								if ($i == $total_rows) {
-									$fields = $wpdb->get_results("UPDATE $log_table_name SET status = 'Completed' WHERE hash_key = '$hash_key'");
+									$fields = $wpdb->query( "UPDATE $log_table_name SET status = 'Completed' WHERE hash_key = '$hash_key'");
 								}
 								if (is_countable($core_instance->detailed_log) && count($core_instance->detailed_log) > $file_iteration) {
 									$log_manager_instance->get_event_log($hash_key, $file_name, $file_extension, $get_mode, $total_rows, $selected_type, $core_instance->detailed_log, $addHeader);
@@ -944,10 +1362,10 @@ class SaveMapping
 							$helpers_instance->get_post_ids($post_id, $hash_key);
 
 							$remaining_records = $total_rows - $i;
-							$fields = $wpdb->get_results("UPDATE $log_table_name SET processing_records = $i , remaining_records = $remaining_records , status = 'Processing' WHERE hash_key = '$hash_key'");
+							$fields = $wpdb->query( "UPDATE $log_table_name SET processing_records = $i , remaining_records = $remaining_records , status = 'Processing' WHERE hash_key = '$hash_key'");
 
 							if ($i == $total_rows) {
-								$fields = $wpdb->get_results("UPDATE $log_table_name SET status = 'Completed' WHERE hash_key = '$hash_key'");
+								$fields = $wpdb->query( "UPDATE $log_table_name SET status = 'Completed' WHERE hash_key = '$hash_key'");
 							}
 							if (is_countable($core_instance->detailed_log) && count($core_instance->detailed_log) > $file_iteration) {
 								$log_manager_instance->get_event_log($hash_key, $file_name, $file_extension, $get_mode, $total_rows, $selected_type, $core_instance->detailed_log, $addHeader);
@@ -968,6 +1386,10 @@ class SaveMapping
 				$running = $wpdb->get_row("SELECT running FROM $log_table_name WHERE hash_key = '$hash_key' ");
 				$check_pause = $running->running;
 				if ($check_pause == 0) {
+					if ($resume_svc) {
+						$resume_svc->mark_paused($hash_key, $page_number);
+						$resume_svc->sync_checkpoint_from_log($hash_key);
+					}
 					$response['success'] = false;
 					$response['pause_message'] = 'Record Paused';
 					echo wp_json_encode($response);
@@ -1172,10 +1594,10 @@ class SaveMapping
 						$helpers_instance->get_post_ids($post_id, $hash_key);
 
 						$remaining_records = $total_rows - $i;
-						$fields = $wpdb->get_results("UPDATE $log_table_name SET processing_records = $i , remaining_records = $remaining_records , status = 'Processing' WHERE hash_key = '$hash_key'");
+						$fields = $wpdb->query( "UPDATE $log_table_name SET processing_records = $i , remaining_records = $remaining_records , status = 'Processing' WHERE hash_key = '$hash_key'");
 
 						if ($i == $total_rows) {
-							$fields = $wpdb->get_results("UPDATE $log_table_name SET status = 'Completed' WHERE hash_key = '$hash_key'");
+							$fields = $wpdb->query( "UPDATE $log_table_name SET status = 'Completed' WHERE hash_key = '$hash_key'");
 						}
 						if (is_countable($core_instance->detailed_log) && count($core_instance->detailed_log) > $file_iteration) {
 							$log_manager_instance->get_event_log($hash_key, $file_name, $file_extension, $get_mode, $total_rows, $selected_type, $core_instance->detailed_log, $addHeader);
@@ -1195,6 +1617,10 @@ class SaveMapping
 				$running = $wpdb->get_row("SELECT running FROM $log_table_name WHERE hash_key = '$hash_key' ");
 				$check_pause = $running->running;
 				if ($check_pause == 0) {
+					if ($resume_svc) {
+						$resume_svc->mark_paused($hash_key, $page_number);
+						$resume_svc->sync_checkpoint_from_log($hash_key);
+					}
 					$response['success'] = false;
 					$response['pause_message'] = 'Record Paused';
 					echo wp_json_encode($response);
@@ -1279,10 +1705,10 @@ class SaveMapping
 					$line_numbers = $i + 1;
 					//$remaining_records = $total_rows - $line_numbers;
 					$remaining_records = max($total_rows - $line_numbers, 0);
-					$wpdb->get_results("UPDATE $log_table_name SET processing_records = $line_numbers, remaining_records = $remaining_records, status = 'Processing' WHERE hash_key = '$hash_key'");
+					$wpdb->query( "UPDATE $log_table_name SET processing_records = $line_numbers, remaining_records = $remaining_records, status = 'Processing' WHERE hash_key = '$hash_key'");
 
 					if ($i == $total_rows - 1) {
-						$wpdb->get_results("UPDATE $log_table_name SET status = 'Completed' WHERE hash_key = '$hash_key'");
+						$wpdb->query( "UPDATE $log_table_name SET status = 'Completed' WHERE hash_key = '$hash_key'");
 					}
 					if (is_countable($core_instance->detailed_log) && count($core_instance->detailed_log) > $file_iteration) {
 						$log_manager_instance->get_event_log($hash_key, $file_name, $file_extension, $get_mode, $total_rows, $selected_type, $core_instance->detailed_log, $addHeader);
@@ -1301,6 +1727,10 @@ class SaveMapping
 			$running = $wpdb->get_row("SELECT running FROM $log_table_name WHERE hash_key = '$hash_key' ");
 			$check_pause = $running->running;
 			if ($check_pause == 0) {
+				if ($resume_svc) {
+					$resume_svc->mark_paused($hash_key, $page_number);
+					$resume_svc->sync_checkpoint_from_log($hash_key);
+				}
 				$response['success'] = false;
 				$response['pause_message'] = 'Record Paused';
 				echo wp_json_encode($response);
@@ -1327,7 +1757,7 @@ class SaveMapping
 					$get_total_row_count = $wpdb->get_col("SELECT DISTINCT _ID FROM $jettable WHERE cct_status != 'trash' ");
 					$unmatched_id = array_diff($get_total_row_count, $test);
 					foreach ($unmatched_id as $keys => $values) {
-						$wpdb->get_results("DELETE FROM $jettable WHERE `_ID`='$values' ");
+						$wpdb->query( "DELETE FROM $jettable WHERE `_ID`='$values' ");
 					}
 				} else {
 					if ($import_type_value == 'category' || $import_type_value == 'post_tag' || $import_type_value == 'product_cat' || $import_type_value == 'product_tag') {
@@ -1338,7 +1768,7 @@ class SaveMapping
 						}
 
 						foreach ($unmatched_id as $keys => $values) {
-							$wpdb->get_results("DELETE FROM {$wpdb->prefix}terms WHERE `term_id` = '$values' ");
+							$wpdb->query( "DELETE FROM {$wpdb->prefix}terms WHERE `term_id` = '$values' ");
 						}
 					}
 					if ($import_type_value == 'post' || $import_type_value == 'product' || $import_type_value == 'page' || $import_name_as == 'CustomPosts') {
@@ -1348,11 +1778,11 @@ class SaveMapping
 							$unmatched_id = array_diff($get_total_row_count, $entries_array);
 						}
 						foreach ($unmatched_id as $keys => $values) {
-							$wpdb->get_results("DELETE FROM {$wpdb->prefix}posts WHERE `ID` = '$values' ");
+							$wpdb->query( "DELETE FROM {$wpdb->prefix}posts WHERE `ID` = '$values' ");
 						}
 					}
 				}
-				$wpdb->get_results("DELETE FROM {$wpdb->prefix}ultimate_post_entries");
+				$wpdb->query( "DELETE FROM {$wpdb->prefix}ultimate_post_entries");
 			}
 		}
 
@@ -1526,6 +1956,16 @@ class SaveMapping
 		if ($rollback_option == 'true') {
 			$response['rollback'] = true;
 		}
+		if ($resume_svc) {
+			$resume_svc->heartbeat($hash_key);
+			$resume_svc->sync_checkpoint_from_log($hash_key);
+			$response['processed_records'] = (int) $wpdb->get_var(
+				$wpdb->prepare(
+					"SELECT processing_records FROM $log_table_name WHERE hash_key = %s ORDER BY id DESC LIMIT 1",
+					$hash_key
+				)
+			);
+		}
 		$import_log_row = $wpdb->get_row($wpdb->prepare("SELECT created, updated, skipped, failed, status FROM $log_table_name WHERE hash_key = %s", $hash_key), ARRAY_A);
 		if (!empty($import_log_row)) {
 			$response['created_count'] = (int) $import_log_row['created'];
@@ -1535,6 +1975,9 @@ class SaveMapping
 			$response['import_status'] = $import_log_row['status'];
 		}
 		if (!empty($import_log_row['status']) && $import_log_row['status'] == 'Completed') {
+			if ($resume_svc) {
+				$resume_svc->mark_completed($hash_key);
+			}
 			if (get_option('failed_line_number')) {
 				delete_option('failed_line_number');
 			}
@@ -1561,8 +2004,16 @@ class SaveMapping
 
 	public function background_starts_function()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		$hash_key = sanitize_key($_POST['HashKey']);
+		$blocked = $this->maybe_block_import_preflight_validation($hash_key);
+		if ($blocked) {
+			echo wp_json_encode($blocked);
+			wp_die();
+		}
 		$check = sanitize_text_field($_POST['Check']);
 		$update_based_on = isset($_POST['UpdateUsing']) ? sanitize_text_field(wp_unslash($_POST['UpdateUsing'])) : 'normal';
 		$duplicate_action = isset($_POST['DuplicateAction']) ? sanitize_text_field(wp_unslash($_POST['DuplicateAction'])) : 'skip';
@@ -1689,13 +2140,13 @@ class SaveMapping
 						$helpers_instance->get_post_ids($post_id, $hash_key);
 
 						$import_table_name = $wpdb->prefix . "import_postID";
-						$medias_fields = $wpdb->get_results("INSERT INTO $import_table_name (post_id , line_number) VALUES ($post_id  , $line_number )");
+						$medias_fields = $wpdb->query( "INSERT INTO $import_table_name (post_id , line_number) VALUES ($post_id  , $line_number )");
 
 						$remaining_records = $total_rows - $line_number;
-						$fields = $wpdb->get_results("UPDATE $log_table_name SET processing_records = $line_number , remaining_records = $remaining_records , status = 'Processing' WHERE hash_key = '$hash_key'");
+						$fields = $wpdb->query( "UPDATE $log_table_name SET processing_records = $line_number , remaining_records = $remaining_records , status = 'Processing' WHERE hash_key = '$hash_key'");
 
 						if ($line_number == $total_rows) {
-							$fields = $wpdb->get_results("UPDATE $log_table_name SET status = 'Completed' WHERE hash_key = '$hash_key'");
+							$fields = $wpdb->query( "UPDATE $log_table_name SET status = 'Completed' WHERE hash_key = '$hash_key'");
 						}
 
 						if (count($core_instance->detailed_log) > $file_iteration) {
@@ -1765,13 +2216,13 @@ class SaveMapping
 						$helpers_instance->get_post_ids($post_id, $hash_key);
 
 						$import_table_name = $wpdb->prefix . "import_postID";
-						$medias_fields = $wpdb->get_results("INSERT INTO $import_table_name (post_id , line_number) VALUES ($post_id  , $line_number )");
+						$medias_fields = $wpdb->query( "INSERT INTO $import_table_name (post_id , line_number) VALUES ($post_id  , $line_number )");
 
 						$remaining_records = $total_rows - $line_number;
-						$fields = $wpdb->get_results("UPDATE $log_table_name SET processing_records = $line_number , remaining_records = $remaining_records , status = 'Processing' WHERE hash_key = '$hash_key'");
+						$fields = $wpdb->query( "UPDATE $log_table_name SET processing_records = $line_number , remaining_records = $remaining_records , status = 'Processing' WHERE hash_key = '$hash_key'");
 
 						if ($line_number == $total_rows) {
-							$fields = $wpdb->get_results("UPDATE $log_table_name SET status = 'Completed' WHERE hash_key = '$hash_key'");
+							$fields = $wpdb->query( "UPDATE $log_table_name SET status = 'Completed' WHERE hash_key = '$hash_key'");
 						}
 
 						if (count($core_instance->detailed_log) > $file_iteration) {
@@ -1874,10 +2325,10 @@ class SaveMapping
 				$helpers_instance->get_post_ids($post_id, $hash_key);
 				$line_numbers = $line_number + 1;
 				$remaining_records = $total_rows - $line_numbers;
-				$fields = $wpdb->get_results("UPDATE $log_table_name SET processing_records = $line_number + 1 , remaining_records = $remaining_records, status = 'Processing' WHERE hash_key = '$hash_key'");
+				$fields = $wpdb->query( "UPDATE $log_table_name SET processing_records = $line_number + 1 , remaining_records = $remaining_records, status = 'Processing' WHERE hash_key = '$hash_key'");
 
 				if ($line_number == $total_rows - 1) {
-					$fields = $wpdb->get_results("UPDATE $log_table_name SET status = 'Completed' WHERE hash_key = '$hash_key'");
+					$fields = $wpdb->query( "UPDATE $log_table_name SET status = 'Completed' WHERE hash_key = '$hash_key'");
 				}
 
 				if (count($core_instance->detailed_log) > $file_iteration) {
@@ -2083,6 +2534,29 @@ class SaveMapping
 	 */
 	public function main_import_process($map, $header_array, $value_array, $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, $gmode = null, $templatekey = null, $media_type = null, $update_based_on = 'normal', $duplicate_action = 'skip')
 	{
+		if (!empty($hash_key) && class_exists(ImportResumeService::class)) {
+			$resume_row_svc = ImportResumeService::getInstance();
+			if ($resume_row_svc->is_row_completed($hash_key, (int) $line_number)) {
+				$core_instance = CoreFieldsImport::getInstance();
+				if (!is_array($core_instance->detailed_log)) {
+					$core_instance->detailed_log = array();
+				}
+				$existing_row = $resume_row_svc->get_row_log($hash_key, (int) $line_number);
+				$core_instance->detailed_log[$line_number] = array(
+					'Message' => 'Skipped: already imported (resume)',
+					'state' => !empty($existing_row['status']) ? $existing_row['status'] : ImportResumeService::ROW_SKIPPED,
+					'id' => !empty($existing_row['post_id']) ? $existing_row['post_id'] : '',
+				);
+				return array(
+					'id' => !empty($existing_row['post_id']) ? (int) $existing_row['post_id'] : 0,
+					'detail_log' => $core_instance->detailed_log,
+					'failed_media_log' => array(),
+					'media_log' => array(),
+					'resume_skipped' => true,
+				);
+			}
+		}
+
 		$return_arr = [];
 		$core_instance = CoreFieldsImport::getInstance();
 		$order_meta = $attr_data = $meta_data = '';
@@ -2547,15 +3021,34 @@ class SaveMapping
 		}
 
 		$return_arr['detail_log'] = $core_instance->detailed_log;
+
+		if (!empty($hash_key) && class_exists(ImportResumeService::class) && empty($return_arr['resume_skipped'])) {
+			$log_entry = isset($core_instance->detailed_log[$line_number]) ? $core_instance->detailed_log[$line_number] : null;
+			ImportResumeService::getInstance()->mark_row_from_detail(
+				$hash_key,
+				(int) $line_number,
+				$log_entry,
+				isset($post_id) ? (int) $post_id : 0
+			);
+		}
+
 		return $return_arr;
 	}
 
 	public function bulk_file_import_function()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		global $wpdb;
 		$helpers_instance = ImportHelpers::getInstance();
 		$hash_key = sanitize_key($_POST['HashKey']);
+		$blocked = $this->maybe_block_import_preflight_validation($hash_key);
+		if ($blocked) {
+			echo wp_json_encode($blocked);
+			wp_die();
+		}
 		$fileiteration = sanitize_key($_POST['FileIteration']);
 		$template_table_name = $wpdb->prefix . "ultimate_csv_importer_mappingtemplate";
 		$background_values = $wpdb->get_results("SELECT module  FROM $template_table_name WHERE `eventKey` = '$hash_key' ");
@@ -2684,7 +3177,7 @@ class SaveMapping
 		if (empty($core_map['ID'])) {
 			return array(
 				'success' => false,
-				'message' => 'ID is a mandatory field for Update mode. Please map ID in WordPress Core Fields.',
+				'message' => __( 'ID is a mandatory field for Update mode. Please map ID in WordPress Core Fields.', 'wp-ultimate-csv-importer' ),
 			);
 		}
 		return true;
@@ -2746,9 +3239,38 @@ class SaveMapping
 		return true;
 	}
 
+	/**
+	 * Block import when pre-flight validation reports critical errors.
+	 *
+	 * @param string $hash_key
+	 * @return array|null
+	 */
+	private function maybe_block_import_preflight_validation($hash_key)
+	{
+		if (!class_exists(CsvValidationController::class)) {
+			return null;
+		}
+
+		$config = array();
+		if (isset($_POST['validation_scan_mode'])) {
+			$config['scan_mode'] = sanitize_key(wp_unslash($_POST['validation_scan_mode']));
+		}
+		if (isset($_POST['allow_import_with_critical_errors'])) {
+			$config['allow_import_with_critical_errors'] = filter_var(
+				wp_unslash($_POST['allow_import_with_critical_errors']),
+				FILTER_VALIDATE_BOOLEAN
+			);
+		}
+
+		return CsvValidationController::import_gate_response($hash_key, $config);
+	}
+
 	public function deactivate_mail()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		$headers = array("Content-type: text/html; charset=UTF-8");
 		$headers .= 'MIME-Version: 1.0' . "\r\n";
 		$to = 'support@smackcoders.com';

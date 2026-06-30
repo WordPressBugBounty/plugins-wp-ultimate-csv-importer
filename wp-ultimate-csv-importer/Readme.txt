@@ -3,8 +3,8 @@ Contributors: smackcoders, premairuthayarajan
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 8.0.1
-Version: 8.0.1
+Stable tag: 8.1
+Version: 8.1
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
 Tags: csv importer, import export, wordpress import, woocommerce import, xml importer, excel import, wp import, data migration, wordpress csv import, wordpress xml import, xml, all import, import all, export woocommerce products, product export, product import, woocommerce product import, wordpress csv importer, xml import, importer, migrate, datafeed, wordpress importer
@@ -399,6 +399,13 @@ This method ensures a hassle-free setup directly from your WordPress dashboard.
 
 
 == Changelog ==
+
+= 8.1 =
+Security: Hardened AJAX authorization, nonce handling, and import workflows; remediated CVE-2026-13353 related vulnerabilities
+Improved: Content Update UI — disabled button and added PRO tag for restricted importer types
+Improved: Free Content Update restricted to Posts, Pages, and Users only
+Fixed: Incomplete Japanese localization across the admin UI
+Updated: Plugin version, changelog, and readme documentation
 
 = 8.0.1 = 
 Improved : Latest version of JetEngine and MetaBox plugin compatibility
@@ -969,6 +976,10 @@ Fixed: Term & Taxonomies Hierarchy import issue
 
 
 == Upgrade Notice ==
+
+= 8.1 =
+Security update: Hardened AJAX authorization and import workflows. Update recommended for all users.
+Improved Content Update UI and Japanese localization fixes.
 
 = 8.0.1 =
 Update to version 8.0 for improved thirdparty compatibility support

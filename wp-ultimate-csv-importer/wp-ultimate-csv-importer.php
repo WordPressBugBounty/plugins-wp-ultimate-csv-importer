@@ -10,7 +10,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: WP Ultimate CSV Importer
- * Version:     8.0.1
+ * Version:     8.1
  * Plugin URI:  https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
  * Description: Seamlessly create posts, custom posts, pages, media, SEO and more from your CSV data with ease.
  * Author:      Smackcoders
@@ -85,6 +85,10 @@ foreach ($import_extensions as $import_extension_value) {
 	include_once($import_extension_value);
 }
 
+require_once __DIR__ . '/includes/SecurityHelper.php';
+require_once __DIR__ . '/includes/SafeExpressionEvaluator.php';
+require_once __DIR__ . '/includes/AjaxAuthorization.php';
+AjaxAuthorization::register();
 require_once __DIR__ . '/includes/WpucsvHooks.php';
 
 $export_extensions = glob( __DIR__ . '/exportExtensions/*.php');
@@ -153,7 +157,7 @@ class UCICore{
 	public static $persian_instance = null;
 	public static $chinese_instance = null;
 	private static $addon_instance = null;
-	public $version = '8.0.1';
+	public $version = '8.1';
 
 	/**
 	 * UCICore Instance
@@ -314,7 +318,11 @@ public function handle_review_notice_actions() {
         $single_import_state = get_option('sm_uci_pro_settings');
         $single_import = isset($single_import_state['singleimport']) ? $single_import_state['singleimport'] : '';
 
-        if (strpos($page, 'com.smackcoders.csvimporternew.menu') === false && $page !== 'wp-addons-page') {
+        $allowed_pages = array(
+            'com.smackcoders.csvimporternew.menu',
+            'wp-addons-page',
+        );
+        if ( ! in_array( $page, $allowed_pages, true ) ) {
             return;
         }
         $plugin_instance = self::getInstance();
@@ -416,10 +424,13 @@ public function handle_review_notice_actions() {
             'logfielpath' => $upload_url
         ));
 
-        wp_localize_script('react-js', 'smack_nonce_object', array(
+        $nonce_payload = array(
             'url' => admin_url('admin-ajax.php'),
-            'nonce' => wp_create_nonce('smack-ultimate-csv-importer'),
-        ));
+        );
+        if ( current_user_can( 'manage_options' ) ) {
+            $nonce_payload['nonce'] = wp_create_nonce( 'smack-ultimate-csv-importer' );
+        }
+        wp_localize_script( 'react-js', 'smack_nonce_object', $nonce_payload );
 
     }
 

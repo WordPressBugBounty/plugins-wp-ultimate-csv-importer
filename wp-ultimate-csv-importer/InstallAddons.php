@@ -40,7 +40,10 @@ class InstallAddons {
     }
     
     public function install(){
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if ( ! SecurityHelper::can_install_plugins() ) {
+			wp_die( __( 'You do not have sufficient permissions to install plugins.', 'wp-ultimate-csv-importer' ) );
+		}
 		delete_option("WP_ULTIMATE_ADDONS_FAILED");
 	
 		$fields = $_POST;				
@@ -64,7 +67,10 @@ class InstallAddons {
 	}
 
 	public function separateaddons(){
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if ( ! SecurityHelper::can_install_plugins() ) {
+			wp_die( __( 'You do not have sufficient permissions to install plugins.', 'wp-ultimate-csv-importer' ) );
+		}
 		$type = isset($_POST['addons']) ? sanitize_text_field($_POST['addons']) : "";
 		if($type == 'Users'){
 			$plugin_slug = 'import-users/import-users.php';
