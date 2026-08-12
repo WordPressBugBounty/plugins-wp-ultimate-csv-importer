@@ -126,13 +126,17 @@ class ImportHelpers {
 		// }
 		if($data_array['post_status'] == 'trash'){
 				$title=$data_array['post_title'];
-				$trash = $wpdb->query( "DELETE FROM {$wpdb->prefix}posts WHERE post_title = '$title' AND post_status='publish' "
-						);		
+				$trash = $wpdb->query( $wpdb->prepare(
+					"DELETE FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_status='publish'",
+					$title
+				) );
 		}
 		elseif($data_array['post_status'] == 'delete'){
 				$post_title=$data_array['post_title'];
-		$id=$wpdb->query("select ID FROM {$wpdb->prefix}posts WHERE post_title= '$post_title' ");
-		$id = $wpdb->get_results("select ID FROM {$wpdb->prefix}posts WHERE post_title= '$post_title' ");
+		$id = $wpdb->get_results( $wpdb->prepare(
+			"SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s",
+			$post_title
+		) );
 		foreach ($id as $delete_id){
 			$del_id=$delete_id->ID;
 			wp_delete_post($del_id, true); 	
@@ -255,9 +259,69 @@ class ImportHelpers {
 		return ( null !== $override ) ? $override : $value;
 	}
 
+	/**
+	 * Strip UTF-8 BOM from header labels.
+	 *
+	 * @param string $text Header text.
+	 * @return string
+	 */
+	public function strip_utf8_bom( $text ) {
+		$text = (string) $text;
+		if ( strncmp( $text, "\xEF\xBB\xBF", 3 ) === 0 ) {
+			$text = substr( $text, 3 );
+		}
+		return trim( $text );
+	}
+
+	/**
+	 * Normalize CSV header row (trim + strip BOM).
+	 *
+	 * @param array $headers Raw headers.
+	 * @return array
+	 */
+	public function normalize_header_array( $headers ) {
+		if ( ! is_array( $headers ) ) {
+			return array();
+		}
+		$out = array();
+		foreach ( $headers as $header ) {
+			$out[] = $this->strip_utf8_bom( $header );
+		}
+		return $out;
+	}
+
+	public function find_header_index( $csv_value, $header_array ) {
+		if ( ! is_array( $header_array ) || is_array( $csv_value ) || is_object( $csv_value ) ) {
+			return false;
+		}
+		$csv_value = $this->strip_utf8_bom( (string) $csv_value );
+		if ( $csv_value === '' ) {
+			return false;
+		}
+		$header_array = array_values( $header_array );
+		foreach ( $header_array as $index => $header ) {
+			if ( is_array( $header ) || is_object( $header ) ) {
+				continue;
+			}
+			if ( $csv_value === $this->strip_utf8_bom( (string) $header ) ) {
+				return $index;
+			}
+		}
+		$lower = strtolower( $csv_value );
+		foreach ( $header_array as $index => $header ) {
+			if ( is_array( $header ) || is_object( $header ) ) {
+				continue;
+			}
+			if ( strtolower( $this->strip_utf8_bom( (string) $header ) ) === $lower ) {
+				return $index;
+			}
+		}
+		return false;
+	}
+
 	public function get_header_values($map , $header_array , $value_array){
 		$current_user = wp_get_current_user();
-		$current_user_role = $current_user->roles[0];
+		$current_user_role = ! empty( $current_user->roles[0] ) ? $current_user->roles[0] : '';
 		if($current_user_role == 'administrator'){
 		
 		$post_values = [];
@@ -283,19 +347,18 @@ class ImportHelpers {
 					$map[$header_trim] = $value;
 				}
 			}
+
+			$num_keys = count( $header_array );
+			$num_values = count( $value_array );
+			if ( $num_keys > $num_values ) {
+				$value_array = array_pad( $value_array, $num_keys, '' );
+			} elseif ( $num_values > $num_keys ) {
+				$header_array = array_pad( $header_array, $num_values, '' );
+			}
+			$value_assoc = array_combine( $header_array, $value_array );
 	
 			foreach($map as $key => $value){	
 				$csv_value= trim($map[$key]);
-$num_keys = count($header_array);
-$num_values = count($value_array);
-
-if ($num_keys > $num_values) {
-    $value_array = array_pad($value_array, $num_keys, '');
-} elseif ($num_values > $num_keys) {
-    $header_array = array_pad($header_array, $num_values, '');
-}
-
-$value_assoc = array_combine($header_array, $value_array);
 				if(!empty($csv_value)){
 					//$pattern = "/({([a-z A-Z 0-9 | , _ -]+)(.*?)(}))/";
 					$pattern1 = '/{([^}]*)}/';
@@ -540,26 +603,30 @@ $value_assoc = array_combine($header_array, $value_array);
 
 	public function update_count($unikey_value, $unikey_name)
 	{
-		$response = array();
 		global $wpdb;
 		$log_table_name = $wpdb->prefix . 'import_detail_log';
+		$allowed_keys   = array( 'hash_key', 'templatekey' );
+		if ( ! in_array( $unikey_name, $allowed_keys, true ) ) {
+			$unikey_name = 'hash_key';
+		}
 		$get_data = $wpdb->get_results(
 			$wpdb->prepare(
-				"SELECT skipped, created, updated, failed FROM {$log_table_name} WHERE {$unikey_name} = %s",
+				"SELECT skipped, created, updated, failed FROM {$log_table_name} WHERE {$unikey_name} = %s ORDER BY id DESC LIMIT 1",
 				$unikey_value
 			)
 		);
 
-		$skipped = isset($get_data[0]->skipped) ? (int) $get_data[0]->skipped : 0;
-		$response['skipped'] = $skipped + 1;
-		$created = isset($get_data[0]->created) ? (int) $get_data[0]->created : 0;
-		$response['created'] = $created + 1;
-		$updated = isset($get_data[0]->updated) ? (int) $get_data[0]->updated : 0;
-		$response['updated'] = $updated + 1;
-		$failed = isset($get_data[0]->failed) ? (int) $get_data[0]->failed : 0;
-		$response['failed'] = $failed + 1;
+		$skipped = isset( $get_data[0]->skipped ) ? (int) $get_data[0]->skipped : 0;
+		$created = isset( $get_data[0]->created ) ? (int) $get_data[0]->created : 0;
+		$updated = isset( $get_data[0]->updated ) ? (int) $get_data[0]->updated : 0;
+		$failed  = isset( $get_data[0]->failed ) ? (int) $get_data[0]->failed : 0;
 
-		return $response;
+		return array(
+			'skipped' => $skipped + 1,
+			'created' => $created + 1,
+			'updated' => $updated + 1,
+			'failed'  => $failed + 1,
+		);
 	}
 
 	public function validate_datefield($date,$field,$dateformat,$line_number){		

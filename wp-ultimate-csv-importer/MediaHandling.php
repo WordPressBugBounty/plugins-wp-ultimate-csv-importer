@@ -28,7 +28,10 @@ class MediaHandling{
 
 	public static function imageOptions()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		$media_settings['use_ExistingImage'] = sanitize_text_field($_POST['use_ExistingImage'] ?? '');
 		$media_settings['overwriteImage'] = sanitize_text_field($_POST['overwriteImage'] ?? '');
 		$media_settings['enable_postcontent_image'] = sanitize_text_field($_POST['postContent_image_option'] ?? '');
@@ -63,7 +66,10 @@ class MediaHandling{
 
 	public function zipImageUpload()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		// Check if the ZIP extension is loaded
 		if (!extension_loaded('zip')) {
 			$result['success'] = false;
@@ -212,18 +218,21 @@ class MediaHandling{
 	public function deleteImage()
 	{
 		if (!is_user_logged_in() || !current_user_can('manage_options')) {
-			wp_send_json_error(['message' => 'Unauthorized access.'], 403);
+			wp_send_json_error(['message' => __( 'Unauthorized access.', 'wp-ultimate-csv-importer' )], 403);
 			return;
 		}
 	
 		// Verify nonce for CSRF protection
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 	
 		// Decode JSON safely
 		$images = json_decode(stripslashes($_POST['images']), true);
 		if (!empty($images)) {
 		if (empty($images) || !is_array($images)) {
-			wp_send_json_error(['message' => 'Invalid input.'], 400);
+			wp_send_json_error(['message' => __( 'Invalid input.', 'wp-ultimate-csv-importer' )], 400);
 			return;
 		}
 	
@@ -235,7 +244,7 @@ class MediaHandling{
 		$upload_path_month = !empty($media_dir['path']) ? realpath($media_dir['path']) : false;
 	
 		if (!$basedir_real) {
-			wp_send_json_error(['message' => 'Upload directory not found.'], 500);
+			wp_send_json_error(['message' => __( 'Upload directory not found.', 'wp-ultimate-csv-importer' )], 500);
 			return;
 		}
 	
@@ -252,7 +261,7 @@ class MediaHandling{
 				continue;
 			}
 			if (strpos($file_path, $basedir_real) !== 0) {
-				wp_send_json_error(['message' => 'Invalid file path.'], 403);
+				wp_send_json_error(['message' => __( 'Invalid file path.', 'wp-ultimate-csv-importer' )], 403);
 				return;
 			}
 			unlink($file_path);
@@ -422,7 +431,10 @@ class MediaHandling{
 
 	public function mediaReport()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		global $wpdb;
 		$list_of_images = $wpdb->get_results("select * from {$wpdb->prefix}ultimate_csv_importer_media_report  ", ARRAY_A);
 

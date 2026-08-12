@@ -140,7 +140,7 @@ if (!defined('ABSPATH'))
             if (empty($item) || empty($item['check_in_date']) || empty($item['check_out_date'])) {
                 $core_instance->detailed_log[$line_number]['Message'] = "No data to update. Incorrect item data in Jet-Booking.";
                 $core_instance->detailed_log[$line_number]['state'] = 'Skipped';
-                $wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+                $wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
                 return array('MODE' => $mode, 'ERROR_MSG' => 'No data to update');
             }
             foreach ($not_allowed as $key) {
@@ -179,7 +179,7 @@ if (!defined('ABSPATH'))
                 // Log the message and update the detailed log
                 $core_instance->detailed_log[$line_number]['Message'] = $error_message;
                 $core_instance->detailed_log[$line_number]['state'] = 'Skipped';
-                $wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+                $wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
     
                 return array('MODE' => $mode, 'ERROR_MSG' => $error_message);
             }
@@ -187,7 +187,7 @@ if (!defined('ABSPATH'))
             jet_abaf()->db->update_booking($item_id, $item);
             $mode_of_affect = 'Updated';
             $core_instance->detailed_log[$line_number]['state'] = 'Updated';
-            $wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");
+            $wpdb->query( "UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");
             $returnArr['ID'] = $item_id;
             $returnArr['MODE'] = $mode_of_affect;
             return $returnArr;
@@ -202,7 +202,7 @@ if (!defined('ABSPATH'))
             if (empty($item['check_in_date']) || empty($item['check_out_date'])) {
                 $core_instance->detailed_log[$line_number]['Message'] = "Booking date is empty";
                 $core_instance->detailed_log[$line_number]['state'] = 'Skipped';
-                $wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+                $wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
                 return array('MODE' => $mode, 'ERROR_MSG' => 'Invalid');
             }
     
@@ -243,7 +243,7 @@ if (!defined('ABSPATH'))
                 // Log the message and update the detailed log
                 $core_instance->detailed_log[$line_number]['Message'] = $error_message;
                 $core_instance->detailed_log[$line_number]['state'] = 'Skipped';
-                $wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+                $wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
     
                 return array('MODE' => $mode, 'ERROR_MSG' => $error_message);
             }
@@ -253,12 +253,12 @@ if (!defined('ABSPATH'))
             } else {
                 $core_instance->detailed_log[$line_number]['Message'] = "Cat't add this  apartment_id is invalid";
                 $core_instance->detailed_log[$line_number]['state'] = 'Skipped';
-                $wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+                $wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
                 return array('MODE' => $mode, 'ERROR_MSG' => 'apartment_id invalid');
             }
             $mode_of_affect = 'Inserted';
             $core_instance->detailed_log[$line_number]['state'] = 'Inserted';
-            $wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
+            $wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
             $returnArr['ID'] = $booking_id;
             $returnArr['MODE'] = $mode_of_affect;
             return $returnArr;

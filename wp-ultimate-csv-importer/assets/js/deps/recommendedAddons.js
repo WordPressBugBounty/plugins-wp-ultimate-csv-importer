@@ -31,7 +31,7 @@ jQuery(document).ready(function(){
         },
 
         success: function(response){          
-          $("#Useraddon").html('Activated');               
+          $("#Useraddon").html('<span class="check-icon">✓</span> Activated').addClass('wpucsv-btn-active').prop('disabled', true);               
         },
         error: function(errorThrown){
         }
@@ -50,7 +50,7 @@ jQuery(document).ready(function(){
       },
 
       success: function(response){       
-        $("#WooCommerceaddon").html('Activated');           
+        $("#WooCommerceaddon").html('<span class="check-icon">✓</span> Activated').addClass('wpucsv-btn-active').prop('disabled', true);           
       },
       error: function(errorThrown){
       }
@@ -69,7 +69,7 @@ $("#Exporteraddon").click(function() {
     },
 
     success: function(response){             
-      $("#Exporteraddon").html('Activated');          
+      $("#Exporteraddon").html('<span class="check-icon">✓</span> Activated').addClass('wpucsv-btn-active').prop('disabled', true);          
     },
     error: function(errorThrown){
     }

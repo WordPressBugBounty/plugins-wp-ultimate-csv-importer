@@ -41,9 +41,15 @@ class WPMLImport {
 		$core_instance = CoreFieldsImport::getInstance();
 		$extension_object = new ExtensionHandler;
 		$taxonomies = get_taxonomies();
-		$is_active = $wpdb->get_var("select active from {$wpdb->prefix}icl_languages where code = '$lang_code'");		
+		$is_active = $wpdb->get_var($wpdb->prepare(
+			"SELECT active FROM {$wpdb->prefix}icl_languages WHERE code = %s",
+			$lang_code
+		));
 		if(!$is_active){			
-			$lang_tag = $wpdb->get_var("select code from {$wpdb->prefix}icl_languages where default_locale = '$site_lang'");
+			$lang_tag = $wpdb->get_var($wpdb->prepare(
+				"SELECT code FROM {$wpdb->prefix}icl_languages WHERE default_locale = %s",
+				$site_lang
+			));
 			if(!empty($lang_tag))
 				$data_array['language_code'] = $lang_tag;
 				$core_instance->detailed_log[$line_number]['Instruction'] = "The given language code not configured in WPML.So all are done under default language section.";
@@ -76,7 +82,10 @@ class WPMLImport {
 				}
 				$element_type = 'tax_'.$taxo_type;
 				$trids = $trid+1;
-				$term_taxonomy_id = $wpdb->get_var("select term_taxonomy_id from {$wpdb->prefix}term_taxonomy where term_id = $pId");
+				$term_taxonomy_id = $wpdb->get_var($wpdb->prepare(
+					"SELECT term_taxonomy_id FROM {$wpdb->prefix}term_taxonomy WHERE term_id = %d",
+					(int) $pId
+				));
 				$set_language_args = array(
 					'element_id'    => $term_taxonomy_id,
 					'trid'   => $trids,
@@ -122,7 +131,10 @@ class WPMLImport {
 				if(is_array($termdata) && !empty($termdata)) {
 					$term_id = $termdata['term_id'];					
 					$taxo_type = $termdata['taxonomy'];
-					$element_id = $wpdb->get_var("select term_taxonomy_id from {$wpdb->prefix}term_taxonomy where term_id = $term_id");
+					$element_id = $wpdb->get_var($wpdb->prepare(
+						"SELECT term_taxonomy_id FROM {$wpdb->prefix}term_taxonomy WHERE term_id = %d",
+						(int) $term_id
+					));
 				}
 				else {
 					$taxo_type = $import_type;
@@ -136,7 +148,10 @@ class WPMLImport {
 					}
 				}
 				$element_type = 'tax_'.$taxo_type;
-				$term_taxonomy_id = $wpdb->get_var("select term_taxonomy_id from {$wpdb->prefix}term_taxonomy where term_id = $pId");
+				$term_taxonomy_id = $wpdb->get_var($wpdb->prepare(
+					"SELECT term_taxonomy_id FROM {$wpdb->prefix}term_taxonomy WHERE term_id = %d",
+					(int) $pId
+				));
 				$set_language_args = array(
 					'element_id'    => $term_taxonomy_id,
 					'element_type'  => $element_type,

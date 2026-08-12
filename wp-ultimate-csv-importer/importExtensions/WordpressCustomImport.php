@@ -39,6 +39,20 @@ class WordpressCustomImport {
             foreach ($data_array as $custom_key => $custom_value) {
                 $createdFields[] = $custom_key;
                 if ($importType != 'Users') {
+                    if ($importType === 'WooCommerce Orders' && function_exists('wc_get_order')) {
+                        if (is_serialized($custom_value)) {
+                            $custom_value = maybe_unserialize($custom_value);
+                        }
+                        if (is_array($custom_value) || is_object($custom_value)) {
+                            $custom_value = wp_json_encode($custom_value);
+                        }
+                        $order = wc_get_order($pID);
+                        if ($order) {
+                            $order->update_meta_data($custom_key, $custom_value);
+                            $order->save();
+                        }
+                        continue;
+                    }
                     if ((isset($core_serialize_info[$custom_key]) && $core_serialize_info[$custom_key] == 'on') || is_plugin_active('wpml-import/plugin.php')) {
     
                         // Check if value is serialized,
@@ -92,7 +106,4 @@ class WordpressCustomImport {
     }
         return $createdFields;
     }
-    
-    
-    
 }

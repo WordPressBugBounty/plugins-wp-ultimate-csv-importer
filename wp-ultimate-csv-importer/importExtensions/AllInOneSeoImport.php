@@ -12,6 +12,50 @@ class AllInOneSeoImport
 {
     private static $all_seo_instance = null;
 
+    /**
+     * Allowed columns for aioseo_posts INSERT/UPDATE.
+     * Identifiers must never come from imported CSV/XML values.
+     *
+     * @return string[]
+     */
+    private function get_allowed_aioseo_columns()
+    {
+        return array(
+            'post_id',
+            'og_title',
+            'og_description',
+            'canonical_url',
+            'og_image_type',
+            'og_image_custom_url',
+            'og_video',
+            'og_object_type',
+            'og_article_section',
+            'twitter_use_og',
+            'twitter_card',
+            'twitter_image_type',
+            'twitter_image_custom_url',
+            'twitter_title',
+            'twitter_description',
+            'robots_default',
+            'robots_noindex',
+            'robots_noarchive',
+            'robots_nosnippet',
+            'robots_nofollow',
+            'robots_noimageindex',
+            'robots_noodp',
+            'robots_notranslate',
+            'robots_max_snippet',
+            'robots_max_videopreview',
+            'robots_max_imagepreview',
+            'og_article_tags',
+            'title',
+            'keyphrases',
+            'description',
+            'og_image_custom_fields',
+            'twitter_image_custom_fields',
+        );
+    }
+
     public static function getInstance()
     {
 
@@ -179,18 +223,49 @@ class AllInOneSeoImport
             {
                 $og_image_custom_url = isset($data_array['og_image_custom_url']) ? $data_array['og_image_custom_url'] : '';
             }
-            $wpdb->get_results("INSERT INTO $aioseo_table_name
-				(post_id,og_title ,og_description,canonical_url,og_image_type,og_image_custom_url,og_video,og_object_type,og_article_section,
-				twitter_use_og,twitter_card,twitter_image_type,twitter_image_custom_url,twitter_title,twitter_description,robots_default,
-				robots_noindex,robots_noarchive,robots_nosnippet,robots_nofollow,robots_noimageindex,
-				robots_noodp,robots_notranslate,robots_max_snippet,robots_max_videopreview,robots_max_imagepreview,og_article_tags
-				,title,keyphrases,description,og_image_custom_fields,twitter_image_custom_fields)
-				values('$pID','$og_title','$og_description','$canonical_url','$og_image_type','$og_image_custom_url','$og_video','$og_object_type','$og_article_section',
-					'$twitter_use_og','$twitter_card','$twitter_image_type','$twitter_image_custom_url','$twitter_title','$twitter_description',
-					'$robots_default','$robots_noindex','$robots_noarchive','$robots_nosnippet','$robots_nofollow',
-					'$robots_noimageindex','$robots_noodp','$robots_notranslate','$robots_max_snippet',
-					'$robots_max_videopreview','$robots_max_imagepreview','$og_article_tags','$title','$keyphrases','$description'
-					,'$og_image_custom_fields','$twitter_image_custom_fields')");
+
+            $insert_row = array(
+                'post_id' => (int) $pID,
+                'og_title' => $og_title,
+                'og_description' => $og_description,
+                'canonical_url' => $canonical_url,
+                'og_image_type' => $og_image_type,
+                'og_image_custom_url' => $og_image_custom_url,
+                'og_video' => $og_video,
+                'og_object_type' => $og_object_type,
+                'og_article_section' => $og_article_section,
+                'twitter_use_og' => $twitter_use_og,
+                'twitter_card' => $twitter_card,
+                'twitter_image_type' => $twitter_image_type,
+                'twitter_image_custom_url' => $twitter_image_custom_url,
+                'twitter_title' => $twitter_title,
+                'twitter_description' => $twitter_description,
+                'robots_default' => $robots_default,
+                'robots_noindex' => $robots_noindex,
+                'robots_noarchive' => $robots_noarchive,
+                'robots_nosnippet' => $robots_nosnippet,
+                'robots_nofollow' => $robots_nofollow,
+                'robots_noimageindex' => $robots_noimageindex,
+                'robots_noodp' => $robots_noodp,
+                'robots_notranslate' => $robots_notranslate,
+                'robots_max_snippet' => $robots_max_snippet,
+                'robots_max_videopreview' => $robots_max_videopreview,
+                'robots_max_imagepreview' => $robots_max_imagepreview,
+                'og_article_tags' => $og_article_tags,
+                'title' => $title,
+                'keyphrases' => $keyphrases,
+                'description' => $description,
+                'og_image_custom_fields' => $og_image_custom_fields,
+                'twitter_image_custom_fields' => $twitter_image_custom_fields,
+            );
+
+            $insert_formats = array();
+            foreach ($insert_row as $column => $column_value)
+            {
+                $insert_formats[] = ($column === 'post_id') ? '%d' : '%s';
+            }
+
+            $wpdb->insert($aioseo_table_name, $insert_row, $insert_formats);
         }
 
         if ($mode == 'Update')
@@ -230,6 +305,7 @@ class AllInOneSeoImport
                 $name['value'] = $data_array['og_article_tags'];
                 $obj_merged = (object)array_merge((array)$value, (array)$name);
                 $article_tags = wp_json_encode($obj_merged);
+                $og_article_tag = '';
                 $og_article_tag .= '[' . $article_tags . ']';
                 $custom_value['og_article_tags'] = $og_article_tag;
             }
@@ -314,25 +390,43 @@ class AllInOneSeoImport
             }
             if (isset($data_array['twitter_image_custom_fields']))
             {
-                if ($custom_value['twitter_image_type'] == 'custom')
+                if (isset($custom_value['twitter_image_type']) && $custom_value['twitter_image_type'] == 'custom')
                 {
                     $custom_value['twitter_image_custom_url'] = $data_array['twitter_image_custom_url'];
                 }
             }
             if (isset($data_array['og_image_custom_fields']))
             {
-                if ($custom_value['og_image_type'] == 'custom')
+                if (isset($custom_value['og_image_type']) && $custom_value['og_image_type'] == 'custom')
                 {
                     $custom_value['og_image_custom_url'] = $data_array['og_image_custom_url'];
                 }
             }
             if (!empty($custom_value))
             {
+                $allowed_columns = array_flip($this->get_allowed_aioseo_columns());
+                $safe_update = array();
+                $update_formats = array();
+
                 foreach ($custom_value as $custom_key => $custom_val)
                 {
-                    $sql = $wpdb->prepare("UPDATE {$wpdb->prefix}aioseo_posts SET $custom_key = '$custom_val' WHERE post_id = %d;", $pID);
-                    $wpdb->query($sql);
+                    if (!isset($allowed_columns[$custom_key]) || $custom_key === 'post_id')
+                    {
+                        continue;
+                    }
+                    $safe_update[$custom_key] = $custom_val;
+                    $update_formats[] = '%s';
+                }
 
+                if (!empty($safe_update))
+                {
+                    $wpdb->update(
+                        $wpdb->prefix . 'aioseo_posts',
+                        $safe_update,
+                        array('post_id' => (int) $pID),
+                        $update_formats,
+                        array('%d')
+                    );
                 }
             }
         }

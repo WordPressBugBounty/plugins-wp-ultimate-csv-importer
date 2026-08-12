@@ -102,7 +102,7 @@ class CustomerReviewsImport {
 					if(is_wp_error($reviewId)) {
 						
 						$core_instance->detailed_log[$line_number]['Message'] = "Can't insert this Review. " . $reviewId->get_error_message();
-						$fields = $wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+						$fields = $wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 						return $returnArray;
 					}
 					$guId = site_url() . '/?post_type=wpcr3_review&#038;p=' . $reviewId;
@@ -132,14 +132,14 @@ class CustomerReviewsImport {
 					if(is_wp_error($reviewId)) {
 
 						$core_instance->detailed_log[$line_number]['Message'] = "Can't insert this Review. " . $reviewId->get_error_message();
-						$fields = $wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+						$fields = $wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 						return $returnArray;
 					}
 				}
 
 				$mode_of_affect = 'Inserted';
 				$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Review ID: ' . $reviewId;
-				$fields = $wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
+				$fields = $wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
 				
 			}
 		} else {
@@ -197,13 +197,13 @@ class CustomerReviewsImport {
 							if(is_wp_error($reviewId)) {
 
 								$core_instance->detailed_log[$line_number]['Message'] = "Can't insert this Review. " . $reviewId->get_error_message();
-								$fields = $wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");	
+								$fields = $wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");	
 								return $returnArray;
 							}
 
 							$mode_of_affect = 'Inserted';
 							$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Review ID: ' . $reviewId;
-							$fields = $wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
+							$fields = $wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
 							
 						} else {
 							$review_array['ID'] = $reviewId;
@@ -211,7 +211,7 @@ class CustomerReviewsImport {
 							$mode_of_affect = 'Updated';
 
 							$core_instance->detailed_log[$line_number]['Message'] = 'Updated Review ID: ' . $reviewId;
-							$fields = $wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
+							$fields = $wpdb->query( "UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
 						}
 						$guId = site_url() . '/?post_type=wpcr3_review&#038;p=' . $reviewId;
 						wp_update_post(array('ID' => $reviewId, 'guid' => $guId));
@@ -255,7 +255,7 @@ class CustomerReviewsImport {
 							$mode_of_affect = 'Inserted';
 
 							$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Review ID: ' . $reviewId;
-							$fields = $wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
+							$fields = $wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
 						} else {
 							$wpdb->update( $wpdb->wpcreviews, array(
 								'date_time'       => $data_array['date_time'],
@@ -274,7 +274,7 @@ class CustomerReviewsImport {
 							$mode_of_affect = 'Updated';
 
 							$core_instance->detailed_log[$line_number]['Message'] = 'Updated Review ID: ' . $reviewId;
-							$fields = $wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
+							$fields = $wpdb->query( "UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
 						}
 					}
 				}

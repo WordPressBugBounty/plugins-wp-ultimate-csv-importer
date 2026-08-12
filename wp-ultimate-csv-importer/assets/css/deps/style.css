@@ -647,7 +647,7 @@ Author: Mohamed Fariz
 }
 
 .text-primary {
-  color: #00a699;
+  color: #3d4fdb;
 }
 
 .text-warning {
@@ -729,7 +729,7 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .csv-link {
-  color: #00a699;
+  color: #3d4fdb;
   text-decoration: underline;
 }
 
@@ -753,7 +753,7 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .text-primary {
-  color: #00a699 !important;
+  color: #3d4fdb !important;
 }
 
 .wp-ultimate-csv-importer p {
@@ -791,7 +791,7 @@ Author: Mohamed Fariz
 
 .wp-ultimate-csv-importer .btn-select .btn-select-radio:checked+label {
   color: #2d3748;
-  border: 1px solid #00a699;
+  border: 1px solid #3d4fdb;
   font-weight: 500;
 }
 
@@ -804,9 +804,9 @@ Author: Mohamed Fariz
 .wp-ultimate-csv-importer .btn-select .btn:active,
 .wp-ultimate-csv-importer .btn-select .btn:active:focus {
   background: #fff !important;
-  border-color: #00a699 !important;
+  border-color: #3d4fdb !important;
   box-shadow: none !important;
-  color: #00a699;
+  color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .text-muted {
@@ -1271,6 +1271,7 @@ Author: Mohamed Fariz
   background: #ffffff;
   border-radius: 6px;
   box-shadow: 0 2px 20px 0 #c9d3df;
+  margin-bottom: 15px;
 }
 
 .wp-ultimate-csv-importer #wordpress-custom-fields-body {
@@ -1355,12 +1356,12 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .form_export_file_type input[type="radio"]:checked+label {
-  border-color: #00a699;
+  border-color: #3d4fdb;
 }
 
 u {
   text-decoration: underline;
-  color: #00a699;
+  color: #3d4fdb;
 }
 
 button.btn.btn-outline {
@@ -1381,7 +1382,7 @@ button.btn.btn-outline {
 }
 
 .import_new a {
-  color: #00a699;
+  color: #3d4fdb;
   text-decoration: underline;
 }
 
@@ -1390,7 +1391,7 @@ button.btn.btn-outline {
 }
 
 .import_new_advanced a {
-  color: #00a699;
+  color: #3d4fdb;
   text-decoration: underline;
 }
 
@@ -1418,7 +1419,7 @@ svg.bi.bi-plus {
 }
 
 .csv-importer-panel .footer a {
-  color: #00a699;
+  color: #3d4fdb;
   text-decoration: underline;
 }
 
@@ -1443,7 +1444,7 @@ svg.bi.bi-plus {
 }
 
 .csv-importer-panel button {
-  color: #00a699;
+  color: #3d4fdb;
   margin-top: 150px;
   font-size: 23px;
 }
@@ -1482,15 +1483,15 @@ svg.bi.bi-plus {
 }
 
 .wp-ultimate-csv-importer .smack-btn.smack-btn-primary {
-  background-color: #00a699;
-  border-color: #00a699;
+  background-color: #3d4fdb;
+  border-color: #3d4fdb;
   margin-bottom: 25px;
   color: #ffffff;
 }
 
 .wp-ultimate-csv-importer .smack-btn.smack-btn-primary_2 {
-  background-color: #00a699;
-  border-color: #00a699;
+  background-color: #3d4fdb;
+  border-color: #3d4fdb;
   margin-bottom: 25px;
   color: #ffffff;
   margin-top: 40px;
@@ -1502,8 +1503,8 @@ svg.bi.bi-plus {
 }
 
 .wp-ultimate-csv-importer .smack-btn.smack-btn-primary_4 {
-  background-color: #00a699;
-  border-color: #00a699;
+  background-color: #3d4fdb;
+  border-color: #3d4fdb;
   margin-bottom: 25px;
   color: #ffffff;
   margin-right: 35px;
@@ -1516,21 +1517,21 @@ svg.bi.bi-plus {
 }
 
 .wp-ultimate-csv-importer .smack-btn.smack-btn-primary:hover {
-  background-color: #00a699;
+  background-color: #3d4fdb;
   border-color: #178d7c;
   color: #ffffff;
 }
 
 .wp-ultimate-csv-importer .smack-btn.smack-btn-secondary {
   background-color: #ffffff;
-  border: 2px solid #00a699;
-  color: #00a699;
+  border: 2px solid #3d4fdb;
+  color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .smack-btn.smack-btn-secondary:hover {
   background-color: rgba(0, 166, 153, 0.1);
   border-color: #178d7c;
-  color: #00a699;
+  color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .smack-btn.smack-btn-info {
@@ -1662,11 +1663,13 @@ svg.bi.bi-plus {
 }
 
 .wp-ultimate-csv-importer .react-datepicker-wrapper {
-  display: block;
+  display: block !important;
+  width: 100% !important;
 }
 
 .wp-ultimate-csv-importer .react-datepicker-wrapper .react-datepicker__input-container {
-  display: block;
+  display: block !important;
+  width: 100% !important;
 }
 
 .wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker {
@@ -1715,7 +1718,14 @@ svg.bi.bi-plus {
 }
 
 .wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker__month .react-datepicker__day.react-datepicker__day--selected {
-  background-image: linear-gradient(to bottom, #00a699, #00736a) !important;
+  background: #3d4fdb !important;
+  color: #ffffff !important;
+  border-radius: 4px !important;
+}
+
+.wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker__month .react-datepicker__day.react-datepicker__day--selected:hover {
+  background: #2f3cb0 !important;
+  color: #ffffff !important;
 }
 
 .wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker__month .react-datepicker__day.react-datepicker__day--outside-month {
@@ -1737,7 +1747,7 @@ svg.bi.bi-plus {
 
 .wp-ultimate-csv-importer .form-control:focus {
   box-shadow: none;
-  border: 1px solid #00a699;
+  border: 1px solid #3d4fdb;
   box-shadow: 0 0 15px 0 rgba(0, 166, 153, 0.1);
 }
 
@@ -1751,7 +1761,7 @@ svg.bi.bi-plus {
 }
 
 .wp-ultimate-csv-importer .dropdown-menu li.selected a {
-  background-color: #00a699;
+  background-color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .dropdown-menu li.selected a:hover {
@@ -1759,7 +1769,7 @@ svg.bi.bi-plus {
 }
 
 .wp-ultimate-csv-importer .dropdown-menu li a:active {
-  background-color: #00a699;
+  background-color: #3d4fdb;
   color: #fff;
 }
 
@@ -1778,7 +1788,7 @@ svg.bi.bi-plus {
 
 .wp-ultimate-csv-importer .select .btn-light:hover,
 .wp-ultimate-csv-importer .bootstrap-select .btn-light:hover {
-  border-color: #00a699;
+  border-color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .select .form-control,
@@ -1830,7 +1840,7 @@ svg.bi.bi-plus {
 }
 
 .wp-ultimate-csv-importer .switch-ios:active {
-  box-shadow: inset 0 0 0 20px #00a699;
+  box-shadow: inset 0 0 0 20px #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .switch-ios:active>i {
@@ -1838,7 +1848,7 @@ svg.bi.bi-plus {
 }
 
 .wp-ultimate-csv-importer .fieldset input[type="checkbox"]:checked+.switch-ios {
-  box-shadow: inset 0 0 0 20px #00a699;
+  box-shadow: inset 0 0 0 20px #3d4fdb;
   border: none;
 }
 
@@ -1901,12 +1911,13 @@ svg.bi.bi-plus {
   padding-left: 40px;
   transition: all 0.2s;
   cursor: pointer;
+  position: relative;
 }
 
 .wp-ultimate-csv-importer .form_export_file_type input[type="radio"]:checked+label {
-  border-color: #00a699;
+  border-color: #3d4fdb;
   color: #fff;
-  background-color: #00a699;
+  background-color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .form-group input[type="radio"]+label:before {
@@ -1917,25 +1928,27 @@ svg.bi.bi-plus {
   border-radius: 50%;
   position: absolute;
   left: 5px;
-  top: 0px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .wp-ultimate-csv-importer .form-group input[type="radio"]+label:hover:before {
-  border: 2px solid #00a699;
+  border: 2px solid #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .form-group input[type="radio"]:checked+label:before {
-  border: 2px solid #00a699;
+  border: 2px solid #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .form-group input[type="radio"]:checked+label:after {
   content: "";
   width: 13px;
   height: 13px;
-  background: #00a699;
+  background: #3d4fdb;
   border-radius: 50%;
   position: absolute;
-  top: 5px;
+  top: 50%;
+  transform: translateY(-50%);
   left: 10px;
 }
 
@@ -1961,7 +1974,7 @@ svg.bi.bi-plus {
 }
 
 .wp-ultimate-csv-importer .checkbox input[type="checkbox"]+label:hover:before {
-  border: 2px solid #00a699;
+  border: 2px solid #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .checkbox input[type="checkbox"]:checked+label:after {
@@ -1969,8 +1982,8 @@ svg.bi.bi-plus {
   font-family: "csvimporter";
   width: 22px;
   height: 22px;
-  background: #00a699;
-  border: 1px solid #00a699;
+  background: #3d4fdb;
+  border: 1px solid #3d4fdb;
   border-radius: 4px;
   display: flex;
   justify-content: center;
@@ -2019,7 +2032,7 @@ svg.bi.bi-plus {
     width: 48%;
     margin: 2px;
     border-radius: 6px;
-    border: 1px solid #00a699;
+    border: 1px solid #3d4fdb;
   }
 }
 
@@ -2036,15 +2049,15 @@ svg.bi.bi-plus {
 }
 
 .wp-ultimate-csv-importer .tab-section .tabs .tab-list.active {
-  border-bottom: 2px solid #00a699;
+  border-bottom: 2px solid #3d4fdb;
   font-weight: 500;
 }
 
 @media (max-width: 576px) {
   .wp-ultimate-csv-importer .tab-section .tabs .tab-list.active {
     color: #fff;
-    border: 1px solid #00a699;
-    background-color: #00a699;
+    border: 1px solid #3d4fdb;
+    background-color: #3d4fdb;
   }
 }
 
@@ -2070,7 +2083,7 @@ svg.bi.bi-plus {
 }
 
 .wp-ultimate-csv-importer .nav.file-choosen-tab .nav-link.active {
-  background: #00a699;
+  background: #3d4fdb;
   color: #ffffff;
 }
 
@@ -2138,7 +2151,7 @@ svg.bi.bi-plus {
 }
 
 .wp-ultimate-csv-importer .mapping-switcher li.active {
-  background: #00a699;
+  background: #3d4fdb;
   color: #fff;
   text-align: center;
   display: block;
@@ -2152,7 +2165,7 @@ svg.bi.bi-plus {
   content: "";
   width: 0;
   height: 0;
-  border-top: solid 12px #00a699;
+  border-top: solid 12px #3d4fdb;
   border-left: solid 12px transparent;
   border-right: solid 12px transparent;
 }
@@ -2162,7 +2175,7 @@ svg.bi.bi-plus {
 }
 
 .wp-ultimate-csv-importer .mapping-switcher li:hover {
-  color: #00a699;
+  color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .custom-fields-tabs {
@@ -2194,7 +2207,7 @@ svg.bi.bi-plus {
     width: 48%;
     margin: 2px;
     border-radius: 6px;
-    border: 1px solid #00a699;
+    border: 1px solid #3d4fdb;
   }
 }
 
@@ -2217,15 +2230,15 @@ svg.bi.bi-plus {
 }
 
 .wp-ultimate-csv-importer .custom-fields-tabs .custom-fields-tab-list.active {
-  border-bottom: 2px solid #00a699;
+  border-bottom: 2px solid #3d4fdb;
   font-weight: 500;
 }
 
 @media (max-width: 576px) {
   .wp-ultimate-csv-importer .custom-fields-tabs .custom-fields-tab-list.active {
     color: #fff;
-    border: 1px solid #00a699;
-    background-color: #00a699;
+    border: 1px solid #3d4fdb;
+    background-color: #3d4fdb;
   }
 }
 
@@ -2430,7 +2443,7 @@ svg.bi.bi-plus {
 .wp-ultimate-csv-importer .table.table-mapping tbody tr td.action .manipulation-screen .csv-hint {
   padding: 10px;
   background: rgba(0, 166, 153, 0.2);
-  color: #00a699;
+  color: #3d4fdb;
   border-radius: 6px;
   font-size: 14px;
 }
@@ -2604,7 +2617,7 @@ i#smsumicon {
 .wp-ultimate-csv-importer .main-heading span.exportData {
   padding: 3px 16px;
   font-size: 18px;
-  color: #00a699;
+  color: #3d4fdb;
   background: rgba(0, 166, 153, 0.05);
   border: 2px solid rgba(0, 166, 153, 0.3);
 }
@@ -2645,6 +2658,10 @@ i#smsumicon {
   margin-bottom: 0;
 }
 
+.wp-ultimate-csv-importer .setting-tab .setting-tab-list.pro-tag {
+  padding-right: 55px;
+}
+
 .wp-ultimate-csv-importer .setting-tab .setting-tab-list i {
   padding-right: 10px;
 }
@@ -2661,12 +2678,16 @@ i#smsumicon {
   margin-bottom: 0;
 }
 
+.setting-tab-list-pro.pro-tag {
+  padding-right: 55px;
+}
+
 .wp-ultimate-csv-importer .setting-tab .setting-tab-list:hover {
   background-color: #e9e9e9;
 }
 
 .wp-ultimate-csv-importer .setting-tab .setting-tab-list.active {
-  background-color: #00a699;
+  background-color: #3d4fdb;
   color: #fff;
   font-weight: 500;
 }
@@ -2753,7 +2774,7 @@ i#smsumicon {
 
 .wp-ultimate-csv-importer .importing-details .progress-loading {
   font-size: 25px;
-  color: #00a699;
+  color: #3d4fdb;
   display: inline-block;
 }
 
@@ -2795,7 +2816,7 @@ i#smsumicon {
 .wp-ultimate-csv-importer .btn-add-size {
   border: none;
   background: none;
-  color: #00a699;
+  color: #3d4fdb;
   cursor: pointer;
   outline: none;
 }
@@ -3090,7 +3111,7 @@ i#smsumicon {
 }
 
 .wp-ultimate-csv-importer .ck.ck-editor__main>.ck-editor__editable.ck-focused {
-  border-color: #00a699 !important;
+  border-color: #3d4fdb !important;
   box-shadow: none;
 }
 
@@ -3167,7 +3188,7 @@ i#smsumicon {
 }
 
 .wp-ultimate-csv-importer .progress-bar {
-  background: #00a699 linear-gradient(to right, #65cd8d, #4fc492, #38ba96, #21b098, #00a699);
+  background: #3d4fdb linear-gradient(to right, #65cd8d, #4fc492, #38ba96, #21b098, #3d4fdb);
   border-radius: inherit;
 }
 
@@ -3252,8 +3273,8 @@ i#smsumicon {
   text-decoration: none;
   padding: 8px 3px;
   color: #fff;
-  background: #00a699;
-  border: 1px solid #00a699;
+  background: #3d4fdb;
+  border: 1px solid #3d4fdb;
   border-radius: 6px;
   font-weight: 600;
 }
@@ -3296,7 +3317,7 @@ i#smsumicon {
 
 .wp-ultimate-csv-importer .filepond--wrapper .filepond--list-scroller .filepond--list .filepond--item .filepond--file-wrapper {
   height: auto;
-  background: #00a699;
+  background: #3d4fdb;
   color: #fff;
   border-radius: 6px;
   padding: 5px 15px;
@@ -3370,84 +3391,100 @@ i#smsumicon {
   top: 5em !important;
 }
 
-.wp-ultimate-csv-importer .Toastify {
-  font-family: "Poppins", sans-serif;
-}
-
 .wp-ultimate-csv-importer .Toastify .Toastify__toast {
-  font-family: inherit;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
-}
-
-.wp-ultimate-csv-importer .Toastify .Toastify__toast--info {
-  background: #0073aa;
-}
-
-.wp-ultimate-csv-importer .Toastify .Toastify__toast-body {
-  /* padding: 10px 50px; */
-  padding: 10px 10px;
-  height: 80px;
-}
-
-.wp-ultimate-csv-importer .Toastify__toast.Toastify__toast--success,
-.wp-ultimate-csv-importer .Toastify__toast.Toastify__toast--error,
-.wp-ultimate-csv-importer .Toastify__toast.Toastify__toast--info {
-  border-radius: 6px;
-  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 16px -6px rgba(0, 0, 0, 0.03) !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(0, 0, 0, 0.03) !important;
+  padding: 12px 16px !important;
+  min-height: 70px !important;
+  height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  border-top: none !important;
 }
 
 .wp-ultimate-csv-importer .Toastify__toast.Toastify__toast--success {
-  border-top: 4px solid #38b2ac;
+  background: #f0fdf4 !important;
+  color: #166534 !important;
+  border-left: 5px solid #22c55e !important;
 }
 
 .wp-ultimate-csv-importer .Toastify__toast.Toastify__toast--success::before {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  background: url("../../images/check-circle.png");
-  content: " ";
-  top: 25px;
-  left: 10px;
+  display: none !important;
 }
 
-.wp-ultimate-csv-importer .Toastify__toast--success {
-  background: #e6fffa !important;
-  color: #234e52 !important;
+.wp-ultimate-csv-importer .Toastify__toast.Toastify__toast--error {
+  background: #fef2f2 !important;
+  color: #991b1b !important;
+  border-left: 5px solid #ef4444 !important;
 }
 
-.wp-ultimate-csv-importer .Toastify__toast--error {
-  background: #fff5f5;
-  color: #c53030 !important;
-  border-top: 4px solid #f56565 !important;
-  border-radius: 6px;
+.wp-ultimate-csv-importer .Toastify__toast.Toastify__toast--info {
+  background: #f0f9ff !important;
+  color: #075985 !important;
+  border-left: 5px solid #3b82f6 !important;
 }
 
-/* .wp-ultimate-csv-importer .Toastify__toast--error::before {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  background: url("../../images/warning.png");
-  content: " ";
-  top: 25px;
-  left: 10px;
-} */
-.wp-ultimate-csv-importer .Toastify__toast--info {
-  background: #ebf8ff !important;
-  color: #2b6cb0 !important;
-  border-top: 4px solid #4299e1 !important;
-  border-radius: 6px;
+.wp-ultimate-csv-importer .Toastify .Toastify__toast-body {
+  padding: 0 !important;
+  height: auto !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  font-weight: 500 !important;
 }
 
-/* .wp-ultimate-csv-importer .Toastify__toast--info::before {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  background: url("../../images/info.png");
-  content: " ";
-  top: 25px;
-  left: 10px;
-} */
+.wp-ultimate-csv-importer .Toastify__toast-icon {
+  width: 22px !important;
+  height: 22px !important;
+  margin-inline-end: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+
+.wp-ultimate-csv-importer .Toastify__toast-icon img,
+.wp-ultimate-csv-importer .Toastify__toast-icon svg {
+  width: 100% !important;
+  height: 100% !important;
+  margin-top: 0 !important;
+  vertical-align: middle !important;
+  fill: currentColor !important;
+}
+
+.wp-ultimate-csv-importer .Toastify__toast--success .Toastify__toast-icon svg {
+  color: #22c55e !important;
+}
+
+.wp-ultimate-csv-importer .Toastify__toast--error .Toastify__toast-icon svg {
+  color: #ef4444 !important;
+}
+
+.wp-ultimate-csv-importer .Toastify__toast--info .Toastify__toast-icon svg {
+  color: #3b82f6 !important;
+}
+
+.wp-ultimate-csv-importer .Toastify__close-button {
+  align-self: center !important;
+  color: currentColor !important;
+  opacity: 0.4 !important;
+  transition: opacity 0.2s ease, transform 0.2s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-left: 12px !important;
+}
+
+.wp-ultimate-csv-importer .Toastify__close-button:hover {
+  opacity: 0.8 !important;
+  transform: scale(1.1) !important;
+}
+
 .wp-ultimate-csv-importer .loader {
   width: 30px;
   height: 30px;
@@ -3466,7 +3503,7 @@ i#smsumicon {
   height: 100%;
   border-radius: 100%;
   border: 3px solid transparent;
-  border-top-color: #00a699;
+  border-top-color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .loader-1:before {
@@ -3496,7 +3533,7 @@ i#smsumicon {
   height: 30px;
   border-radius: 100%;
   border: 3px solid transparent;
-  border-top-color: #00a699;
+  border-top-color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .ajax-loader.loading:before {
@@ -4108,11 +4145,13 @@ i#smsumicon {
 }
 
 .datepicker table tbody>tr>td.active {
-  background-image: linear-gradient(to bottom, #00a699, #00736a) !important;
+  background: #3d4fdb !important;
+  color: #ffffff !important;
 }
 
 .datepicker table tbody>tr>td span.active {
-  background-image: linear-gradient(to bottom, #00a699, #00736a) !important;
+  background: #3d4fdb !important;
+  color: #ffffff !important;
 }
 
 .table> :not(caption)> :last-child {
@@ -4129,7 +4168,7 @@ i#smsumicon {
 
 .export-information {
   opacity: 0.7;
-  color: #00a699;
+  color: #3d4fdb;
 }
 
 #upload_csv button.close {
@@ -4221,7 +4260,7 @@ i.removeapikey {
 }
 
 .wp-ultimate-csv-importer .chatgpt_close {
-  color: #00a699;
+  color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .chatgpt_close:hover {
@@ -4236,7 +4275,7 @@ i.removeapikey {
   padding: 10px 15px;
   border-radius: 0px 6px 6px 0px;
   background: #fff;
-  border-left: 3px solid #00a699;
+  border-left: 3px solid #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .chatgpt-notify button {
@@ -4273,7 +4312,7 @@ i.removeapikey {
 
 .openai_head {
   /* padding: 10px; */
-  color: #00a699;
+  color: #3d4fdb;
   border-radius: 6px;
   font-size: 14px;
 }
@@ -4284,7 +4323,7 @@ i.removeapikey {
 }
 
 .pro_tag_upgrade .modal-header {
-  border-top: 4px solid #00a699;
+  border-top: 4px solid #3d4fdb;
   position: relative;
   border-bottom: none;
 }
@@ -4312,7 +4351,7 @@ i.removeapikey {
 }
 
 .modal-header {
-  background: #00a699;
+  background: #3d4fdb;
   color: #fff;
 }
 
@@ -4352,14 +4391,14 @@ i.removeapikey {
 }
 
 .pro_tag_upgrade .btn.btn-primary:hover {
-  background-color: #00a699;
+  background-color: #3d4fdb;
   border-color: #178d7c;
   color: #ffffff;
 }
 
 .pro_tag_upgrade .btn.btn-primary {
-  background-color: #00a699;
-  border-color: #00a699;
+  background-color: #3d4fdb;
+  border-color: #3d4fdb;
   margin-bottom: 18px;
   color: #ffffff;
 }
@@ -4566,7 +4605,7 @@ img {
 
 .links-section a {
   margin-right: 0.5rem;
-  color: #00a699;
+  color: #3d4fdb;
   text-decoration: none;
 }
 
@@ -4612,7 +4651,7 @@ img {
 }
 
 .custom-tooltip {
-  background-color: #00a699 !important;
+  background-color: #3d4fdb !important;
   color: white !important;
   border-radius: 4px;
   padding: 5px 10px;
@@ -4669,18 +4708,18 @@ div#newsm {
 }
 
 #smmodaldown {
-  background: #00a699;
-  border: 1px solid #00a699;
+  background: #3d4fdb;
+  border: 1px solid #3d4fdb;
 }
 
 #smmodaldown1 {
-  background: #00a699;
-  border: 1px solid #00a699;
+  background: #3d4fdb;
+  border: 1px solid #3d4fdb;
 }
 
 #smmodalfailed {
-  background: #00a699;
-  border: 1px solid #00a699;
+  background: #3d4fdb;
+  border: 1px solid #3d4fdb;
 }
 
 #smsumicon {
@@ -4713,8 +4752,8 @@ div#newsm {
 }
 
 #modalcontinue {
-  background: #00a699;
-  border-color: #00a699;
+  background: #3d4fdb;
+  border-color: #3d4fdb;
   color: #fff;
   font-size: 1rem;
   padding: 8px 20px;
@@ -4724,11 +4763,11 @@ div#newsm {
 }
 
 input[type="radio"]:checked::before {
-  background: #00a699;
+  background: #3d4fdb;
 }
 
 .form-check-input:checked {
-  border-color: #00a699;
+  border-color: #3d4fdb;
   background: #fff;
 }
 
@@ -4749,7 +4788,7 @@ input[type="radio"]:checked::before {
   width: 0.5rem;
   height: 0.5rem;
   margin: 0.1875rem;
-  background-color: #00a699 !important;
+  background-color: #3d4fdb !important;
   line-height: 1.14285714;
   float: left;
   display: inline-block;
@@ -4795,8 +4834,9 @@ div[style*="inline-block"]:hover .tooltip-box {
 .Toastify__toast-icon.Toastify--animate-icon.Toastify__zoom-enter img,
 .Toastify__toast-icon.Toastify--animate-icon.Toastify__zoom-enter svg {
   vertical-align: middle;
-  margin-top: -13px;
+  margin-top: 0 !important;
 }
+
 .wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker .react-datepicker__navigation--previous {
   border-right-color: #303030;
   margin-top: 5px;
@@ -4806,7 +4846,7 @@ div[style*="inline-block"]:hover .tooltip-box {
   border-left-color: #303030;
   margin-top: 5px;
 }
+
 body.smack-uci-free-page #wpcontent {
   padding-left: 0px !important;
 }
-

@@ -50,8 +50,6 @@ class DesktopUpload implements Uploads{
 	 */
 	public function upload_function(){
   		$this->check_upload_security();
-     
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
 		global $wpdb;
 
 
@@ -303,7 +301,7 @@ class DesktopUpload implements Uploads{
 							$response['success'] = false;
 							$response['message'] = "Cannot download the file";
 							echo wp_json_encode($response); 
-							$wpdb->get_results("UPDATE $file_table_name SET status='Download_Failed' WHERE id = '$lastid'");
+							$wpdb->query( "UPDATE $file_table_name SET status='Download_Failed' WHERE id = '$lastid'");
 						}
 					}
 					$validate_file = $validate_instance->file_validation($path , $file_extension);
@@ -311,7 +309,7 @@ class DesktopUpload implements Uploads{
 					$filesize = $validate_instance->formatSizeUnits($file_size);   
 					$server_software = sanitize_text_field($_SERVER['SERVER_SOFTWARE']);
 					if($validate_file == "yes"){
-						$fields = $wpdb->get_results("UPDATE $file_table_name SET status='Downloaded',`lock`=false WHERE id = '$lastid'");
+						$fields = $wpdb->query( "UPDATE $file_table_name SET status='Downloaded',`lock`=false WHERE id = '$lastid'");
 
 						$get_result = $validate_instance->import_record_function($event_key , $file_name);
 						if(isset($media_type) && ($media_type == 'external' || $media_type == 'local')){
@@ -320,6 +318,7 @@ class DesktopUpload implements Uploads{
 						$response['success'] = true;
 						$response['filename'] = $file_name;
 						$response['hashkey'] = $event_key;
+						$response['file_path'] = $path;
 						$response['posttype'] = $get_result['Post Type'];
 						$response['selectedtype'] = $get_result['selected type'];
 						$response['taxonomy'] = $get_result['Taxonomy'];
@@ -340,7 +339,7 @@ class DesktopUpload implements Uploads{
 						$response['message'] = $validate_file;
 						echo wp_json_encode($response); 
 						unlink($path);
-						$wpdb->get_results("UPDATE $file_table_name SET status='Download_Failed' WHERE id = '$lastid'");
+						$wpdb->query( "UPDATE $file_table_name SET status='Download_Failed' WHERE id = '$lastid'");
 					}
 					break;
 
@@ -348,14 +347,14 @@ class DesktopUpload implements Uploads{
 					$response['success'] = false;
 					$response['message'] = "The uploaded file exceeds the upload_max_filesize directive in php.ini";
 					echo wp_json_encode($response); 
-					$wpdb->get_results("UPDATE $file_table_name SET status='Download_Failed' WHERE id = '$lastid'");
+					$wpdb->query( "UPDATE $file_table_name SET status='Download_Failed' WHERE id = '$lastid'");
 					break;
 
 				default:
 					$response['success'] = false;
 					$response['message'] = "Cannot download file";
 					echo wp_json_encode($response); 
-					$wpdb->get_results("UPDATE $file_table_name SET status='Download_Failed' WHERE id = '$lastid'");
+					$wpdb->query( "UPDATE $file_table_name SET status='Download_Failed' WHERE id = '$lastid'");
 					break;
 				}
 			}else{
@@ -374,13 +373,9 @@ class DesktopUpload implements Uploads{
 	}
 
 	private function check_upload_security() {
-        // Security: Check nonce for CSRF protection using wp_verify_nonce
-        if (!wp_verify_nonce($_POST['securekey'], 'smack-ultimate-csv-importer')) {
-            wp_die(__('Security check failed'));
-        }
+        SecurityHelper::verify_ajax_nonce();
         
-        // Security: Check user capabilities - only administrators should access upload functionality
-        if (!current_user_can('manage_options')) {
+        if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
     }
@@ -388,8 +383,10 @@ class DesktopUpload implements Uploads{
 
 	public function save_mapping($data,$hash_key,$post,$decoded_json)
 	{
-
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		$type          = $decoded_json['selectedtype'];
 		$map_fields    = $data;
 
@@ -551,7 +548,6 @@ class DesktopUpload implements Uploads{
 public function get_csv_delimiter() {
 	
 	$this->check_upload_security(); 
-    check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
     $event_key = sanitize_text_field($_POST['hashkey']);
 
     $delimiter = get_option("smack_csv_delimiter_{$event_key}", ',');

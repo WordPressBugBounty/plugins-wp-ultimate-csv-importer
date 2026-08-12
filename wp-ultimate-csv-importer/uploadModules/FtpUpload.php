@@ -51,13 +51,9 @@ class FtpUpload implements Uploads{
      * Validates nonce and user capabilities
      */
     private function check_ftp_security() {
-        // Security: Check nonce for CSRF protection using wp_verify_nonce
-        if (!wp_verify_nonce($_POST['securekey'], 'smack-ultimate-csv-importer')) {
-            wp_die(__('Security check failed'));
-        }
+        SecurityHelper::verify_ajax_nonce();
         
-        // Security: Check user capabilities - only administrators should access FTP functionality
-        if (!current_user_can('manage_options')) {
+        if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
             wp_die(__('You do not have sufficient permissions to access this page.'));
         }
     }
@@ -184,7 +180,7 @@ $ret = ftp_nb_get($conn_id, $local_file, $server_file, $ftp_mode);
                     $dld = intval($fileSize);
                     if($dld > 0){
                         $i = ($dld/$fs)*100;
-                        $wpdb->get_results("UPDATE $file_table_name SET  progress='$i' , `lock`=true WHERE id = '$lastid'");
+                        $wpdb->query( "UPDATE $file_table_name SET  progress='$i' , `lock`=true WHERE id = '$lastid'");
                     }
                     
                     $ret = ftp_nb_continue($conn_id);
@@ -203,7 +199,7 @@ $ret = ftp_nb_get($conn_id, $local_file, $server_file, $ftp_mode);
                         
                         if($validate_file == "yes"){
 
-                            $wpdb->get_results("UPDATE $file_table_name SET status='Downloaded',`lock`=false WHERE id = '$lastid'");
+                            $wpdb->query( "UPDATE $file_table_name SET status='Downloaded',`lock`=false WHERE id = '$lastid'");
                             $get_result = $validate_instance->import_record_function($event_key , $ftp_file_name);
                             $response['success'] = true;
                             $response['filename'] = $ftp_file_name;
@@ -233,10 +229,10 @@ $ret = ftp_nb_get($conn_id, $local_file, $server_file, $ftp_mode);
                             if ($real_path !== false && strpos($real_path, $real_base) === 0) {
                                 unlink($real_path); // safe delete inside uploads only
                             }
-                            $wpdb->get_results("UPDATE $file_table_name SET status='Download Failed' WHERE id = '$lastid'");
+                            $wpdb->query( "UPDATE $file_table_name SET status='Download Failed' WHERE id = '$lastid'");
                         }
                     } else {
-                        $wpdb->get_results("UPDATE $file_table_name SET status='Download Failed' WHERE id = '$lastid'");
+                        $wpdb->query( "UPDATE $file_table_name SET status='Download Failed' WHERE id = '$lastid'");
                         $response['message'] = 'Cannot Download the file , file not found';
                         echo wp_json_encode($response);
                     }
@@ -264,7 +260,7 @@ $ret = ftp_nb_get($conn_id, $local_file, $server_file, $ftp_mode);
         $result['HostPort'] = get_option('sm_ftp_hostport');
         $result['HostUserName'] = get_option('sm_ftp_hostusername');
         $result['HostPath'] = get_option('sm_ftp_hostpath');
-        $result['HostPassword'] = get_option('sm_ftp_hostpassword');
+        $result['HostPassword'] = SecurityHelper::mask_credentials(get_option('sm_ftp_hostpassword'));
         $result['action'] = get_option('action');
         echo wp_json_encode($result);
         wp_die();

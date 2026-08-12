@@ -103,7 +103,7 @@ class ToolsetNewImport {
                                 $pq = "select id from {$wpdb->prefix}toolset_connected_elements where element_id ='{$parrelid}'";
                                 $pqres = $wpdb->get_results($pq);
                                 $parent_id = $pqres[0]->id;
-                                $wpdb->get_results("UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$parent_id' where id = $parent_id");
+                                $wpdb->query( "UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$parent_id' where id = $parent_id");
                                 //$wpdb->update($wpdb->toolset_connected_elements, ['group_id' => $parent_id], ['id' => $parent_id]);
                             }
                             if($childconid[0]['group_id']){
@@ -129,7 +129,7 @@ class ToolsetNewImport {
                                 $pq1 = "select id from {$wpdb->prefix}toolset_connected_elements where element_id ='{$pID}'";
                                 $pqres1 = $wpdb->get_results($pq1);
                                 $child_id = $pqres1[0]->id;
-                                $wpdb->get_results("UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$child_id' where id = $child_id");
+                                $wpdb->query( "UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$child_id' where id = $child_id");
                                 //$wpdb->update($wpdb->toolset_connected_elements, ['group_id' => $child_id], ['id' => $child_id]);
                             }
                             if(!empty($is_intermediate)){
@@ -172,7 +172,7 @@ class ToolsetNewImport {
                                 $inter_id = $pinterres[0]->id;
                                 
                                 //$wpdb->update($wpdb->toolset_connected_elements, ['group_id' => $inter_id], ['id' => $inter_id]);
-                                $wpdb->get_results("UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$inter_id' where id = $inter_id");
+                                $wpdb->query( "UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$inter_id' where id = $inter_id");
                             }
                             else{
                                     $inter_id = 0;
@@ -283,7 +283,7 @@ class ToolsetNewImport {
                                         $pq = "select id from {$wpdb->prefix}toolset_connected_elements where element_id ='{$pID}'";
                                         $pqres = $wpdb->get_results($pq);
                                         $parentid = $pqres[0]->id;
-                                        $wpdb->get_results("UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$parentid' where id = $parentid");
+                                        $wpdb->query( "UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$parentid' where id = $parentid");
                                         
                                     }
                                    
@@ -314,7 +314,7 @@ class ToolsetNewImport {
                                         $pq1 = "select id from {$wpdb->prefix}toolset_connected_elements where element_id ='{$post[0]['ID']}'";
                                         $pqres1 = $wpdb->get_results($pq1);
                                         $child_id = $pqres1[0]->id;
-                                        $wpdb->get_results("UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$child_id' where id = $child_id");
+                                        $wpdb->query( "UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$child_id' where id = $child_id");
                                         //$wpdb->update($wpdb->toolset_connected_elements, ['group_id' => $child_id], ['id' => $child_id]);
                                     }
 
@@ -360,7 +360,7 @@ class ToolsetNewImport {
                                         
                 
                                         //$wpdb->update($wpdb->toolset_connected_elements, ['group_id' => $inter_id], ['id' => $inter_id]);
-                                        $wpdb->get_results("UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$inter_id' where id = $inter_id");
+                                        $wpdb->query( "UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$inter_id' where id = $inter_id");
                                     }
                                     else{
                                          $inter_id = 0;
@@ -397,7 +397,7 @@ class ToolsetNewImport {
                                                    
                                                         $delinter =$wpdb->get_results($q, ARRAY_A); 
                                                         $delinterid = $delinter[0]['element_id'];
-                                                        $wpdb->get_results("DELETE FROM {$wpdb->prefix}posts WHERE `ID` = $delinterid");
+                                                        $wpdb->query( "DELETE FROM {$wpdb->prefix}posts WHERE `ID` = $delinterid");
                                                       //  $wpdb->delete($wpdb->prefix . 'posts',array('ID'=>$arrval1['intermediary_id']));
                                                         
                                                     }
@@ -467,7 +467,7 @@ class ToolsetNewImport {
                                                         $delinter =$wpdb->get_results($q, ARRAY_A);
                                                        
                                                         $delinterid = $delinter[0]['element_id'];
-                                                        $wpdb->get_results("DELETE FROM {$wpdb->prefix}posts WHERE `ID` = $delinterid");
+                                                        $wpdb->query( "DELETE FROM {$wpdb->prefix}posts WHERE `ID` = $delinterid");
                                                     
                                                     }
                                                 }   
@@ -553,7 +553,7 @@ class ToolsetNewImport {
                                     $pqres1 = $wpdb->get_results($pq1);
                                     $parent_id = $pqres1[0]->id;                                    
                                     //$wpdb->update($wpdb->toolset_connected_elements, ['group_id' => $parent_id], ['id' => $parent_id]);
-                                    $wpdb->get_results("UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$parent_id' where id = $parent_id");                                    
+                                    $wpdb->query( "UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$parent_id' where id = $parent_id");                                    
                                 }
                               
                                 $pmqueryres1 = $wpdb->get_results($pmquery1);
@@ -582,7 +582,7 @@ class ToolsetNewImport {
                                     $pq2 = "select id from {$wpdb->prefix}toolset_connected_elements where element_id ='{$po}'";
                                     $pqres2 = $wpdb->get_results($pq2);
                                     $child_id = $pqres2[0]->id;                                    
-                                    $wpdb->get_results("UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$child_id' where id = $child_id");                                    
+                                    $wpdb->query( "UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$child_id' where id = $child_id");                                    
                                 }
                                 $inter_id = 0;
                               
@@ -655,7 +655,7 @@ class ToolsetNewImport {
                                     
             
                                     //$wpdb->update($wpdb->toolset_connected_elements, ['group_id' => $inter_id], ['id' => $inter_id]);
-                                    $wpdb->get_results("UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$inter_id' where id = $inter_id");
+                                    $wpdb->query( "UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$inter_id' where id = $inter_id");
                                 }
                                 else{
                                      $inter_id = 0;
@@ -786,7 +786,7 @@ class ToolsetNewImport {
                 $pq = "select id from {$wpdb->prefix}toolset_connected_elements where element_id ='{$parrelid}'";
                 $pqres = $wpdb->get_results($pq);
                 $parent_id = $pqres[0]->id;
-                $wpdb->get_results("UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$parent_id' where id = $parent_id");
+                $wpdb->query( "UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$parent_id' where id = $parent_id");
                 //$wpdb->update($wpdb->toolset_connected_elements, ['group_id' => $parent_id], ['id' => $parent_id]);
             }
           
@@ -815,7 +815,7 @@ class ToolsetNewImport {
                 $pqres1 = $wpdb->get_results($pq1);
                 $child_id = $pqres1[0]->id;
                 //$wpdb->update($wpdb->toolset_connected_elements, ['group_id' => $child_id], ['id' => $child_id]);
-                $wpdb->get_results("UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$child_id' where id = $child_id");
+                $wpdb->query( "UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$child_id' where id = $child_id");
             }
          
             $intercon = "select id from {$wpdb->prefix}toolset_connected_elements where element_id ='{$pID}'";
@@ -846,7 +846,7 @@ class ToolsetNewImport {
                 $pqresc1 = $wpdb->get_results($pqc1);
                 $inter_id = $pqresc1[0]->id;
                 //$wpdb->update($wpdb->toolset_connected_elements, ['group_id' => $inter_id], ['id' => $inter_id]);
-                $wpdb->get_results("UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$inter_id' where id = $inter_id");
+                $wpdb->query( "UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$inter_id' where id = $inter_id");
             }
             $post = get_post($get_rel_vals[0]);
 
@@ -894,7 +894,7 @@ class ToolsetNewImport {
                 $pq = "select id from {$wpdb->prefix}toolset_connected_elements where element_id ='{$parrelid}'";
                 $pqres = $wpdb->get_results($pq);
                 $parent_id = $pqres[0]->id;
-                $wpdb->get_results("UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$parent_id' where id = $parent_id");
+                $wpdb->query( "UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$parent_id' where id = $parent_id");
               
             }
           
@@ -922,7 +922,7 @@ class ToolsetNewImport {
                 $pq1 = "select id from {$wpdb->prefix}toolset_connected_elements where element_id ='{$childrelid}'";
                 $pqres1 = $wpdb->get_results($pq1);
                 $child_id = $pqres1[0]->id;
-                $wpdb->get_results("UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$child_id' where id = $child_id");
+                $wpdb->query( "UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$child_id' where id = $child_id");
                
             }
         
@@ -954,7 +954,7 @@ class ToolsetNewImport {
                 $pqc1 = "select id from {$wpdb->prefix}toolset_connected_elements where element_id ='{$pID}'";
                 $pqresc1 = $wpdb->get_results($pqc1);
                 $inter_id = $pqresc1[0]->id;
-                $wpdb->get_results("UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$inter_id' where id = $inter_id");
+                $wpdb->query( "UPDATE {$wpdb->prefix}toolset_connected_elements set group_id = '$inter_id' where id = $inter_id");
                
             }
             $pquery = "select id from {$wpdb->prefix}toolset_relationships where slug ='{$data_array['relationship_slug']}'";	
@@ -963,7 +963,7 @@ class ToolsetNewImport {
             $get_id = "select id  from {$wpdb->prefix}toolset_associations where parent_id=$parent_id and child_id =$child_id and relationship_id=$rel_id";
             $getid = $wpdb->get_var($get_id);
             if(!empty($getid)){
-                $wpdb->get_results("UPDATE {$wpdb->prefix}toolset_associations set intermediary_id = $inter_id where id = $getid");
+                $wpdb->query( "UPDATE {$wpdb->prefix}toolset_associations set intermediary_id = $inter_id where id = $getid");
                 // $wpdb->update($wpdb->prefix.'toolset_associations',array('relationship_id' => $post1[0]->id,'parent_id' => $parent_id ,'child_id' => $child_id
                 // ,'intermediary_id' => $inter_id));
             }

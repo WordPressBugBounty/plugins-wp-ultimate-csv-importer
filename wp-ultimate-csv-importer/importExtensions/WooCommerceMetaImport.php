@@ -53,7 +53,11 @@ class WooCommerceMetaImport {
 					$stock_status = '';
 					if ($metaData['_stock'] >= 1) {
 						$stock_status = 'instock';
-						$wpdb->get_results("UPDATE {$wpdb->prefix}wc_product_meta_lookup SET stock_status = 'instock'  WHERE product_id = $pID");
+						$wpdb->query( $wpdb->prepare(
+							"UPDATE {$wpdb->prefix}wc_product_meta_lookup SET stock_status = %s WHERE product_id = %d",
+							'instock',
+							(int) $pID
+						) );
 					}
 					$metaData['_stock_status'] = $stock_status;
 					$metaData['_manage_stock'] = 'yes';
@@ -61,7 +65,11 @@ class WooCommerceMetaImport {
 				else{
 					$metaData['_stock_status'] = 'outofstock';
 					$metaData['_manage_stock'] = 'no';
-					$wpdb->get_results("UPDATE {$wpdb->prefix}wc_product_meta_lookup SET stock_status = 'outofstock'  WHERE product_id = $pID");
+					$wpdb->query( $wpdb->prepare(
+						"UPDATE {$wpdb->prefix}wc_product_meta_lookup SET stock_status = %s WHERE product_id = %d",
+						'outofstock',
+						(int) $pID
+					) );
 		
 				}
 				break;
@@ -106,7 +114,11 @@ class WooCommerceMetaImport {
 							$stock_status = 'outofstock';
 							$metaData['_manage_stock'] = 'no';
 						}
-						$wpdb->get_results("UPDATE {$wpdb->prefix}wc_product_meta_lookup SET stock_status = '$stock_status'  WHERE product_id = $pID");
+						$wpdb->query( $wpdb->prepare(
+							"UPDATE {$wpdb->prefix}wc_product_meta_lookup SET stock_status = %s WHERE product_id = %d",
+							$stock_status,
+							(int) $pID
+						) );
 						$metaData['_stock_status'] = $stock_status;
 						
 					}
@@ -520,11 +532,19 @@ class WooCommerceMetaImport {
 				break;
 			case 'comment_status' :
 				$status = $data_array[$ekey];
-				$wpdb->get_results("UPDATE {$wpdb->prefix}posts SET comment_status = '$status' WHERE id = '$pID' ");
+				$wpdb->query( $wpdb->prepare(
+					"UPDATE {$wpdb->prefix}posts SET comment_status = %s WHERE ID = %d",
+					$status,
+					(int) $pID
+				) );
 				break;
 			case 'menu_order' :
 				$menu_order = $data_array[$ekey];
-				$wpdb->get_results("UPDATE {$wpdb->prefix}posts SET menu_order = '$menu_order' WHERE id = '$pID' ");
+				$wpdb->query( $wpdb->prepare(
+					"UPDATE {$wpdb->prefix}posts SET menu_order = %d WHERE ID = %d",
+					(int) $menu_order,
+					(int) $pID
+				) );
 				break;	
 			case 'download_expiry' :
 				$metaData['_download_expiry'] = $data_array[$ekey];
@@ -1393,13 +1413,29 @@ class WooCommerceMetaImport {
 			$exploded_att_names = explode('|', $attribute_names['product_attribute_name']);
 			$get_csvpro_settings = get_option('sm_uci_pro_settings');	
 			foreach ($exploded_att_names as $attr_name) {
-				$attri_name = $wpdb->get_results( "SELECT attribute_name FROM {$wpdb->prefix}woocommerce_attribute_taxonomies where attribute_label = '$attr_name' ");
+				$attri_name = $wpdb->get_results( $wpdb->prepare(
+					"SELECT attribute_name FROM {$wpdb->prefix}woocommerce_attribute_taxonomies WHERE attribute_label = %s",
+					$attr_name
+				) );
 				
 				if(empty($attri_name)  && ($get_csvpro_settings['woocomattr'] == 'false')){
 					$attr_value = wc_sanitize_taxonomy_name($attr_name);
 
-					$wpdb->query("insert into {$wpdb->prefix}woocommerce_attribute_taxonomies(attribute_label,attribute_name,attribute_type,attribute_orderby,attribute_public) values('".$attr_name."','".$attr_value."','select','menu_order','0')");
-					$attri_name = $wpdb->get_results( "SELECT attribute_name FROM {$wpdb->prefix}woocommerce_attribute_taxonomies where attribute_label = '$attr_name' ");
+					$wpdb->insert(
+						$wpdb->prefix . 'woocommerce_attribute_taxonomies',
+						array(
+							'attribute_label' => $attr_name,
+							'attribute_name' => $attr_value,
+							'attribute_type' => 'select',
+							'attribute_orderby' => 'menu_order',
+							'attribute_public' => 0,
+						),
+						array('%s', '%s', '%s', '%s', '%d')
+					);
+					$attri_name = $wpdb->get_results( $wpdb->prepare(
+						"SELECT attribute_name FROM {$wpdb->prefix}woocommerce_attribute_taxonomies WHERE attribute_label = %s",
+						$attr_name
+					) );
 					
 					$attribute['name'][] = $attri_name[0]->attribute_name;
 				}
@@ -1420,18 +1456,42 @@ class WooCommerceMetaImport {
 				$term_val = explode('|',$exploded_att_values[$i]);
 				foreach ($term_val as $term_value) {
 					$attribute_slug = 'pa_'. $attribute['name'][$i];
-					$slug_val = $wpdb->get_results( "SELECT slug FROM {$wpdb->prefix}terms where name = '$term_value' ");
+					$slug_val = $wpdb->get_results( $wpdb->prepare(
+						"SELECT slug FROM {$wpdb->prefix}terms WHERE name = %s",
+						$term_value
+					) );
 					$slug_value = isset($slug_val[0]->slug) ? $slug_val[0]->slug : '';
 					if(empty($slug_value)){
 						$slug_value = wc_sanitize_taxonomy_name($term_value);
-						$wpdb->get_results("INSERT into {$wpdb->prefix}terms(name, slug) values ('{$term_value}', '{$slug_value}')");					
+						$wpdb->insert(
+							$wpdb->prefix . 'terms',
+							array(
+								'name' => $term_value,
+								'slug' => $slug_value,
+							),
+							array('%s', '%s')
+						);
 					}
 
-					$term_id = $wpdb->get_var("SELECT term_id from {$wpdb->prefix}terms where name = '$term_value' and slug = '$slug_value'");
-					$taxonomy_value = $wpdb->get_var("SELECT taxonomy from {$wpdb->prefix}term_taxonomy where term_id = '$term_id'");
+					$term_id = $wpdb->get_var($wpdb->prepare(
+						"SELECT term_id FROM {$wpdb->prefix}terms WHERE name = %s AND slug = %s",
+						$term_value,
+						$slug_value
+					));
+					$taxonomy_value = $wpdb->get_var($wpdb->prepare(
+						"SELECT taxonomy FROM {$wpdb->prefix}term_taxonomy WHERE term_id = %d",
+						(int) $term_id
+					));
 						
 					if(empty($taxonomy_value)){
-					 	$wpdb->get_results("INSERT into {$wpdb->prefix}term_taxonomy (term_id, taxonomy) values ('{$term_id}', '{$attribute_slug}')");
+						$wpdb->insert(
+							$wpdb->prefix . 'term_taxonomy',
+							array(
+								'term_id' => (int) $term_id,
+								'taxonomy' => $attribute_slug,
+							),
+							array('%d', '%s')
+						);
 					}
 				}
 			}

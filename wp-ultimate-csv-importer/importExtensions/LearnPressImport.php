@@ -535,11 +535,11 @@ $wpdb->update(
             
             if(is_wp_error($retID) || $retID == '') {
                 $core_instance->detailed_log[$line_number]['Message'] = "Can't insert this LP Order. " . $retID->get_error_message();
-                $wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+                $wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
                 return array('MODE' => $mode, 'ERROR_MSG' => $retID->get_error_message());
             }
             $core_instance->detailed_log[$line_number]['Message'] = 'Inserted LP Order ID: ' . $retID;
-            $wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
+            $wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
 
         } 
         $returnArr['ID'] = $retID;

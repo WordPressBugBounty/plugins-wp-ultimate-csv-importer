@@ -111,7 +111,7 @@ class CommentsImport {
 			if ($type === 'Comments' && $update_based_on === 'skip' && !empty($check) && in_array($check, $comment_match_fields, true) && !$has_match) {
 				$core_instance->detailed_log[$line_number]['Message'] = 'Skipped. No matching record found.';
 				$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
-				$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+				$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 				$returnArr['MODE'] = $mode;
 				return $returnArr;
 			}
@@ -120,7 +120,7 @@ class CommentsImport {
 				$core_instance->detailed_log[$line_number]['Message'] = 'Skipped, Due to duplicate Comment found!.';
 				$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
 				$core_instance->detailed_log[$line_number]['id'] = $existing_id;
-				$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+				$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 				$returnArr['MODE'] = $mode;
 				$returnArr['ID'] = $existing_id;
 				return $returnArr;
@@ -134,7 +134,7 @@ class CommentsImport {
 				if ($result === false) {
 					$core_instance->detailed_log[$line_number]['Message'] = 'Skipped, Due to duplicate Comment update failed!.';
 					$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
-					$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+					$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 					$returnArr['MODE'] = $mode;
 					return $returnArr;
 				}
@@ -153,7 +153,7 @@ class CommentsImport {
 				if ($result === false) {
 					$core_instance->detailed_log[$line_number]['Message'] = 'Skipped, Due to duplicate Comment update failed!.';
 					$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
-					$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+					$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 					$returnArr['MODE'] = $mode;
 					return $returnArr;
 				}
@@ -162,7 +162,7 @@ class CommentsImport {
 			} elseif ($mode === 'Update' && !$has_match && $update_based_on === 'skip') {
 				$core_instance->detailed_log[$line_number]['Message'] = 'Skipped. No matching record found.';
 				$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
-				$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+				$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 				$returnArr['MODE'] = $mode;
 				return $returnArr;
 			} elseif ($mode === 'Update' && !$has_match && empty($check)) {
@@ -210,7 +210,7 @@ class CommentsImport {
 		}else {
 			$retID = $commentid;
 			$core_instance->detailed_log[$line_number]['Message'] = "Skipped, Due to unknown post ID.";
-			$fields = $wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+			$fields = $wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 		}
 			
 		$returnArr['ID'] = $retID;
@@ -299,13 +299,13 @@ class CommentsImport {
 		if (is_wp_error($retID) || $retID == '') {
 			$core_instance->detailed_log[$line_number]['Message'] = 'Skipped, Due to unknown post ID.';
 			$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
-			$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+			$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 			return false;
 		}
 		$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Comment ID: ' . $retID;
 		$core_instance->detailed_log[$line_number]['id'] = $retID;
 		$core_instance->detailed_log[$line_number]['state'] = 'Inserted';
-		$wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
+		$wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
 		return array('ID' => $retID, 'MODE' => 'Inserted');
 	}
 
@@ -320,7 +320,7 @@ class CommentsImport {
 		$core_instance->detailed_log[$line_number]['Message'] = 'Updated Comment ID: ' . $comment_id;
 		$core_instance->detailed_log[$line_number]['id'] = $comment_id;
 		$core_instance->detailed_log[$line_number]['state'] = 'Updated';
-		$wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
+		$wpdb->query( "UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
 		return array('ID' => $comment_id, 'MODE' => 'Updated');
 	}
 		

@@ -59,6 +59,24 @@ final class WpucsvHooks {
 	/** @var string Filter import type dropdown (post types list). */
 	const HOOK_CUSTOM_POST_TYPE_SUPPORT = 'wpucsv_custom_post_type_support';
 
+	/** @var string Filter row-level validation issues during CSV pre-flight scan. */
+	const FILTER_VALIDATION_ROW_ISSUES = 'wpucsv_validation_row_issues';
+
+	/** @var string Filter final ValidationResult after a scan completes. */
+	const FILTER_VALIDATION_RESULT = 'wpucsv_validation_result';
+
+	/** @var string Filter required mapped CORE field keys per import type. */
+	const FILTER_VALIDATION_REQUIRED_FIELDS = 'wpucsv_validation_required_fields';
+
+	/** @var string Filter whether import types require post_title mapping. */
+	const FILTER_VALIDATION_REQUIRES_TITLE = 'wpucsv_validation_requires_title';
+
+	/** @var string Filter whether critical validation errors allow import. */
+	const FILTER_VALIDATION_ALLOW_CRITICAL = 'wpucsv_validation_allow_import_with_critical_errors';
+
+	/** @var string Filter scan mode used by the import gate (default full). */
+	const FILTER_VALIDATION_IMPORT_SCAN_MODE = 'wpucsv_validation_import_scan_mode';
+
 	/** @var string Filter SSL verify flag for image downloads. */
 	const HOOK_MEDIA_DOWNLOAD_SSLVERIFY = 'wpucsv_media_download_sslverify';
 

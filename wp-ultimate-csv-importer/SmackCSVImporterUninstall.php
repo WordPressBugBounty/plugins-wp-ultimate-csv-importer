@@ -54,6 +54,8 @@ class SmackUCIUnInstall {
 			$tables[] = "drop table {$prefix}ultimate_post_entries";
 			$tables[] = "drop table {$prefix}ultimate_csv_importer_acf_fields";
 			$tables[] = "drop table {$prefix}cli_csv_template";
+			$tables[] = "drop table {$prefix}sm_uci_import_checkpoint";
+			$tables[] = "drop table {$prefix}sm_uci_import_row_log";
 
 			foreach($tables as $table) {
 				$wpdb->query($table, array());

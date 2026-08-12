@@ -65,7 +65,10 @@ class LogManager {
 	 * Retrieves and display the file events history.
 	 */
 	public function display_log(){	
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_download_logs())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		global $wpdb,$logArr;
 		$response = [];
 		$logInfo = [];
@@ -122,7 +125,10 @@ class LogManager {
 		return true;
 	}
 	public function delete_log(){
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_download_logs())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		global $wpdb;
 		$smack_instance = UCICore::getInstance();
 		$filename = sanitize_text_field($_POST['filename']);
@@ -147,6 +153,9 @@ class LogManager {
 				}
 
 				$wpdb->update($wpdb->prefix . 'smackuci_events', ['deletelog' => true], ['id' => $records->id]);
+			}
+			if ( class_exists( '\Smackcoders\UCI\Core\Dashboard\DashboardService' ) ) {
+				\Smackcoders\UCI\Core\Dashboard\DashboardService::bust_cache();
 			}
 			$response['message'] = "Deleted Successfully";
 			echo wp_json_encode($response);
@@ -197,7 +206,10 @@ class LogManager {
 	//     wp_die();  
 	// }
 	public function download_media_log(){
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_download_logs())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 
 		global $wpdb;
 
@@ -375,7 +387,10 @@ class LogManager {
 	// }
 
 	public function download_log() {
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_download_logs())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 
 		global $wpdb;
 
@@ -616,7 +631,10 @@ class LogManager {
 	//failed media log download
 	public function download_failed_log()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_download_logs())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 
 		global $wpdb;
 
@@ -796,6 +814,8 @@ class LogManager {
 					'failed' => "{$failed_count}",
 					'processed' => "{$processed}",
 					'last_activity' => "{$imported_on}",
+					'month' => $month,
+					'year' => $year,
 				),
 				array('id' => $getid[0]['id'])
 			);
@@ -822,8 +842,12 @@ class LogManager {
 					'month' => $month,
 					'year' => $year
 				),
-				array('%d', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%s', '%s')
+				array('%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%s', '%s')
 			);
+		}
+
+		if ( class_exists( '\Smackcoders\UCI\Core\Dashboard\DashboardService' ) ) {
+			\Smackcoders\UCI\Core\Dashboard\DashboardService::bust_cache();
 		}
 	}
 	/**

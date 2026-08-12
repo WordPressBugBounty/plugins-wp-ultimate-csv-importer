@@ -311,6 +311,48 @@ class Tables {
 		if($result_8 == 1){
 			$wpdb->query("ALTER TABLE `{$wpdb->prefix}ultimate_csv_importer_shortcode_manager` Modify COLUMN hash_key VARCHAR(255) DEFAULT NULL ");
 		}
+		$checkpoint_table = $wpdb->prefix . 'sm_uci_import_checkpoint';
+		$wpdb->query(
+			"CREATE TABLE IF NOT EXISTS {$checkpoint_table} (
+			`resume_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+			`import_hash` varchar(64) NOT NULL,
+			`import_type` varchar(32) NOT NULL DEFAULT 'csv',
+			`import_mode` varchar(32) NOT NULL DEFAULT 'bulk',
+			`batch_number` int(11) NOT NULL DEFAULT 1,
+			`page_number` int(11) NOT NULL DEFAULT 1,
+			`line_number` int(11) NOT NULL DEFAULT 1,
+			`processed_count` bigint(20) NOT NULL DEFAULT 0,
+			`failed_count` bigint(20) NOT NULL DEFAULT 0,
+			`skipped_count` bigint(20) NOT NULL DEFAULT 0,
+			`state` varchar(20) NOT NULL DEFAULT 'PENDING',
+			`queue_snapshot` longtext,
+			`media_snapshot` longtext,
+			`schedule_id` bigint(20) UNSIGNED DEFAULT NULL,
+			`file_name` varchar(255) DEFAULT NULL,
+			`last_heartbeat_at` datetime DEFAULT NULL,
+			`created_at` datetime NOT NULL,
+			`updated_at` datetime NOT NULL,
+			PRIMARY KEY (`resume_id`),
+			KEY `import_hash` (`import_hash`),
+			KEY `state_heartbeat` (`state`, `last_heartbeat_at`)
+			) ENGINE=InnoDB"
+		);
+
+		$row_log_table = $wpdb->prefix . 'sm_uci_import_row_log';
+		$wpdb->query(
+			"CREATE TABLE IF NOT EXISTS {$row_log_table} (
+			`id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
+			`import_hash` varchar(64) NOT NULL,
+			`row_number` int(11) NOT NULL,
+			`status` varchar(20) NOT NULL,
+			`post_id` bigint(20) UNSIGNED DEFAULT NULL,
+			`completed_at` datetime NOT NULL,
+			PRIMARY KEY (`id`),
+			UNIQUE KEY `hash_row` (`import_hash`, `row_number`),
+			KEY `import_hash` (`import_hash`)
+			) ENGINE=InnoDB"
+		);
+
 		do_action('sm_uci_create_addon_tables');
 	}
 }

@@ -3,18 +3,18 @@ Contributors: smackcoders, premairuthayarajan
 Donate link: https://www.smackcoders.com/contact-us.html
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 8.1
-Version: 8.1
+Stable tag: 9.0
+Version: 9.0
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
-Tags: csv importer, import export, wordpress import, woocommerce import, xml importer, excel import, wp import, data migration, wordpress csv import, wordpress xml import, xml, all import, import all, export woocommerce products, product export, product import, woocommerce product import, wordpress csv importer, xml import, importer, migrate, datafeed, wordpress importer
+Tags: csv importer, woocommerce import, woocommerce order import, Wordpress import, xml importer, excel import, wp import, data migration, wordpress csv import, wordpress xml import, xml, all import, import all, export woo-commerce products, product export, product import, woocommerce product import, wordpress csv importer, xml import, importer, migrate, datafeed, wordpress importer
 License: GPLv2 or later
 
-The #1 WordPress import export plugin. Bulk import CSV, XML & Excel into WordPress — WooCommerce products, posts, users, ACF fields, and more. Free.
+#1 WordPress import export plugin. Bulk import CSV, XML & Excel into WordPress posts, pages, users, comments, WooCommerce products, custom fields, and more.
 
 == Description ==
 
-**WP Ultimate CSV Importer** is a complete **WordPress import and export** plugin — the fastest way to bulk import posts, pages, WooCommerce products, users, ACF fields, and custom post types from CSV, XML, or Excel files. Whether you need a full **WordPress data migration**, a WooCommerce product import, or a scheduled import-export workflow, this plugin handles it without writing a single line of code.
+**WP Ultimate CSV Importer** is a complete **WordPress import and export** plugin — the fastest way to bulk import posts, pages, WooCommerce products, orders, users, ACF fields, and custom post types from CSV, XML, or Excel files. Whether you need a full **WordPress data migration**, a WooCommerce product or order import, or a scheduled import-export workflow, this plugin handles it without writing a single line of code.
 
 To enable exporting feature, you'll need the [WP Ultimate Exporter add-on](https://wordpress.org/plugins/wp-ultimate-exporter). Once you install and activate the Importer plugin, you’ll be prompted to add the Exporter (and other available add-ons) via the plugin dashboard or when you visit the Export page.
 
@@ -31,7 +31,7 @@ Experience the Pro plugin in action: [Live Demo »](https://demo.smackcoders.com
 
 Try by creating a [Private Trial](https://trial.smackcoders.com/index.html?utm_source=csv-importer-free&utm_medium=wporgreadme&utm_campaign=csv_importer_pro_trial)
 
-[youtube https://www.youtube.com/watch?v=dy3pdwoujxQ]
+[youtube https://www.youtube.com/watch?v=pK2lKrNEnkQ&feature=youtu.be]
 
 **Key Features of WP Import – Ultimate CSV/XML Importer**
 
@@ -45,7 +45,11 @@ Try by creating a [Private Trial](https://trial.smackcoders.com/index.html?utm_s
 - **Flexible File Formats**: Supports CSV, XML, Excel, Google Sheets, TSV, and ZIP files.
 - **Various Plugin Integrations**: Works seamlessly with WooCommerce, SEO plugins, LMS plugins, page builders, custom field plugins, membership plugins, and more.
 - **AI Integrations**: Supports ChatGPT AI, Gemini, and Claude AI to generate content and image during import.
-- **Smart Duplicate Handling**: Detect and update existing posts, pages, and users during import — no duplicate content, no manual cleanup.
+- **Smart Duplicate Handling**: Detect and update existing posts, pages, users, and custom posts during import.
+- **Pre-Flight Validation**: Scan your import file before importing. Get a file health score and a list of issues to fix, so broken rows never reach your database.
+- **Auto Recovery & Resume**: If an import stops due to a timeout or connection drop, resume it from the exact row it stopped at. No duplicates, no starting over.
+- **Saved Mapping Templates**: Save your field mapping once and reuse it for every future import.
+- **Import Dashboard**: Track import volume, success rates, and recent activity from KPI cards, charts, and an integrated log manager.
 
 **Key Benefits**
 
@@ -100,10 +104,6 @@ Need to move content from one WordPress or WooCommerce site to another? WP Ultim
 This feature requires the [Export Add-on](https://wordpress.org/plugins/wp-ultimate-exporter), which gives you access to a special Migrate option during export.
 
 Refer to more detailed instructions on our [Migrate & One Click Import documentation](https://www.smackcoders.com/documentation/wp-ultimate-csv-importer-pro/migrate-wordpress-and-woocommerce-data?utmsource=web&utmcampaign=readme&utmmedium=wporg).
-
-Watch the video tutorial below related to how to migrate and one click import data with Ultimate CSV Importer.
-
-[youtube https://www.youtube.com/watch?v=NiBx2fqX1kc&pp=0gcJCcEJAYcqIYzv]
 
 
 = Popular Plugins Integration =
@@ -182,21 +182,30 @@ Expand your global reach with multilingual content management. The plugin integr
 
 Upgrade to the Pro version to unlock more powerful features such as:
 
+* **Failed Record Retry Queue:** Retry only the rows that failed, with failure details, a downloadable CSV, and a full audit trail.
+* **Spreadsheet Live Editor:** Fix bad values directly in the WordPress admin without re-exporting from Excel. Supports CSV, TSV, XLS, XLSX, and JSON.
 * **ACF & Other Custom Fields Plugin Advanced Support**: Import data into fields created with ACF, JetEngine, MetaBox, CMB2, Pods, and Toolset.
-* **Multilingual Compatibility:** Fully compatible with WPML, Polylang, and qTranslate X.
 * **WooCommerce Import:** Import products, variations, orders, and custom WooCommerce fields.
+* **Page Builder Support:** Import and export field data for WPBakery, Bricks, and Oxygen builders.
+* **Multilingual Compatibility:** Fully compatible with WPML, Polylang, and qTranslate X.
 * **Yoast SEO PRO Integration:** Import SEO metadata like titles, descriptions, and focus keywords.
-* **Easy Digital Downloads Orders Import Export** Upgrade to PRO to import and export Easy Digital Downloads Orders module records.
-* **Scheduled Imports:** Automate imports via ftp/sftp/google sheets by scheduling them to run in the background.
+* **Easy Digital Downloads Orders Import Export:** Upgrade to PRO to import and export Easy Digital Downloads Orders module records.
 * **Data Update Support:** Bulk update existing WordPress content without creating duplicates.
+* **Cloud Storage Import:** Connect Google Drive or Microsoft OneDrive and import directly from shared folders.
+* **External Database Migration:** Import straight from MySQL, MariaDB, PostgreSQL, or SQL Server without an intermediate CSV export.
+* **REST API & Webhooks:** Let your ERP, PIM, or automation tool trigger imports automatically, with API key management and IP whitelisting.
+* **Scheduled Imports:** Automate imports via ftp/sftp/google sheets by scheduling them to run in the background.
+* **Upload file from server:** Easily select and import files directly from your server storage.
+* **AI Content Assistance:** Generate category suggestions, SEO titles, meta descriptions, and translations during import, with human review before anything publishes.
+* **Export All:** Export every module on your site in one action, packaged as a single archive.
 * **Advanced Export Options:** Export content using more advanced filters, post types, and WP_Query for flexible data control.
 * **Google Sheets Export:** Export your WordPress data directly to Google Sheets for easy access, collaboration, and sharing.
 * **Schedule Exports:** Automate exports to backup any WordPress data at your preferred time to your configured Google Sheet or FTP/SFTP host.
-* **Upload file from server:** Easily select and import files directly from your server storage.
-* **Mapping Templates Import Export:** Export your custom mapping templates and import them again whenever needed.
 * **Images Export:** Export images from WordPress media along with their metadata and related details.
+* **Mapping Templates Import Export:** Export your custom mapping templates and import them again whenever needed.
 * **Database Optimization:** The plugin includes options to clean up temporary data, optimize database tables, and maintain peak performance during imports and exports.
-* **Priority Support:** Get help when you need it most. With priority support from our export team, your queries are addressed faster, ensuring minimal downtime and smooth plugin usage.
+* **Priority Support:** Get help when you need it most. With priority support from our expert team, your queries are addressed faster, ensuring minimal downtime and smooth plugin usage.
+
 
 [Explore WP Ultimate CSV Importer Pro](https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html?utm_source=web&utm_campaign=readme&utm_medium=wporg).
 
@@ -214,7 +223,7 @@ Featured by Kinsta, one of the most trusted names in managed WordPress hosting. 
 = Ready to Get Started? =
 
 * [Try Our PRO DEMO](https://demo.smackcoders.com/wordpress/wp-admin/?utm_source=csv_importer_free&utm_medium=wporgreadme&utm_campaign=csv_importer_pro_demo)
-* [Play with Our Private Trial](https://trial.smackcoders.com/index.html?utm_source=csv-importer-free&utm_medium=wporgreadme&utm_campaign=csv_importer_pro_trial)
+* [Play with Our Private PRO Trial](https://trial.smackcoders.com/index.html?utm_source=csv-importer-free&utm_medium=wporgreadme&utm_campaign=csv_importer_pro_trial)
 * [Check Out Our Documentation](https://www.smackcoders.com/documentation/wp-ultimate-csv-importer-pro?utm_source=csv_importer_free_readme&utm_medium=wporg&utm_campaign=csv_importer_docs)
 
 = Watch Our YouTube Tutorials =
@@ -379,6 +388,27 @@ Yes, you can import and export your JetEngine CCTs using WP Ultimate CSV Importe
 
 Yes. The free version includes export compatibility for many post types with smart filters. To use the export feature, you need to install the free [WP Ultimate Exporter add-on](https://wordpress.org/plugins/wp-ultimate-exporter). For advanced export options — including scheduled exports, Google Sheets integration, WP_Query-based filtering, and images export — you can upgrade to the Pro version.
 
+= How do I check my CSV file for errors before importing? =
+
+Use the built-in Pre-Flight Validation before running the import. Upload your file, choose post type, configure mapping, before import select the 'validate CSV' button and the plugin analyzes it for structural and data issues without writing anything to your database.
+
+You get a file health score plus a detailed issue list showing which rows and columns need attention, including encoding problems, inconsistent column counts, malformed delimiters, and missing required fields such as post title or SKU.
+
+Fix the issues in your file, re-upload, and rescan until the file is clean. This is available in the free version.
+
+= What happens if my import fails or times out halfway through? =
+
+The plugin's Auto Recovery feature saves your import progress continuously. If the import stops because of a PHP timeout, memory limit, dropped connection, or closed browser tab, you can resume it from the exact row where it stopped.
+
+Rows that were already imported are skipped, so resuming does not create duplicate posts or products. You do not need to edit your file or restart from the beginning. All you have to do is simply click the resume button in the import log screen.
+
+= Can I save my field mapping and reuse it for future imports? =
+
+Yes. After mapping your fields, save the configuration as a template. The next time you import a file with the same structure, load the template instead of remapping column by column.
+
+Templates work for posts, pages, custom post types, WooCommerce products, and users, and now also cover input field settings in Simple Mode and Media Import.
+
+
 == Installation ==
 
 Installing the WP Ultimate CSV Importer plugin is quick and straightforward, just like any other WordPress plugin. Follow either of the two methods below:
@@ -399,6 +429,30 @@ This method ensures a hassle-free setup directly from your WordPress dashboard.
 
 
 == Changelog ==
+
+= 9.0 =
+Added: CSV Pre-Flight Validation Framework with multiple scan modes and file health score reporting
+Added: Auto Recovery and Resume Import, allowing interrupted imports to continue from the row they stopped at
+Added: Template Management with input field support for Simple Mode and Media Import
+Added: Dashboard analytics with dynamic KPI cards, charts, and Log Manager integration
+Added: Complete French (fr_FR) localization
+Added: Complete Italian (it_IT) localization
+Added: Complete German (de_DE) localization, including previously untranslated UI strings
+Added: Added a security baseline for all import and export operations
+Improved: Redesigned Dashboard, Mapping, Import, Export, Media, Template, Add-ons, Manager, Support, and Settings sections with a modern, responsive UI
+Improved: Modernized Import Each Record, Chatbot, and Need Help sections
+Improved: Consistent primary color across all sections, with alert display issues resolved
+Improved: Pro tags now clearly indicate which features require an upgrade
+Improved: Synced missing translation keys across all language files
+Improved: Plugin file loading reliability using absolute include paths for core dependencies
+Fixed: UI and functionality issues in the Mapping section, with better responsiveness and alignment
+Fixed: WooCommerce order import issues with order date and custom field mapping
+Fixed: Simple Mode import redirection issue
+Fixed: Spanish localization gaps across the admin UI
+Fixed: an SQL injection vulnerability and hardened database queries across import extensions
+Fixed: UI alignment in Save Template, Pre-Flight Validation, and Background Import Queue sections
+Fixed: Import section UI issues and Manager section functionality
+Fixed: Template Import handling, dashboard display, and activity status
 
 = 8.1 =
 Security: Hardened AJAX authorization, nonce handling, and import workflows; remediated CVE-2026-13353 related vulnerabilities
@@ -977,13 +1031,9 @@ Fixed: Term & Taxonomies Hierarchy import issue
 
 == Upgrade Notice ==
 
-= 8.1 =
-Security update: Hardened AJAX authorization and import workflows. Update recommended for all users.
-Improved Content Update UI and Japanese localization fixes.
+= 9.0 =
+A major release with a redesigned interface, plus Pre-Flight Validation, Auto Recovery and Resume Import, and Mapping Templates. Includes important security hardening.
 
-= 8.0.1 =
-Update to version 8.0 for improved thirdparty compatibility support
-Update to ensure compatibility with WordPress 6.9.3 and to resolve issues related to Simple Mode imports.
 
 
 

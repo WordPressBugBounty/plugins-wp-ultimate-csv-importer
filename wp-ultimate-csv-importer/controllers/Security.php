@@ -42,7 +42,10 @@ class Security {
 	}
 
 	public function activeAddons(){
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_admin_access()) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		$result = array();
 		if(is_plugin_active('wp-ultimate-exporter/wp-ultimate-exporter.php') ){
 			$result['exporter'] = true;
@@ -72,7 +75,10 @@ class Security {
 	}
 
 	public  function securityPerformance(){
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_admin_access()) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		global $wpdb,$wp_version;
 		$result['post_max_size'] = ini_get('post_max_size');
 		$result['auto_append_file'] = ini_get('auto_append_file');

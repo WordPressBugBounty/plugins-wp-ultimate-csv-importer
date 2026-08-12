@@ -37,15 +37,18 @@ class SingleImportExport {
 	public static function import_single_post_as_csv() {
 		
 		if (!is_user_logged_in() || !current_user_can('manage_options')) {
-			wp_send_json_error(['message' => 'Unauthorized access.'], 403);
+			wp_send_json_error(['message' => __( 'Unauthorized access.', 'wp-ultimate-csv-importer' )], 403);
 			return;
 		}
 
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		
 
 		if (empty($_FILES['file']) || $_FILES['file']['error'] !== UPLOAD_ERR_OK) {
-			wp_send_json_error(['message' => 'File upload error.']);
+			wp_send_json_error(['message' => __( 'File upload error.', 'wp-ultimate-csv-importer' )]);
 			return;
 		}
 
@@ -53,7 +56,7 @@ class SingleImportExport {
 		$file_tmp  = $_FILES['file']['tmp_name'];
 		$file_info = wp_check_filetype_and_ext($file_tmp, $file_name, ['csv' => 'text/csv']);
 		if (!$file_info['ext'] || $file_info['ext'] !== 'csv') {
-			wp_send_json_error(['message' => 'Invalid file type. Only CSV files are allowed.']);
+			wp_send_json_error(['message' => __( 'Invalid file type. Only CSV files are allowed.', 'wp-ultimate-csv-importer' )]);
 			return;
 		}
 		$upload = wp_upload_dir();
@@ -204,22 +207,25 @@ foreach ($data as $key => $value) {
 	public static function export_single_post_as_csv() {
 
 		if (!is_user_logged_in() || !current_user_can('manage_options')) {
-			wp_send_json_error(['message' => 'Unauthorized access.'], 403);
+			wp_send_json_error(['message' => __( 'Unauthorized access.', 'wp-ultimate-csv-importer' )], 403);
 			return;
 		}
 
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		global $wpdb;
 		$post_id = intval($_POST['post_id']);
 		$post = get_post($post_id);
 
 		if (!is_user_logged_in() || !current_user_can('manage_options')) {
-			wp_send_json_error(['message' => 'Unauthorized access.']);
+			wp_send_json_error(['message' => __( 'Unauthorized access.', 'wp-ultimate-csv-importer' )]);
 			return;
 		}
 
 		if (!$post_id || get_post_status($post_id) !== 'publish') {
-			wp_send_json_error(['message' => 'Invalid or unpublished post ID.']);
+			wp_send_json_error(['message' => __( 'Invalid or unpublished post ID.', 'wp-ultimate-csv-importer' )]);
 			wp_die();
 		}
 

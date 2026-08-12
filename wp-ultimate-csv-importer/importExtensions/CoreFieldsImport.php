@@ -392,16 +392,16 @@ class CoreFieldsImport
 				$table_name = 'jet_cct_' . $type;
 				$value_status = empty($post_values['cct_status']) ? "publish" : $post_values['cct_status'];
 				if ($author_id)
-					$wpdb->get_results("INSERT INTO {$wpdb->prefix}$table_name(cct_status,cct_author_id) values('$value_status',$author_id)");
+					$wpdb->query( "INSERT INTO {$wpdb->prefix}$table_name(cct_status,cct_author_id) values('$value_status',$author_id)");
 				else
-					$wpdb->get_results("INSERT INTO {$wpdb->prefix}$table_name(cct_status) values('$value_status')");
+					$wpdb->query( "INSERT INTO {$wpdb->prefix}$table_name(cct_status) values('$value_status')");
 				$get_result = $wpdb->get_results("SELECT _ID FROM {$wpdb->prefix}$table_name WHERE  cct_status = '$value_status' order by _ID DESC ");
 				$id = $get_result[0];
 				$post_id = $id->_ID;
 
 				$page = 'jet-cct-' . $type;
 				$dir = site_url() . '/wp-admin';
-				$wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
+				$wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
 				$cct_post_title = isset($post_values['post_title']) ? $post_values['post_title'] : '';
 
 				$this->detailed_log[$line_number]['Message'] = 'Inserted Custom Content Type ' . ' ID: ' . $post_id;
@@ -418,7 +418,7 @@ class CoreFieldsImport
 					$file_table_name = $wpdb->prefix . "smackcsv_file_events";
 					$get_id = $wpdb->get_results("SELECT file_name  FROM $file_table_name WHERE `hash_key` = '$hash_key'");
 					$file_name = $get_id[0]->file_name;
-					$wpdb->get_results("INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Inserted')");
+					$wpdb->query( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Inserted')");
 				}
 				return $post_id;
 			}
@@ -633,7 +633,7 @@ class CoreFieldsImport
 				$import_row_finished = false;
 
 				if ($update_based_on === 'skip' && !empty($check) && in_array($check, $core_match_fields, true) && !$has_match) {
-					$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+					$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 					$this->detailed_log[$line_number]['Message'] = 'Skipped. No matching record found.';
 					$this->detailed_log[$line_number]['state'] = 'Skipped';
 					$import_row_finished = true;
@@ -642,7 +642,7 @@ class CoreFieldsImport
 				if (!$import_row_finished && $mode == 'Insert' && $update_based_on === 'normal') {
 					$orig_img_src = [];
 					if ($has_match && !empty($check) && $duplicate_action === 'skip') {
-						$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+						$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 						$this->detailed_log[$line_number]['Message'] = "Skipped, Due to duplicate found!.";
 						$this->detailed_log[$line_number]['state'] = 'Skipped';
 						$import_row_finished = true;
@@ -654,7 +654,7 @@ class CoreFieldsImport
 							set_post_format($post_id, $format);
 						}
 						wp_update_post($post_values);
-						$wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
+						$wpdb->query( "UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
 						$post_values['specific_author'] = isset($post_values['specific_author']) ? $post_values['specific_author'] : '';
 						$this->detailed_log[$line_number]['Message'] = 'Updated ' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'];
 						$this->detailed_log[$line_number]['id'] = $post_id;
@@ -682,7 +682,7 @@ class CoreFieldsImport
 								if (in_array($wpml_values['language_code'], $active)) {
 									$post_id = wp_insert_post($post_values);
 									$status = $post_values['post_status'];
-									$update = $wpdb->get_results("UPDATE {$wpdb->prefix}posts set post_status = '$status' where id = $post_id");
+									$update = $wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$status' where id = $post_id");
 								} else {
 									$wpml_message = "The given language code not configured in WPML";
 								}
@@ -695,7 +695,7 @@ class CoreFieldsImport
 								unset($post_values['ID']);
 								$post_id = wp_insert_post($post_values);
 								$status = $post_values['post_status'];
-								$update = $wpdb->get_results("UPDATE {$wpdb->prefix}posts set post_status = '$status' where id = $post_id");
+								$update = $wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$status' where id = $post_id");
 							}
 
 							if (!empty($post_values['wp_page_template']) && $type == 'Pages') {
@@ -708,7 +708,7 @@ class CoreFieldsImport
 							$file_table_name = $wpdb->prefix . "smackcsv_file_events";
 							$get_id = $wpdb->get_results("SELECT file_name  FROM $file_table_name WHERE `hash_key` = '$hash_key'");
 							$file_name = $get_id[0]->file_name;
-							$wpdb->get_results("INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Inserted')");
+							$wpdb->query( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Inserted')");
 						}
 						if (isset($post_values['post_format'])) {
 							$format = str_replace("post-format-", "", $post_values['post_format']);
@@ -794,7 +794,7 @@ class CoreFieldsImport
 						}
 
 
-						$fields = $wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
+						$fields = $wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
 						if (is_wp_error($post_id) || $post_id == '') {
 							if (is_wp_error($post_id)) {
 								$this->detailed_log[$line_number]['Message'] = sprintf(
@@ -823,7 +823,7 @@ class CoreFieldsImport
 									$this->detailed_log[$line_number]['state'] = 'Skipped';
 								}
 							}
-							$fields = $wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+							$fields = $wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 						} else {
 							$post_values['specific_author'] = isset($post_values['specific_author']) ? $post_values['specific_author'] : '';
 
@@ -958,11 +958,11 @@ class CoreFieldsImport
 						}
 						if ($post_values['post_type'] == 'page') {
 							$status = $post_values['post_status'];
-							$wpdb->get_results("UPDATE {$wpdb->prefix}posts set post_status = '$status' where id = $post_id");
+							$wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$status' where id = $post_id");
 						}
 						if ($post_values['post_type'] == 'page') {
 							$status = $post_values['post_status'];
-							$wpdb->get_results("UPDATE {$wpdb->prefix}posts set post_status = '$status' where id = $post_id");
+							$wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$status' where id = $post_id");
 						}
 						$import_row_finished = true;
 					}
@@ -985,10 +985,10 @@ class CoreFieldsImport
 							$file_table_name = $wpdb->prefix . "smackcsv_file_events";
 							$get_id = $wpdb->get_results("SELECT file_name  FROM $file_table_name WHERE `hash_key` = '$hash_key'");
 							$file_name = $get_id[0]->file_name;
-							$wpdb->get_results("INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Updated')");
+							$wpdb->query( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Updated')");
 						}
 
-						$fields = $wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
+						$fields = $wpdb->query( "UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
 						$this->detailed_log[$line_number]['Message'] = sprintf(
 							/* translators: 1: post type, 2: updated post ID, 3: author info */
 							__( 'Updated %1$s ID: %2$d, %3$s', 'wp-ultimate-csv-importer' ),
@@ -999,7 +999,7 @@ class CoreFieldsImport
 						$this->detailed_log[$line_number]['id'] = $post_id;
 						$this->detailed_log[$line_number]['state'] = 'Updated';
 					} elseif ($update_based_on === 'skip') {
-						$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+						$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 						$this->detailed_log[$line_number]['Message'] = __( 'Skipped. No matching record found.', 'wp-ultimate-csv-importer' );
 						$this->detailed_log[$line_number]['state'] = 'Skipped';
 					} else {
@@ -1010,7 +1010,7 @@ class CoreFieldsImport
 							$format = str_replace("post-format-", "", $post_values['post_format']);
 							set_post_format($post_id, $format);
 						}
-						$fields = $wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
+						$fields = $wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
 						if (is_wp_error($post_id) || $post_id == '') {
 							if (is_wp_error($post_id)) {
 								$this->detailed_log[$line_number]['Message'] = "Can't insert this " . $post_values['post_type'] . ". " . $post_id->get_error_message();
@@ -1019,7 +1019,7 @@ class CoreFieldsImport
 								$this->detailed_log[$line_number]['Message'] = "Can't insert this " . $post_values['post_type'];
 								$this->detailed_log[$line_number]['state'] = 'Skipped';
 							}
-							$fields = $wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+							$fields = $wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 						} else {
 							$this->detailed_log[$line_number]['Message'] = 'Inserted ' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'];
 						}
@@ -1077,7 +1077,7 @@ class CoreFieldsImport
 								// $check_featured_image = $wpdb->get_results("SELECT $unikey_name FROM {$wpdb->prefix}ultimate_csv_importer_media_report WHERE $unikey_name = '$unikey_value'  AND image_type = 'Featured' "); 
 								// if(empty($check_featured_image)){				
 								// 	$image_media_table = $wpdb->prefix . "ultimate_csv_importer_media_report";
-								// 	$wpdb->get_results("INSERT INTO $image_media_table (`hash_key`,`templatekey`,`module`,`image_type`,`status`) VALUES ( '{$hash_key}','{$templatekey}','{$type}','{$image_type}','Completed') ");
+								// 	$wpdb->query( "INSERT INTO $image_media_table (`hash_key`,`templatekey`,`module`,`image_type`,`status`) VALUES ( '{$hash_key}','{$templatekey}','{$type}','{$image_type}','Completed') ");
 								// }
 								$wp_content_url = content_url();
 								if (strpos($f_image, $wp_content_url) !== FALSE) {
@@ -1156,7 +1156,7 @@ class CoreFieldsImport
 		}
 		$lang_code = $post_values['lang_code'];
 		$post_id = wp_insert_post($post_values);
-		$wpdb->get_results("INSERT INTO {$wpdb->prefix}mltlngg_translate (post_ID , post_content , post_excerpt, post_title,`language`) VALUES ( $post_id, '{$lang_content}', '{$lang_excerpt}' , '{$lang_title}', '{$lang_code}')");
+		$wpdb->query( "INSERT INTO {$wpdb->prefix}mltlngg_translate (post_ID , post_content , post_excerpt, post_title,`language`) VALUES ( $post_id, '{$lang_content}', '{$lang_excerpt}' , '{$lang_title}', '{$lang_code}')");
 		return $post_id;
 	}
 

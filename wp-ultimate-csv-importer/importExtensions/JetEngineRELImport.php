@@ -127,25 +127,45 @@ class JetEngineRELImport {
                         $related_posts = trim($related_posts);                    
                         if(is_numeric($related_posts)){                                                                         
                             if($connection_type == 'posts'){
-                                $get_related_post_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}posts WHERE ID = $related_posts AND post_status = 'publish' AND post_type = '$connection_object'");                                
+                                $get_related_post_id = $wpdb->get_var($wpdb->prepare(
+                                    "SELECT ID FROM {$wpdb->prefix}posts WHERE ID = %d AND post_status = 'publish' AND post_type = %s",
+                                    (int) $related_posts,
+                                    $connection_object
+                                ));
                             }
                             elseif($connection_type == 'users'){
-                                $get_related_post_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}users WHERE ID = $related_posts");
+                                $get_related_post_id = $wpdb->get_var($wpdb->prepare(
+                                    "SELECT ID FROM {$wpdb->prefix}users WHERE ID = %d",
+                                    (int) $related_posts
+                                ));
                             }
                             elseif($connection_type == 'terms'){
-                                $get_related_post_id = $wpdb->get_var("SELECT term_id FROM {$wpdb->prefix}terms WHERE name = $related_posts");
+                                $get_related_post_id = $wpdb->get_var($wpdb->prepare(
+                                    "SELECT term_id FROM {$wpdb->prefix}terms WHERE name = %s",
+                                    $related_posts
+                                ));
                             }
                         }
                         else{
 
                             if($connection_type == 'posts'){
-                                $get_related_post_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = \"$related_posts\" AND post_status = 'publish' AND post_type = '$connection_object' ORDER BY ID DESC");
+                                $get_related_post_id = $wpdb->get_var($wpdb->prepare(
+                                    "SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_status = 'publish' AND post_type = %s ORDER BY ID DESC",
+                                    $related_posts,
+                                    $connection_object
+                                ));
                             }
                             elseif($connection_type == 'users'){
-                                $get_related_post_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}users WHERE user_login = '$related_posts'");
+                                $get_related_post_id = $wpdb->get_var($wpdb->prepare(
+                                    "SELECT ID FROM {$wpdb->prefix}users WHERE user_login = %s",
+                                    $related_posts
+                                ));
                             }
                             elseif($connection_type == 'terms'){
-                                $get_related_post_id = $wpdb->get_var("SELECT term_id FROM {$wpdb->prefix}terms WHERE name = '$related_posts'");
+                                $get_related_post_id = $wpdb->get_var($wpdb->prepare(
+                                    "SELECT term_id FROM {$wpdb->prefix}terms WHERE name = %s",
+                                    $related_posts
+                                ));
                             }
                         }                                                
                         

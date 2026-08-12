@@ -34,11 +34,19 @@ class ToolsetImporter {
 		global $wpdb;
 		for ($i = 0; $i < count($explodedParent); $i++)
 		{
-			$post_title = $wpdb->_real_escape($explodedParent[$i]);
-			$result = $wpdb->get_results("SELECT id FROM ".$wpdb->prefix."posts WHERE post_title='{$post_title}' and post_type='{$postTypeValue}'");
-			if (!empty($result[0]->id)) {
-				$post_id = $result[0]->id;
-				$result = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id ='{$post_id}' and meta_key ='_wp_types_group_fields'");
+			$post_title = $explodedParent[$i];
+			$result = $wpdb->get_results($wpdb->prepare(
+				"SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_type = %s",
+				$post_title,
+				$postTypeValue
+			));
+			if (!empty($result[0]->ID)) {
+				$post_id = $result[0]->ID;
+				$result = $wpdb->get_results($wpdb->prepare(
+					"SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE post_id = %d AND meta_key = %s",
+					$post_id,
+					'_wp_types_group_fields'
+				));
 				$elementString=$result[0]->meta_value;
 				$elementArray[]=$this->explodeFunction(',',$elementString);                           
 			} 
@@ -54,7 +62,10 @@ class ToolsetImporter {
 	public function getRelationshipId($groupName)
 	{
 		global $wpdb;
-		$relation_id = $wpdb->get_results("SELECT id FROM ".$wpdb->prefix."toolset_relationships WHERE slug = '{$groupName}'");
+		$relation_id = $wpdb->get_results($wpdb->prepare(
+			"SELECT id FROM {$wpdb->prefix}toolset_relationships WHERE slug = %s",
+			$groupName
+		));
 		$relation_id=$relation_id[0]->id;
 		return $relation_id;
 	}
@@ -157,14 +168,21 @@ class ToolsetImporter {
 	public function getRepeatableMetaValue($value)
 	{
 		global $wpdb;
-		$meta = $wpdb->get_results("SELECT meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = {$value} and meta_key = '_wp_types_group_fields'");
+		$meta = $wpdb->get_results($wpdb->prepare(
+			"SELECT meta_value FROM {$wpdb->prefix}postmeta WHERE post_id = %d AND meta_key = %s",
+			(int) $value,
+			'_wp_types_group_fields'
+		));
 		return $meta[0]->meta_value;
 	}
 
 	public function getRepeatableName($value)
 	{
 		global $wpdb;
-		$meta = $wpdb->get_results("SELECT post_name FROM ".$wpdb->prefix."posts WHERE id = {$value}");
+		$meta = $wpdb->get_results($wpdb->prepare(
+			"SELECT post_name FROM {$wpdb->prefix}posts WHERE ID = %d",
+			(int) $value
+		));
 
 		return $meta[0]->post_name;
 	}
@@ -194,7 +212,10 @@ class ToolsetImporter {
 	public function checkTermKeys($postId,$postType)
 	{
 		global $wpdb;
-		$result=$wpdb->get_results("SELECT term_id FROM ".$wpdb->prefix."term_taxonomy WHERE taxonomy = '{$postType}' ",ARRAY_A);
+		$result=$wpdb->get_results($wpdb->prepare(
+			"SELECT term_id FROM {$wpdb->prefix}term_taxonomy WHERE taxonomy = %s",
+			$postType
+		),ARRAY_A);
 		if (!empty($result)){
 			return 1;
 		}
@@ -227,9 +248,17 @@ class ToolsetImporter {
 	{
 		global $wpdb;
 		if ($postType == 'Users') {
-			return $wpdb->get_results("SELECT umeta_id,meta_value FROM ".$wpdb->prefix."usermeta WHERE user_id = {$postId} and meta_key = '{$metaKeyname}'",ARRAY_A);
+			return $wpdb->get_results($wpdb->prepare(
+				"SELECT umeta_id,meta_value FROM {$wpdb->prefix}usermeta WHERE user_id = %d AND meta_key = %s",
+				(int) $postId,
+				$metaKeyname
+			),ARRAY_A);
 		}else{
-			return $wpdb->get_results("SELECT meta_id,meta_value FROM ".$wpdb->prefix."postmeta WHERE post_id = {$postId} and meta_key = '{$metaKeyname}'",ARRAY_A);
+			return $wpdb->get_results($wpdb->prepare(
+				"SELECT meta_id,meta_value FROM {$wpdb->prefix}postmeta WHERE post_id = %d AND meta_key = %s",
+				(int) $postId,
+				$metaKeyname
+			),ARRAY_A);
 		}
 	}
 	public function findRelationship($postId)

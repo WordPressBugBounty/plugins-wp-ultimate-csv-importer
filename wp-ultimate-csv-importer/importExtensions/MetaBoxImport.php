@@ -162,7 +162,7 @@ class MetaBoxImport {
 						foreach($term_fd as $value){						
 							$taxonomy = $get_metabox_fields[$data_key]['taxonomy']['0'];
 							$get_post_id = $wpdb->get_var("SELECT tax.term_taxonomy_id FROM {$wpdb->prefix}terms t INNER JOIN {$wpdb->prefix}term_taxonomy tax ON t.term_id=tax.term_id WHERE t.name='$value' AND tax.taxonomy='$taxonomy'");
-							$wpdb->get_results("INSERT into {$wpdb->prefix}term_relationships (`object_id`,`term_taxonomy_id`) VALUES($pID,$get_post_id)");
+							$wpdb->query( "INSERT into {$wpdb->prefix}term_relationships (`object_id`,`term_taxonomy_id`) VALUES($pID,$get_post_id)");
 
 						}
 					}

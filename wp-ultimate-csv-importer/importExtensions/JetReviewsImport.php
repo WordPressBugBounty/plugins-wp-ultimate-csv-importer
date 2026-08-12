@@ -56,7 +56,7 @@ class JetReviewsImport
             $error_message = $wpdb->last_error;
             $core_instance->detailed_log[$line_number]['Message'] = ' Skipped ' .$error_message;
             $core_instance->detailed_log[$line_number]['state'] = 'Skipped';
-            $wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+            $wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
             return array('MODE' => $mode, 'ERROR_MSG' => 'No data to update');
 		}
 
@@ -64,7 +64,7 @@ class JetReviewsImport
 
         $mode_of_affect = 'Inserted';
         $core_instance->detailed_log[$line_number]['state'] = 'Inserted';
-        $wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
+        $wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
         $returnArr['ID'] = $review_id;
         $returnArr['MODE'] = $mode_of_affect;
         return $returnArr;
@@ -90,7 +90,7 @@ class JetReviewsImport
             );
             $mode_of_affect = 'Updated';
             $core_instance->detailed_log[$line_number]['state'] = 'Updated';
-            $wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");
+            $wpdb->query( "UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");
             $returnArr['ID'] = $review_id;
             $returnArr['MODE'] = $mode_of_affect;
             return $returnArr;
@@ -102,7 +102,7 @@ class JetReviewsImport
             $review_id = jet_reviews()->db->wpdb()->insert_id;
             $mode_of_affect = 'Inserted';
             $core_instance->detailed_log[$line_number]['state'] = 'Inserted';
-            $wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
+            $wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
             $returnArr['ID'] = $review_id;
             $returnArr['MODE'] = $mode_of_affect;
             return $returnArr;

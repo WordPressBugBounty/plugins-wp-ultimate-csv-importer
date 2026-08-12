@@ -10,7 +10,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: WP Ultimate CSV Importer
- * Version:     8.1
+ * Version:     9.0
  * Plugin URI:  https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
  * Description: Seamlessly create posts, custom posts, pages, media, SEO and more from your CSV data with ease.
  * Author:      Smackcoders
@@ -90,6 +90,18 @@ require_once __DIR__ . '/includes/SafeExpressionEvaluator.php';
 require_once __DIR__ . '/includes/AjaxAuthorization.php';
 AjaxAuthorization::register();
 require_once __DIR__ . '/includes/WpucsvHooks.php';
+require_once __DIR__ . '/includes/ImportResumeService.php';
+require_once __DIR__ . '/controllers/ImportResumeController.php';
+require_once __DIR__ . '/includes/Validation/ValidationIssue.php';
+require_once __DIR__ . '/includes/Validation/ValidationReport.php';
+require_once __DIR__ . '/includes/Validation/ValidationResult.php';
+require_once __DIR__ . '/includes/Validation/CsvPreflightReader.php';
+require_once __DIR__ . '/includes/Validation/ValidationEngine.php';
+require_once __DIR__ . '/controllers/CsvValidationController.php';
+require_once __DIR__ . '/includes/Dashboard/DashboardRepository.php';
+require_once __DIR__ . '/includes/Dashboard/DashboardService.php';
+require_once __DIR__ . '/controllers/DashboardController.php';
+require_once __DIR__ . '/admin/class-deactivation-feedback.php';
 
 $export_extensions = glob( __DIR__ . '/exportExtensions/*.php');
 foreach ($export_extensions as $export_extension_value) {
@@ -157,7 +169,7 @@ class UCICore{
 	public static $persian_instance = null;
 	public static $chinese_instance = null;
 	private static $addon_instance = null;
-	public $version = '8.1';
+	public $version = '9.0';
 
 	/**
 	 * UCICore Instance
@@ -170,23 +182,38 @@ class UCICore{
 	}
 
 	public static function show_admin_menus(){
-		if( is_user_logged_in() ) {
-			$user = wp_get_current_user();
-			$role = ( array ) $user->roles;
-		} 
-		
-		if(!empty($role) && in_array( 'administrator' , $role)){
-			if ( is_user_logged_in() &&  current_user_can('manage_options') ) {
-				add_action('admin_menu',array(__CLASS__,'testing_function'));
-			}
+		if ( is_user_logged_in() && current_user_can( 'manage_options' ) ) {
+			add_action( 'admin_menu', array( __CLASS__, 'testing_function' ) );
+		}
+	}
+
+	/**
+	 * Redirect first-time activations to the Manage Addons screen.
+	 *
+	 * Runs on admin_init (not init) so headers are not sent early and a failed
+	 * redirect cannot leave a blank white page from exit().
+	 */
+	public static function maybe_redirect_first_activation() {
+		if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
+			return;
 		}
 
-		$first_activate = get_option("WP_ULTIMATE_CSV_FIRST_ACTIVATE");
-		if($first_activate == 'On'){
-			delete_option("WP_ULTIMATE_CSV_FIRST_ACTIVATE");	
-			wp_redirect(admin_url().'admin.php?page=wp-addons-page');
-			exit;
+		if ( 'On' !== get_option( 'WP_ULTIMATE_CSV_FIRST_ACTIVATE' ) ) {
+			return;
 		}
+
+		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+
+		if ( 'wp-addons-page' === $page ) {
+			delete_option( 'WP_ULTIMATE_CSV_FIRST_ACTIVATE' );
+			return;
+		}
+
+		delete_option( 'WP_ULTIMATE_CSV_FIRST_ACTIVATE' );
+
+		$redirect_url = admin_url( 'admin.php?page=wp-addons-page' );
+		wp_safe_redirect( $redirect_url );
+		exit;
 	}
 
 	public static function admin_body_class($classes) {
@@ -204,6 +231,7 @@ class UCICore{
 
 	public function __construct() {
 		add_action('init', array(__CLASS__, 'show_admin_menus'));
+		add_action( 'admin_init', array( __CLASS__, 'maybe_redirect_first_activation' ), 1 );
 		//action to register in wordpress tools
 		add_action('admin_init', array(__CLASS__, 'csv_register_importers'));
 		// WordPress 7.0 AI: increase timeout for AI generation during import.
@@ -345,6 +373,7 @@ public function handle_review_notice_actions() {
         do_action('sm_uci_enqueue_scripts');
         do_action('sm_uci_enqueue_styles');
 
+        $react_js_version = $plugin_instance->version;
         if ($page === 'com.smackcoders.csvimporternew.menu' || $single_import == 'true') {
             $react_js_path = plugin_dir_path(__FILE__) . 'assets/js/admin-v6.1.js';
             $react_js_version = file_exists($react_js_path) ? (string) filemtime($react_js_path) : $plugin_instance->version;
@@ -352,12 +381,16 @@ public function handle_review_notice_actions() {
             wp_enqueue_script('react-js');
         }
 
+        $dashboard_css_path = plugin_dir_path(__FILE__) . 'assets/css/dashboard.css';
+        $dashboard_css_version = file_exists($dashboard_css_path) ? (string) filemtime($dashboard_css_path) : $plugin_instance->version;
+
         // Common styles
         wp_enqueue_style(wp_unique_handle($plugin_slug . '_bootstrap-css'), plugins_url( 'assets/css/deps/bootstrap.min.css', __FILE__));
         wp_enqueue_style(wp_unique_handle($plugin_slug . '_filepond-css'), plugins_url( 'assets/css/deps/filepond.min.css', __FILE__));
         wp_enqueue_style(wp_unique_handle($plugin_slug . '_react-datepicker-css'), plugins_url( 'assets/css/deps/react-datepicker.css', __FILE__));
         wp_enqueue_style(wp_unique_handle($plugin_slug . '_react-toastify-css'), plugins_url( 'assets/css/deps/ReactToastify.css', __FILE__));
         wp_enqueue_style(wp_unique_handle($plugin_slug . '_csv-importer-css'), plugins_url( 'assets/css/deps/csv-importer-free.css', __FILE__));
+        wp_enqueue_style(wp_unique_handle($plugin_slug . '_dashboard-css'), plugins_url( 'assets/css/dashboard.css', __FILE__), array(), $dashboard_css_version);
         wp_enqueue_style(wp_unique_handle($plugin_slug . '_csv-importer-roboto-css'), plugins_url( 'assets/css/deps/csv-importerfree-roboto.css', __FILE__));
         wp_enqueue_style(wp_unique_handle($plugin_slug . '_csv-importer-poppins-css'), plugins_url( 'assets/css/deps/csv-importerfree-poppins.css', __FILE__));
         wp_enqueue_style(wp_unique_handle($plugin_slug . '_style-css'), plugins_url('assets/css/deps/style.css', __FILE__));
@@ -426,6 +459,10 @@ public function handle_review_notice_actions() {
 
         $nonce_payload = array(
             'url' => admin_url('admin-ajax.php'),
+            'currentUser' => array(
+                'name' => wp_get_current_user()->display_name ? wp_get_current_user()->display_name : 'there'
+            ),
+            'plugin_version' => $plugin_instance->version
         );
         if ( current_user_can( 'manage_options' ) ) {
             $nonce_payload['nonce'] = wp_create_nonce( 'smack-ultimate-csv-importer' );
@@ -488,7 +525,7 @@ public function handle_review_notice_actions() {
 	{
 
 		global $wpdb;
-		$wpdb->get_results("DELETE FROM {$wpdb->prefix}ultimate_csv_importer_shortcode_manager");
+		$wpdb->query( "DELETE FROM {$wpdb->prefix}ultimate_csv_importer_shortcode_manager");
 	}
 
 	public function image_schedule()
@@ -619,18 +656,9 @@ add_action( 'plugins_loaded', 'Smackcoders\\UCI\\Core\\onpluginsload' );
 namespace Smackcoders\UCI\Core;
 
 function onpluginsload(){
+	SmackCSVInstall::init();
+	DeactivationFeedback::getInstance();
 	loadbasic();
-	$ucisettings = get_option('sm_uci_pro_settings');
-	if( is_user_logged_in() ) {
-		$user = wp_get_current_user();
-		$role = ( array ) $user->roles;
-	} 
-		if(!empty($role) && in_array( 'administrator' , $role ) ){
-		if ( is_user_logged_in() &&  current_user_can('manage_options') ) {
-			loadbasic();
-		}
-	}
-
 }
 add_action('admin_head', 'Smackcoders\\UCI\\Core\\disable_admin_notices_on_plugin_page');
 
@@ -678,6 +706,7 @@ function loadbasic(){
 		\Smackcoders\UCI\Core\MappingExtension::getInstance();
 		\Smackcoders\UCI\Core\ExportExtension::getInstance();
 		\Smackcoders\UCI\Core\LogManager::getInstance();
+		\Smackcoders\UCI\Core\TemplateManager::getInstance();
 		\Smackcoders\UCI\Core\DesktopUpload::getInstance();
 		\Smackcoders\UCI\Core\FtpUpload::getInstance();
 		\Smackcoders\UCI\Core\UrlUpload::getInstance();
@@ -685,7 +714,7 @@ function loadbasic(){
 		\Smackcoders\UCI\Core\InstallAddons::getInstance();
 		\Smackcoders\UCI\Core\SingleImportExport::getInstance();
 		\Smackcoders\UCI\Core\ImportHelpers::getInstance();
+		\Smackcoders\UCI\Core\ImportResumeController::getInstance();
+		\Smackcoders\UCI\Core\CsvValidationController::getInstance();
 	}	
 }
-
-?>

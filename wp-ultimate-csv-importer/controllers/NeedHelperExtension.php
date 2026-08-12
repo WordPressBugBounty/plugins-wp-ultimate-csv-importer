@@ -48,7 +48,10 @@ class NeedHelperExtension
 
     public function Need_Helper()
     {
-        check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+        SecurityHelper::verify_ajax_nonce();
+        if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+            wp_die(__('You do not have sufficient permissions to access this page.'));
+        }
         //$_POST['ID'] = 'import#2'; // Test case
         if (!empty($_POST['ID']) && isset($_POST['ID'])) {
             $id = sanitize_text_field($_POST['ID']);
@@ -243,7 +246,7 @@ class NeedHelperExtension
             wp_send_json_success($response);
             wp_die();
         } else {
-            wp_send_json_error(['message' => 'Invalid ID passing.']);
+            wp_send_json_error(['message' => __( 'Invalid ID passing.', 'wp-ultimate-csv-importer' )]);
             wp_die();
         }
     }

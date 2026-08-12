@@ -78,7 +78,10 @@ class RankMathImport {
 			$sourcess=array($sources);
 			$source=serialize($sourcess);
 			$wpdb->insert("{$wpdb->prefix}rank_math_redirections", array('sources' => $source,'url_to' => $destination_url,'header_code' => $redirection_type,'created'=>date('Y-m-d H:i:s'),'updated'=>date('Y-m-d H:i:s'))); 
-			$get_id=$wpdb->get_results("select id from {$wpdb->prefix}rank_math_redirections where url_to = '$destination_url'" ,ARRAY_A);
+			$get_id=$wpdb->get_results($wpdb->prepare(
+				"SELECT id FROM {$wpdb->prefix}rank_math_redirections WHERE url_to = %s",
+				$destination_url
+			) ,ARRAY_A);
 			$redirection_id=$get_id[0]['id'];
 
 			$wpdb->insert("{$wpdb->prefix}rank_math_redirections_cache", array('from_url' => $from_url,'redirection_id' => $redirection_id,'object_id' => $pID,'is_redirected'=>'1')); 

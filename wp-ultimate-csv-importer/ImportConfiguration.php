@@ -27,7 +27,10 @@ class ImportConfiguration {
     }
 
     public function get_update_fields(){
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		$import_type = sanitize_text_field($_POST['Types']);	
 		$mode = sanitize_text_field($_POST['Mode']);
 		$hash_key = sanitize_key($_POST['HashKey']);

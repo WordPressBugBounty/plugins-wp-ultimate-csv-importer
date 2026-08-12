@@ -16,15 +16,15 @@ class ExtensionHandler{
 	public static function getInstance() {
 
 		if (ExtensionHandler::$instance == null) {
+			ExtensionHandler::$instance = new ExtensionHandler();
 			ExtensionHandler::$validate_file = ValidateFile::getInstance();
-			return ExtensionHandler::$instance;
 		}
 		return ExtensionHandler::$instance;
 	}
 
 	public function import_post_types($import_type) {	
 		$import_type = trim($import_type);	
-		$module = array('Posts' => 'post', 'Pages' => 'page', 'Users' => 'user', 'JetReviews' => 'jetreviews', 'Comments' => 'comments', 'Taxonomies' => $import_type, 'CustomerReviews' =>'wpcr3_review', 'Categories' => 'categories', 'Tags' => 'tags', 'WooCommerce' => 'product', 'WooCommerce Product' => 'product', 'WPeCommerce' => 'wpsc-product','WPeCommerceCoupons' => 'wpsc-product', 'WooCommerceOrders' => 'product', 'WooCommerceCoupons' => 'product', 'WooCommerceRefunds' => 'product', 'CustomPosts' => $import_type,'WooCommerceReviews' => 'reviews');
+		$module = array('Posts' => 'post', 'Pages' => 'page', 'Users' => 'user', 'JetReviews' => 'jetreviews', 'Comments' => 'comments', 'Taxonomies' => $import_type, 'CustomerReviews' =>'wpcr3_review', 'Categories' => 'categories', 'Tags' => 'tags', 'WooCommerce' => 'product', 'WooCommerce Product' => 'product', 'WPeCommerce' => 'wpsc-product','WPeCommerceCoupons' => 'wpsc-product', 'WooCommerceOrders' => 'shop_order', 'WooCommerceCoupons' => 'product', 'WooCommerceRefunds' => 'product', 'CustomPosts' => $import_type,'WooCommerceReviews' => 'reviews');
 		foreach (get_taxonomies() as $key => $taxonomy) {
 			$module[$taxonomy] = $taxonomy;
 		}

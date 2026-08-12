@@ -47,7 +47,10 @@ class SendPassword {
 	 *
 	 */
 	public function settingsOptions() {
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_admin_access()) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		if(is_user_logged_in() && current_user_can('create_users')){
 		$ucisettings = get_option('sm_uci_pro_settings');
 		$option = sanitize_text_field($_POST['option']);
@@ -99,7 +102,10 @@ class SendPassword {
 	 *
 	 */
 	public function showOptions() {
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_admin_access()) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 
 		$prefixValue = isset($_POST['prefixValue']) ? sanitize_text_field($_POST['prefixValue']) : '';
 

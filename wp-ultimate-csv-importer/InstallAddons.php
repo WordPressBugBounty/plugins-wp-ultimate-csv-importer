@@ -41,8 +41,8 @@ class InstallAddons {
     
     public function install(){
 		SecurityHelper::verify_ajax_nonce();
-		if ( ! SecurityHelper::can_install_plugins() ) {
-			wp_die( __( 'You do not have sufficient permissions to install plugins.', 'wp-ultimate-csv-importer' ) );
+		if (!SecurityHelper::check_admin_access()) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
 		}
 		delete_option("WP_ULTIMATE_ADDONS_FAILED");
 	
@@ -68,8 +68,8 @@ class InstallAddons {
 
 	public function separateaddons(){
 		SecurityHelper::verify_ajax_nonce();
-		if ( ! SecurityHelper::can_install_plugins() ) {
-			wp_die( __( 'You do not have sufficient permissions to install plugins.', 'wp-ultimate-csv-importer' ) );
+		if (!SecurityHelper::check_admin_access()) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
 		}
 		$type = isset($_POST['addons']) ? sanitize_text_field($_POST['addons']) : "";
 		if($type == 'Users'){

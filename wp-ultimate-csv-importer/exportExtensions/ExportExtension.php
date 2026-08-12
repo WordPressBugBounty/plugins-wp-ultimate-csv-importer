@@ -53,7 +53,10 @@ class ExportExtension
 
 	public function checkExport()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_export())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		if (\is_plugin_active('wp-ultimate-exporter/wp-ultimate-exporter.php')) {
 			$result['success'] = true;
 		} else {
@@ -65,7 +68,10 @@ class ExportExtension
 
 	public function totalRecords()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_export())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		global $wpdb, $post_export_class;
 		$module = sanitize_text_field($_POST['module']);
 		$optionalType = isset($_POST['optionalType']) ? sanitize_text_field($_POST['optionalType']) : '';

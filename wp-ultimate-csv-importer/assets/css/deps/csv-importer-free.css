@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 /*--------------------------------------------------------
 Style Sheet for WP Ultimate CSV Importer Free Plugin
 SCSS Version: 2.0
@@ -610,7 +611,7 @@ Author: Mohamed Fariz
 
 .csv-icon-file-text1:before {
   content: "";
-  
+
 }
 
 .csv-icon-spinner8:before {
@@ -647,7 +648,7 @@ Author: Mohamed Fariz
 }
 
 .text-primary {
-  color: #00a699;
+  color: #3d4fdb;
 }
 
 .text-warning {
@@ -722,7 +723,7 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .csv-link {
-  color: #00a699;
+  color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .csv-link:hover {
@@ -745,7 +746,7 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .text-primary {
-  color: #00a699 !important;
+  color: #3d4fdb !important;
 }
 
 .wp-ultimate-csv-importer p {
@@ -781,9 +782,9 @@ Author: Mohamed Fariz
   position: absolute;
 }
 
-.wp-ultimate-csv-importer .btn-select .btn-select-radio:checked + label {
+.wp-ultimate-csv-importer .btn-select .btn-select-radio:checked+label {
   color: #2d3748;
-  border: 1px solid #00a699;
+  border: 1px solid #3d4fdb;
   font-weight: 500;
 }
 
@@ -796,9 +797,9 @@ Author: Mohamed Fariz
 .wp-ultimate-csv-importer .btn-select .btn:active,
 .wp-ultimate-csv-importer .btn-select .btn:active:focus {
   background: #fff !important;
-  border-color: #00a699 !important;
+  border-color: #3d4fdb !important;
   box-shadow: none !important;
-  color: #00a699;
+  color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .text-muted {
@@ -1258,6 +1259,7 @@ Author: Mohamed Fariz
   background: #ffffff;
   border-radius: 6px;
   box-shadow: 0 2px 20px 0 #c9d3df;
+  margin-bottom: 15px;
 }
 
 .wp-ultimate-csv-importer #wordpress-custom-fields-body {
@@ -1337,34 +1339,22 @@ Author: Mohamed Fariz
   border-color: #00c0b1;
 }
 
-.wp-ultimate-csv-importer
-  .form_export_file_type
-  input[type="radio"]
-  + label:before,
-.wp-ultimate-csv-importer
-  .form_export_file_type
-  input[type="radio"]
-  + label:after {
+.wp-ultimate-csv-importer .form_export_file_type input[type="radio"]+label:before,
+.wp-ultimate-csv-importer .form_export_file_type input[type="radio"]+label:after {
   display: none;
 }
 
-.wp-ultimate-csv-importer
-  .form_export_file_type
-  input[type="radio"]:checked
-  + label {
-  border-color: #00a699;
+.wp-ultimate-csv-importer .form_export_file_type input[type="radio"]:checked+label {
+  border-color: #3d4fdb;
 }
 
-.wp-ultimate-csv-importer
-  .form_export_file_type
-  input[type="radio"]:checked
-  + label:before {
+.wp-ultimate-csv-importer .form_export_file_type input[type="radio"]:checked+label:before {
   content: "";
   font-family: "csvimporter";
   width: 22px;
   height: 22px;
   font-size: 13px;
-  background: #00a699;
+  background: #3d4fdb;
   border: none;
   border-radius: 50%;
   color: #fff;
@@ -1407,27 +1397,27 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .smack-btn.smack-btn-primary {
-  background-color: #00a699;
-  border-color: #00a699;
+  background-color: #3d4fdb;
+  border-color: #3d4fdb;
   color: #ffffff;
 }
 
 .wp-ultimate-csv-importer .smack-btn.smack-btn-primary:hover {
-  background-color: #00a699;
+  background-color: #3d4fdb;
   border-color: #178d7c;
   color: #ffffff;
 }
 
 .wp-ultimate-csv-importer .smack-btn.smack-btn-secondary {
   background-color: #ffffff;
-  border: 2px solid #00a699;
-  color: #00a699;
+  border: 2px solid #3d4fdb;
+  color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .smack-btn.smack-btn-secondary:hover {
   background-color: rgba(0, 166, 153, 0.1);
   border-color: #178d7c;
-  color: #00a699;
+  color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .smack-btn.smack-btn-info {
@@ -1541,13 +1531,13 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .react-datepicker-wrapper {
-  display: block;
+  display: block !important;
+  width: 100% !important;
 }
 
-.wp-ultimate-csv-importer
-  .react-datepicker-wrapper
-  .react-datepicker__input-container {
-  display: block;
+.wp-ultimate-csv-importer .react-datepicker-wrapper .react-datepicker__input-container {
+  display: block !important;
+  width: 100% !important;
 }
 
 .wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker {
@@ -1556,37 +1546,23 @@ Author: Mohamed Fariz
   box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
 }
 
-.wp-ultimate-csv-importer
-  .react-datepicker-popper
-  .react-datepicker
-  .react-datepicker__triangle {
+.wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker .react-datepicker__triangle {
   border-bottom-color: #fff;
 }
 
-.wp-ultimate-csv-importer
-  .react-datepicker-popper
-  .react-datepicker
-  .react-datepicker__triangle:before {
+.wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker .react-datepicker__triangle:before {
   border-top-color: #e8e8e8;
 }
 
-.wp-ultimate-csv-importer
-  .react-datepicker-popper
-  .react-datepicker
-  .react-datepicker__navigation--previous {
+.wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker .react-datepicker__navigation--previous {
   border-right-color: #303030;
 }
 
-.wp-ultimate-csv-importer
-  .react-datepicker-popper
-  .react-datepicker
-  .react-datepicker__navigation--next {
+.wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker .react-datepicker__navigation--next {
   border-left-color: #303030;
 }
 
-.wp-ultimate-csv-importer
-  .react-datepicker-popper
-  .react-datepicker__month-container {
+.wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker__month-container {
   width: 100%;
 }
 
@@ -1595,40 +1571,32 @@ Author: Mohamed Fariz
   border: none;
 }
 
-.wp-ultimate-csv-importer
-  .react-datepicker-popper
-  .react-datepicker__header
-  .react-datepicker__day-name {
+.wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker__header .react-datepicker__day-name {
   font-weight: 600;
   font-size: 16px;
   margin: 0px 7px;
 }
 
-.wp-ultimate-csv-importer
-  .react-datepicker-popper
-  .react-datepicker__month
-  .react-datepicker__week {
+.wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker__month .react-datepicker__week {
   font-size: 16px;
 }
 
-.wp-ultimate-csv-importer
-  .react-datepicker-popper
-  .react-datepicker__month
-  .react-datepicker__day {
+.wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker__month .react-datepicker__day {
   margin: 0px 7px;
 }
 
-.wp-ultimate-csv-importer
-  .react-datepicker-popper
-  .react-datepicker__month
-  .react-datepicker__day.react-datepicker__day--selected {
-  background-image: linear-gradient(to bottom, #00a699, #00736a) !important;
+.wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker__month .react-datepicker__day.react-datepicker__day--selected {
+  background: #3d4fdb !important;
+  color: #ffffff !important;
+  border-radius: 4px !important;
 }
 
-.wp-ultimate-csv-importer
-  .react-datepicker-popper
-  .react-datepicker__month
-  .react-datepicker__day.react-datepicker__day--outside-month {
+.wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker__month .react-datepicker__day.react-datepicker__day--selected:hover {
+  background: #2f3cb0 !important;
+  color: #ffffff !important;
+}
+
+.wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker__month .react-datepicker__day.react-datepicker__day--outside-month {
   opacity: 0.5;
 }
 
@@ -1647,7 +1615,7 @@ Author: Mohamed Fariz
 
 .wp-ultimate-csv-importer .form-control:focus {
   box-shadow: none;
-  border: 1px solid #00a699;
+  border: 1px solid #3d4fdb;
   box-shadow: 0 0 15px 0 rgba(0, 166, 153, 0.1);
 }
 
@@ -1661,7 +1629,7 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .dropdown-menu li.selected a {
-  background-color: #00a699;
+  background-color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .dropdown-menu li.selected a:hover {
@@ -1669,7 +1637,7 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .dropdown-menu li a:active {
-  background-color: #00a699;
+  background-color: #3d4fdb;
   color: #fff;
 }
 
@@ -1688,7 +1656,7 @@ Author: Mohamed Fariz
 
 .wp-ultimate-csv-importer .select .btn-light:hover,
 .wp-ultimate-csv-importer .bootstrap-select .btn-light:hover {
-  border-color: #00a699;
+  border-color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .select .form-control,
@@ -1733,29 +1701,22 @@ Author: Mohamed Fariz
   pointer-events: none;
 }
 
-.wp-ultimate-csv-importer
-  .fieldset
-  input[type="checkbox"]:checked
-  + .switch-ios
-  > i {
+.wp-ultimate-csv-importer .fieldset input[type="checkbox"]:checked+.switch-ios>i {
   margin-left: 18px;
   box-shadow: 0 3px 2px rgba(0, 0, 0, 0.25);
   cursor: pointer;
 }
 
 .wp-ultimate-csv-importer .switch-ios:active {
-  box-shadow: inset 0 0 0 20px #00a699;
+  box-shadow: inset 0 0 0 20px #3d4fdb;
 }
 
-.wp-ultimate-csv-importer .switch-ios:active > i {
+.wp-ultimate-csv-importer .switch-ios:active>i {
   width: 20px;
 }
 
-.wp-ultimate-csv-importer
-  .fieldset
-  input[type="checkbox"]:checked
-  + .switch-ios {
-  box-shadow: inset 0 0 0 20px #00a699;
+.wp-ultimate-csv-importer .fieldset input[type="checkbox"]:checked+.switch-ios {
+  box-shadow: inset 0 0 0 20px #3d4fdb;
   border: none;
 }
 
@@ -1807,13 +1768,14 @@ Author: Mohamed Fariz
   opacity: 0;
 }
 
-.wp-ultimate-csv-importer .form-group input[type="radio"] + label {
+.wp-ultimate-csv-importer .form-group input[type="radio"]+label {
   display: inline-block;
   padding-left: 40px;
   transition: all 0.2s;
+  position: relative;
 }
 
-.wp-ultimate-csv-importer .form-group input[type="radio"] + label:before {
+.wp-ultimate-csv-importer .form-group input[type="radio"]+label:before {
   content: "";
   width: 23px;
   height: 23px;
@@ -1821,31 +1783,27 @@ Author: Mohamed Fariz
   border-radius: 50%;
   position: absolute;
   left: 5px;
-  top: 0px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.wp-ultimate-csv-importer .form-group input[type="radio"] + label:hover:before {
-  border: 2px solid #00a699;
+.wp-ultimate-csv-importer .form-group input[type="radio"]+label:hover:before {
+  border: 2px solid #3d4fdb;
 }
 
-.wp-ultimate-csv-importer
-  .form-group
-  input[type="radio"]:checked
-  + label:before {
-  border: 2px solid #00a699;
+.wp-ultimate-csv-importer .form-group input[type="radio"]:checked+label:before {
+  border: 2px solid #3d4fdb;
 }
 
-.wp-ultimate-csv-importer
-  .form-group
-  input[type="radio"]:checked
-  + label:after {
+.wp-ultimate-csv-importer .form-group input[type="radio"]:checked+label:after {
   content: "";
   width: 13px;
   height: 13px;
-  background: #00a699;
+  background: #3d4fdb;
   border-radius: 50%;
   position: absolute;
-  top: 5px;
+  top: 50%;
+  transform: translateY(-50%);
   left: 10px;
 }
 
@@ -1854,12 +1812,12 @@ Author: Mohamed Fariz
   opacity: 0;
 }
 
-.wp-ultimate-csv-importer .checkbox input[type="checkbox"] + label {
+.wp-ultimate-csv-importer .checkbox input[type="checkbox"]+label {
   position: relative;
   padding-left: 35px;
 }
 
-.wp-ultimate-csv-importer .checkbox input[type="checkbox"] + label:before {
+.wp-ultimate-csv-importer .checkbox input[type="checkbox"]+label:before {
   content: "";
   width: 22px;
   height: 22px;
@@ -1870,23 +1828,17 @@ Author: Mohamed Fariz
   top: 0;
 }
 
-.wp-ultimate-csv-importer
-  .checkbox
-  input[type="checkbox"]
-  + label:hover:before {
-  border: 2px solid #00a699;
+.wp-ultimate-csv-importer .checkbox input[type="checkbox"]+label:hover:before {
+  border: 2px solid #3d4fdb;
 }
 
-.wp-ultimate-csv-importer
-  .checkbox
-  input[type="checkbox"]:checked
-  + label:after {
+.wp-ultimate-csv-importer .checkbox input[type="checkbox"]:checked+label:after {
   content: "";
   font-family: "csvimporter";
   width: 22px;
   height: 22px;
-  background: #00a699;
-  border: 1px solid #00a699;
+  background: #3d4fdb;
+  border: 1px solid #3d4fdb;
   border-radius: 4px;
   display: flex;
   justify-content: center;
@@ -1941,7 +1893,7 @@ Author: Mohamed Fariz
     width: 48%;
     margin: 2px;
     border-radius: 6px;
-    border: 1px solid #00a699;
+    border: 1px solid #3d4fdb;
   }
 }
 
@@ -1958,15 +1910,15 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .tab-section .tabs .tab-list.active {
-  border-bottom: 2px solid #00a699;
+  border-bottom: 2px solid #3d4fdb;
   font-weight: 500;
 }
 
 @media (max-width: 576px) {
   .wp-ultimate-csv-importer .tab-section .tabs .tab-list.active {
     color: #fff;
-    border: 1px solid #00a699;
-    background-color: #00a699;
+    border: 1px solid #3d4fdb;
+    background-color: #3d4fdb;
   }
 }
 
@@ -1992,7 +1944,7 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .nav.file-choosen-tab .nav-link.active {
-  background: #00a699;
+  background: #3d4fdb;
   color: #ffffff;
 }
 
@@ -2060,7 +2012,7 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .mapping-switcher li.active {
-  background: #00a699;
+  background: #3d4fdb;
   color: #fff;
   text-align: center;
   display: block;
@@ -2074,7 +2026,7 @@ Author: Mohamed Fariz
   content: "";
   width: 0;
   height: 0;
-  border-top: solid 12px #00a699;
+  border-top: solid 12px #3d4fdb;
   border-left: solid 12px transparent;
   border-right: solid 12px transparent;
 }
@@ -2084,7 +2036,7 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .mapping-switcher li:hover {
-  color: #00a699;
+  color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .custom-fields-tabs {
@@ -2116,7 +2068,7 @@ Author: Mohamed Fariz
     width: 48%;
     margin: 2px;
     border-radius: 6px;
-    border: 1px solid #00a699;
+    border: 1px solid #3d4fdb;
   }
 }
 
@@ -2139,15 +2091,15 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .custom-fields-tabs .custom-fields-tab-list.active {
-  border-bottom: 2px solid #00a699;
+  border-bottom: 2px solid #3d4fdb;
   font-weight: 500;
 }
 
 @media (max-width: 576px) {
   .wp-ultimate-csv-importer .custom-fields-tabs .custom-fields-tab-list.active {
     color: #fff;
-    border: 1px solid #00a699;
-    background-color: #00a699;
+    border: 1px solid #3d4fdb;
+    background-color: #3d4fdb;
   }
 }
 
@@ -2263,32 +2215,15 @@ Author: Mohamed Fariz
   position: relative;
 }
 
-.wp-ultimate-csv-importer
-  .table.table-mapping
-  tbody
-  tr
-  td.action
-  .action-icon
-  i {
+.wp-ultimate-csv-importer .table.table-mapping tbody tr td.action .action-icon i {
   font-size: 22px;
 }
 
-.wp-ultimate-csv-importer
-  .table.table-mapping
-  tbody
-  tr
-  td.action
-  .action-icon
-  i:hover {
+.wp-ultimate-csv-importer .table.table-mapping tbody tr td.action .action-icon i:hover {
   color: #4a5568;
 }
 
-.wp-ultimate-csv-importer
-  .table.table-mapping
-  tbody
-  tr
-  td.action
-  .manipulation-screen {
+.wp-ultimate-csv-importer .table.table-mapping tbody tr td.action .manipulation-screen {
   padding: 20px;
   padding-top: 10px;
   background: #fff;
@@ -2303,36 +2238,19 @@ Author: Mohamed Fariz
   display: none;
 }
 
-.wp-ultimate-csv-importer
-  .table.table-mapping
-  tbody
-  tr
-  td.action
-  .manipulation-screen.active {
+.wp-ultimate-csv-importer .table.table-mapping tbody tr td.action .manipulation-screen.active {
   animation: scale_animate 0.3s;
   display: block;
 }
 
-.wp-ultimate-csv-importer
-  .table.table-mapping
-  tbody
-  tr
-  td.action
-  .manipulation-screen
-  .close {
+.wp-ultimate-csv-importer .table.table-mapping tbody tr td.action .manipulation-screen .close {
   margin-bottom: 15px;
 }
 
-.wp-ultimate-csv-importer
-  .table.table-mapping
-  tbody
-  tr
-  td.action
-  .manipulation-screen
-  .csv-hint {
+.wp-ultimate-csv-importer .table.table-mapping tbody tr td.action .manipulation-screen .csv-hint {
   padding: 10px;
   background: rgba(0, 166, 153, 0.2);
-  color: #00a699;
+  color: #3d4fdb;
   border-radius: 6px;
   font-size: 14px;
 }
@@ -2369,11 +2287,7 @@ Author: Mohamed Fariz
   margin: 5px 0px 5px 0px;
 }
 
-.wp-ultimate-csv-importer
-  #wordpress-custom-fields-body
-  .table
-  td:last-child
-  .csv-hint {
+.wp-ultimate-csv-importer #wordpress-custom-fields-body .table td:last-child .csv-hint {
   text-align: left;
 }
 
@@ -2409,9 +2323,7 @@ Author: Mohamed Fariz
   font-weight: normal;
 }
 
-.wp-ultimate-csv-importer
-  .table.table-manager
-  .list-inline-item:not(:last-child) {
+.wp-ultimate-csv-importer .table.table-manager .list-inline-item:not(:last-child) {
   margin-right: 0px;
 }
 
@@ -2419,10 +2331,7 @@ Author: Mohamed Fariz
   font-size: 20px;
 }
 
-.wp-ultimate-csv-importer
-  .table.table-manager
-  .action-icon
-  i.csv-icon-highlight_off {
+.wp-ultimate-csv-importer .table.table-manager .action-icon i.csv-icon-highlight_off {
   font-size: 22px;
 }
 
@@ -2493,7 +2402,7 @@ Author: Mohamed Fariz
 .wp-ultimate-csv-importer .main-heading span.exportData {
   padding: 3px 16px;
   font-size: 18px;
-  color: #00a699;
+  color: #3d4fdb;
   background: rgba(0, 166, 153, 0.05);
   border: 2px solid rgba(0, 166, 153, 0.3);
 }
@@ -2534,6 +2443,10 @@ Author: Mohamed Fariz
   margin-bottom: 0;
 }
 
+.wp-ultimate-csv-importer .setting-tab .setting-tab-list.pro-tag {
+  padding-right: 55px;
+}
+
 .wp-ultimate-csv-importer .setting-tab .setting-tab-list i {
   padding-right: 10px;
 }
@@ -2543,7 +2456,7 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .setting-tab .setting-tab-list.active {
-  background-color: #00a699;
+  background-color: #3d4fdb;
   color: #fff;
   font-weight: 500;
 }
@@ -2630,7 +2543,7 @@ Author: Mohamed Fariz
 
 .wp-ultimate-csv-importer .importing-details .progress-loading {
   font-size: 25px;
-  color: #00a699;
+  color: #3d4fdb;
   display: inline-block;
 }
 
@@ -2670,7 +2583,7 @@ Author: Mohamed Fariz
 .wp-ultimate-csv-importer .btn-add-size {
   border: none;
   background: none;
-  color: #00a699;
+  color: #3d4fdb;
   cursor: pointer;
   outline: none;
 }
@@ -2835,10 +2748,7 @@ Author: Mohamed Fariz
   cursor: pointer;
 }
 
-.wp-ultimate-csv-importer
-  .mapping-sidebar
-  .mapping-sidebar-arrow
-  [class^="csv-icon-"] {
+.wp-ultimate-csv-importer .mapping-sidebar .mapping-sidebar-arrow [class^="csv-icon-"] {
   font-size: 24px;
   color: #cbd5e0;
   -moz-transition: all 0.3s ease;
@@ -2848,10 +2758,7 @@ Author: Mohamed Fariz
   transition: all 0.3s ease;
 }
 
-.wp-ultimate-csv-importer
-  .mapping-sidebar
-  .mapping-sidebar-arrow
-  [class^="csv-icon-"]:hover {
+.wp-ultimate-csv-importer .mapping-sidebar .mapping-sidebar-arrow [class^="csv-icon-"]:hover {
   color: #718096;
 }
 
@@ -2859,10 +2766,7 @@ Author: Mohamed Fariz
   text-decoration: none;
 }
 
-.wp-ultimate-csv-importer
-  .mapping-sidebar
-  .mapping-sidebar-textbox-section
-  input[type="text"] {
+.wp-ultimate-csv-importer .mapping-sidebar .mapping-sidebar-textbox-section input[type="text"] {
   width: 40px;
   text-align: center;
   border: 1px solid #a0aec0;
@@ -3028,8 +2932,7 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .progress-bar {
-  background: #00a699
-    linear-gradient(to right, #65cd8d, #4fc492, #38ba96, #21b098, #00a699);
+  background: #3d4fdb linear-gradient(to right, #65cd8d, #4fc492, #38ba96, #21b098, #3d4fdb);
   border-radius: inherit;
 }
 
@@ -3045,12 +2948,8 @@ Author: Mohamed Fariz
   z-index: 1000;
 }
 
-.wp-ultimate-csv-importer
-  #v-pills-tabContent
-  .filepond--wrapper
-  .filepond--drop-label
-  label:after {
-    content: var(--uci-supported-file-types-legacy, "Supported file types .csv .txt .xml .xlsx .xls .zip .tsv");
+.wp-ultimate-csv-importer #v-pills-tabContent .filepond--wrapper .filepond--drop-label label:after {
+  content: var(--uci-supported-file-types-legacy, "Supported file types .csv .txt .xml .xlsx .xls .zip .tsv");
   position: absolute;
   bottom: -20px;
   z-index: 1000;
@@ -3071,7 +2970,7 @@ Author: Mohamed Fariz
 .wp-ultimate-csv-importer .filepond--wrapper .filepond--drop-label {
   margin-top: 0px;
   height: 430px;
-  width: 97.5%;
+  width: 100%;
   background: #f9fbfc;
   border: 2px dashed #cbd5e0;
   border-radius: 6px;
@@ -3090,26 +2989,19 @@ Author: Mohamed Fariz
   text-decoration: none;
   padding: 8px 3px;
   color: #fff;
-  background: #00a699;
-  border: 1px solid #00a699;
+  background: #3d4fdb;
+  border: 1px solid #3d4fdb;
   border-radius: 6px;
   font-weight: 600;
 }
 
-.wp-ultimate-csv-importer
-  .filepond--wrapper
-  .filepond--drop-label
-  label
-  span:hover {
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--drop-label label span:hover {
   transition: all 0.3s;
   transform: translateY(-5px);
   box-shadow: 0px 0px 8px 1px rgba(0, 0, 0, 0.1);
 }
 
-.wp-ultimate-csv-importer
-  .filepond--wrapper
-  .filepond--drop-label
-  label:before {
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--drop-label label:before {
   content: "";
   font-size: 50px;
   color: #cbd5e0;
@@ -3124,82 +3016,37 @@ Author: Mohamed Fariz
   opacity: 1;
 }
 
-.wp-ultimate-csv-importer
-  .filepond--wrapper
-  .filepond--root[data-hopper-state="drag-over"]
-  .filepond--drop-label {
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--root[data-hopper-state="drag-over"] .filepond--drop-label {
   transition: all 0.2s;
   border: 2px dashed rgba(0, 166, 153, 0.7);
   transform: scale(1.005);
   box-shadow: 0 2px 60px rgba(0, 0, 0, 0.1);
 }
 
-.wp-ultimate-csv-importer
-  .filepond--wrapper
-  .filepond--list-scroller
-  .filepond--list
-  .filepond--item {
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--list-scroller .filepond--list .filepond--item {
   max-height: 70px;
 }
 
-.wp-ultimate-csv-importer
-  .filepond--wrapper
-  .filepond--list-scroller
-  .filepond--list
-  .filepond--item[data-filepond-item-state="processing-error"]
-  .filepond--file-wrapper {
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--list-scroller .filepond--list .filepond--item[data-filepond-item-state="processing-error"] .filepond--file-wrapper {
   background: #dc3545;
 }
 
-.wp-ultimate-csv-importer
-  .filepond--wrapper
-  .filepond--list-scroller
-  .filepond--list
-  .filepond--item
-  .filepond--file-wrapper {
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--list-scroller .filepond--list .filepond--item .filepond--file-wrapper {
   height: auto;
-  background: #00a699;
+  background: #3d4fdb;
   color: #fff;
   border-radius: 6px;
   padding: 5px 15px;
 }
 
-.wp-ultimate-csv-importer
-  .filepond--wrapper
-  .filepond--list-scroller
-  .filepond--list
-  .filepond--item
-  .filepond--file-wrapper
-  .filepond--file-info
-  .filepond--file-info-main,
-.wp-ultimate-csv-importer
-  .filepond--wrapper
-  .filepond--list-scroller
-  .filepond--list
-  .filepond--item
-  .filepond--file-wrapper
-  .filepond--file-info
-  .filepond--file-info-sub {
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--list-scroller .filepond--list .filepond--item .filepond--file-wrapper .filepond--file-info .filepond--file-info-main,
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--list-scroller .filepond--list .filepond--item .filepond--file-wrapper .filepond--file-info .filepond--file-info-sub {
   font-size: 17px;
   opacity: 1;
 }
 
-.wp-ultimate-csv-importer
-  .filepond--wrapper
-  .filepond--list-scroller
-  .filepond--list
-  .filepond--item
-  .filepond--file-wrapper
-  .filepond--file-status
-  .filepond--file-status-main,
-.wp-ultimate-csv-importer
-  .filepond--wrapper
-  .filepond--list-scroller
-  .filepond--list
-  .filepond--item
-  .filepond--file-wrapper
-  .filepond--file-status
-  .filepond--file-status-sub {
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--list-scroller .filepond--list .filepond--item .filepond--file-wrapper .filepond--file-status .filepond--file-status-main,
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--list-scroller .filepond--list .filepond--item .filepond--file-wrapper .filepond--file-status .filepond--file-status-sub {
   font-size: 17px;
   opacity: 1;
 }
@@ -3260,85 +3107,99 @@ Author: Mohamed Fariz
   top: 5em !important;
 }
 
-.wp-ultimate-csv-importer .Toastify {
-  font-family: "Poppins", sans-serif;
-}
-
 .wp-ultimate-csv-importer .Toastify .Toastify__toast {
-  font-family: inherit;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
-}
-
-.wp-ultimate-csv-importer .Toastify .Toastify__toast--info {
-  background: #0073aa;
-}
-
-.wp-ultimate-csv-importer .Toastify .Toastify__toast-body {
-  /* padding: 10px 50px; */
-  padding: 10px 10px;
-  height: 80px;
-}
-
-.wp-ultimate-csv-importer .Toastify__toast.Toastify__toast--success,
-.wp-ultimate-csv-importer .Toastify__toast.Toastify__toast--error,
-.wp-ultimate-csv-importer .Toastify__toast.Toastify__toast--info {
-  border-radius: 6px;
-  font-weight: 500;
+  font-family: "Poppins", sans-serif;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.06), 0 8px 16px -6px rgba(0, 0, 0, 0.03) !important;
+  border-radius: 12px !important;
+  border: 1px solid rgba(0, 0, 0, 0.03) !important;
+  padding: 12px 16px !important;
+  min-height: 70px !important;
+  height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  border-top: none !important;
 }
 
 .wp-ultimate-csv-importer .Toastify__toast.Toastify__toast--success {
-  border-top: 4px solid #38b2ac;
+  background: #f0fdf4 !important;
+  color: #166534 !important;
+  border-left: 5px solid #22c55e !important;
 }
 
 .wp-ultimate-csv-importer .Toastify__toast.Toastify__toast--success::before {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  background: url("../../images/check-circle.png");
-  content: " ";
-  top: 25px;
-  left: 10px;
+  display: none !important;
 }
 
-.wp-ultimate-csv-importer .Toastify__toast--success {
-  background: #e6fffa !important;
-  color: #234e52 !important;
+.wp-ultimate-csv-importer .Toastify__toast.Toastify__toast--error {
+  background: #fef2f2 !important;
+  color: #991b1b !important;
+  border-left: 5px solid #ef4444 !important;
 }
 
-.wp-ultimate-csv-importer .Toastify__toast--error {
-  background: #fff5f5;
-  color: #c53030 !important;
-  border-top: 4px solid #f56565 !important;
-  border-radius: 6px;
+.wp-ultimate-csv-importer .Toastify__toast.Toastify__toast--info {
+  background: #f0f9ff !important;
+  color: #075985 !important;
+  border-left: 5px solid #3b82f6 !important;
 }
 
-/* .wp-ultimate-csv-importer .Toastify__toast--error::before {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  background: url("../../images/warning.png");
-  content: " ";
-  top: 25px;
-  left: 10px;
-} */
-
-.wp-ultimate-csv-importer .Toastify__toast--info {
-  background: #ebf8ff !important;
-  color: #2b6cb0 !important;
-  border-top: 4px solid #4299e1 !important;
-  border-radius: 6px;
+.wp-ultimate-csv-importer .Toastify .Toastify__toast-body {
+  padding: 0 !important;
+  height: auto !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  font-weight: 500 !important;
 }
 
-/* .wp-ultimate-csv-importer .Toastify__toast--info::before {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  background: url("../../images/info.png");
-  content: " ";
-  top: 25px;
-  left: 10px;
-} */
+.wp-ultimate-csv-importer .Toastify__toast-icon {
+  width: 22px !important;
+  height: 22px !important;
+  margin-inline-end: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+
+.wp-ultimate-csv-importer .Toastify__toast-icon img,
+.wp-ultimate-csv-importer .Toastify__toast-icon svg {
+  width: 100% !important;
+  height: 100% !important;
+  margin-top: 0 !important;
+  vertical-align: middle !important;
+  fill: currentColor !important;
+}
+
+.wp-ultimate-csv-importer .Toastify__toast--success .Toastify__toast-icon svg {
+  color: #22c55e !important;
+}
+
+.wp-ultimate-csv-importer .Toastify__toast--error .Toastify__toast-icon svg {
+  color: #ef4444 !important;
+}
+
+.wp-ultimate-csv-importer .Toastify__toast--info .Toastify__toast-icon svg {
+  color: #3b82f6 !important;
+}
+
+.wp-ultimate-csv-importer .Toastify__close-button {
+  align-self: center !important;
+  color: currentColor !important;
+  opacity: 0.4 !important;
+  transition: opacity 0.2s ease, transform 0.2s ease !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin-left: 12px !important;
+}
+
+.wp-ultimate-csv-importer .Toastify__close-button:hover {
+  opacity: 0.8 !important;
+  transform: scale(1.1) !important;
+}
 
 .wp-ultimate-csv-importer .loader {
   width: 30px;
@@ -3358,7 +3219,7 @@ Author: Mohamed Fariz
   height: 100%;
   border-radius: 100%;
   border: 3px solid transparent;
-  border-top-color: #00a699;
+  border-top-color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .loader-1:before {
@@ -3388,7 +3249,7 @@ Author: Mohamed Fariz
   height: 100%;
   border-radius: 100%;
   border: 3px solid transparent;
-  border-top-color: #00a699;
+  border-top-color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .ajax-loader.loading:before {
@@ -3759,6 +3620,7 @@ Author: Mohamed Fariz
 .wp-ultimate-csv-importer .csv-addon-box p {
   font-size: 15px;
 }
+
 .wp-ultimate-csv-importer .csv-addon-box .smack-btn {
   margin: 0 auto;
   display: flex;
@@ -3852,15 +3714,15 @@ Author: Mohamed Fariz
 }
 
 .wp-ultimate-csv-importer .importer-pro {
-  border-top-color: #00a699;
+  border-top-color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .importer-pro h2 {
-  color: #00a699;
+  color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .importer-pro .btn-install {
-  background: #00a699;
+  background: #3d4fdb;
   color: #fff;
   border-radius: 6px !important;
 }
@@ -3950,55 +3812,28 @@ Author: Mohamed Fariz
   border-radius: 6px;
 }
 
-.wp-ultimate-csv-importer.rtl
-  .csv-importer-panel
-  .export-section
-  .form-group
-  input[type="radio"]
-  + label {
+.wp-ultimate-csv-importer.rtl .csv-importer-panel .export-section .form-group input[type="radio"]+label {
   padding-right: 40px;
   padding-left: 0px;
 }
 
-.wp-ultimate-csv-importer.rtl
-  .csv-importer-panel
-  .export-section
-  .form-group
-  input[type="radio"]
-  + label:before {
+.wp-ultimate-csv-importer.rtl .csv-importer-panel .export-section .form-group input[type="radio"]+label:before {
   right: 5px;
 }
 
-.wp-ultimate-csv-importer.rtl
-  .csv-importer-panel
-  .export-section
-  .form-group
-  input[type="radio"]
-  + label:after {
+.wp-ultimate-csv-importer.rtl .csv-importer-panel .export-section .form-group input[type="radio"]+label:after {
   right: 10px;
 }
 
-.wp-ultimate-csv-importer.rtl
-  .csv-importer-panel
-  .export-section
-  .form-group.row {
+.wp-ultimate-csv-importer.rtl .csv-importer-panel .export-section .form-group.row {
   padding-right: 15px;
 }
 
-.wp-ultimate-csv-importer.rtl
-  .csv-importer-panel
-  .export-section
-  .form-group.row
-  input[type="radio"]
-  + label {
+.wp-ultimate-csv-importer.rtl .csv-importer-panel .export-section .form-group.row input[type="radio"]+label {
   padding-right: 25px;
 }
 
-.wp-ultimate-csv-importer.rtl
-  .fieldset
-  input[type="checkbox"]:checked
-  + .switch-ios
-  > i {
+.wp-ultimate-csv-importer.rtl .fieldset input[type="checkbox"]:checked+.switch-ios>i {
   margin-right: 18px;
 }
 
@@ -4011,35 +3846,19 @@ Author: Mohamed Fariz
   justify-content: space-between;
 }
 
-.wp-ultimate-csv-importer.rtl
-  .importing-details
-  .import-progress
-  .progress-timing {
+.wp-ultimate-csv-importer.rtl .importing-details .import-progress .progress-timing {
   position: relative;
 }
 
-.wp-ultimate-csv-importer.rtl
-  .wp-ultimate-csv-importer
-  .importer-log
-  .table
-  td.text-left {
+.wp-ultimate-csv-importer.rtl .wp-ultimate-csv-importer .importer-log .table td.text-left {
   text-align: right !important;
 }
 
-.wp-ultimate-csv-importer.rtl
-  .wp-ultimate-csv-importer
-  .importer-log
-  .table
-  td.text-right {
+.wp-ultimate-csv-importer.rtl .wp-ultimate-csv-importer .importer-log .table td.text-right {
   text-align: left !important;
 }
 
-.wp-ultimate-csv-importer.rtl
-  .table.table-mapping
-  tbody
-  tr
-  td.action
-  .manipulation-screen {
+.wp-ultimate-csv-importer.rtl .table.table-mapping tbody tr td.action .manipulation-screen {
   right: unset;
   left: 25px;
 }
@@ -4058,12 +3877,14 @@ Author: Mohamed Fariz
   width: 100%;
 }
 
-.datepicker table tbody > tr > td.active {
-  background-image: linear-gradient(to bottom, #00a699, #00736a) !important;
+.datepicker table tbody>tr>td.active {
+  background: #3d4fdb !important;
+  color: #ffffff !important;
 }
 
-.datepicker table tbody > tr > td span.active {
-  background-image: linear-gradient(to bottom, #00a699, #00736a) !important;
+.datepicker table tbody>tr>td span.active {
+  background: #3d4fdb !important;
+  color: #ffffff !important;
 }
 
 .Toastify__toast-container--top-right {
@@ -4074,12 +3895,15 @@ Author: Mohamed Fariz
 .cardbanner {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   /* box-shadow: none; */
-  background-color: #00a699ba /*#00a699 */;
+  background-color: #3d4fdbba
+    /*#3d4fdb */
+  ;
   padding: 1em 1em 1em !important;
   transition: 0.3s;
   width: 100%;
   border-radius: 0px;
 }
+
 .cardbanner .title {
   color: white !important;
 }
@@ -4092,7 +3916,7 @@ Author: Mohamed Fariz
 .cardprogress {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   /* box-shadow: none; */
-  background-color: #00a699;
+  background-color: #3d4fdb;
   padding: 1em 1em 1em !important;
   transition: 0.3s;
   width: 100%;
@@ -4112,13 +3936,13 @@ Author: Mohamed Fariz
 }
 
 .divider {
-  border-bottom: 1px solid #00a699;
+  border-bottom: 1px solid #3d4fdb;
 }
 
 .tit {
   font-size: medium;
   font-style: italic;
-  background-color: #00a699;
+  background-color: #3d4fdb;
   color: white;
 }
 
@@ -4152,12 +3976,13 @@ Author: Mohamed Fariz
 
 /*OpenAI*/
 .wp-ultimate-csv-importer .chatgpt_close {
-  color: #00a699;
+  color: #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .chatgpt_close:hover {
   text-decoration: underline;
 }
+
 .wp-ultimate-csv-importer .chatgpt-notify {
   display: flex;
   align-items: center;
@@ -4166,7 +3991,7 @@ Author: Mohamed Fariz
   padding: 10px 15px;
   border-radius: 0px 6px 6px 0px;
   background: #fff;
-  border-left: 3px solid #00a699;
+  border-left: 3px solid #3d4fdb;
 }
 
 .wp-ultimate-csv-importer .chatgpt-notify button {
@@ -4181,6 +4006,7 @@ Author: Mohamed Fariz
   vertical-align: middle;
   margin-right: 10px;
 }
+
 @font-face {
   font-family: "icomoon";
   src: url("../fonts/icomoon.eot?mmacql");
@@ -4211,37 +4037,44 @@ Author: Mohamed Fariz
 .icon-Ai_icons-05:before {
   content: "\e900";
 }
+
 .openai_head {
   /* padding: 10px; */
-  color: #00a699;
+  color: #3d4fdb;
   border-radius: 6px;
   font-size: 14px;
 }
+
 /* pagination_buttom_manager_section */
 .pre_next_button_page {
   display: none;
 }
-.pagination > li > a {
+
+.pagination>li>a {
   border-style: hidden;
   padding: 5px 10px;
   outline: none;
   cursor: pointer;
   box-shadow: none;
 }
-.pagination > li > a,
-.pagination > li > span {
-  color: #00a699;
+
+.pagination>li>a,
+.pagination>li>span {
+  color: #3d4fdb;
 }
+
 .pagination {
   display: flex;
   padding-left: 0;
   list-style: none;
 }
+
 .pagination .active {
-  background-color: #00a699;
+  background-color: #3d4fdb;
   color: #ffffff;
   height: 100%;
 }
+
 .addon_installed_check {
   display: inline-block;
   transform: rotate(45deg);
@@ -4251,10 +4084,12 @@ Author: Mohamed Fariz
   border-right: 7px solid #78b13f;
   margin-right: 10px;
 }
+
 .addon_already_installed {
   display: flex;
   justify-content: center;
 }
+
 /*# sourceMappingURL=csv-importer-free.css.map */
 table.table.log-manager tbody tr td:first-child {
   text-overflow: ellipsis;
@@ -4262,9 +4097,11 @@ table.table.log-manager tbody tr td:first-child {
   max-width: 140px;
   overflow-x: hidden;
 }
+
 table.table.log-manager tbody tr td:first-child:hover {
   white-space: break-spaces;
 }
+
 .rollbackAlign {
   width: 100%;
   display: flex;

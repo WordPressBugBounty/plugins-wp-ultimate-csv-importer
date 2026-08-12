@@ -43,7 +43,10 @@ class SupportMail {
 	}
 
 	public static function supportMail(){
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_admin_access()) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		if($_POST){
 			$email = sanitize_email($_POST['email']);
 			$url = get_option('siteurl');
@@ -87,7 +90,10 @@ class SupportMail {
 	}
 	
 	public static function sendSubscribeEmail(){
-				check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+				SecurityHelper::verify_ajax_nonce();
+				if (!SecurityHelper::check_admin_access()) {
+					wp_die(__('You do not have sufficient permissions to access this page.'));
+				}
 				if($_POST){
 			$email = sanitize_email($_POST['subscribe_email']);
 			$url = get_option('siteurl');

@@ -1,0 +1,241 @@
+/**
+ * Plugin deactivation feedback modal styles.
+ */
+
+body.smack-deactivation-feedback-open {
+	overflow: hidden;
+}
+
+.smack-deactivation-feedback-overlay {
+	position: fixed;
+	inset: 0;
+	z-index: 100000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 24px;
+	background: rgba(0, 0, 0, 0.55);
+	box-sizing: border-box;
+}
+
+.smack-deactivation-feedback-overlay[hidden] {
+	display: none !important;
+}
+
+.smack-deactivation-feedback-modal {
+	position: relative;
+	width: 100%;
+	max-width: 560px;
+	max-height: calc(100vh - 48px);
+	overflow: auto;
+	padding: 28px 28px 24px;
+	border-radius: 8px;
+	background: #fff;
+	box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+	color: #1d2327;
+	box-sizing: border-box;
+}
+
+.smack-deactivation-feedback-close {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+	height: 32px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 4px;
+	background: transparent;
+	color: #646970;
+	font-size: 24px;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.smack-deactivation-feedback-close:hover,
+.smack-deactivation-feedback-close:focus {
+	background: #f0f0f1;
+	color: #1d2327;
+	outline: 2px solid transparent;
+	box-shadow: 0 0 0 1px #2271b1;
+}
+
+.smack-deactivation-feedback-title {
+	margin: 0 36px 8px 0;
+	padding: 0;
+	font-size: 20px;
+	font-weight: 600;
+	line-height: 1.3;
+}
+
+.smack-deactivation-feedback-description {
+	margin: 0 0 18px;
+	color: #50575e;
+	font-size: 14px;
+	line-height: 1.5;
+}
+
+.smack-deactivation-feedback-reasons {
+	margin: 0 0 16px;
+	padding: 0;
+	border: 0;
+}
+
+.smack-deactivation-feedback-reason {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	margin: 0 0 10px;
+	padding: 10px 12px;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	background: #f6f7f7;
+	cursor: pointer;
+	transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.smack-deactivation-feedback-reason:hover {
+	border-color: #c3c4c7;
+	background: #fff;
+}
+
+.smack-deactivation-feedback-reason input {
+	margin: 3px 0 0;
+	flex-shrink: 0;
+}
+
+.smack-deactivation-feedback-reason span {
+	font-size: 14px;
+	line-height: 1.45;
+}
+
+.smack-deactivation-feedback-other-wrap {
+	margin-bottom: 18px;
+}
+
+.smack-deactivation-feedback-other-label {
+	display: block;
+	margin-bottom: 8px;
+	font-size: 13px;
+	font-weight: 600;
+}
+
+.smack-deactivation-feedback-comment {
+	display: block;
+	width: 100%;
+	min-height: 96px;
+	padding: 10px 12px;
+	border: 1px solid #8c8f94;
+	border-radius: 4px;
+	font-size: 14px;
+	line-height: 1.5;
+	resize: vertical;
+	box-sizing: border-box;
+}
+
+.smack-deactivation-feedback-comment:focus {
+	border-color: #2271b1;
+	box-shadow: 0 0 0 1px #2271b1;
+	outline: 2px solid transparent;
+}
+
+.smack-deactivation-feedback-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	align-items: center;
+}
+
+.smack-deactivation-feedback-submit {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 170px;
+}
+
+.smack-deactivation-feedback-submit.is-busy .smack-deactivation-feedback-submit-text {
+	visibility: hidden;
+}
+
+.smack-deactivation-feedback-spinner {
+	float: none;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -10px 0 0 -10px;
+	visibility: hidden;
+}
+
+.smack-deactivation-feedback-submit.is-busy .smack-deactivation-feedback-spinner,
+.smack-deactivation-feedback-spinner.is-active {
+	visibility: visible;
+}
+
+.smack-deactivation-feedback-submit:disabled,
+.smack-deactivation-feedback-skip:disabled {
+	opacity: 0.65;
+	cursor: not-allowed;
+}
+
+.smack-deactivation-feedback-error {
+	margin: 0 0 16px;
+	padding: 10px 12px;
+	border-left: 4px solid #d63638;
+	border-radius: 2px;
+	background: #fcf0f1;
+	color: #8a2424;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.smack-deactivation-feedback-success {
+	padding: 24px 8px;
+	text-align: center;
+}
+
+.smack-deactivation-feedback-success-icon {
+	margin: 0 0 12px;
+	color: #00a32a;
+	font-size: 48px;
+	line-height: 1;
+}
+
+.smack-deactivation-feedback-success-icon .dashicons {
+	width: 48px;
+	height: 48px;
+	font-size: 48px;
+}
+
+.smack-deactivation-feedback-success-message {
+	margin: 0;
+	color: #1d2327;
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+	.smack-deactivation-feedback-overlay {
+		padding: 12px;
+	}
+
+	.smack-deactivation-feedback-modal {
+		padding: 22px 18px 18px;
+	}
+
+	.smack-deactivation-feedback-actions {
+		flex-direction: column;
+		align-items: stretch;
+	}
+
+	.smack-deactivation-feedback-submit,
+	.smack-deactivation-feedback-skip {
+		width: 100%;
+		text-align: center;
+	}
+}

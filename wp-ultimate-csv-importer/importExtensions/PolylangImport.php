@@ -46,7 +46,10 @@ class PolylangImport {
 			$arr = pll_get_term_translations($pId);
 			$translated_titles = explode(',',$data_array['translated_taxonomy_title']);
 			foreach($translated_titles as $translated_title){
-				$translated_post_id = $wpdb->get_var("SELECT term_id FROM {$wpdb->prefix}terms WHERE name ='$translated_title'");
+				$translated_post_id = $wpdb->get_var($wpdb->prepare(
+					"SELECT term_id FROM {$wpdb->prefix}terms WHERE name = %s",
+					$translated_title
+				));
 				$get_language = pll_get_term_language($translated_post_id);
 				$arr[$get_language] =$translated_post_id;
 				pll_save_term_translations( $arr );
@@ -66,7 +69,10 @@ class PolylangImport {
 				$translated_titles = explode(',',$data_array['translated_post_title']);
 			}
 			foreach($translated_titles as $translated_title){
-				$translated_post_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = '$translated_title' and post_status='publish'");
+				$translated_post_id = $wpdb->get_var($wpdb->prepare(
+					"SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_status='publish'",
+					$translated_title
+				));
 				if(!empty($translated_post_id)){
 					$get_language = pll_get_post_language($translated_post_id);
 					$arr[$get_language] =$translated_post_id;

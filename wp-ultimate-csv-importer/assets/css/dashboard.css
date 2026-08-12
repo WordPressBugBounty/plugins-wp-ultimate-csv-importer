@@ -1,0 +1,8168 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --wpucsv-dash-font: 'Inter Tight', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --wpucsv-dash-bg: #f8fafc;
+  --wpucsv-dash-card-bg: #ffffff;
+  --wpucsv-dash-text: #0f172a;
+  --wpucsv-dash-text-muted: #64748b;
+  --wpucsv-dash-border: #f1f5f9;
+  --wpucsv-dash-accent: #3d4fdb;
+  --wpucsv-dash-positive: #10b981;
+  --wpucsv-dash-negative: #ef4444;
+  --wpucsv-dash-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  --wpucsv-dash-card-shadow-hover: 0 16px 32px -4px rgba(15, 23, 42, 0.08);
+  --wpucsv-dash-banner-gradient: linear-gradient(135deg, #1a2270 0%, #3d4fdb 55%, #0ea5e9 100%);
+}
+
+.wpucsv-dashboard {
+  font-family: var(--wpucsv-dash-font) !important;
+  -webkit-font-smoothing: antialiased !important;
+  -moz-osx-font-smoothing: grayscale !important;
+  text-rendering: optimizeLegibility !important;
+  font-feature-settings: "ss01", "cv11" !important;
+  background-color: var(--wpucsv-dash-bg) !important;
+  padding: 24px !important;
+  color: var(--wpucsv-dash-text) !important;
+  border-radius: 12px !important;
+  margin-top: 10px !important;
+}
+
+/* Banner Component */
+.wpucsv-dashboard-banner {
+  position: relative !important;
+  display: grid !important;
+  grid-template-columns: 1.8fr 1fr !important;
+  align-items: center !important;
+  min-height: 180px !important;
+  padding: 22px 26px !important;
+  background: var(--wpucsv-dash-banner-gradient) !important;
+  border-radius: 24px !important;
+  color: #ffffff !important;
+  overflow: hidden !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2) !important;
+  margin-bottom: 14px !important;
+}
+
+.wpucsv-dashboard-banner__grid-overlay {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px) !important;
+  background-size: 20px 20px !important;
+  opacity: 0.1 !important;
+  pointer-events: none !important;
+}
+
+.wpucsv-dashboard-banner__content {
+  position: relative !important;
+  z-index: 2 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+}
+
+.wpucsv-dashboard-banner__meta-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-bottom: 4px !important;
+  flex-wrap: wrap !important;
+}
+
+.wpucsv-dashboard-banner__tag {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 3px 8px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.18) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.02em !important;
+  color: #ffffff !important;
+  font-family: var(--wpucsv-dash-font) !important;
+}
+
+.wpucsv-dashboard-banner__greeting {
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  font-family: var(--wpucsv-dash-font) !important;
+}
+
+.wpucsv-dashboard-banner__title {
+  margin: 0 0 4px !important;
+  font-size: 30px !important;
+  font-weight: 800 !important;
+  line-height: 1.1 !important;
+  letter-spacing: -0.025em !important;
+  color: #ffffff !important;
+  font-family: var(--wpucsv-dash-font) !important;
+}
+
+.wpucsv-dashboard-banner__underline {
+  text-decoration: underline !important;
+  text-decoration-thickness: 3px !important;
+  text-underline-offset: 6px !important;
+  text-decoration-color: rgba(255, 255, 255, 0.45) !important;
+  border-bottom: none !important;
+}
+
+.wpucsv-dashboard-banner__subtitle {
+  margin: 0 0 16px !important;
+  font-size: 14px !important;
+  line-height: 1.55 !important;
+  font-weight: 400 !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  max-width: 550px !important;
+  font-family: var(--wpucsv-dash-font) !important;
+}
+
+.wpucsv-dashboard-banner__actions {
+  display: flex !important;
+  gap: 12px !important;
+}
+
+.wpucsv-dashboard-banner__btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 9px 14px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  font-family: var(--wpucsv-dash-font) !important;
+}
+
+.wpucsv-dashboard-banner__btn--primary {
+  background: #ffffff !important;
+  color: #312e81 !important;
+  box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.2) !important;
+}
+
+.wpucsv-dashboard-banner__btn--primary:hover {
+  background: rgba(255, 255, 255, 0.95) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 20px -4px rgba(0, 0, 0, 0.3) !important;
+}
+
+.wpucsv-dashboard-banner__btn--secondary {
+  background: rgba(255, 255, 255, 0.12) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+.wpucsv-dashboard-banner__btn--secondary:hover {
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  background: rgba(255, 255, 255, 0.25) !important;
+  transform: translateY(-2px) !important;
+}
+
+.wpucsv-dashboard-banner__chart-container {
+  position: relative !important;
+  z-index: 2 !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  height: 160px !important;
+}
+
+.wpucsv-dashboard-banner__chart-wrap {
+  position: relative !important;
+  width: 160px !important;
+  height: 160px !important;
+}
+
+.wpucsv-dashboard-banner__chart-center {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+  pointer-events: none !important;
+}
+
+.wpucsv-dashboard-banner__chart-value {
+  font-size: 23px !important;
+  font-weight: 800 !important;
+  color: #ffffff !important;
+  line-height: 1 !important;
+  letter-spacing: -0.02em !important;
+  font-family: var(--wpucsv-dash-font) !important;
+}
+
+.wpucsv-dashboard-banner__chart-label {
+  font-size: 11px !important;
+  text-transform: none !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.01em !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+  margin-top: 3px !important;
+  font-family: var(--wpucsv-dash-font) !important;
+}
+
+/* KPI Cards Section */
+.wpucsv-dashboard-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.wpucsv-dashboard-card {
+  background: var(--wpucsv-dash-card-bg);
+  border: 1px solid var(--wpucsv-dash-border);
+  border-radius: 20px;
+  box-shadow: var(--wpucsv-dash-shadow);
+  padding: 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+.wpucsv-dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--wpucsv-dash-card-shadow-hover);
+}
+
+.wpucsv-dashboard-kpi-card {
+  position: relative;
+  overflow: hidden;
+  height: 190px;
+}
+
+.wpucsv-dashboard-kpi-card__header {
+  margin-bottom: 8px;
+}
+
+.wpucsv-dashboard-kpi-card__title {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  color: var(--wpucsv-dash-text-muted);
+}
+
+.wpucsv-dashboard-kpi-card__body {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.wpucsv-dashboard-kpi-card__value {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--wpucsv-dash-text);
+  line-height: 1.15;
+}
+
+.wpucsv-dashboard-kpi-card__growth {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.wpucsv-dashboard-kpi-card__growth.is-positive {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.wpucsv-dashboard-kpi-card__growth.is-negative {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.wpucsv-dashboard-kpi-card__meta {
+  font-size: 12px;
+  color: var(--wpucsv-dash-text-muted);
+  margin-bottom: auto;
+}
+
+.wpucsv-dashboard-kpi-card__sparkline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 48px;
+  width: 100%;
+}
+
+/* Grids & Chart Layout */
+.wpucsv-dashboard-main-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.wpucsv-dashboard-chart-card {
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+}
+
+.wpucsv-dashboard-chart-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.wpucsv-dashboard-section-title {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--wpucsv-dash-text);
+}
+
+.wpucsv-dashboard-section-subtitle {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--wpucsv-dash-text-muted);
+}
+
+.wpucsv-dashboard-chart-wrap {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  min-height: 260px;
+}
+
+/* Content Distribution widget */
+.wpucsv-dashboard-distribution-card {
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+}
+
+.wpucsv-dashboard-distribution-card__header {
+  margin-bottom: 20px;
+}
+
+.wpucsv-dashboard-distribution-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wpucsv-dashboard-distribution-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wpucsv-dashboard-distribution-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13.5px;
+}
+
+.wpucsv-dashboard-distribution-label {
+  color: #334155;
+  font-weight: 500;
+}
+
+.wpucsv-dashboard-distribution-count {
+  color: var(--wpucsv-dash-text);
+  font-weight: 600;
+}
+
+.wpucsv-dashboard-progress {
+  height: 6px;
+  background: #f1f5f9;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.wpucsv-dashboard-progress span {
+  display: block;
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.6s ease;
+}
+
+/* Recent Activity Component */
+.wpucsv-dashboard-activity-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.wpucsv-dashboard-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.wpucsv-dashboard-link-btn {
+  display: inline-flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--wpucsv-dash-accent);
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.15s ease;
+}
+
+.wpucsv-dashboard-link-btn:hover {
+  color: #1e2270;
+}
+
+.wpucsv-dashboard-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--wpucsv-dash-border);
+  border-radius: 12px;
+}
+
+.wpucsv-dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.wpucsv-dashboard-table th {
+  background: #f8fafc;
+  padding: 12px 16px;
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--wpucsv-dash-text-muted);
+  border-bottom: 1px solid var(--wpucsv-dash-border);
+}
+
+.wpucsv-dashboard-table td {
+  padding: 16px;
+  font-size: 13.5px;
+  color: #334155;
+  border-bottom: 1px solid var(--wpucsv-dash-border);
+}
+
+.wpucsv-dashboard-table tr:last-child td {
+  border-bottom: none;
+}
+
+.wpucsv-dashboard-table tr:hover td {
+  background-color: #f8fafc;
+}
+
+.wpucsv-dashboard-table-date {
+  color: var(--wpucsv-dash-text-muted);
+}
+
+.wpucsv-dashboard-table-records {
+  font-weight: 600;
+  color: var(--wpucsv-dash-text);
+}
+
+.wpucsv-dashboard-activity-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wpucsv-dashboard-activity-label {
+  font-weight: 600;
+  color: var(--wpucsv-dash-text);
+}
+
+.wpucsv-dashboard-activity-module {
+  font-size: 11px;
+  color: var(--wpucsv-dash-text-muted);
+  font-weight: 500;
+}
+
+/* Status Chips */
+.wpucsv-dashboard-status-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.wpucsv-dashboard-status-chip.status-completed {
+  background-color: #ecfdf5;
+  color: #059669;
+}
+
+.wpucsv-dashboard-status-chip.status-failed {
+  background-color: #fef2f2;
+  color: #dc2626;
+}
+
+.wpucsv-dashboard-status-chip.status-processing {
+  background-color: #eff6ff;
+  color: #2563eb;
+}
+
+.wpucsv-dashboard-status-chip.status-scheduled {
+  background-color: #f5f3ff;
+  color: #7c3aed;
+}
+
+/* Empty State */
+.wpucsv-dashboard-empty {
+  color: var(--wpucsv-dash-text-muted);
+  text-align: center;
+  padding: 32px 16px;
+  font-size: 13.5px;
+}
+
+/* Loader Shimmer */
+.wpucsv-dashboard-skeleton {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #f1f5f9 25%, #f8fafc 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: wpucsv-dashboard-shimmer 1.4s infinite;
+}
+
+.wpucsv-dashboard-skeleton--chart {
+  height: 260px;
+}
+
+.wpucsv-dashboard-skeleton--panel {
+  height: 240px;
+}
+
+.wpucsv-dashboard-skeleton--row {
+  height: 48px;
+}
+
+@keyframes wpucsv-dashboard-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Recent Activity Custom Columns Styles */
+.wpucsv-dashboard-table-module {
+  font-weight: 500;
+  color: var(--wpucsv-dash-text);
+}
+
+.wpucsv-dashboard-table-inserted,
+.wpucsv-dashboard-table-updated,
+.wpucsv-dashboard-table-skipped,
+.wpucsv-dashboard-table-failed,
+.wpucsv-dashboard-table-records {
+  text-align: center;
+}
+
+.wpucsv-dashboard-table th:nth-child(4),
+.wpucsv-dashboard-table th:nth-child(5),
+.wpucsv-dashboard-table th:nth-child(6),
+.wpucsv-dashboard-table th:nth-child(7),
+.wpucsv-dashboard-table th:nth-child(8) {
+  text-align: center;
+}
+
+.wpucsv-text-danger {
+  color: var(--wpucsv-dash-negative);
+  font-weight: 600;
+}
+
+/* Media Queries */
+@media (max-width: 1200px) {
+  .wpucsv-dashboard-banner {
+    grid-template-columns: 1.5fr 1fr;
+    padding: 24px 30px;
+  }
+
+  .wpucsv-dashboard-kpi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .wpucsv-dashboard-main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .wpucsv-dashboard-banner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px;
+  }
+
+  .wpucsv-dashboard-banner__chart-container {
+    justify-content: center;
+  }
+
+  .wpucsv-dashboard-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   Premium Sidebar Layout for WP Ultimate CSV Importer
+   ========================================================================== */
+
+:root {
+  --wpucsv-sb-bg: #ffffff;
+  --wpucsv-sb-border: #e2e8f0;
+  --wpucsv-sb-text: #475569;
+  --wpucsv-sb-text-hover: #0f172a;
+  --wpucsv-sb-text-active: #2563eb;
+  --wpucsv-sb-bg-hover: #f1f5f9;
+  --wpucsv-sb-bg-active: #eff6ff;
+  --wpucsv-sb-accent: #3d4fdb;
+  --wpucsv-sb-accent-hover: #1d4ed8;
+}
+
+/* Hide default/original tab navigation completely */
+.tab-section {
+  display: none !important;
+}
+
+.manipulation-screen .tab-section {
+  display: flex !important;
+}
+
+/* Sidebar Wrapper */
+.wpucsv-layout-wrapper {
+  display: flex;
+  min-height: calc(100vh - 32px - 60px);
+  /* WP Admin height adjustments */
+  margin: 0 !important;
+  background-color: #f8fafc;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* WordPress sidebar spacing and structure adjustments */
+#wpbody-content {
+  padding-bottom: 0 !important;
+}
+
+.wpucsv-sidebar {
+  width: 260px;
+  background-color: var(--wpucsv-sb-bg);
+  border-right: 1px solid var(--wpucsv-sb-border);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  flex-shrink: 0;
+}
+
+/* Logo box */
+.wpucsv-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+  padding-left: 8px;
+}
+
+.wpucsv-logo-box {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #4f46e5, #06b6d4);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.wpucsv-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.wpucsv-brand-title {
+  font-weight: 700;
+  font-size: 15px;
+  color: #0f172a;
+}
+
+.wpucsv-brand-subtitle {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+/* Sidebar button action */
+.wpucsv-sidebar-action {
+  margin-bottom: 24px;
+  padding: 0 4px;
+}
+
+.wpucsv-btn-new-import {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 11px 16px;
+  background-color: var(--wpucsv-sb-accent);
+  color: #ffffff !important;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.15);
+}
+
+.wpucsv-btn-new-import:hover {
+  background-color: var(--wpucsv-sb-accent-hover);
+  box-shadow: 0 6px 12px -2px rgba(37, 99, 235, 0.25);
+  transform: translateY(-1px);
+}
+
+.wpucsv-btn-new-import.active {
+  background-color: var(--wpucsv-sb-accent);
+}
+
+/* Sidebar Menu list */
+.wpucsv-sidebar-menu {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wpucsv-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: var(--wpucsv-sb-text);
+  font-weight: 500;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.wpucsv-menu-item:hover {
+  background-color: var(--wpucsv-sb-bg-hover);
+  color: var(--wpucsv-sb-text-hover);
+}
+
+.wpucsv-menu-item.active {
+  background-color: var(--wpucsv-sb-bg-active);
+  color: var(--wpucsv-sb-text-active);
+  font-weight: 600;
+}
+
+.wpucsv-menu-icon {
+  color: currentColor;
+  flex-shrink: 0;
+  opacity: 0.85;
+  transition: transform 0.2s ease;
+}
+
+.wpucsv-menu-item:hover .wpucsv-menu-icon {
+  transform: scale(1.05);
+}
+
+.wpucsv-menu-item.active .wpucsv-menu-icon {
+  opacity: 1;
+}
+
+/* Main Content Area */
+.wpucsv-main-layout {
+  flex: 1;
+  padding: 22px 28px 30px;
+  min-width: 0;
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Header bar */
+.wpucsv-header-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* margin-bottom: 24px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 16px; */
+}
+
+.wpucsv-switcher-wrap {
+  flex: 1;
+}
+
+.wpucsv-links-wrap {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Overrides for bootstrap container inside layout */
+.wpucsv-main-layout .container {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Maintainance and Chatgpt Banners styling */
+.maintenance-mode-banner {
+  background-color: #fef3c7;
+  border: 1px solid #fde68a;
+  color: #92400e;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  font-size: 13.5px;
+}
+
+.chatgpt-notify {
+  position: relative !important;
+  background: var(--wpucsv-dash-banner-gradient) !important;
+  border: none !important;
+  border-radius: 16px !important;
+  padding: 16px 48px 16px 20px !important;
+  margin: 0 0 24px 0 !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  box-shadow: 0 10px 20px -5px rgba(37, 99, 235, 0.2) !important;
+  color: #ffffff !important;
+  font-family: var(--wpucsv-dash-font) !important;
+}
+
+.chatgpt-notify__body {
+  display: flex !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 16px !important;
+  flex: 1 !important;
+}
+
+.chatgptcontent {
+  color: rgba(255, 255, 255, 0.95) !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  line-height: 1.5 !important;
+}
+
+.chatgpt-upgrade-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  background: #ffffff !important;
+  color: #1a2270 !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  padding: 8px 16px !important;
+  border-radius: 8px !important;
+  font-size: 13px !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  white-space: nowrap !important;
+}
+
+.chatgpt-upgrade-btn:hover {
+  background: rgba(255, 255, 255, 0.9) !important;
+  transform: translateY(-1px) !important;
+  text-decoration: none !important;
+}
+
+.chatgpt_close {
+  position: absolute !important;
+  top: 12px !important;
+  right: 12px !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  border: none !important;
+  width: 28px !important;
+  height: 28px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #ffffff !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+.chatgpt_close:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+
+/* Content Body */
+.wpucsv-content-body {
+  flex: 1;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .wpucsv-layout-wrapper {
+    flex-direction: column;
+    margin: 0;
+  }
+
+  .wpucsv-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--wpucsv-sb-border);
+    padding: 16px;
+  }
+
+  .wpucsv-sidebar-brand {
+    margin-bottom: 16px;
+  }
+
+  .wpucsv-sidebar-menu {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .wpucsv-menu-item {
+    padding: 8px 12px;
+  }
+
+  .wpucsv-main-layout {
+    padding: 16px;
+  }
+}
+
+/* Prevent horizontal scrollbar on WordPress admin pages containing the CSV Importer */
+body.smack-csv-importer,
+body.smack-csv-importer #wpwrap,
+body.smack-csv-importer #wpcontent,
+body.smack-csv-importer #wpbody {
+  overflow-x: hidden !important;
+}
+
+body.smack-csv-importer #wpcontent {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+body.smack-csv-importer #wpbody-content {
+  padding: 0 !important;
+  margin: 0 !important;
+  min-height: calc(100vh - 32px) !important;
+}
+
+/* ==========================================================================
+   Premium Support Tab styling (Audie Data Migrator Premium Style)
+   ========================================================================== */
+.wpucsv-support-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 100%;
+  font-family: var(--wpucsv-dash-font);
+  color: var(--wpucsv-dash-text);
+  margin-top: 10px;
+}
+
+/* Rate Us Banner */
+.wpucsv-support-banner {
+  background: linear-gradient(135deg, rgba(61, 79, 219, 0.08) 0%, rgba(14, 165, 233, 0.04) 100%);
+  border: 1px solid rgba(61, 79, 219, 0.16);
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--wpucsv-dash-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.wpucsv-support-banner__glow {
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.wpucsv-support-banner-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--wpucsv-dash-banner-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(61, 79, 219, 0.25);
+}
+
+.wpucsv-support-banner-text {
+  flex-grow: 1;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: #1e293b;
+  line-height: 1.5;
+}
+
+.wpucsv-support-banner-text a {
+  color: var(--wpucsv-dash-accent);
+  font-weight: 700;
+  text-decoration: none;
+  transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.wpucsv-support-banner-text a:hover {
+  color: #0ea5e9;
+  text-decoration: underline;
+}
+
+/* Two-column layout */
+.wpucsv-support-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 992px) {
+  .wpucsv-support-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Premium Card */
+.wpucsv-support-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.wpucsv-support-card__header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, rgba(61, 79, 219, 0.04) 0%, rgba(14, 165, 233, 0.02) 100%);
+}
+
+.wpucsv-support-card__title {
+  font-size: 16px;
+  font-weight: 750;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.wpucsv-support-card__body {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex-grow: 1;
+}
+
+/* Resource sections */
+.wpucsv-support-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wpucsv-support-section__title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  margin-bottom: 4px;
+}
+
+.wpucsv-support-section__links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wpucsv-support-link-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  text-decoration: none !important;
+  color: #334155;
+  font-weight: 500;
+  font-size: 13.5px;
+  transition: all 0.2s ease;
+}
+
+.wpucsv-support-link-item:hover {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.wpucsv-support-link-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(61, 79, 219, 0.1);
+  color: var(--wpucsv-dash-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wpucsv-support-link-arrow {
+  margin-left: auto;
+  color: #94a3b8;
+  transition: transform 0.2s ease;
+}
+
+.wpucsv-support-link-item:hover .wpucsv-support-link-arrow {
+  transform: translateX(3px);
+  color: var(--wpucsv-dash-accent);
+}
+
+/* Info Paragraphs */
+.wpucsv-support-info-box {
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 13.5px;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.wpucsv-support-info-box p {
+  margin: 0 0 12px 0;
+}
+
+.wpucsv-support-info-box p:last-child {
+  margin-bottom: 0;
+}
+
+.wpucsv-support-info-box a {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.wpucsv-support-info-box a:hover {
+  text-decoration: underline;
+}
+
+/* Form inputs & buttons */
+.wpucsv-support-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wpucsv-support-form-group label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.wpucsv-support-input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 13.5px;
+  font-family: inherit;
+  color: #1e293b;
+  transition: all 0.2s ease;
+  background-color: #ffffff;
+}
+
+.wpucsv-support-input:focus {
+  outline: none;
+  border-color: var(--wpucsv-dash-accent);
+  box-shadow: 0 0 0 3px rgba(61, 79, 219, 0.15);
+}
+
+.wpucsv-support-btn-submit {
+  width: auto;
+  align-self: flex-end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #3d4fdb !important;
+  color: #ffffff !important;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.2) !important;
+}
+
+.wpucsv-support-btn-submit:hover {
+  background: #2344cc !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(56, 88, 233, 0.3) !important;
+}
+
+/* Notes & Warnings */
+.wpucsv-support-note-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.wpucsv-support-note-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.wpucsv-support-note-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(61, 79, 219, 0.08);
+  color: var(--wpucsv-dash-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wpucsv-support-note-text {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   Premium Settings Tab styling (Audie Data Migrator Premium Style)
+   ========================================================================== */
+.wpucsv-settings-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 32px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+  padding: 32px;
+  border: 1px solid #e2e8f0;
+  width: 100%;
+}
+
+@media (max-width: 992px) {
+  .wpucsv-settings-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 20px;
+  }
+}
+
+/* Sidebar navigation */
+.wpucsv-settings-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-right: 1px solid #f1f5f9;
+  padding-right: 24px;
+}
+
+.wpucsv-settings-nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.wpucsv-settings-nav-heading {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  padding: 0 16px;
+  margin-bottom: 6px;
+}
+
+@media (max-width: 992px) {
+  .wpucsv-settings-sidebar {
+    border-right: none;
+    border-bottom: 1px solid #f1f5f9;
+    padding-right: 0;
+    padding-bottom: 16px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .wpucsv-settings-nav-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 0;
+  }
+
+  .wpucsv-settings-nav-heading {
+    width: 100%;
+    margin-bottom: 4px;
+    padding: 0;
+  }
+}
+
+.wpucsv-settings-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: #334155;
+  font-weight: 500;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.wpucsv-settings-nav-item:hover {
+  background: #f8fafc;
+  border-color: #e2e8f0;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.wpucsv-settings-nav-item.active {
+  background: linear-gradient(135deg, rgba(61, 79, 219, 0.08) 0%, rgba(14, 165, 233, 0.04) 100%);
+  border: 1px solid rgba(61, 79, 219, 0.16);
+  color: #0f172a;
+  box-shadow: var(--wpucsv-dash-shadow);
+}
+
+.wpucsv-settings-nav-item.active:hover {
+  background: linear-gradient(135deg, rgba(61, 79, 219, 0.1) 0%, rgba(14, 165, 233, 0.06) 100%);
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.wpucsv-settings-nav-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: rgba(61, 79, 219, 0.1);
+  color: var(--wpucsv-dash-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.wpucsv-settings-nav-item.active .wpucsv-settings-nav-icon {
+  background: var(--wpucsv-dash-banner-gradient);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(61, 79, 219, 0.25);
+}
+
+/* Pro Tag */
+.wpucsv-settings-pro-tag {
+  margin-left: auto;
+  font-size: 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #e04b4a, #dc2626);
+  color: #ffffff;
+  padding: 2.5px 6px 1.5px 6px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+  line-height: normal;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(224, 75, 74, 0.15);
+}
+
+/* Content Area */
+.wpucsv-settings-content {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.wpucsv-settings-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: linear-gradient(135deg, rgba(61, 79, 219, 0.04) 0%, rgba(14, 165, 233, 0.02) 100%);
+  flex-shrink: 0;
+  margin-bottom: 8px;
+}
+
+.wpucsv-settings-title {
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  color: #0f172a !important;
+  margin: 0 !important;
+  letter-spacing: -0.01em !important;
+}
+
+.wpucsv-settings-desc {
+  font-size: 13.5px !important;
+  color: #475569 !important;
+  margin: 4px 0 0 !important;
+  line-height: 1.5 !important;
+}
+
+/* Setting Card / List rows */
+.wpucsv-settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wpucsv-settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.wpucsv-settings-row:hover {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.wpucsv-settings-row__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
+}
+
+.wpucsv-settings-row__title {
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  color: #334155 !important;
+  margin: 0 !important;
+}
+
+.wpucsv-settings-row__desc {
+  font-size: 13px !important;
+  color: #64748b !important;
+  margin: 0 !important;
+  line-height: 1.45 !important;
+}
+
+.wpucsv-settings-layout .smack-btn {
+  text-transform: none !important;
+  font-weight: 500 !important;
+}
+
+/* Premium toggle switch */
+.wpucsv-toggle {
+  position: relative;
+  display: inline-block;
+  width: 46px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.wpucsv-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.wpucsv-toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #cbd5e1;
+  transition: .3s;
+  border-radius: 34px;
+}
+
+.wpucsv-toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .3s;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.wpucsv-toggle input:checked+.wpucsv-toggle-slider {
+  background-color: #3d4fdb;
+}
+
+.wpucsv-toggle input:focus+.wpucsv-toggle-slider {
+  box-shadow: 0 0 1px #3d4fdb;
+}
+
+.wpucsv-toggle input:checked+.wpucsv-toggle-slider:before {
+  transform: translateX(22px);
+}
+
+/* Database Optimization */
+.wpucsv-dbopt-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+  .wpucsv-dbopt-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wpucsv-dbopt-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.wpucsv-dbopt-card:hover {
+  background: #ffffff;
+  border-color: #cbd5e1;
+}
+
+.wpucsv-dbopt-card__label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #334155;
+  margin: 0;
+  flex: 1;
+  line-height: 1.4;
+}
+
+.wpucsv-dbopt-card .wpucsv-toggle {
+  flex-shrink: 0;
+}
+
+/* Premium Tables */
+.wpucsv-table-container {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.01);
+  margin-top: 16px;
+}
+
+.wpucsv-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13.5px;
+}
+
+.wpucsv-table th {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 700;
+  padding: 14px 18px;
+  border-bottom: 1px solid #e2e8f0;
+  text-transform: uppercase;
+  font-size: 11.5px;
+  letter-spacing: 0.05em;
+}
+
+.wpucsv-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+  font-weight: 500;
+}
+
+.wpucsv-table tr:last-child td {
+  border-bottom: none;
+}
+
+.wpucsv-table tr:hover td {
+  background: #f8fafc;
+}
+
+.wpucsv-table__var {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.wpucsv-table__val {
+  color: #334155;
+}
+
+.wpucsv-table__req {
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* Documentation list */
+.wpucsv-doc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+@media (max-width: 768px) {
+  .wpucsv-doc-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wpucsv-doc-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  text-decoration: none !important;
+  color: #1e293b;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.wpucsv-doc-card:hover {
+  background: #ffffff;
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  transform: translateY(-1px);
+}
+
+.wpucsv-doc-card__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(56, 88, 233, 0.1);
+  color: #3d4fdb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wpucsv-doc-card__arrow {
+  margin-left: auto;
+  color: #94a3b8;
+  transition: transform 0.2s ease;
+}
+
+.wpucsv-doc-card:hover .wpucsv-doc-card__arrow {
+  transform: translateX(3px);
+  color: #3d4fdb;
+}
+
+/* ==========================================================================
+   Premium Add-ons Page Styling (Audie Data Migrator Premium Style)
+   ========================================================================== */
+.wpucsv-addons-container {
+  font-family: var(--wpucsv-dash-font), sans-serif;
+  color: var(--wpucsv-dash-text);
+  /* padding: 12px; */
+}
+
+.wpucsv-addons-header {
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 20px;
+  margin-bottom: 32px;
+}
+
+.wpucsv-addons-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.02em;
+}
+
+.wpucsv-addons-desc {
+  font-size: 14px;
+  color: var(--wpucsv-dash-text-muted);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.wpucsv-addons-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+@media (max-width: 1200px) {
+  .wpucsv-addons-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .wpucsv-addons-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wpucsv-addon-card {
+  position: relative;
+  background: var(--wpucsv-dash-card-bg);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: var(--wpucsv-dash-shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 24px;
+}
+
+.wpucsv-addon-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--wpucsv-dash-card-shadow-hover);
+  border-color: #cbd5e1;
+}
+
+.wpucsv-addon-card__top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #cbd5e1;
+}
+
+.wpucsv-addon-card--woocommerce .wpucsv-addon-card__top-bar {
+  background: #e64e6f;
+}
+
+.wpucsv-addon-card--users .wpucsv-addon-card__top-bar {
+  background: #3d4fdb;
+}
+
+.wpucsv-addon-card--exporter .wpucsv-addon-card__top-bar {
+  background: #10b981;
+}
+
+.wpucsv-addon-card__header {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  margin-top: 4px;
+}
+
+.wpucsv-addon-card__icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wpucsv-addon-card--woocommerce .wpucsv-addon-card__icon-wrap {
+  background: rgba(230, 78, 111, 0.08);
+  color: #e64e6f;
+}
+
+.wpucsv-addon-card--users .wpucsv-addon-card__icon-wrap {
+  background: rgba(56, 88, 233, 0.08);
+  color: #3d4fdb;
+}
+
+.wpucsv-addon-card--exporter .wpucsv-addon-card__icon-wrap {
+  background: rgba(16, 185, 129, 0.08);
+  color: #10b981;
+}
+
+.wpucsv-addon-card__title-area {
+  flex-grow: 1;
+}
+
+.wpucsv-addon-card__title {
+  font-size: 16.5px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0 0 6px 0;
+  line-height: 1.3;
+}
+
+.wpucsv-addon-card__desc {
+  font-size: 13px;
+  color: var(--wpucsv-dash-text-muted);
+  margin: 0;
+  line-height: 1.45;
+}
+
+.wpucsv-addon-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex-grow: 1;
+  margin-bottom: 24px;
+}
+
+.wpucsv-addon-card__section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wpucsv-addon-card__section-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.wpucsv-addon-card__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wpucsv-addon-card__list-item {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.wpucsv-addon-card__list-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.wpucsv-addon-card--woocommerce .wpucsv-addon-card__list-icon {
+  background: rgba(230, 78, 111, 0.08);
+  color: #e64e6f;
+}
+
+.wpucsv-addon-card--users .wpucsv-addon-card__list-icon {
+  background: rgba(56, 88, 233, 0.08);
+  color: #3d4fdb;
+}
+
+.wpucsv-addon-card--exporter .wpucsv-addon-card__list-icon {
+  background: rgba(16, 185, 129, 0.08);
+  color: #10b981;
+}
+
+.wpucsv-addon-card__list-text {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.4;
+}
+
+.wpucsv-addon-card__file-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 12.5px;
+  color: #475569;
+  font-weight: 500;
+}
+
+.wpucsv-addon-card__footer {
+  margin-top: auto;
+}
+
+.wpucsv-addon-card__status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.wpucsv-addon-card__status--installed {
+  background: rgba(16, 185, 129, 0.08);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.wpucsv-addon-card__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none !important;
+  color: #ffffff !important;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.wpucsv-addon-card__btn:hover {
+  transform: translateY(-1px);
+}
+
+.wpucsv-addon-card__btn--woocommerce {
+  background: #e64e6f;
+}
+
+.wpucsv-addon-card__btn--woocommerce:hover {
+  background: #d43d5d;
+  box-shadow: 0 6px 16px rgba(230, 78, 111, 0.25);
+}
+
+.wpucsv-addon-card__btn--users {
+  background: #3d4fdb;
+}
+
+.wpucsv-addon-card__btn--users:hover {
+  background: #2544cc;
+  box-shadow: 0 6px 16px rgba(56, 88, 233, 0.25);
+}
+
+.wpucsv-addon-card__btn--exporter {
+  background: #10b981;
+}
+
+.wpucsv-addon-card__btn--exporter:hover {
+  background: #059669;
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.25);
+}
+
+/* ==========================================================================
+   Premium Manager Tab Styling (Audie Data Migrator Premium Style)
+   ========================================================================== */
+.wpucsv-manager-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 32px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+  padding: 32px;
+  border: 1px solid #e2e8f0;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 20px;
+}
+
+@media (max-width: 992px) {
+  .wpucsv-manager-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 20px;
+  }
+}
+
+/* Sidebar navigation */
+.wpucsv-manager-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-right: 1px solid #f1f5f9;
+  padding-right: 24px;
+}
+
+.wpucsv-manager-nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.wpucsv-manager-nav-heading {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  padding: 0 16px;
+  margin-bottom: 6px;
+}
+
+@media (max-width: 992px) {
+  .wpucsv-manager-sidebar {
+    border-right: none;
+    border-bottom: 1px solid #f1f5f9;
+    padding-right: 0;
+    padding-bottom: 16px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .wpucsv-manager-nav-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 0;
+  }
+
+  .wpucsv-manager-nav-heading {
+    width: 100%;
+    margin-bottom: 4px;
+    padding: 0;
+  }
+}
+
+.wpucsv-manager-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.wpucsv-manager-nav-item:hover {
+  background: #f8fafc;
+  color: #334155;
+}
+
+.wpucsv-manager-nav-item.active {
+  background: #3d4fdb;
+  color: #ffffff;
+}
+
+.wpucsv-manager-nav-item.active:hover {
+  background: #3d4fdb;
+  color: #ffffff;
+}
+
+.wpucsv-manager-nav-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Pro Tag */
+.wpucsv-manager-pro-tag {
+  margin-left: auto;
+  font-size: 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #e04b4a, #dc2626);
+  color: #ffffff;
+  padding: 2.5px 6px 1.5px 6px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+  line-height: normal;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(224, 75, 74, 0.15);
+}
+
+/* Content Area compatibility overrides for nested Bootstrap grid items */
+.wpucsv-manager-content {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  width: 100%;
+}
+
+.wpucsv-manager-content .col-sm-8,
+.wpucsv-manager-content .col-md-9 {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: 0 0 100% !important;
+  padding: 0 !important;
+}
+
+.wpucsv-manager-content .setting-tab-pane {
+  padding: 0 !important;
+}
+
+.wpucsv-manager-content .row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.wpucsv-manager-content .col-md-12 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* ==========================================================================
+   Premium Top-Navigation Manager Layout (Audie Data Migrator Style)
+   ========================================================================== */
+.wpucsv-manager-layout-top {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  /* padding: 12px; */
+}
+
+.wpucsv-manager-tabs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.wpucsv-manager-header {
+  margin-bottom: 24px;
+  padding-bottom: 4px;
+}
+
+.wpucsv-manager-title {
+  font-size: 22px;
+  font-weight: 600 !important;
+  color: #0f172a;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.02em;
+  font-family: var(--wpucsv-dash-font), sans-serif;
+}
+
+.wpucsv-manager-desc {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+  font-family: var(--wpucsv-dash-font), sans-serif;
+  line-height: 1.6;
+}
+
+.wpucsv-manager-tabs-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #ffffff;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: none;
+  flex-wrap: nowrap;
+  /* keep in a single row */
+  overflow-x: auto;
+  /* enable horizontal scrolling */
+  overflow-y: visible;
+  width: fit-content;
+  max-width: 100%;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+  margin-bottom: 8px;
+}
+
+/* Custom scrollbar styling for webkit browsers */
+.wpucsv-manager-tabs-bar::-webkit-scrollbar {
+  height: 4px;
+}
+
+.wpucsv-manager-tabs-bar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.wpucsv-manager-tabs-bar::-webkit-scrollbar-thumb {
+  background-color: #e2e8f0;
+  border-radius: 20px;
+}
+
+.wpucsv-manager-tabs-bar::-webkit-scrollbar-thumb:hover {
+  background-color: #cbd5e1;
+}
+
+.wpucsv-manager-tab-item {
+  position: relative;
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  color: #475569;
+  font-weight: 500;
+  font-size: 13.5px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  transition: all 0.12s ease-in-out;
+  outline: none !important;
+  font-family: var(--wpucsv-dash-font), sans-serif;
+  flex-shrink: 0;
+  /* prevent tabs from shrinking */
+}
+
+.wpucsv-manager-tab-item.has-badge {
+  padding-right: 28px;
+}
+
+.wpucsv-manager-tab-item:hover {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.wpucsv-manager-tab-item.active {
+  background: #3d4fdb;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.wpucsv-manager-tab-item.active:hover {
+  background: #3d4fdb;
+  color: #ffffff;
+}
+
+.wpucsv-manager-tab-icon {
+  flex-shrink: 0;
+}
+
+.wpucsv-manager-badge-pro {
+  position: absolute;
+  top: 4px;
+  right: 6px;
+  font-size: 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #e04b4a, #dc2626);
+  color: #ffffff;
+  padding: 2.5px 5px 1.5px 5px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+  line-height: normal;
+  box-shadow: 0 2px 4px rgba(224, 75, 74, 0.15);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wpucsv-manager-tab-item.active .wpucsv-manager-badge-pro {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  box-shadow: none;
+}
+
+/* Content compatibility overrides */
+.wpucsv-manager-content-top {
+  width: 100%;
+}
+
+.wpucsv-manager-content-top .col-sm-8,
+.wpucsv-manager-content-top .col-md-9 {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: 0 0 100% !important;
+  padding: 0 !important;
+}
+
+.wpucsv-manager-content-top .setting-tab-pane {
+  padding: 0 !important;
+}
+
+.wpucsv-manager-content-top .row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.wpucsv-manager-content-top .col-md-12 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* ==========================================================================
+   Premium Log Manager Styles (Audie Data Migrator Style)
+   ========================================================================== */
+.wpucsv-log-manager-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 12px;
+}
+
+.wpucsv-log-manager-heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 20px 0;
+  font-family: var(--wpucsv-dash-font), sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.wpucsv-log-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid #f1f5f9;
+}
+
+.wpucsv-log-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: var(--wpucsv-dash-font), sans-serif;
+}
+
+.wpucsv-log-table thead th {
+  background: #f8fafc;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 14px 16px;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.wpucsv-log-table tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.15s ease;
+}
+
+.wpucsv-log-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.wpucsv-log-table tbody td {
+  padding: 16px;
+  vertical-align: middle;
+  color: #334155;
+  font-size: 14px;
+}
+
+.wpucsv-log-file-name {
+  font-weight: 600;
+  color: #1e293b;
+  white-space: nowrap;
+  margin-bottom: 4px;
+}
+
+.wpucsv-log-table thead th:first-child,
+.wpucsv-log-table tbody td:first-child {
+  min-width: 260px;
+}
+
+.wpucsv-log-revision-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #64748b;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.wpucsv-log-revision-badge span {
+  font-weight: 700;
+  color: #475569;
+}
+
+.wpucsv-log-module-badge {
+  display: inline-block;
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+  cursor: help;
+}
+
+.wpucsv-log-count {
+  font-weight: 600;
+}
+
+.wpucsv-log-count-inserted {
+  color: #10b981;
+}
+
+.wpucsv-log-count-updated {
+  color: #3b82f6;
+}
+
+.wpucsv-log-count-skipped {
+  color: #f59e0b;
+}
+
+.wpucsv-log-count-failed {
+  color: #ef4444;
+}
+
+.wpucsv-log-actions-row {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.wpucsv-log-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wpucsv-log-action-btn:hover {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  transform: translateY(-1px);
+}
+
+.wpucsv-log-action-img {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+
+.wpucsv-log-delete-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #fff5f5;
+  border: 1px solid #ffe3e3;
+  color: #ef4444;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wpucsv-log-delete-btn:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
+  transform: translateY(-1px);
+}
+
+.wpucsv-log-no-records {
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.wpucsv-log-loader-container {
+  display: flex;
+  justify-content: center;
+  padding: 30px 0;
+}
+
+/* Premium Pagination Styles */
+.wpucsv-log-pagination-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.wpucsv-pagination {
+  display: flex;
+  gap: 6px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.wpucsv-pagination li {
+  display: inline-block;
+}
+
+.wpucsv-pagination li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 8px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #ffffff;
+}
+
+.wpucsv-pagination li a:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.wpucsv-pagination li.active a {
+  background: #3d4fdb;
+  border-color: #3d4fdb;
+  color: #ffffff;
+}
+
+.wpucsv-pagination li.disabled a {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #f1f5f9;
+}
+
+/* ==========================================================================
+   Premium Template Manager Styles
+   ========================================================================== */
+.wpucsv-template-manager-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 12px;
+}
+
+.wpucsv-template-manager-heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 20px 0;
+  font-family: var(--wpucsv-dash-font), sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.wpucsv-template-search-wrapper {
+  position: relative !important;
+  width: 100% !important;
+  max-width: 420px !important;
+  margin-bottom: 24px !important;
+  display: block !important;
+}
+
+.wpucsv-template-search-icon {
+  position: absolute !important;
+  left: 14px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  color: #64748b !important;
+  pointer-events: none !important;
+  z-index: 10 !important;
+  width: 16px !important;
+  height: 16px !important;
+  display: block !important;
+}
+
+.wpucsv-template-search-input {
+  width: 100% !important;
+  height: 42px !important;
+  padding: 10px 14px 10px 42px !important;
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 10px !important;
+  color: #0f172a !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  outline: none !important;
+  transition: all 0.2s ease !important;
+  font-family: var(--wpucsv-dash-font), sans-serif !important;
+  box-sizing: border-box !important;
+}
+
+.wpucsv-template-search-input:focus {
+  background: #ffffff;
+  border-color: #3d4fdb;
+  box-shadow: 0 0 0 3px rgba(56, 88, 233, 0.1);
+}
+
+.wpucsv-template-loader-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.wpucsv-template-group-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.01);
+}
+
+.wpucsv-template-group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: #ffffff;
+  transition: background-color 0.15s ease;
+}
+
+.wpucsv-template-group-header:hover {
+  background: #f8fafc;
+}
+
+.wpucsv-template-group-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+  font-family: var(--wpucsv-dash-font), sans-serif;
+}
+
+.wpucsv-template-group-badge {
+  font-size: 12px;
+  font-weight: 600;
+  color: #2563eb;
+  background: #eff6ff;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.wpucsv-template-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-top: 1px solid #e2e8f0;
+}
+
+.wpucsv-template-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-family: var(--wpucsv-dash-font), sans-serif;
+}
+
+.wpucsv-template-table thead th {
+  background: #f8fafc;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 12px 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.wpucsv-template-table tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+  transition: background-color 0.15s ease;
+}
+
+.wpucsv-template-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.wpucsv-template-table tbody td {
+  padding: 14px 20px;
+  vertical-align: middle;
+  color: #334155;
+  font-size: 14px;
+}
+
+.wpucsv-template-id-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f1f5f9;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.wpucsv-template-id-badge code {
+  font-family: monospace;
+  font-size: 12px;
+  color: #475569;
+  background: transparent;
+  padding: 0;
+}
+
+.wpucsv-template-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.wpucsv-template-copy-btn:hover {
+  color: #3d4fdb;
+}
+
+.wpucsv-template-name-cell {
+  font-weight: 600;
+  color: #1e293b;
+  max-width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wpucsv-template-time-cell {
+  color: #64748b;
+  font-size: 13.5px;
+}
+
+.wpucsv-template-actions-row {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.wpucsv-template-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.wpucsv-template-action-btn.has-pro-badge {
+  overflow: visible;
+}
+
+.wpucsv-template-action-pro-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  font-size: 7px;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #e04b4a, #dc2626);
+  color: #ffffff;
+  padding: 1.5px 4px 1px 4px;
+  border-radius: 9999px;
+  letter-spacing: 0.04em;
+  line-height: normal;
+  box-shadow: 0 2px 4px rgba(224, 75, 74, 0.15);
+  pointer-events: none;
+}
+
+.wpucsv-template-action-btn:hover {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #3b82f6;
+  transform: translateY(-1px);
+}
+
+.wpucsv-template-delete-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #fff5f5;
+  border: 1px solid #ffe3e3;
+  color: #ef4444;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wpucsv-template-delete-btn:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
+  transform: translateY(-1px);
+}
+
+.wpucsv-template-no-records {
+  color: #ef4444;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 12px;
+  display: block;
+}
+
+/* Modal Styling */
+.wpucsv-template-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+.wpucsv-template-modal-dialog {
+  width: 100%;
+  max-width: 500px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.wpucsv-template-modal-content {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  padding: 24px;
+  font-family: var(--wpucsv-dash-font), sans-serif;
+}
+
+.wpucsv-template-modal-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px 0;
+}
+
+.wpucsv-template-modal-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0 0 20px 0;
+}
+
+.wpucsv-template-modal-field {
+  margin-bottom: 16px;
+}
+
+.wpucsv-template-modal-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #475569;
+  margin-bottom: 6px;
+}
+
+.wpucsv-template-modal-id-row {
+  display: flex;
+  gap: 8px;
+}
+
+.wpucsv-template-modal-input {
+  flex: 1;
+  height: 38px;
+  padding: 8px 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  background: #f8fafc;
+  color: #334155;
+  transition: all 0.15s ease;
+}
+
+.wpucsv-template-modal-input:focus {
+  background: #ffffff;
+  border-color: #3d4fdb;
+}
+
+.wpucsv-template-modal-copy-btn {
+  height: 38px;
+  padding: 0 16px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wpucsv-template-modal-copy-btn:hover {
+  background: #dbeafe;
+}
+
+.wpucsv-template-modal-help {
+  display: block;
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.wpucsv-template-modal-urls-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+.wpucsv-template-modal-url-item label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 2px;
+}
+
+.wpucsv-template-modal-url-item input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  color: #0f172a;
+  outline: none;
+  padding: 0;
+  text-overflow: ellipsis;
+}
+
+.wpucsv-template-modal-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wpucsv-template-modal-checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid #cbd5e1;
+  cursor: pointer;
+}
+
+.wpucsv-template-modal-check label {
+  font-size: 14px;
+  color: #334155;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+
+.wpucsv-template-modal-textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  background: #ffffff;
+  color: #334155;
+  resize: vertical;
+}
+
+.wpucsv-template-modal-textarea:focus {
+  border-color: #3d4fdb;
+}
+
+.wpucsv-template-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.wpucsv-template-modal-btn-cancel {
+  height: 38px;
+  padding: 0 16px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #475569;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wpucsv-template-modal-btn-cancel:hover {
+  background: #f8fafc;
+}
+
+.wpucsv-template-modal-btn-save {
+  height: 38px;
+  padding: 0 16px;
+  background: #3d4fdb;
+  border: 1px solid #3d4fdb;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 10px rgba(56, 88, 233, 0.2);
+}
+
+.wpucsv-template-modal-btn-save:hover {
+  background: #2546d0;
+  border-color: #2546d0;
+}
+
+.wpucsv-template-modal-btn-save:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   Premium Upload Templates Styles
+   ========================================================================== */
+.wpucsv-upload-templates-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+  padding: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 12px;
+}
+
+.wpucsv-upload-pond-wrapper {
+  margin-top: 16px;
+  margin-bottom: 20px;
+}
+
+.wpucsv-upload-pond-wrapper .filepond--root {
+  background-color: #f8fafc !important;
+  border: 2px dashed #cbd5e1 !important;
+  border-radius: 12px !important;
+}
+
+.wpucsv-upload-pond-wrapper .filepond--panel-root {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.wpucsv-upload-pond-wrapper .filepond--drop-label {
+  color: #64748b !important;
+  font-family: var(--wpucsv-dash-font), sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+.wpucsv-upload-pond-wrapper .filepond--label-action {
+  text-decoration: none !important;
+  background-color: #3d4fdb !important;
+  color: #ffffff !important;
+  padding: 6px 16px !important;
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  margin-left: 6px !important;
+  display: inline-block !important;
+  transition: background-color 0.15s ease !important;
+  box-shadow: 0 2px 6px rgba(56, 88, 233, 0.15) !important;
+}
+
+.wpucsv-upload-pond-wrapper .filepond--label-action:hover {
+  background-color: #2546d0 !important;
+  color: #ffffff !important;
+}
+
+.wpucsv-upload-submit-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 42px !important;
+  padding: 0 24px !important;
+  background: #3d4fdb !important;
+  border: 1px solid #3d4fdb !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.15s ease !important;
+  box-shadow: 0 4px 10px rgba(56, 88, 233, 0.2) !important;
+  font-family: var(--wpucsv-dash-font), sans-serif !important;
+  text-decoration: none !important;
+}
+
+.wpucsv-upload-submit-btn:hover {
+  background: #2546d0 !important;
+  border-color: #2546d0 !important;
+  color: #ffffff !important;
+}
+
+.wpucsv-upload-actions-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Zip Upload Modal */
+.wpucsv-upload-modal {
+  background: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.wpucsv-upload-modal-content {
+  border-radius: 16px !important;
+  border: none !important;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+  overflow: hidden !important;
+}
+
+.wpucsv-upload-modal-header {
+  border-bottom: 1px solid #e2e8f0 !important;
+  background: #f8fafc !important;
+  padding: 16px 24px !important;
+}
+
+.wpucsv-upload-modal-header .modal-title {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+}
+
+.wpucsv-upload-modal-body {
+  padding: 24px !important;
+}
+
+.wpucsv-upload-modal-list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 0 20px 0 !important;
+}
+
+.wpucsv-upload-modal-item {
+  margin-bottom: 12px !important;
+  padding: 10px 14px !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  background: #f8fafc !important;
+  transition: all 0.15s ease !important;
+}
+
+.wpucsv-upload-modal-item:hover {
+  background: #ffffff !important;
+  border-color: #3d4fdb !important;
+}
+
+.wpucsv-upload-modal-radio-label {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  cursor: pointer !important;
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+.wpucsv-upload-modal-radio {
+  width: 16px !important;
+  height: 16px !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+}
+
+.wpucsv-upload-modal-filename {
+  font-size: 14px !important;
+  color: #334155 !important;
+  font-weight: 500 !important;
+}
+
+.wpucsv-upload-modal-actions {
+  display: flex !important;
+  justify-content: flex-end !important;
+}
+
+/* Upgrade to Pro Modal */
+.wpucsv-upgrade-modal {
+  background: rgba(15, 23, 42, 0.6) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+.wpucsv-upgrade-modal-dialog {
+  max-width: 440px !important;
+  margin: 1.75rem auto !important;
+}
+
+.wpucsv-upgrade-modal-content {
+  border: none !important;
+  border-radius: 20px !important;
+  background: #ffffff !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+.wpucsv-upgrade-modal-banner {
+  background: linear-gradient(135deg, #3d4fdb 0%, #2563eb 100%) !important;
+  padding: 40px 32px 32px 32px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  text-align: center !important;
+  position: relative !important;
+}
+
+.wpucsv-upgrade-modal-close-btn {
+  position: absolute !important;
+  right: 18px !important;
+  top: 18px !important;
+  border: none !important;
+  background: rgba(255, 255, 255, 0.15) !important;
+  color: #ffffff !important;
+  cursor: pointer !important;
+  padding: 6px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  transition: all 0.15s ease !important;
+}
+
+.wpucsv-upgrade-modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+  color: #ffffff !important;
+}
+
+.wpucsv-upgrade-modal-image-wrapper {
+  margin-bottom: 20px !important;
+}
+
+.wpucsv-upgrade-modal-image-wrapper img {
+  display: block !important;
+  max-width: 100px !important;
+  height: auto !important;
+}
+
+.wpucsv-upgrade-modal-title {
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+  margin: 0 0 12px 0 !important;
+  font-family: var(--wpucsv-dash-font), sans-serif !important;
+  letter-spacing: -0.01em !important;
+}
+
+.wpucsv-upgrade-modal-desc {
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  margin: 0 !important;
+  font-family: var(--wpucsv-dash-font), sans-serif !important;
+}
+
+.wpucsv-upgrade-modal-body {
+  padding: 32px 32px 20px 32px !important;
+}
+
+.wpucsv-upgrade-benefits-list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.wpucsv-upgrade-benefit-item {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 12px !important;
+  margin-bottom: 16px !important;
+}
+
+.wpucsv-benefit-icon-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  background: #dcfce7 !important;
+  color: #16a34a !important;
+  flex-shrink: 0 !important;
+  margin-top: 2px !important;
+}
+
+.wpucsv-benefit-text {
+  font-size: 13.5px !important;
+  color: #475569 !important;
+  font-weight: 500 !important;
+  line-height: 1.5 !important;
+  text-align: left !important;
+  font-family: var(--wpucsv-dash-font), sans-serif !important;
+}
+
+.wpucsv-upgrade-modal-footer {
+  padding: 28px 32px 36px 32px !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.wpucsv-upgrade-modal-link {
+  width: 100% !important;
+  text-decoration: none !important;
+  display: block !important;
+}
+
+.wpucsv-upgrade-modal-btn {
+  width: 100% !important;
+  height: 46px !important;
+  background: #3d4fdb !important;
+  border: 1px solid #3d4fdb !important;
+  color: #ffffff !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  border-radius: 12px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  font-family: var(--wpucsv-dash-font), sans-serif !important;
+  animation: wpucsv-pulse-glow 2s infinite !important;
+}
+
+.wpucsv-upgrade-modal-btn:hover {
+  background: #2546d0 !important;
+  border-color: #2546d0 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+
+@keyframes wpucsv-pulse-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(56, 88, 233, 0.4);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(56, 88, 233, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(56, 88, 233, 0);
+  }
+}
+
+/* ==========================================================================
+   Premium Redesign for Export Tab (Audie Data Migrator Premium Style)
+   ========================================================================== */
+
+.wpucsv-export-tabs-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  margin-bottom: 24px;
+}
+
+.wpucsv-export-tabs-bar {
+  display: inline-flex;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 6px;
+  border-radius: 12px;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.wpucsv-export-tab-item {
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  background: transparent;
+  font-family: var(--wpucsv-dash-font), sans-serif;
+  outline: none !important;
+}
+
+.wpucsv-export-tab-item:hover {
+  color: #0f172a;
+  background: #f8fafc;
+}
+
+.wpucsv-export-tab-item.active {
+  background: #3d4fdb;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.25);
+}
+
+.wpucsv-export-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  padding: 32px;
+  margin-top: 20px;
+  font-family: var(--wpucsv-dash-font), sans-serif;
+  box-sizing: border-box;
+}
+
+.wpucsv-export-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.wpucsv-export-title-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.wpucsv-export-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0;
+  font-family: var(--wpucsv-dash-font), sans-serif;
+}
+
+.wpucsv-export-help-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #3d4fdb;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: rgba(56, 88, 233, 0.05);
+}
+
+.wpucsv-export-help-badge:hover {
+  color: #2845c9;
+  background: rgba(56, 88, 233, 0.08);
+  transform: translateY(-1px);
+}
+
+.wpucsv-export-counter {
+  background: rgba(56, 88, 233, 0.06);
+  color: #3d4fdb;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.wpucsv-export-grid-title {
+  font-size: 12.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #64748b;
+  margin: 28px 0 16px 0;
+}
+
+.wpucsv-export-grids-container {
+  display: block;
+}
+
+.wpucsv-export-column {
+  margin-bottom: 32px;
+}
+
+.wpucsv-export-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.wpucsv-export-option-card-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+}
+
+.wpucsv-export-option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px 16px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+  min-height: 140px;
+  position: relative;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.wpucsv-export-option-card:hover:not(.is-disabled) {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transform: translateY(-2px);
+}
+
+.wpucsv-export-option-card.selected {
+  border: 2px solid #3d4fdb;
+  background: #f0f4ff;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.08);
+  padding: 23px 15px;
+  /* adjust for border width */
+}
+
+.wpucsv-export-option-card__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.wpucsv-export-option-card__icon-wrap {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+  transition: transform 0.2s ease;
+}
+
+.wpucsv-export-option-card:hover:not(.is-disabled) .wpucsv-export-option-card__icon-wrap {
+  transform: scale(1.05);
+}
+
+.wpucsv-export-option-card__label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e293b;
+  transition: color 0.2s ease;
+}
+
+.wpucsv-export-option-card.selected .wpucsv-export-option-card__label {
+  color: #0f172a;
+}
+
+.wpucsv-export-option-card__checkbox {
+  display: none !important;
+}
+
+.wpucsv-export-option-card__checkmark {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 20px;
+  height: 20px;
+  background: #3d4fdb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.2s ease;
+}
+
+.wpucsv-export-option-card.selected .wpucsv-export-option-card__checkmark {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.wpucsv-export-option-card.is-disabled {
+  opacity: 0.6;
+  background: #f8fafc;
+  cursor: not-allowed;
+  border-color: #e2e8f0;
+}
+
+.wpucsv-export-option-card__pro-badge {
+  background: linear-gradient(135deg, #e04b4a, #dc2626);
+  color: #ffffff;
+  font-size: 8px;
+  font-weight: 800;
+  padding: 2.5px 6px 1.5px 6px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: normal;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(224, 75, 74, 0.15);
+}
+
+.wpucsv-export-select {
+  width: 100% !important;
+  border-radius: 10px !important;
+  border: 1px solid #cbd5e1 !important;
+  padding: 12px 36px 12px 16px !important;
+  height: 48px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #334155 !important;
+  background: #ffffff !important;
+  outline: none !important;
+  transition: all 0.2s ease !important;
+  box-sizing: border-box !important;
+  line-height: 1.5 !important;
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e") !important;
+  background-repeat: no-repeat !important;
+  background-position: right 16px center !important;
+  background-size: 16px !important;
+}
+
+.wpucsv-export-select:focus {
+  border-color: #3d4fdb !important;
+  box-shadow: 0 0 0 3px rgba(56, 88, 233, 0.15) !important;
+}
+
+.wpucsv-export-select option {
+  padding: 12px 16px !important;
+  font-size: 14px !important;
+  color: #334155 !important;
+  background: #ffffff !important;
+}
+
+.wpucsv-export-option-card__dropdown {
+  padding: 0 4px;
+  animation: slideDown 0.2s ease-out;
+  margin-top: 8px;
+}
+
+/* Premium Dropdown Popup Style */
+.wpucsv-export-custom-dropdown-popup {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  z-index: 1000;
+  overflow-y: auto;
+  max-height: 220px;
+  padding: 6px 0;
+  animation: wpucsv-dropdown-fade-in 0.15s ease-out;
+  box-sizing: border-box;
+}
+
+@keyframes wpucsv-dropdown-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.wpucsv-export-dropdown-item {
+  padding: 10px 16px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #475569;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.wpucsv-export-dropdown-item:hover {
+  background-color: #f1f5f9;
+  color: #0f172a;
+}
+
+.wpucsv-export-dropdown-item.active {
+  background-color: #f0f4ff;
+  color: #3d4fdb;
+  font-weight: 600;
+}
+
+.wpucsv-export-wpquery-container {
+  max-width: 600px;
+  margin: 40px auto 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.wpucsv-export-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wpucsv-export-form-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.wpucsv-query-select {
+  padding: 12px 16px;
+  font-size: 14px;
+  border-radius: 10px;
+  border-color: #cbd5e1;
+}
+
+.wpucsv-export-textarea {
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  padding: 14px 16px;
+  font-size: 14px;
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  color: #0f172a;
+  background: #ffffff;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.wpucsv-export-textarea:focus {
+  border-color: #3d4fdb;
+  box-shadow: 0 0 0 3px rgba(56, 88, 233, 0.15);
+}
+
+.wpucsv-export-form-hint {
+  font-size: 12.5px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+
+.wpucsv-export-required-star {
+  color: #ef4444;
+  font-weight: bold;
+}
+
+.wpucsv-export-tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.wpucsv-export-tooltip-icon {
+  background-color: #3d4fdb;
+  color: white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.wpucsv-export-tooltip-content {
+  visibility: hidden;
+  background-color: #0f172a;
+  color: #fff;
+  text-align: left;
+  border-radius: 8px;
+  padding: 12px;
+  position: absolute;
+  z-index: 10;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  width: max-content;
+  max-width: 280px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+}
+
+.wpucsv-export-tooltip-wrapper:hover .wpucsv-export-tooltip-content {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(-50%) translateY(-4px);
+}
+
+.wpucsv-export-code {
+  display: block;
+  margin-top: 6px;
+  color: #0ea5e9;
+  background: rgba(14, 165, 233, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+.wpucsv-export-actions {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 24px;
+  margin-top: 32px;
+}
+
+.wpucsv-export-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #3d4fdb;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.2);
+  font-family: var(--wpucsv-dash-font), sans-serif;
+  text-decoration: none !important;
+}
+
+.wpucsv-export-btn:hover:not(:disabled) {
+  background-color: #2845c9;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(40, 69, 201, 0.25);
+  color: #ffffff !important;
+}
+
+.wpucsv-export-btn:disabled {
+  background-color: #cbd5e1;
+  color: #94a3b8 !important;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.wpucsv-export-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #ffffff;
+  color: #475569 !important;
+  font-family: var(--wpucsv-dash-font), sans-serif;
+  text-decoration: none !important;
+}
+
+.wpucsv-export-btn-secondary:hover:not(:disabled) {
+  background-color: #f8fafc;
+  border-color: #94a3b8;
+  color: #1e293b !important;
+  transform: translateY(-1px);
+}
+
+.wpucsv-export-btn-secondary:disabled {
+  background-color: #f1f5f9;
+  color: #94a3b8 !important;
+  cursor: not-allowed;
+  border-color: #e2e8f0;
+}
+
+.wpucsv-export-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px 24px;
+  min-height: 340px;
+}
+
+.wpucsv-export-empty-icon-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(56, 88, 233, 0.06);
+  color: #3d4fdb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.wpucsv-export-empty-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #334155;
+  max-width: 500px;
+  line-height: 1.5;
+  margin: 0 0 24px 0;
+}
+
+.wpucsv-export-empty-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 8px;
+  background: transparent;
+  color: #3d4fdb !important;
+  border: 2px solid #3d4fdb;
+  text-decoration: none !important;
+  transition: all 0.2s ease;
+  font-family: var(--wpucsv-dash-font), sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.wpucsv-export-empty-btn:hover {
+  background: #3d4fdb;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.2);
+}
+
+.wpucsv-export-loader-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Premium Export Filter Styles */
+.wpucsv-export-filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 24px;
+}
+
+.wpucsv-export-filter-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+}
+
+.wpucsv-export-filter-card-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 20px 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.wpucsv-export-field-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  align-items: end;
+}
+
+@media (max-width: 768px) {
+  .wpucsv-export-field-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.wpucsv-export-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.wpucsv-export-filter-option {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px 20px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-sizing: border-box;
+}
+
+.wpucsv-export-filter-option:hover {
+  border-color: #cbd5e1;
+  background: #fbfcfd;
+}
+
+.wpucsv-export-filter-option.active {
+  border-color: #3d4fdb;
+  background: rgba(56, 88, 233, 0.01);
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.03);
+}
+
+.wpucsv-export-filter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+}
+
+.wpucsv-export-filter-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.wpucsv-export-filter-label-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wpucsv-export-filter-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  line-height: 1.4;
+}
+
+.wpucsv-export-filter-desc {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.3;
+}
+
+.wpucsv-export-filter-content {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #f1f5f9;
+  width: 100%;
+  animation: slideDown 0.2s ease-out;
+}
+
+.wpucsv-export-pro-badge {
+  background: linear-gradient(135deg, #e04b4a, #dc2626) !important;
+  color: #ffffff !important;
+  font-size: 8px !important;
+  font-weight: 800 !important;
+  padding: 2.5px 6px 1.5px 6px !important;
+  border-radius: 9999px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  line-height: normal !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 2px 4px rgba(224, 75, 74, 0.15) !important;
+}
+
+.wpucsv-export-progress-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 32px;
+  text-align: center;
+}
+
+.wpucsv-export-progress-circle-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 24px;
+}
+
+.wpucsv-export-progress-circle-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.wpucsv-export-progress-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0 0 8px 0;
+}
+
+.wpucsv-export-progress-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0 0 28px 0;
+}
+
+.wpucsv-export-progress-bar-bg {
+  width: 100%;
+  max-width: 480px;
+  height: 8px;
+  background: #f1f5f9;
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.wpucsv-export-progress-bar-fill {
+  height: 100%;
+  background: #3d4fdb;
+  border-radius: 9999px;
+  transition: width 0.3s ease;
+}
+
+.wpucsv-export-progress-stats {
+  font-size: 14.5px;
+  color: #334155;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.wpucsv-export-progress-time {
+  font-size: 13px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+}
+
+.wpucsv-export-progress-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 36px;
+  padding-top: 24px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.wpucsv-export-input {
+  width: 100% !important;
+  border-radius: 10px !important;
+  border: 1px solid #cbd5e1 !important;
+  padding: 12px 16px !important;
+  height: 48px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #334155 !important;
+  background: #ffffff !important;
+  outline: none !important;
+  transition: all 0.2s ease !important;
+  box-sizing: border-box !important;
+  line-height: 1.5 !important;
+}
+
+.wpucsv-export-input:focus {
+  border-color: #3d4fdb !important;
+  box-shadow: 0 0 0 3px rgba(56, 88, 233, 0.15) !important;
+}
+
+/* Premium Progress UI */
+.wpucsv-premium-progress-card {
+  border-radius: 16px;
+  padding: 24px 32px;
+  color: #ffffff;
+  font-family: var(--wpucsv-dash-font), 'Inter', sans-serif;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.wpucsv-premium-progress-active {
+  background: linear-gradient(135deg, #2b3eb1 0%, #7d44dc 100%);
+}
+
+.wpucsv-premium-progress-completed {
+  background: linear-gradient(135deg, #0d8b5c 0%, #10b981 100%);
+}
+
+.wpucsv-premium-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.wpucsv-premium-progress-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.wpucsv-spin {
+  animation: wpucsv-spin-anim 1.5s linear infinite;
+}
+
+@keyframes wpucsv-spin-anim {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.wpucsv-premium-btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #ffffff;
+  color: #10b981;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wpucsv-premium-btn-action:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.wpucsv-premium-btn-cancel {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wpucsv-premium-btn-cancel:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.wpucsv-premium-progress-middle {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 12px;
+}
+
+.wpucsv-premium-progress-percentage-area {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.wpucsv-premium-progress-percent {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.wpucsv-premium-progress-text {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.wpucsv-premium-progress-meta {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.wpucsv-premium-progress-bar-container {
+  width: 100%;
+  height: 6px;
+  background-color: rgba(255, 255, 255, 0.25);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.wpucsv-premium-progress-bar-fill {
+  height: 100%;
+  background-color: #ffffff;
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.wpucsv-premium-progress-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.wpucsv-premium-stat-box {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.wpucsv-premium-stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: 6px;
+}
+
+.wpucsv-premium-stat-value {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.wpucsv-premium-progress-footer {
+  font-size: 12px;
+  opacity: 0.75;
+  margin-top: 4px;
+}
+
+/* ==========================================================================
+   Premium Upload Tabs (Audie Data Migrator Style)
+   ========================================================================== */
+
+.wpucsv-premium-upload-dashboard {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  margin-top: 20px;
+  overflow: hidden;
+  font-family: var(--wpucsv-dash-font), sans-serif;
+  width: 100%;
+}
+
+.wpucsv-premium-upload-tabs {
+  display: flex;
+  background: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0 24px;
+  gap: 24px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.wpucsv-premium-upload-tabs::-webkit-scrollbar {
+  height: 6px;
+  display: block;
+}
+
+.wpucsv-premium-upload-tabs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.wpucsv-premium-upload-tabs::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 3px;
+}
+
+.wpucsv-premium-upload-tabs::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+}
+
+.wpucsv-premium-upload-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 4px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+  position: relative;
+  margin-bottom: -1px;
+  /* Overlap border */
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.wpucsv-premium-upload-tab:hover {
+  color: #3d4fdb;
+}
+
+.wpucsv-premium-upload-tab.active {
+  color: #3d4fdb;
+  border-bottom-color: #3d4fdb;
+  font-weight: 600;
+}
+
+.wpucsv-premium-upload-tab svg {
+  width: 18px;
+  height: 18px;
+  stroke-width: 2;
+  stroke: currentColor;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.7;
+}
+
+.wpucsv-premium-upload-tab.active svg {
+  opacity: 1;
+}
+
+.wpucsv-premium-upload-content {
+  padding: 30px;
+  background: #ffffff;
+  min-height: 400px;
+}
+
+/* Form Controls & Buttons inside Premium Content */
+.wpucsv-premium-upload-content .form-control {
+  border-radius: 8px !important;
+  border: 1px solid #e2e8f0 !important;
+  padding: 12px 16px !important;
+  font-size: 14px !important;
+  color: #334155 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02) !important;
+  transition: all 0.2s ease !important;
+  height: auto !important;
+}
+
+.wpucsv-premium-upload-content .form-control:focus {
+  border-color: #3d4fdb !important;
+  box-shadow: 0 0 0 3px rgba(56, 88, 233, 0.1) !important;
+  outline: none !important;
+}
+
+.wpucsv-premium-upload-content label {
+  font-weight: 600 !important;
+  color: #475569 !important;
+  margin-bottom: 8px !important;
+  display: block !important;
+  font-size: 14px !important;
+}
+
+.wpucsv-premium-upload-content .form-text.text-muted {
+  color: #94a3b8 !important;
+  font-size: 12.5px !important;
+  margin-top: 6px !important;
+}
+
+.wpucsv-premium-upload-content .smack-btn-primary {
+  background-color: #3d4fdb !important;
+  border-color: #3d4fdb !important;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.25) !important;
+  border-radius: 8px !important;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 12px 32px !important;
+  transition: all 0.2s ease !important;
+  color: #ffffff !important;
+  font-size: 14px !important;
+}
+
+.wpucsv-premium-upload-content .smack-btn-primary:hover {
+  background-color: #2b45b8 !important;
+  border-color: #2b45b8 !important;
+  box-shadow: 0 6px 16px rgba(56, 88, 233, 0.35) !important;
+  transform: translateY(-2px);
+}
+
+/* FilePond Override for Premium Look */
+.wpucsv-premium-upload-content .filepond--root {
+  background-color: #f8fafc !important;
+  border: 2px dashed #cbd5e1 !important;
+  border-radius: 12px !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.wpucsv-premium-upload-content .filepond--panel-root {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.wpucsv-premium-upload-content .filepond--drop-label {
+  color: #475569 !important;
+  font-weight: 500 !important;
+  border: none !important;
+  background: transparent !important;
+}
+
+.wpucsv-premium-upload-content .filepond--label-action {
+  text-decoration: none !important;
+  background: #3d4fdb !important;
+  color: #ffffff !important;
+  padding: 10px 24px !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  display: inline-block !important;
+  margin-top: 12px !important;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.25) !important;
+  transition: all 0.2s ease !important;
+}
+
+.wpucsv-premium-upload-content .filepond--label-action:hover {
+  background: #2b45b8 !important;
+  transform: translateY(-2px) !important;
+}
+
+/* FilePond loading and item overrides */
+.wpucsv-premium-upload-content .filepond--wrapper .filepond--drop-label label span {
+  background: #3d4fdb !important;
+  border-color: #3d4fdb !important;
+}
+
+.wpucsv-premium-upload-content .filepond--wrapper .filepond--drop-label label span:hover {
+  background: #2b45b8 !important;
+  border-color: #2b45b8 !important;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.2) !important;
+}
+
+.wpucsv-premium-upload-content .filepond--root[data-hopper-state="drag-over"] {
+  border-color: #3d4fdb !important;
+  box-shadow: 0 2px 60px rgba(56, 88, 233, 0.15) !important;
+}
+
+.wpucsv-premium-upload-content .filepond--item .filepond--file-wrapper {
+  background: #3d4fdb !important;
+}
+
+.wpucsv-premium-upload-content .filepond--item .filepond--progress-indicator {
+  color: #ffffff !important;
+}
+
+.wpucsv-premium-upload-content .ajax-loader.loading:before {
+  border-top-color: #3d4fdb !important;
+}
+
+/* Global overrides to replace green with premium blue (#3d4fdb) */
+.wp-ultimate-csv-importer .ajax-loader.loading:before {
+  border-top-color: #3d4fdb !important;
+}
+
+.wp-ultimate-csv-importer .progress-bar {
+  background: #3d4fdb linear-gradient(to right, #818cf8, #6366f1, #4f46e5, #3d4fdb) !important;
+}
+
+.wpucsv-premium-pro-badge {
+  background: linear-gradient(135deg, #e04b4a, #dc2626);
+  color: #ffffff;
+  font-size: 8px;
+  font-weight: 800;
+  padding: 2.5px 6px 1.5px 6px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: normal;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(224, 75, 74, 0.15);
+}
+
+/* ==========================================================================
+   Premium CSV Info Page (Audie Data Migrator Style)
+   ========================================================================== */
+
+.wpucsv-csvinfo-container {
+  max-width: 100%;
+  margin: 40px auto;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Premium Card */
+.wpucsv-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02), 0 10px 30px rgba(0, 0, 0, 0.03);
+  padding: 32px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Header Section */
+.wpucsv-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 24px;
+  margin-bottom: 32px;
+  gap: 16px;
+}
+
+.wpucsv-file-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wpucsv-file-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.wpucsv-file-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.wpucsv-file-size-badge {
+  background-color: #eff6ff;
+  color: #2563eb;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.wpucsv-help-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: #1e293b;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 8px 16px 8px 8px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(61, 79, 219, 0.04) 0%, rgba(14, 165, 233, 0.04) 100%);
+  border: 1px solid rgba(61, 79, 219, 0.15);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.wpucsv-help-link:hover {
+  background: linear-gradient(135deg, rgba(61, 79, 219, 0.08) 0%, rgba(14, 165, 233, 0.08) 100%);
+  color: #3d4fdb;
+  border-color: rgba(61, 79, 219, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(61, 79, 219, 0.12);
+}
+
+.wpucsv-help-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #3d4fdb 0%, #0ea5e9 100%);
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(61, 79, 219, 0.25);
+  transition: all 0.25s ease;
+}
+
+.wpucsv-help-link:hover .wpucsv-help-icon {
+  box-shadow: 0 4px 10px rgba(61, 79, 219, 0.35);
+  transform: scale(1.05);
+}
+
+/* Mode Selection Cards Grid */
+.wpucsv-mode-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.wpucsv-mode-option {
+  cursor: pointer;
+  position: relative;
+}
+
+.wpucsv-mode-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.wpucsv-mode-card {
+  background: #ffffff;
+  border: 2px solid #f1f5f9;
+  border-radius: 16px;
+  padding: 20px 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+}
+
+.wpucsv-mode-card:hover:not(.is-disabled) {
+  border-color: #cbd5e1;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.06);
+}
+
+.wpucsv-mode-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background-color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #475569;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  flex-shrink: 0;
+}
+
+.wpucsv-mode-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wpucsv-mode-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.wpucsv-mode-desc {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Checked State */
+.wpucsv-mode-option input[type="radio"]:checked+.wpucsv-mode-card {
+  border-color: #3d4fdb;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(56, 88, 233, 0.1);
+}
+
+.wpucsv-mode-option input[type="radio"]:checked+.wpucsv-mode-card .wpucsv-mode-icon-wrap {
+  background: linear-gradient(135deg, #3d4fdb, #4f46e5);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.3);
+}
+
+.wpucsv-mode-option input[type="radio"]:checked+.wpucsv-mode-card .wpucsv-mode-title {
+  color: #3d4fdb;
+}
+
+/* Disabled/Pro State */
+.wpucsv-mode-card.is-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #f8fafc;
+}
+
+.wpucsv-mode-card.is-disabled:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: #e2e8f0;
+}
+
+.wpucsv-pro-lock-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, #e04b4a, #dc2626);
+  color: #ffffff;
+  font-size: 8px;
+  font-weight: 800;
+  padding: 2.5px 6px 1.5px 6px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: normal;
+  box-shadow: 0 2px 4px rgba(224, 75, 74, 0.15);
+}
+
+/* Import Type Form Field */
+.wpucsv-form-section {
+  background-color: #f8fafc;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wpucsv-form-label {
+  font-size: 14px;
+  font-weight: 700;
+  color: #334155;
+  margin: 0;
+}
+
+/* Button Navigation Bar */
+.wpucsv-actions-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 24px;
+}
+
+.wpucsv-btn-back {
+  padding: 10px 24px;
+  background-color: #ffffff !important;
+  color: #475569 !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-size: 13.5px !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wpucsv-btn-back:hover {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+  border-color: #94a3b8 !important;
+}
+
+.wpucsv-btn-continue {
+  padding: 10px 28px;
+  background: #3d4fdb !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-size: 13.5px !important;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.2);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 130px;
+}
+
+
+.wpucsv-btn-continue:hover:not(:disabled) {
+  background: #2b45b8 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(56, 88, 233, 0.3);
+}
+
+.wpucsv-btn-continue:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Spinner inside Button & Loader Indicators */
+.wpucsv-btn-loader-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.wpucsv-btn-spinner {
+  animation: wpucsv-rotate 2s linear infinite;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+}
+
+.wpucsv-btn-spinner .path {
+  stroke: currentColor;
+  stroke-linecap: round;
+  animation: wpucsv-dash 1.5s ease-in-out infinite;
+}
+
+.wpucsv-loader-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@keyframes wpucsv-rotate {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes wpucsv-dash {
+  0% {
+    stroke-dasharray: 1, 150;
+    stroke-dashoffset: 0;
+  }
+
+  50% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -35;
+  }
+
+  100% {
+    stroke-dasharray: 90, 150;
+    stroke-dashoffset: -124;
+  }
+}
+
+/* Premium Simple Mode Layout */
+.wpucsv-simple-dashboard-row {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+  align-items: stretch;
+  max-width: 100%;
+}
+
+.wpucsv-simple-upload-card {
+  flex: 2;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 36px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+.wpucsv-simple-pro-card {
+  flex: 1;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: #ffffff;
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.wpucsv-simple-pro-card .wpucsv-pro-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.wpucsv-simple-pro-card .wpucsv-pro-divider {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 20px;
+}
+
+.wpucsv-simple-pro-card ul {
+  list-style: none !important;
+  padding: 0;
+  margin: 0 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wpucsv-simple-pro-card li {
+  font-size: 12.5px;
+  color: #cbd5e1;
+  line-height: 1.4;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  list-style: none !important;
+}
+
+.wpucsv-simple-pro-card li::before {
+  content: "✓";
+  color: #3d4fdb;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.wpucsv-btn-buy-pro {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 12px;
+  background: #3d4fdb;
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 13.5px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.3);
+}
+
+.wpucsv-btn-buy-pro:hover {
+  background: #2b45b8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(56, 88, 233, 0.4);
+}
+
+/* Responsive Overrides */
+@media (max-width: 1024px) {
+  .wpucsv-simple-dashboard-row {
+    flex-direction: column;
+  }
+}
+
+/* Override green button styles with premium #3d4fdb blue */
+.wp-ultimate-csv-importer .smack-btn.smack-btn-primary {
+  background-color: #3d4fdb !important;
+  border-color: #3d4fdb !important;
+}
+
+.wp-ultimate-csv-importer .smack-btn.smack-btn-primary:hover {
+  background-color: #2b45b8 !important;
+  border-color: #2b45b8 !important;
+}
+
+.wp-ultimate-csv-importer .smack-btn.smack-btn-secondary {
+  border-color: #3d4fdb !important;
+  color: #3d4fdb !important;
+}
+
+.wp-ultimate-csv-importer .smack-btn.smack-btn-secondary:hover {
+  background-color: rgba(56, 88, 233, 0.08) !important;
+  border-color: #2b45b8 !important;
+  color: #3d4fdb !important;
+}
+
+/* Radio buttons and checkboxes focus / checked color overrides */
+.wp-ultimate-csv-importer .form-group input[type="radio"]:checked+label:before {
+  border-color: #3d4fdb !important;
+}
+
+.wp-ultimate-csv-importer .form-group input[type="radio"]:checked+label:after {
+  background: #3d4fdb !important;
+}
+
+.wp-ultimate-csv-importer .form-group input[type="radio"]+label:hover:before {
+  border-color: #3d4fdb !important;
+}
+
+/* Datepicker active date override */
+.wp-ultimate-csv-importer .react-datepicker-wrapper {
+  display: block !important;
+  width: 100% !important;
+}
+
+.wp-ultimate-csv-importer .react-datepicker-wrapper .react-datepicker__input-container {
+  display: block !important;
+  width: 100% !important;
+}
+
+.wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker__month .react-datepicker__day.react-datepicker__day--selected {
+  background: #3d4fdb !important;
+  color: #ffffff !important;
+  border-radius: 4px !important;
+}
+
+.wp-ultimate-csv-importer .react-datepicker-popper .react-datepicker__month .react-datepicker__day.react-datepicker__day--selected:hover {
+  background: #2f3cb0 !important;
+  color: #ffffff !important;
+}
+
+/* Form control focus override */
+.wp-ultimate-csv-importer .form-control:focus {
+  border-color: #3d4fdb !important;
+  box-shadow: 0 0 15px 0 rgba(56, 88, 233, 0.1) !important;
+}
+
+/* Select element border / hover override */
+.wp-ultimate-csv-importer .select .btn-light:hover,
+.wp-ultimate-csv-importer .bootstrap-select .btn-light:hover {
+  border-color: #3d4fdb !important;
+}
+
+.wp-ultimate-csv-importer .dropdown-menu li.selected a {
+  background-color: #3d4fdb !important;
+}
+
+.wp-ultimate-csv-importer .dropdown-menu li a:active {
+  background-color: #3d4fdb !important;
+}
+
+/* Switches overrides */
+.wp-ultimate-csv-importer .switch-ios:active {
+  box-shadow: inset 0 0 0 20px #3d4fdb !important;
+}
+
+.wp-ultimate-csv-importer .fieldset input[type="checkbox"]:checked+.switch-ios {
+  box-shadow: inset 0 0 0 20px #3d4fdb !important;
+}
+
+/* FilePond Alignment & Premium Style Overrides */
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--root {
+  background-color: #f8fafc !important;
+  border: 2px dashed #cbd5e1 !important;
+  border-radius: 12px !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--panel-root {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--drop-label {
+  height: 280px !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--drop-label label {
+  margin-top: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  padding-top: 60px !important;
+  padding-bottom: 30px !important;
+  cursor: pointer !important;
+}
+
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--drop-label label span {
+  background-color: #3d4fdb !important;
+  border: none !important;
+  color: #ffffff !important;
+  border-radius: 8px !important;
+  padding: 10px 24px !important;
+  width: auto !important;
+  display: inline-block !important;
+  margin: 16px auto !important;
+  font-family: var(--wpucsv-dash-font), sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  text-transform: none !important;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.2) !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--drop-label label span:hover {
+  background-color: #2b45b8 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(56, 88, 233, 0.3) !important;
+}
+
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--drop-label label:before {
+  top: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  bottom: auto !important;
+  position: absolute !important;
+  margin: 0 !important;
+  font-size: 44px !important;
+  color: #94a3b8 !important;
+}
+
+.wp-ultimate-csv-importer #v-pills-tabContent .filepond--wrapper .filepond--drop-label label:after,
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--drop-label label:after {
+  bottom: 0 !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  position: absolute !important;
+  white-space: nowrap !important;
+  font-family: var(--wpucsv-dash-font), sans-serif !important;
+  color: #64748b !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  width: auto !important;
+}
+
+.wp-ultimate-csv-importer .filepond--wrapper .filepond--root[data-hopper-state="drag-over"] {
+  border-color: #3d4fdb !important;
+  box-shadow: 0 2px 60px rgba(56, 88, 233, 0.15) !important;
+}
+
+/* ==========================================================================
+   Premium Saved Templates Styles (Audie Data Migrator Redesign)
+   ========================================================================== */
+
+.wpucsv-template-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  font-family: var(--wpucsv-dash-font), 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.wpucsv-template-search-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 30px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.01);
+}
+
+.wpucsv-template-search-grid {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr 1.2fr auto;
+  gap: 16px;
+  align-items: flex-end;
+}
+
+@media (max-width: 991px) {
+  .wpucsv-template-search-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .wpucsv-template-search-actions {
+    grid-column: span 2;
+    justify-content: flex-end;
+  }
+}
+
+@media (max-width: 575px) {
+  .wpucsv-template-search-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wpucsv-template-search-actions {
+    grid-column: span 1;
+    width: 100%;
+  }
+
+  .wpucsv-template-search-actions .wpucsv-template-btn-search,
+  .wpucsv-template-search-actions .wpucsv-template-btn-clear {
+    flex: 1;
+  }
+}
+
+.wpucsv-template-input-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.wpucsv-template-input-wrapper label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569 !important;
+  margin-bottom: 0 !important;
+  display: block;
+}
+
+.wpucsv-template-input {
+  width: 100% !important;
+  border-radius: 8px !important;
+  border: 1px solid #cbd5e1 !important;
+  padding: 10px 14px 10px 36px !important;
+  height: 42px !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #334155 !important;
+  background: #ffffff !important;
+  outline: none !important;
+  transition: all 0.2s ease !important;
+  box-sizing: border-box !important;
+}
+
+.wpucsv-template-input:focus {
+  border-color: #3d4fdb !important;
+  box-shadow: 0 0 0 3px rgba(56, 88, 233, 0.12) !important;
+}
+
+.wpucsv-template-icon-prefix {
+  position: absolute;
+  left: 12px;
+  top: 39px;
+  height: 16px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.wpucsv-template-search-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wpucsv-template-btn-search {
+  background-color: #3d4fdb !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 0 24px !important;
+  height: 42px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.15) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  text-transform: none !important;
+}
+
+.wpucsv-template-btn-search:hover:not(:disabled) {
+  background-color: #2b45b8 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(56, 88, 233, 0.25) !important;
+}
+
+.wpucsv-template-btn-search:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.wpucsv-template-btn-clear {
+  background-color: #ffffff !important;
+  color: #475569 !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  padding: 0 20px !important;
+  height: 42px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.wpucsv-template-btn-clear:hover {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+.wpucsv-template-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.wpucsv-template-title-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wpucsv-template-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.wpucsv-template-count-badge {
+  background-color: rgba(56, 88, 233, 0.1);
+  color: #3d4fdb;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.wpucsv-template-table-wrapper {
+  overflow-x: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #ffffff;
+  margin-bottom: 24px;
+}
+
+.wpucsv-template-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+.wpucsv-template-table th {
+  background-color: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 14px 20px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.wpucsv-template-table td {
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+  vertical-align: middle;
+}
+
+.wpucsv-template-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.wpucsv-template-table tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.wpucsv-template-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.wpucsv-template-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.wpucsv-template-icon {
+  color: #3d4fdb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.wpucsv-template-count-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f5f9;
+  color: #475569;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 2px 10px;
+  border-radius: 9999px;
+}
+
+.wpucsv-module-badge {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  text-transform: capitalize;
+}
+
+.wpucsv-module-badge.posts {
+  background-color: rgba(61, 79, 219, 0.1);
+  color: #3d4fdb;
+}
+
+.wpucsv-module-badge.pages {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.wpucsv-module-badge.users {
+  background-color: #fef3c7;
+  color: #b45309;
+}
+
+.wpucsv-module-badge.woocommerce {
+  background-color: #ecfdf5;
+  color: #047857;
+}
+
+.wpucsv-module-badge.default {
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+.wpucsv-template-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.wpucsv-template-btn-use {
+  background-color: #eff6ff !important;
+  color: #3d4fdb !important;
+  border: 1px solid #bfdbfe !important;
+  border-radius: 6px !important;
+  padding: 8px 16px !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  line-height: 1 !important;
+}
+
+.wpucsv-template-btn-use:hover {
+  background-color: #3d4fdb !important;
+  color: #ffffff !important;
+  border-color: #3d4fdb !important;
+  transform: translateY(-1px) !important;
+}
+
+.wpucsv-template-pagination-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.wpucsv-template-pagination-container .pagination {
+  display: inline-flex;
+  padding-left: 0;
+  list-style: none;
+  border-radius: 8px;
+  gap: 6px;
+}
+
+.wpucsv-template-pagination-container .pagination li {
+  display: inline;
+}
+
+.wpucsv-template-pagination-container .pagination li a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: #475569;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wpucsv-template-pagination-container .pagination li a:hover {
+  color: #3d4fdb;
+  border-color: #cbd5e1;
+  background-color: #f8fafc;
+}
+
+.wpucsv-template-pagination-container .pagination li.active a {
+  z-index: 3;
+  color: #ffffff;
+  background-color: #3d4fdb;
+  border-color: #3d4fdb;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(56, 88, 233, 0.2);
+}
+
+.wpucsv-template-pagination-container .pagination li.disabled a {
+  color: #cbd5e1;
+  pointer-events: none;
+  background-color: #ffffff;
+  border-color: #f1f5f9;
+}
+
+.wpucsv-template-pagination-container .pagination li.previous a,
+.wpucsv-template-pagination-container .pagination li.next a {
+  width: auto;
+  padding: 0 14px;
+}
+
+.wpucsv-template-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.wpucsv-template-btn-back {
+  background-color: #ffffff !important;
+  color: #475569 !important;
+  border: 1px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  padding: 12px 24px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.wpucsv-template-btn-back:hover {
+  background-color: #f8fafc !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+  transform: translateY(-1px) !important;
+}
+
+.wpucsv-template-btn-create {
+  background-color: #3d4fdb !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 12px 28px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.2) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  text-transform: none !important;
+}
+
+.wpucsv-template-btn-create:hover {
+  background-color: #2b45b8 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(56, 88, 233, 0.3) !important;
+}
+
+/* Fix legacy pagination green color leak on active item */
+.wpucsv-template-pagination-container .pagination li.active {
+  background: transparent !important;
+  background-color: transparent !important;
+  height: auto !important;
+}
+
+/* Premium Mapping Section UI */
+.premium-mapping-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.premium-mapping-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(56, 88, 233, 0.1) !important;
+}
+
+.premium-pro-tag:hover {
+  background-color: #f8f9fa !important;
+}
+
+/* =========================================================================
+   EXACT PREMIUM UI MAPPING SECTION (Audie Migrator Style)
+========================================================================= */
+
+#mapping-accordion .csv-importer-panel {
+  border: none !important;
+  border-radius: 6px !important;
+  margin-bottom: 24px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  background: #fff !important;
+  overflow: visible !important;
+}
+
+#mapping-accordion .card-header.main-heading {
+  background-color: #3d4fdb !important;
+  /* Premium Royal Blue */
+  color: #ffffff !important;
+  padding: 18px 24px !important;
+  border: none !important;
+  cursor: pointer !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  font-family: var(--wpucsv-dash-font), 'Inter', sans-serif !important;
+  border-radius: 6px !important;
+  transition: all 0.3s ease !important;
+}
+
+#mapping-accordion .card-header.main-heading.active {
+  border-bottom-left-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+#mapping-accordion .card-header.main-heading .csv-icon-angle-down {
+  color: #ffffff !important;
+  font-weight: bold !important;
+  transition: transform 0.3s ease !important;
+  font-size: 12px !important;
+}
+
+#mapping-accordion .card-header.main-heading.active .csv-icon-angle-down {
+  transform: rotate(180deg) !important;
+}
+
+#mapping-accordion .card-body {
+  padding: 0 !important;
+  background-color: #ffffff !important;
+}
+
+#mapping-accordion .table-mapping {
+  width: 100% !important;
+  margin: 0 !important;
+  border-collapse: collapse !important;
+}
+
+#mapping-accordion .table-mapping th {
+  background-color: #f8f9fa !important;
+  color: #4a5568 !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  padding: 16px 24px !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  border-top: none !important;
+  text-align: left !important;
+  font-family: var(--wpucsv-dash-font), 'Inter', sans-serif !important;
+}
+
+/* Fix Bootstrap bold table borders */
+#mapping-accordion .table-mapping thead th,
+#mapping-accordion .table-mapping tbody,
+#mapping-accordion .table-mapping tbody tr,
+#mapping-accordion .table-mapping tbody tr:first-child td {
+  border-top: none !important;
+}
+
+#mapping-accordion .table-mapping thead {
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+#mapping-accordion .table-mapping td {
+  padding: 20px 24px !important;
+  vertical-align: top !important;
+  border-bottom: 1px solid #edf2f7 !important;
+  background: transparent !important;
+}
+
+#mapping-accordion .table-mapping tr:last-child td {
+  border-bottom: none !important;
+}
+
+/* Field Label Area */
+#mapping-accordion .wpfields {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  color: #1a202c !important;
+  display: block !important;
+  margin-bottom: 6px !important;
+  font-family: var(--wpucsv-dash-font), 'Inter', sans-serif !important;
+}
+
+/* Subtext / Hint (Simulates the blue uppercase type text and grey hint) */
+#mapping-accordion .sub-text {
+  display: block !important;
+  font-size: 12px !important;
+  color: #718096 !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  font-family: var(--wpucsv-dash-font), 'Inter', sans-serif !important;
+}
+
+/* Select Dropdown */
+#mapping-accordion .form-control {
+  border: 1px solid #cbd5e0 !important;
+  border-radius: 6px !important;
+  padding: 8px 12px !important;
+  font-size: 14px !important;
+  color: #4a5568 !important;
+  background-color: #fff !important;
+  width: 100% !important;
+  max-width: 400px !important;
+  height: 38px !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease !important;
+  box-sizing: border-box !important;
+}
+
+#mapping-accordion select.form-control {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+
+#mapping-accordion textarea.form-control {
+  height: auto !important;
+}
+
+#mapping-accordion .form-control:focus {
+  border-color: #3f51b5 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.15) !important;
+}
+
+/* MUI Autocomplete Wrapper Fix (removes double border) */
+#mapping-accordion .smack_csvheader {
+  border: none !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+#mapping-accordion .smack_csvheader .MuiOutlinedInput-root {
+  border: 1px solid #cbd5e0 !important;
+  border-radius: 6px !important;
+  padding: 0 8px !important;
+  background-color: #fff !important;
+  transition: all 0.2s ease !important;
+  height: 38px !important;
+  display: flex !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+}
+
+#mapping-accordion .smack_csvheader .MuiOutlinedInput-root.Mui-focused {
+  border-color: #3f51b5 !important;
+  box-shadow: 0 0 0 3px rgba(63, 81, 181, 0.15) !important;
+}
+
+/* Remove WordPress default input border inside Autocomplete */
+#mapping-accordion .smack_csvheader input.MuiInputBase-input {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 0 4px !important;
+  margin: 0 !important;
+  outline: none !important;
+}
+
+/* Actions Wrapper / Icons */
+#mapping-accordion .action-icon,
+#mapping-accordion .csv-icon-settings {
+  font-size: 18px !important;
+  color: #718096 !important;
+  cursor: pointer !important;
+  transition: color 0.2s ease !important;
+}
+
+#mapping-accordion .action-icon:hover,
+#mapping-accordion .csv-icon-settings:hover {
+  color: #3f51b5 !important;
+}
+
+/* Table Column Widths to Fix Squished Select Dropdown */
+#mapping-accordion .table-mapping th:nth-child(1),
+#mapping-accordion .table-mapping td:nth-child(1) {
+  width: 45% !important;
+  display: table-cell !important;
+}
+
+#mapping-accordion .table-mapping th:nth-child(2),
+#mapping-accordion .table-mapping td:nth-child(2) {
+  width: 45% !important;
+  display: table-cell !important;
+}
+
+#mapping-accordion .table-mapping th:nth-child(3),
+#mapping-accordion .table-mapping td:nth-child(3) {
+  width: 10% !important;
+  display: table-cell !important;
+  text-align: right !important;
+  padding-top: 29px !important;
+  /* Centers the icons vertically next to the 38px inputs */
+}
+
+/* Responsive Mapping Tables styling */
+@media (max-width: 768px) {
+
+  #mapping-accordion .table-mapping,
+  #mapping-accordion .table-mapping thead,
+  #mapping-accordion .table-mapping tbody,
+  #mapping-accordion .table-mapping tr,
+  #mapping-accordion .table-mapping th,
+  #mapping-accordion .table-mapping td {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  #mapping-accordion .table-mapping thead {
+    display: none !important;
+  }
+
+  #mapping-accordion .table-mapping td {
+    padding: 12px 16px !important;
+    border-bottom: none !important;
+    text-align: left !important;
+  }
+
+  #mapping-accordion .table-mapping tr {
+    border-bottom: 2px solid #edf2f7 !important;
+    padding: 12px 0 !important;
+  }
+
+  #mapping-accordion .table-mapping td:nth-child(1) .form-control {
+    max-width: 100% !important;
+  }
+
+  #mapping-accordion .table-mapping td:nth-child(2) .smack_csvheader,
+  #mapping-accordion .table-mapping td:nth-child(2) .select {
+    max-width: 100% !important;
+    min-width: 100% !important;
+    width: 100% !important;
+  }
+
+  #mapping-accordion .table-mapping td:nth-child(3) {
+    text-align: left !important;
+    padding-top: 12px !important;
+  }
+}
+
+/* Ensure the select dropdown fills the column nicely */
+#mapping-accordion .smack_csvheader {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 200px !important;
+  display: block !important;
+}
+
+/* ==========================================================================
+   Audie Premium-Style Import Progress / Import Complete / Live Activity Log
+   ========================================================================== */
+
+/* ---- Import Controls Header ---- */
+.wpucsv-import-controls {
+  margin-bottom: 0;
+}
+
+.wpucsv-import-controls__title {
+  font-family: var(--wpucsv-dash-font);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--wpucsv-dash-text);
+  margin: 0 0 2px;
+}
+
+.wpucsv-import-controls__subtitle {
+  font-family: var(--wpucsv-dash-font);
+  font-size: 13px;
+  color: var(--wpucsv-dash-text-muted);
+  margin: 0 0 18px;
+}
+
+/* ---- Schedule Import Row ---- */
+.wpucsv-schedule-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.wpucsv-schedule-row__info {
+  display: flex;
+  flex-direction: column;
+}
+
+.wpucsv-schedule-row__label {
+  font-family: var(--wpucsv-dash-font);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--wpucsv-dash-text);
+}
+
+.wpucsv-schedule-row__desc {
+  font-family: var(--wpucsv-dash-font);
+  font-size: 12px;
+  color: var(--wpucsv-dash-text-muted);
+  margin-top: 1px;
+}
+
+/* ---- Main Import Progress Card ---- */
+.wpucsv-progress-card {
+  position: relative;
+  border-radius: 16px;
+  padding: 24px 28px 20px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* In-progress state: gradient purple/indigo */
+.wpucsv-progress-card--active {
+  background: #3b37c6;
+  color: #ffffff;
+  box-shadow: 0 16px 40px -8px rgba(79, 70, 229, 0.35);
+}
+
+/* Completed state: dark with green accent border */
+.wpucsv-progress-card--completed {
+  background: #009b69;
+  color: #ffffff;
+  border: 2px solid #10b981;
+  box-shadow: 0 16px 40px -8px rgba(16, 185, 129, 0.2);
+}
+
+/* Error state */
+.wpucsv-progress-card--error {
+  background: linear-gradient(135deg, #1a0a0a 0%, #2d1515 50%, #3b1c1c 100%);
+  color: #ffffff;
+  border: 2px solid #ef4444;
+  box-shadow: 0 16px 40px -8px rgba(239, 68, 68, 0.2);
+}
+
+/* Card Header */
+.wpucsv-progress-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.wpucsv-progress-card__title {
+  font-family: var(--wpucsv-dash-font);
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Start Import / Pause / Resume buttons */
+.wpucsv-progress-card__action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-family: var(--wpucsv-dash-font);
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wpucsv-progress-card__action-btn--start {
+  background: #ffffff;
+  color: #312e81;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.wpucsv-progress-card__action-btn--start:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.wpucsv-progress-card__action-btn--pause {
+  background: rgba(251, 191, 36, 0.9);
+  color: #1a1a1a;
+}
+
+.wpucsv-progress-card__action-btn--pause:hover {
+  background: rgba(251, 191, 36, 1);
+}
+
+.wpucsv-progress-card__action-btn--resume {
+  background: rgba(52, 211, 153, 0.9);
+  color: #ffffff;
+}
+
+.wpucsv-progress-card__action-btn--resume:hover {
+  background: rgba(52, 211, 153, 1);
+}
+
+/* Large percentage display */
+.wpucsv-progress-card__percentage {
+  font-family: var(--wpucsv-dash-font);
+  font-size: 48px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+  margin: 4px 0 10px;
+  letter-spacing: -0.02em;
+}
+
+/* Rows / count text */
+.wpucsv-progress-card__meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.wpucsv-progress-card__rows-text {
+  font-family: var(--wpucsv-dash-font);
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.wpucsv-progress-card__elapsed {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--wpucsv-dash-font);
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.wpucsv-progress-card__elapsed svg {
+  opacity: 0.7;
+}
+
+/* Progress bar */
+.wpucsv-progress-card__bar-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.wpucsv-progress-card__bar-fill {
+  height: 100%;
+  background: #ffffff;
+  border-radius: 999px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Stat cards grid */
+.wpucsv-progress-card__stats-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.wpucsv-progress-card__stat-box {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 10px 12px;
+  backdrop-filter: blur(6px);
+  transition: background 0.2s ease;
+}
+
+.wpucsv-progress-card__stat-box:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.wpucsv-progress-card__stat-label {
+  font-family: var(--wpucsv-dash-font);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+
+.wpucsv-progress-card__stat-value {
+  font-family: var(--wpucsv-dash-font);
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1;
+}
+
+/* File info row */
+.wpucsv-progress-card__file-info {
+  display: flex;
+  gap: 16px;
+  font-family: var(--wpucsv-dash-font);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
+}
+
+/* ---- Live Activity Log ---- */
+.wpucsv-activity-log {
+  margin-bottom: 16px;
+}
+
+.wpucsv-activity-log__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.wpucsv-activity-log__title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wpucsv-activity-log__icon {
+  color: var(--wpucsv-dash-text);
+}
+
+.wpucsv-activity-log__title {
+  font-family: var(--wpucsv-dash-font);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--wpucsv-dash-text);
+  margin: 0;
+}
+
+.wpucsv-activity-log__count {
+  font-family: var(--wpucsv-dash-font);
+  font-size: 12px;
+  color: var(--wpucsv-dash-text-muted);
+  font-weight: 500;
+}
+
+.wpucsv-activity-log__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wpucsv-activity-log__filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-family: var(--wpucsv-dash-font);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--wpucsv-dash-text-muted);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wpucsv-activity-log__filter-btn:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+.wpucsv-activity-log__filter-btn.active {
+  border-color: var(--wpucsv-dash-accent);
+  color: var(--wpucsv-dash-accent);
+  background: #eff6ff;
+}
+
+.wpucsv-activity-log__csv-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-family: var(--wpucsv-dash-font);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--wpucsv-dash-text-muted);
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.wpucsv-activity-log__csv-btn:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+  text-decoration: none;
+  color: var(--wpucsv-dash-text-muted);
+}
+
+/* Log Container (Dark theme) */
+.wpucsv-activity-log__container {
+  background: #0f172a;
+  border-radius: 12px;
+  overflow: hidden;
+  min-height: 180px;
+  max-height: 320px;
+  overflow-y: auto;
+  border: 1px solid #1e293b;
+}
+
+/* Custom scrollbar for log */
+.wpucsv-activity-log__container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.wpucsv-activity-log__container::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+.wpucsv-activity-log__container::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+
+.wpucsv-activity-log__container::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* Empty state */
+.wpucsv-activity-log__empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 180px;
+  font-family: var(--wpucsv-dash-font);
+  font-size: 13px;
+  color: #475569;
+  font-style: italic;
+}
+
+/* Log entry row */
+.wpucsv-activity-log__entry {
+  display: grid;
+  grid-template-columns: 90px 52px 1fr;
+  gap: 10px;
+  padding: 8px 16px;
+  border-bottom: 1px solid rgba(30, 41, 59, 0.6);
+  font-family: 'JetBrains Mono', 'Menlo', 'Consolas', monospace;
+  font-size: 12px;
+  line-height: 1.6;
+  transition: background 0.1s ease;
+}
+
+.wpucsv-activity-log__entry:hover {
+  background: rgba(30, 41, 59, 0.5);
+}
+
+.wpucsv-activity-log__entry:last-child {
+  border-bottom: none;
+}
+
+.wpucsv-activity-log__time {
+  color: #64748b;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.wpucsv-activity-log__level {
+  font-weight: 700;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.wpucsv-activity-log__level--info {
+  color: #22d3ee;
+}
+
+.wpucsv-activity-log__level--success {
+  color: #34d399;
+}
+
+.wpucsv-activity-log__level--warning {
+  color: #fbbf24;
+}
+
+.wpucsv-activity-log__level--error {
+  color: #f87171;
+}
+
+.wpucsv-activity-log__message {
+  color: #cbd5e1;
+  word-break: break-word;
+}
+
+.wpucsv-activity-log__message a {
+  color: #818cf8;
+  text-decoration: none;
+}
+
+.wpucsv-activity-log__message a:hover {
+  text-decoration: underline;
+}
+
+/* Highlight for important log messages */
+.wpucsv-activity-log__entry--highlight {
+  background: rgba(16, 185, 129, 0.06);
+}
+
+.wpucsv-activity-log__entry--highlight .wpucsv-activity-log__level {
+  color: #34d399;
+}
+
+.wpucsv-activity-log__entry--highlight .wpucsv-activity-log__message {
+  color: #34d399;
+}
+
+.wpucsv-activity-log__entry--error {
+  background: rgba(239, 68, 68, 0.06);
+}
+
+.wpucsv-activity-log__entry--error .wpucsv-activity-log__message {
+  color: #fca5a5;
+}
+
+/* ---- Bottom Action Bar ---- */
+.wpucsv-import-bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 8px;
+}
+
+.wpucsv-import-bottom-bar__left {
+  display: flex;
+  gap: 12px;
+}
+
+.wpucsv-import-bottom-bar__right {
+  display: flex;
+  gap: 12px;
+}
+
+.wpucsv-btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-family: var(--wpucsv-dash-font);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--wpucsv-dash-text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wpucsv-btn-back:hover {
+  border-color: #cbd5e1;
+  background: #f8fafc;
+}
+
+.wpucsv-btn-dashboard {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #3d4fdb;
+  font-family: var(--wpucsv-dash-font);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.wpucsv-btn-dashboard:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+.wpucsv-btn-new-import-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #3d4fdb;
+  font-family: var(--wpucsv-dash-font);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.wpucsv-btn-new-import-action:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+/* ---- Responsive for stat cards ---- */
+@media (max-width: 900px) {
+  .wpucsv-progress-card__stats-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .wpucsv-progress-card__stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wpucsv-progress-card__percentage {
+    font-size: 40px;
+  }
+
+  .wpucsv-activity-log__entry {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
+/* Rollback button */
+.wpucsv-btn-rollback {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+  font-family: var(--wpucsv-dash-font);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+}
+
+.wpucsv-btn-rollback:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(220, 38, 38, 0.3);
+}
+
+/* Spinner for rollback */
+.wpucsv-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: wpucsv-spin 0.6s linear infinite;
+}
+
+@keyframes wpucsv-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Premium Feedback Modal Content Fix */
+.wpucsv-premium-feedback-modal-content {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ==========================================================================
+   Media ZIP Upload Popup — Perfect Center Fix
+   Overrides WordPress admin layout interference (#wpwrap, #wpcontent shifts)
+   ========================================================================== */
+
+/* Force the modal backdrop to cover the FULL viewport, ignoring WP sidebar */
+#upload_media.modal {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  z-index: 100050 !important;
+  display: none;
+  background-color: rgba(15, 23, 42, 0.55) !important;
+  backdrop-filter: blur(3px) !important;
+  -webkit-backdrop-filter: blur(3px) !important;
+  /* Use flex to perfectly center the dialog */
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 32px !important;
+  box-sizing: border-box !important;
+}
+
+/* When Bootstrap adds .show, switch to flex */
+#upload_media.modal.show {
+  display: flex !important;
+}
+
+/* The dialog itself: no auto margins, let flexbox handle centering */
+#upload_media .modal-dialog {
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: 580px !important;
+  max-height: calc(100vh - 64px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  /* Prevent touching screen edges */
+  min-width: 0 !important;
+  pointer-events: auto !important;
+}
+
+/* The content box: fills dialog, has max-height, scrolls inside */
+#upload_media .modal-content {
+  border: none !important;
+  border-radius: 16px !important;
+  overflow: hidden !important;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  max-height: calc(100vh - 64px) !important;
+  width: 100% !important;
+}
+
+/* Header stays pinned at top — no shrink */
+#upload_media .modal-header {
+  flex-shrink: 0 !important;
+}
+
+/* Body: grows and scrolls */
+#upload_media .modal-body {
+  overflow-y: auto !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+}
+
+/* Footer stays pinned at bottom — no shrink */
+#upload_media .modal-footer {
+  flex-shrink: 0 !important;
+}
+
+/* Sticky thead inside scrollable body */
+#upload_media .modal-body thead th {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 2 !important;
+  background: #f8fafc !important;
+}
+
+/* Responsive: on very small screens shrink padding */
+@media (max-width: 640px) {
+  #upload_media.modal {
+    padding: 16px !important;
+  }
+}
+
+/* =========================================================================
+   Manage Filtering Options — layout, spacing, responsive
+========================================================================= */
+
+#mapping-accordion .filter-options-body {
+  padding: 0 !important;
+}
+
+#mapping-accordion .table-filter-options,
+#mapping-accordion .table-filter-rules {
+  table-layout: fixed !important;
+  width: 100% !important;
+}
+
+/* Override mapping-table 45/45/10 column widths for filter form */
+#mapping-accordion .table-filter-options th,
+#mapping-accordion .table-filter-options td,
+#mapping-accordion .table-filter-rules th,
+#mapping-accordion .table-filter-rules td {
+  width: auto !important;
+  text-align: left !important;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  vertical-align: middle !important;
+  display: table-cell !important;
+}
+
+#mapping-accordion .table-filter-options th:nth-child(1),
+#mapping-accordion .table-filter-options td:nth-child(1) {
+  width: 28% !important;
+  text-align: left !important;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+}
+
+#mapping-accordion .table-filter-options th:nth-child(2),
+#mapping-accordion .table-filter-options td:nth-child(2) {
+  width: 28% !important;
+  text-align: left !important;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+}
+
+#mapping-accordion .table-filter-options th:nth-child(3),
+#mapping-accordion .table-filter-options td:nth-child(3) {
+  width: 26% !important;
+  text-align: left !important;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+}
+
+#mapping-accordion .table-filter-options th:nth-child(4),
+#mapping-accordion .table-filter-options td:nth-child(4),
+#mapping-accordion .table-filter-options .filter-action-col {
+  width: 18% !important;
+  text-align: right !important;
+  white-space: nowrap !important;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+}
+
+#mapping-accordion .table-filter-options .form-control,
+#mapping-accordion .table-filter-options select.form-control {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  height: 40px !important;
+  box-sizing: border-box !important;
+}
+
+#mapping-accordion .table-filter-options input.form-control:disabled {
+  background-color: #edf2f7 !important;
+  cursor: not-allowed !important;
+  opacity: 0.7 !important;
+}
+
+#mapping-accordion .filter-add-rule-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  white-space: nowrap !important;
+  padding: 8px 16px !important;
+  margin: 0 !important;
+  font-size: 13px !important;
+  line-height: 1.2 !important;
+  text-decoration: none !important;
+  box-sizing: border-box !important;
+  min-height: 40px !important;
+  border-radius: 6px !important;
+  vertical-align: middle !important;
+}
+
+#mapping-accordion .filter-add-rule-btn:hover {
+  text-decoration: none !important;
+}
+
+/* Added rules list */
+#mapping-accordion .filter-added-rules {
+  padding: 8px 0 16px !important;
+  border-top: 1px solid #e2e8f0 !important;
+}
+
+#mapping-accordion .filter-added-rules h5 {
+  margin: 16px 20px 8px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #2d3748 !important;
+}
+
+#mapping-accordion .table-filter-rules th:nth-child(1),
+#mapping-accordion .table-filter-rules td:nth-child(1),
+#mapping-accordion .table-filter-rules th:nth-child(2),
+#mapping-accordion .table-filter-rules td:nth-child(2),
+#mapping-accordion .table-filter-rules th:nth-child(3),
+#mapping-accordion .table-filter-rules td:nth-child(3) {
+  width: 22% !important;
+  text-align: left !important;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+}
+
+#mapping-accordion .table-filter-rules th:nth-child(4),
+#mapping-accordion .table-filter-rules td:nth-child(4) {
+  width: 20% !important;
+  text-align: left !important;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+}
+
+#mapping-accordion .table-filter-rules th:nth-child(5),
+#mapping-accordion .table-filter-rules td:nth-child(5),
+#mapping-accordion .table-filter-rules .filter-action-col {
+  width: 14% !important;
+  text-align: center !important;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
+}
+
+#mapping-accordion .filter-condition-group {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  align-items: center !important;
+}
+
+#mapping-accordion .filter-condition-group label {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  margin: 0 !important;
+  font-weight: 500 !important;
+  color: #4a5568 !important;
+  cursor: pointer !important;
+}
+
+#mapping-accordion .filter-condition-group input[type="radio"] {
+  margin: 0 !important;
+}
+
+/* Responsive: stack filter form on smaller screens */
+@media (max-width: 992px) {
+
+  #mapping-accordion .table-filter-options,
+  #mapping-accordion .table-filter-options thead,
+  #mapping-accordion .table-filter-options tbody,
+  #mapping-accordion .table-filter-options tr,
+  #mapping-accordion .table-filter-options th,
+  #mapping-accordion .table-filter-options td,
+  #mapping-accordion .table-filter-rules,
+  #mapping-accordion .table-filter-rules thead,
+  #mapping-accordion .table-filter-rules tbody,
+  #mapping-accordion .table-filter-rules tr,
+  #mapping-accordion .table-filter-rules th,
+  #mapping-accordion .table-filter-rules td {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  #mapping-accordion .table-filter-options thead,
+  #mapping-accordion .table-filter-rules thead {
+    display: none !important;
+  }
+
+  #mapping-accordion .table-filter-options tbody tr,
+  #mapping-accordion .table-filter-rules tbody tr {
+    padding: 12px 0 !important;
+    border-bottom: 1px solid #edf2f7 !important;
+  }
+
+  #mapping-accordion .table-filter-options td,
+  #mapping-accordion .table-filter-rules td {
+    padding: 8px 20px !important;
+    text-align: left !important;
+    border-bottom: none !important;
+  }
+
+  #mapping-accordion .table-filter-options td[data-label]::before {
+    content: attr(data-label) !important;
+    display: block !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: #718096 !important;
+    text-transform: uppercase !important;
+    margin-bottom: 6px !important;
+    letter-spacing: 0.02em !important;
+  }
+
+  #mapping-accordion .table-filter-options .filter-action-col,
+  #mapping-accordion .table-filter-options td:nth-child(4) {
+    text-align: left !important;
+    padding-top: 12px !important;
+    padding-bottom: 16px !important;
+  }
+
+  #mapping-accordion .table-filter-options .filter-action-col::before,
+  #mapping-accordion .table-filter-options td:nth-child(4)::before {
+    display: none !important;
+  }
+
+  #mapping-accordion .filter-add-rule-btn {
+    width: 100% !important;
+  }
+
+  #mapping-accordion .table-filter-rules .filter-action-col {
+    text-align: left !important;
+  }
+}
+
+@media (max-width: 576px) {
+
+  #mapping-accordion .table-filter-options th,
+  #mapping-accordion .table-filter-options td,
+  #mapping-accordion .table-filter-rules th,
+  #mapping-accordion .table-filter-rules td {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  #mapping-accordion .filter-added-rules h5 {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+  }
+}
+
+/* --- Start Custom Styles for Mapping Popover (Manipulation Screen) --- */
+/* Make textareas and text fields take full width inside the mapping popover */
+#mapping-accordion .manipulation-screen textarea.form-control,
+#mapping-accordion .manipulation-screen input.form-control {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Style the tabs container and line under the tabs to blue */
+.manipulation-screen .tab-section .tabs {
+  border-bottom: 1px solid rgba(61, 79, 219, 0.3) !important;
+  display: flex !important;
+  padding: 0 !important;
+  margin: 0 0 10px 0 !important;
+}
+
+/* Style the tab list items */
+.manipulation-screen .tab-section .tabs .tab-list {
+  background-color: transparent !important;
+  border-bottom: 2px solid transparent !important;
+  color: #718096 !important;
+  font-weight: 500 !important;
+  padding: 8px 12px !important;
+  margin: 0 !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+/* Tab list hover state */
+.manipulation-screen .tab-section .tabs .tab-list:hover {
+  border-bottom: 2px solid rgba(61, 79, 219, 0.6) !important;
+  color: #3d4fdb !important;
+}
+
+/* Tab list active state */
+.manipulation-screen .tab-section .tabs .tab-list.active {
+  border-bottom: 2px solid #3d4fdb !important;
+  color: #3d4fdb !important;
+  font-weight: 600 !important;
+}
+
+/* Add spacing between the tab icon image and tab text label */
+.manipulation-screen .tab-section .tabs .tab-list img {
+  margin-right: 6px !important;
+}
+
+/* Style the CSV hint box to match the blue theme */
+.manipulation-screen .csv-hint {
+  background-color: rgba(61, 79, 219, 0.05) !important;
+  color: #3d4fdb !important;
+  border: 1px solid rgba(61, 79, 219, 0.15) !important;
+  border-radius: 6px !important;
+  padding: 10px !important;
+  font-size: 14px !important;
+}
+
+.manipulation-screen .csv-hint b,
+.manipulation-screen .csv-hint strong,
+.manipulation-screen .csv-hint code {
+  color: #3d4fdb !important;
+}
+
+/* --- End Custom Styles for Mapping Popover --- */
+
+/* Custom premium style overrides for mapping section buttons, matching the Support submit query button size/fonts */
+.wp-ultimate-csv-importer .smack-btn.wpucsv-mapping-btn-primary,
+.wp-ultimate-csv-importer .smack-btn.wpucsv-mapping-btn-default,
+.wp-ultimate-csv-importer .smack-btn.wpucsv-mapping-btn-secondary,
+.wp-ultimate-csv-importer a.smack-btn.wpucsv-mapping-btn-secondary,
+.wp-ultimate-csv-importer .wpucsv-btn-continue,
+.wp-ultimate-csv-importer .wpucsv-btn-back,
+.wp-ultimate-csv-importer .wpucsv-export-btn,
+.wp-ultimate-csv-importer .wpucsv-export-btn-secondary,
+.wp-ultimate-csv-importer .wpucsv-template-btn-create,
+.wp-ultimate-csv-importer .wpucsv-template-btn-back {
+  width: auto !important;
+  height: auto !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 12px 24px !important;
+  font-weight: 600 !important;
+  font-size: 13.5px !important;
+  font-family: var(--wpucsv-dash-font), sans-serif !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  text-transform: none !important;
+  /* Override default Poppins uppercase transform */
+  line-height: normal !important;
+}
+
+/* Primary Mapping / Wizard Buttons (e.g. Continue, Save, Create Mapping) */
+.wp-ultimate-csv-importer .smack-btn.wpucsv-mapping-btn-primary,
+.wp-ultimate-csv-importer .wpucsv-btn-continue,
+.wp-ultimate-csv-importer .wpucsv-export-btn,
+.wp-ultimate-csv-importer .wpucsv-template-btn-create {
+  background: #3d4fdb !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.2) !important;
+}
+
+.wp-ultimate-csv-importer .smack-btn.wpucsv-mapping-btn-primary:hover,
+.wp-ultimate-csv-importer .wpucsv-btn-continue:hover:not(:disabled),
+.wp-ultimate-csv-importer .wpucsv-export-btn:hover:not(:disabled),
+.wp-ultimate-csv-importer .wpucsv-template-btn-create:hover:not(:disabled) {
+  background: #2344cc !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 6px 16px rgba(56, 88, 233, 0.3) !important;
+  color: #ffffff !important;
+}
+
+/* Default / Back Mapping / Wizard Buttons */
+.wp-ultimate-csv-importer .smack-btn.wpucsv-mapping-btn-default,
+.wp-ultimate-csv-importer .wpucsv-btn-back,
+.wp-ultimate-csv-importer .wpucsv-export-btn-secondary,
+.wp-ultimate-csv-importer .wpucsv-template-btn-back {
+  background: #ffffff !important;
+  color: #475569 !important;
+  border: 1px solid #cbd5e1 !important;
+  margin: 0 !important;
+  /* overrides style.css's margin-top: 123px */
+  box-shadow: none !important;
+}
+
+.wp-ultimate-csv-importer .smack-btn.wpucsv-mapping-btn-default:hover,
+.wp-ultimate-csv-importer .wpucsv-btn-back:hover,
+.wp-ultimate-csv-importer .wpucsv-export-btn-secondary:hover:not(:disabled),
+.wp-ultimate-csv-importer .wpucsv-template-btn-back:hover {
+  background: #f8fafc !important;
+  color: #1e293b !important;
+  border-color: #94a3b8 !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Secondary Mapping Button (e.g. Add Custom Field, Add Rule) */
+.wp-ultimate-csv-importer .smack-btn.wpucsv-mapping-btn-secondary,
+.wp-ultimate-csv-importer a.smack-btn.wpucsv-mapping-btn-secondary {
+  background: #ffffff !important;
+  color: #3d4fdb !important;
+  border: 1.5px solid #3d4fdb !important;
+  box-shadow: none !important;
+  text-decoration: none !important;
+}
+
+.wp-ultimate-csv-importer .smack-btn.wpucsv-mapping-btn-secondary:hover,
+.wp-ultimate-csv-importer a.smack-btn.wpucsv-mapping-btn-secondary:hover {
+  background: rgba(61, 79, 219, 0.05) !important;
+  color: #2344cc !important;
+  border-color: #2344cc !important;
+  transform: translateY(-1px) !important;
+}
+
+.wpucsv-import-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1024px) {
+  .wpucsv-import-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .wpucsv-import-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .wpucsv-import-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Database Migration UI Alignment */
+.uci-db-migration-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.uci-db-field-full {
+  grid-column: 1 / -1;
+}
+
+.uci-db-migration-actions,
+.uci-db-preview-actions,
+.uci-rest-api-actions,
+.uci-ai-nl-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.uci-external-actions,
+.uci-ai-nl-file-actions {
+  display: flex;
+  align-items: center;
+}
+
+.uci-ai-nl-file-actions {
+  width: 100%;
+}
+
+.uci-db-migration-actions .btn,
+.uci-db-migration-actions .smack-btn,
+.uci-db-preview-actions .btn,
+.uci-db-preview-actions .smack-btn,
+.uci-rest-api-actions .smack-btn,
+.uci-external-actions .smack-btn,
+.uci-ai-nl-actions .smack-btn,
+.uci-ai-nl-file-actions .smack-btn {
+  padding: 10px 24px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  line-height: 1.5 !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+  height: 42px !important;
+  text-transform: none !important;
+  vertical-align: middle;
+}
+
+.uci-ai-nl-file-actions .smack-btn {
+  width: 100% !important;
+}
+
+.uci-db-migration-actions .smack-btn-secondary,
+.uci-rest-api-actions .smack-btn-secondary {
+  border: 2px solid #3d4fdb !important;
+  background-color: #ffffff !important;
+  color: #3d4fdb !important;
+}
+
+.uci-db-migration-actions .smack-btn-primary,
+.uci-rest-api-actions .smack-btn-primary,
+.uci-external-actions .smack-btn-primary,
+.uci-ai-nl-actions .smack-btn-primary,
+.uci-ai-nl-file-actions .smack-btn-primary {
+  border: 2px solid #3d4fdb !important;
+  background-color: #3d4fdb !important;
+  color: #ffffff !important;
+}
+
+.uci-db-back-btn {
+  padding: 8px 16px !important;
+  font-size: 13.5px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent !important;
+  color: #64748b !important;
+  margin-bottom: 20px;
+  border: 1px solid #cbd5e1 !important;
+}
+
+.uci-db-back-btn:hover {
+  background: #f8fafc !important;
+  color: #0f172a !important;
+  border-color: #94a3b8 !important;
+}
+
+.uci-db-migration-actions .btn-outline-primary {
+  background: transparent !important;
+  color: #3d4fdb !important;
+  border: 2px solid #3d4fdb !important;
+}
+
+.uci-db-migration-actions .btn-outline-primary:hover:not(:disabled) {
+  background: #f1f5f9 !important;
+  transform: translateY(-2px);
+}
+
+.uci-db-migration-actions .btn-primary,
+.uci-db-preview-actions .btn-primary {
+  background: #3d4fdb !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.25) !important;
+}
+
+.uci-db-migration-actions .btn-primary:hover:not(:disabled),
+.uci-db-preview-actions .btn-primary:hover:not(:disabled) {
+  background: #2b45b8 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(56, 88, 233, 0.35) !important;
+}
+
+.uci-db-migration-actions .btn-success {
+  background: #3d4fdb !important;
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25) !important;
+}
+
+.uci-db-migration-actions .btn-success:hover:not(:disabled) {
+  background: #2845c9 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35) !important;
+}
+
+.uci-db-migration-actions .btn:disabled,
+.uci-db-migration-actions .smack-btn:disabled,
+.uci-db-preview-actions .btn:disabled,
+.uci-db-preview-actions .smack-btn:disabled,
+.uci-rest-api-actions .smack-btn:disabled,
+.uci-external-actions .smack-btn:disabled,
+.uci-ai-nl-actions .smack-btn:disabled,
+.uci-ai-nl-file-actions .smack-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none !important;
+}
+
+/* External Sources Premium UI */
+.wpucsv-external-upload-section {
+  padding: 16px 0;
+}
+
+label.wpucsv-premium-section-title {
+  display: block;
+}
+
+.wpucsv-external-sources-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+  background: #f1f5f9;
+  padding: 6px;
+  border-radius: 12px;
+  width: fit-content;
+}
+
+.wpucsv-external-source-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.wpucsv-external-source-tab:hover {
+  color: #334155;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.wpucsv-external-source-tab.active {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+}
+
+.wpucsv-external-source-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  transition: all 0.2s ease;
+  color: inherit;
+}
+
+.wpucsv-external-source-icon img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  opacity: 0.7;
+}
+
+.wpucsv-external-source-tab.active .wpucsv-external-source-icon {
+  color: #3d4fdb;
+}
+
+.wpucsv-external-source-tab.active .wpucsv-external-source-icon img {
+  opacity: 1;
+}
+
+.wpucsv-external-source-label {
+  font-size: 14px;
+}
+
+.wpucsv-external-active-source-container {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* Auth Forms Overrides */
+.wpucsv-external-active-source-container .form-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #475569;
+  margin-bottom: 6px;
+  padding-left: 0;
+}
+
+.wpucsv-external-active-source-container .form-control {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  color: #1e293b;
+  box-shadow: none;
+  transition: all 0.2s;
+  height: auto;
+}
+
+.wpucsv-external-active-source-container .form-control:focus {
+  border-color: #3d4fdb;
+  box-shadow: 0 0 0 3px rgba(56, 88, 233, 0.15);
+  outline: none;
+}
+
+.wpucsv-external-active-source-container .checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 0;
+}
+
+.wpucsv-external-active-source-container .checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0;
+}
+
+.wpucsv-external-active-source-container .checkbox label {
+  font-size: 14px;
+  color: #475569;
+  margin: 0;
+  cursor: pointer;
+}
+
+/* ========================================================
+   WooCommerce → SureCart Migration — Audie premium style
+   ======================================================== */
+
+.woo-surecart-page {
+  font-family: 'Inter Tight', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: #f8f9fa;
+  /* padding: 28px; */
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- Header ---------- */
+.woo-surecart-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.woo-surecart-header-left {}
+
+.woo-surecart-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 6px 0;
+  font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
+}
+
+.woo-surecart-arrow-icon {
+  color: #64748b;
+  flex-shrink: 0;
+}
+
+.woo-surecart-subtitle {
+  color: #64748b;
+  font-size: 0.95rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Connection badge */
+.woo-surecart-connection-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #f1f5f9;
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.woo-surecart-connection-badge.woo-active {
+  color: #3d4fdb;
+}
+
+.woo-surecart-connection-badge.woo-inactive {
+  color: #ef4444;
+}
+
+.woo-surecart-badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: currentColor;
+}
+
+/* ---------- Layout grid ---------- */
+.woo-surecart-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .woo-surecart-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.woo-surecart-col-left,
+.woo-surecart-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ---------- Cards ---------- */
+.woo-surecart-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  padding: 24px;
+}
+
+.woo-surecart-card-heading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.woo-surecart-card-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(56, 88, 233, 0.1);
+  color: #3d4fdb;
+  flex-shrink: 0;
+}
+
+.woo-surecart-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
+}
+
+.woo-surecart-card-desc {
+  font-size: 13px;
+  color: #64748b;
+  margin: 2px 0 0 0;
+  line-height: 1.4;
+}
+
+/* ---------- Forms ---------- */
+.woo-surecart-form-group {
+  margin-bottom: 16px;
+}
+
+.woo-surecart-label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 7px;
+}
+
+.woo-surecart-input,
+.woo-surecart-select {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #334155;
+  background: #ffffff;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.woo-surecart-input:focus,
+.woo-surecart-select:focus {
+  border-color: #3d4fdb;
+  box-shadow: 0 0 0 3px rgba(56, 88, 233, 0.12);
+}
+
+.woo-surecart-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2364748b' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px 10px;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+/* ---------- Buttons ---------- */
+.woo-surecart-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.woo-surecart-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.woo-surecart-btn-primary {
+  background: #3d4fdb;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(56, 88, 233, 0.3);
+}
+
+.woo-surecart-btn-primary:hover:not(:disabled) {
+  background: #2541d4;
+  box-shadow: 0 4px 12px rgba(56, 88, 233, 0.38);
+  transform: translateY(-1px);
+}
+
+.woo-surecart-btn-muted {
+  background: #64748b;
+  color: #ffffff;
+}
+
+.woo-surecart-btn-muted:hover:not(:disabled) {
+  background: #475569;
+}
+
+.woo-surecart-btn-outline {
+  background: transparent;
+  color: #64748b;
+  border: 1.5px solid #e2e8f0;
+}
+
+.woo-surecart-btn-outline:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.woo-surecart-btn-block {
+  width: 100%;
+}
+
+.woo-surecart-btn-migrate {
+  margin-top: 20px;
+  padding: 12px 22px;
+  font-size: 15px;
+}
+
+/* Save message */
+.woo-surecart-save-msg {
+  display: block;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.woo-surecart-save-msg.is-success {
+  color: #3d4fdb;
+}
+
+.woo-surecart-save-msg.is-error {
+  color: #ef4444;
+}
+
+/* ---------- Module / schedule options ---------- */
+.woo-surecart-module-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.woo-surecart-module-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: #ffffff;
+  user-select: none;
+}
+
+.woo-surecart-module-option:hover:not(.is-disabled) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.woo-surecart-module-option.is-selected {
+  border-color: #3d4fdb;
+  background: rgba(56, 88, 233, 0.06);
+  color: #3d4fdb;
+}
+
+.woo-surecart-module-option.is-disabled {
+  opacity: 0.5;
+  cursor: default;
+  pointer-events: none;
+}
+
+.woo-surecart-radio {
+  accent-color: #3d4fdb;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.woo-surecart-module-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: inherit;
+}
+
+/* ---------- Field mapping ---------- */
+.woo-surecart-mapping-header {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  align-items: center;
+  padding: 10px 0 10px;
+  border-bottom: 2px solid #f1f5f9;
+  margin-bottom: 4px;
+}
+
+.woo-surecart-mapping-header span {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.woo-surecart-mapping-row {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.woo-surecart-mapping-row:last-of-type {
+  border-bottom: none;
+}
+
+.woo-surecart-mapping-from {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.woo-surecart-field-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3d4fdb;
+  flex-shrink: 0;
+}
+
+.woo-surecart-mapping-arrow-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.woo-surecart-mapping-to {
+  padding-left: 10px;
+}
+
+.woo-surecart-field-badge {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  background: #f0fdf4;
+  color: #166534;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.woo-surecart-mapping-note {
+  margin-top: 16px;
+  font-size: 12px;
+  color: #94a3b8;
+  font-style: italic;
+  text-align: center;
+}
+
+/* ---------- Progress card ---------- */
+.woo-surecart-progress-card {
+  border-left: 4px solid #3d4fdb;
+}
+
+.woo-surecart-progress-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.woo-surecart-progress-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 8px 0;
+  font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
+}
+
+.woo-surecart-status-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #3d4fdb;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.woo-surecart-progress-pct {
+  text-align: right;
+}
+
+.woo-surecart-pct-number {
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1;
+}
+
+.woo-surecart-pct-detail {
+  display: block;
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.woo-surecart-progress-track {
+  width: 100%;
+  height: 14px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.woo-surecart-progress-fill {
+  height: 100%;
+  background: #3d4fdb;
+  border-radius: 8px;
+  transition: width 0.4s ease;
+}
+
+.woo-surecart-progress-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* Spin animation for status icon */
+@keyframes woo-surecart-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.woo-surecart-spin {
+  animation: woo-surecart-spin 1.2s linear infinite;
+}
+
+/* ---------- Schedule modal ---------- */
+.woo-surecart-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.woo-surecart-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.woo-surecart-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.woo-surecart-modal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.woo-surecart-modal-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: rgba(56, 88, 233, 0.1);
+  color: #3d4fdb;
+  flex-shrink: 0;
+}
+
+.woo-surecart-modal-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
+}
+
+.woo-surecart-modal-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.15s;
+  padding: 0;
+}
+
+.woo-surecart-modal-close:hover {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.woo-surecart-modal-body {
+  padding: 20px 24px;
+  flex: 1;
+}
+
+.woo-surecart-modal-desc {
+  font-size: 13.5px;
+  color: #64748b;
+  margin: 0 0 20px 0;
+  line-height: 1.6;
+}
+
+.woo-surecart-modal-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.woo-surecart-info-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: rgba(56, 88, 233, 0.07);
+  border: 1px solid rgba(56, 88, 233, 0.18);
+  border-radius: 10px;
+  padding: 14px 16px;
+  color: #3d4fdb;
+  margin-top: 4px;
+}
+
+.woo-surecart-info-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: #2541d4;
+  margin: 0 0 4px 0;
+  line-height: 1.5;
+}
+
+.woo-surecart-info-text:last-child {
+  margin-bottom: 0;
+}
+
+.woo-surecart-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 16px 24px 20px;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* ==========================================================================
+   Premium Mapping Sidebar Header & Label styles matching Audie Data Migrator
+   ========================================================================== */
+.wpucsv-mapping-sidebar-header {
+  background-color: #f1f1f1 !important;
+  border-bottom: 1px solid #ccd0d4 !important;
+  padding: 12px 15px !important;
+  color: #23282d !important;
+}
+
+.wpucsv-mapping-sidebar-header-title {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  font-style: normal !important;
+  color: #23282d !important;
+  font-family: var(--wpucsv-dash-font), 'Inter', 'Roboto', sans-serif !important;
+}
+
+.wpucsv-mapping-sidebar-chevron {
+  color: #666666 !important;
+  font-size: 18px !important;
+  cursor: pointer !important;
+  transition: color 0.2s ease !important;
+}
+
+.wpucsv-mapping-sidebar-chevron:hover {
+  color: #23282d !important;
+}
+
+.wpucsv-mapping-sidebar-label {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  font-style: normal !important;
+  color: #23282d !important;
+}
+
+/* Legacy/Simple/XML sidebars match this premium styling */
+.wp-ultimate-csv-importer .mapping-sidebar .mapping-sidebar-title {
+  background-color: #f1f1f1 !important;
+  border-bottom: 1px solid #ccd0d4 !important;
+  color: #23282d !important;
+  padding: 12px 15px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  font-style: normal !important;
+  font-family: var(--wpucsv-dash-font), 'Inter', 'Roboto', sans-serif !important;
+  height: 48px !important;
+}
+
+.wp-ultimate-csv-importer .mapping-sidebar .mapping-sidebar-title input[type="text"],
+.wp-ultimate-csv-importer .mapping-sidebar .mapping-sidebar-title strong {
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  font-style: normal !important;
+  color: #23282d !important;
+}
+
+.wp-ultimate-csv-importer .mapping-sidebar .mapping-sidebar-arrow [class^="csv-icon-"] {
+  color: #666666 !important;
+  font-size: 18px !important;
+}
+
+.wp-ultimate-csv-importer .mapping-sidebar .mapping-sidebar-arrow [class^="csv-icon-"]:hover {
+  color: #23282d !important;
+}
+
+.wp-ultimate-csv-importer .mapping-sidebar td.text-primary.font-weight-bold,
+.wp-ultimate-csv-importer .mapping-sidebar td.text-primary.font-weight-bold * {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  font-style: normal !important;
+  color: #23282d !important;
+}

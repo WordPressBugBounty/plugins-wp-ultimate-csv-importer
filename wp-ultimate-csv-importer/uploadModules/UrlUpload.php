@@ -58,7 +58,10 @@ class UrlUpload implements Uploads
 	 */
 	public function upload_function()
 	{
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		$file_url = esc_url_raw($_POST['url']);
 		$file_url = wp_http_validate_url($file_url);
 		$host = wp_parse_url($file_url, PHP_URL_HOST);
@@ -241,7 +244,7 @@ class UrlUpload implements Uploads
 					$response['success'] = false;
 					$response['message'] = curl_error($curlCh);
 					echo wp_json_encode($response);
-					$wpdb->get_results("UPDATE $file_table_name SET status='Download_Failed' WHERE id = '$lastid'");
+					$wpdb->query( "UPDATE $file_table_name SET status='Download_Failed' WHERE id = '$lastid'");
 				} else {
 					$path = $upload_dir . $event_key . '/' . $event_key;
 					if ($file_extension == 'xlsx' || $file_extension == 'xls') {
@@ -267,7 +270,7 @@ class UrlUpload implements Uploads
 					$filesize = $validate_instance->formatSizeUnits($file_size);
 
 					if ($validate_file == "yes") {
-						$wpdb->get_results("UPDATE $file_table_name SET status='Downloaded',`lock`=false WHERE id = '$lastid'");
+						$wpdb->query( "UPDATE $file_table_name SET status='Downloaded',`lock`=false WHERE id = '$lastid'");
 						$get_result = $validate_instance->import_record_function($event_key, $url_file_name);
 						$template_name = substr($url_file_name, 0, strpos($url_file_name, "."));
 						$response['success'] = true;
@@ -287,7 +290,7 @@ class UrlUpload implements Uploads
 						$response['message'] = $validate_file;
 						echo wp_json_encode($response);
 						unlink($path);
-						$wpdb->get_results("UPDATE $file_table_name SET status='Download Failed',`lock`=true WHERE id = '$lastid'");
+						$wpdb->query( "UPDATE $file_table_name SET status='Download Failed',`lock`=true WHERE id = '$lastid'");
 					}
 				}
 				curl_close($curlCh);

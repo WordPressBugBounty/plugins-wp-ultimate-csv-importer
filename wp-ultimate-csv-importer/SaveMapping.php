@@ -222,11 +222,21 @@ class SaveMapping
 			wp_die(__('You do not have sufficient permissions to access this page.'));
 		}
 		$file_path = isset($_POST['file_path']) ? sanitize_text_field(wp_unslash($_POST['file_path'])) : '';
+		$hash_key  = isset($_POST['hash_key']) ? sanitize_key(wp_unslash($_POST['hash_key'])) : '';
 		$extension = isset($_POST['extension']) ? sanitize_text_field(wp_unslash($_POST['extension'])) : '';
 		$response  = array();
 
 		if ($extension !== 'csv') {
 			wp_send_json_error(array('message' => __( 'Invalid file extension', 'wp-ultimate-csv-importer' )));
+		}
+
+		if ($file_path === '' && $hash_key !== '') {
+			$upload_dir = SaveMapping::$smackcsv_instance->create_upload_dir();
+			$file_path  = $upload_dir . $hash_key . '/' . $hash_key;
+		}
+
+		if (!SecurityHelper::validate_file_path($file_path) || !is_readable($file_path)) {
+			wp_send_json_error(array('message' => __( 'Unable to open the file', 'wp-ultimate-csv-importer' )));
 		}
 
 		if (($handle = fopen($file_path, 'r')) !== false) {
@@ -291,14 +301,12 @@ class SaveMapping
 					array('%s', '%s', '%s', '%s', '%s')
 				);
 				$response['success'] = true;
-				$response['message'] = 'Template inserted successfully.';
+				$response['message'] = __( 'Template inserted successfully.', 'wp-ultimate-csv-importer' );
 			}
-		} else {
-			wp_send_json_error(array('message' => __( 'Unable to open the file', 'wp-ultimate-csv-importer' )));
+			wp_send_json($response);
 		}
 
-		echo wp_json_encode($response);
-		wp_die();
+		wp_send_json_error(array('message' => __( 'Unable to open the file', 'wp-ultimate-csv-importer' )));
 	}
 
 	public function check_templatename_exists()
@@ -776,6 +784,9 @@ class SaveMapping
 			@wp_raise_memory_limit('image');
 		}
 
+		$wpml_bench_start = microtime( true );
+		$bench_log_file   = apply_filters( 'uci_free_import_benchmark_log', '/var/www/html/antony.log' );
+
 		global $wpdb, $core_instance, $uci_woocomm_meta, $uci_woocomm_bundle_meta, $product_attr_instance, $wpmlimp_class;
 		$header_array = [];
 		$upload_dir = SaveMapping::$smackcsv_instance->create_upload_dir();
@@ -789,8 +800,18 @@ class SaveMapping
 		if (!in_array($duplicate_action, array('skip', 'update', 'create'), true)) {
 			$duplicate_action = 'skip';
 		}
+		// Free: duplicate UI is Pro — Insert mode always matches by post_title,
+		// skips existing records, creates new ones, and never updates.
+		$file_table_name = $wpdb->prefix . "smackcsv_file_events";
+		$mode_row = $wpdb->get_row($wpdb->prepare("SELECT mode FROM {$file_table_name} WHERE hash_key = %s", $hash_key));
+		if ($mode_row && isset($mode_row->mode) && $mode_row->mode === 'Insert') {
+			$check = 'post_title';
+			$update_based_on = 'normal';
+			$duplicate_action = 'skip';
+		}
 		$media_type = sanitize_text_field($_POST['MediaType']);
-		$selected_type = sanitize_text_field($_POST['Types']);
+		$user_selected_type = ! empty( $_POST['Types'] ) ? sanitize_text_field( wp_unslash( $_POST['Types'] ) ) : '';
+		$selected_type = $user_selected_type;
 		if ($this->is_free_bulk_update_eligible($selected_type) && $update_based_on === 'skip' && $check === '') {
 			$response['success'] = false;
 			$response['message'] = 'Please select a match field.';
@@ -808,7 +829,6 @@ class SaveMapping
 		$core_instance = CoreFieldsImport::getInstance();
 		$import_config_instance = ImportConfiguration::getInstance();
 		$log_manager_instance = LogManager::getInstance();
-		$file_table_name = $wpdb->prefix . "smackcsv_file_events";
 		$template_table_name = $wpdb->prefix . "ultimate_csv_importer_mappingtemplate";
 		$log_table_name = $wpdb->prefix . "import_detail_log";
 		$response = [];
@@ -816,7 +836,11 @@ class SaveMapping
 		$get_mode = $get_id[0]->mode;
 		$total_rows = $get_id[0]->total_rows;
 		$page_number = isset($_POST['PageNumber']) ? intval(sanitize_text_field($_POST['PageNumber'])) : 0;
-		$total_pages = ceil($total_rows / 5);
+		$file_iteration = (int) get_option( 'sm_bulk_import_free_iteration_limit', 5 );
+		if ( $file_iteration < 1 ) {
+			$file_iteration = 5;
+		}
+		$total_pages = (int) ceil( (int) $total_rows / $file_iteration );
 		$file_name = $get_id[0]->file_name;
 		$file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
 		$gmode = 'Normal';
@@ -829,8 +853,21 @@ class SaveMapping
 		$upload_dir = SaveMapping::$smackcsv_instance->create_upload_dir();
 		$file_size = filesize($upload_dir . $hash_key . '/' . $hash_key);
 		$filesize = $helpers_instance->formatSizeUnits($file_size);
-		$file_iteration = (int) get_option('sm_bulk_import_free_iteration_limit', 5);
 		update_option('sm_bulk_import_page_number', $page_number);
+
+		$this->log_bulk_import_benchmark(
+			$bench_log_file,
+			'START',
+			array(
+				'hash_key' => $hash_key,
+				'page'     => $page_number,
+				'module'   => $user_selected_type,
+				'check'    => $check,
+				'rows'     => (int) $total_rows,
+				'batch'    => (int) $file_iteration,
+			),
+			$wpml_bench_start
+		);
 
 		if ($resume_svc && 1 === $page_number && empty($_POST['uci_resume_session'])) {
 			$started = $resume_svc->start_checkpoint(
@@ -910,6 +947,11 @@ class SaveMapping
 			$map = array();
 		}
 
+		if ( $user_selected_type !== '' ) {
+			$selected_type = $user_selected_type;
+			$this->sync_mapping_template_module( $hash_key, $selected_type );
+		}
+
 		if ($resume_svc && !empty($map)) {
 			$manage_filter_for_snapshot = !empty($mapping_filter) ? SecurityHelper::safe_unserialize($mapping_filter) : array();
 			if (!is_array($manage_filter_for_snapshot)) {
@@ -956,7 +998,10 @@ class SaveMapping
 		}
 
 		$addHeader = false;
-		$file_iteration = get_option('sm_bulk_import_free_iteration_limit');
+		$file_iteration = (int) get_option( 'sm_bulk_import_free_iteration_limit', 5 );
+		if ( $file_iteration < 1 ) {
+			$file_iteration = 5;
+		}
 		if ($file_extension == 'csv' || $file_extension == 'txt') {
 			if (version_compare(PHP_VERSION, '8.1.0', '<')) {  // Only do this if PHP version is less than 8.1.0
 				if (!ini_get("auto_detect_line_endings")) {
@@ -986,7 +1031,8 @@ class SaveMapping
 							$trimmed_info = array_map('trim', $data);
 							array_push($info, $trimmed_info);
 							if ($i == 0) {
-								$header_array = $info[$i];
+								$header_array = $helpers_instance->normalize_header_array( $info[$i] );
+								$info[$i] = $header_array;
 								$i++;
 								continue;
 							}
@@ -1188,7 +1234,8 @@ class SaveMapping
 						$trimmed_info = array_map('trim', $data);
 						array_push($info, $trimmed_info);
 						if ($i == 0) {
-							$header_array = $info[$i];
+							$header_array = $helpers_instance->normalize_header_array( $info[$i] );
+							$info[$i] = $header_array;
 							$i++;
 							continue;
 						}
@@ -1420,7 +1467,8 @@ class SaveMapping
 					$trimmed_info = array_map('trim', $data);
 					array_push($info, $trimmed_info);
 					if ($i == 0) {
-						$header_array = $info[$i];
+						$header_array = $helpers_instance->normalize_header_array( $info[$i] );
+						$info[$i] = $header_array;
 						$i++;
 						continue;
 					}
@@ -1992,6 +2040,28 @@ class SaveMapping
 		$import_phase = ( ! empty( $import_log_row['status'] ) && $import_log_row['status'] === 'Completed' ) ? 'complete' : 'batch';
 		WpucsvHooks::after_import( $import_session_context, $import_phase );
 
+		$response['file_iteration'] = (int) $file_iteration;
+		$response['total_rows']     = (int) $total_rows;
+		$response['page_number']    = (int) $page_number;
+		$response['total_pages']    = (int) $total_pages;
+
+		$bench_counts = ! empty( $import_log_row ) ? $import_log_row : array();
+		$this->log_bulk_import_benchmark(
+			$bench_log_file,
+			'COMPLETE',
+			array(
+				'hash_key' => $hash_key,
+				'page'     => $page_number,
+				'module'   => $user_selected_type,
+				'status'   => ! empty( $import_log_row['status'] ) ? $import_log_row['status'] : '',
+				'created'  => isset( $bench_counts['created'] ) ? (int) $bench_counts['created'] : 0,
+				'updated'  => isset( $bench_counts['updated'] ) ? (int) $bench_counts['updated'] : 0,
+				'skipped'  => isset( $bench_counts['skipped'] ) ? (int) $bench_counts['skipped'] : 0,
+				'failed'   => isset( $bench_counts['failed'] ) ? (int) $bench_counts['failed'] : 0,
+			),
+			$wpml_bench_start
+		);
+
 		echo wp_json_encode($response);
 
 
@@ -2028,6 +2098,16 @@ class SaveMapping
 		$file_iteration = get_option('sm_bulk_import_free_iteration_limit');
 		global $wpdb;
 
+		// Free: duplicate UI is Pro — Insert mode always matches by post_title,
+		// skips existing records, creates new ones, and never updates.
+		$file_table_name = $wpdb->prefix . "smackcsv_file_events";
+		$mode_row = $wpdb->get_row($wpdb->prepare("SELECT mode FROM {$file_table_name} WHERE hash_key = %s", $hash_key));
+		if ($mode_row && isset($mode_row->mode) && $mode_row->mode === 'Insert') {
+			$check = 'post_title';
+			$update_based_on = 'normal';
+			$duplicate_action = 'skip';
+		}
+
 		//first check then set on	
 		$upload_dir = SaveMapping::$smackcsv_instance->create_upload_dir();
 		$import_txt_path = $upload_dir . 'import_state.txt';
@@ -2047,7 +2127,6 @@ class SaveMapping
 		global $core_instance;
 		global $uci_woocomm_meta, $uci_woocomm_bundle_meta, $product_attr_instance, $wpmlimp_class;
 
-		$file_table_name = $wpdb->prefix . "smackcsv_file_events";
 		$template_table_name = $wpdb->prefix . "ultimate_csv_importer_mappingtemplate";
 		$log_table_name = $wpdb->prefix . "import_detail_log";
 
@@ -2129,7 +2208,8 @@ class SaveMapping
 					array_push($info, $data);
 
 					if ($line_number == 0) {
-						$header_array = $info[$line_number];
+						$header_array = $helpers_instance->normalize_header_array( $info[$line_number] );
+						$info[$line_number] = $header_array;
 					} else {
 						$value_array = $info[$line_number];
 						$get_arr = $this->main_import_process($map, $header_array, $value_array, $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, '', '', '', $update_based_on, $duplicate_action);
@@ -2205,7 +2285,8 @@ class SaveMapping
 
 					array_push($info, $data);
 					if ($line_number == 0) {
-						$header_array = $info[$line_number];
+						$header_array = $helpers_instance->normalize_header_array( $info[$line_number] );
+						$info[$line_number] = $header_array;
 					} else {
 						$value_array = $info[$line_number];
 						$get_arr = $this->main_import_process($map, $header_array, $value_array, $selected_type, $get_mode, $line_number, $check, $hash_key, $unmatched_row, '', '', '', $update_based_on, $duplicate_action);
@@ -2555,6 +2636,11 @@ class SaveMapping
 					'resume_skipped' => true,
 				);
 			}
+		}
+
+		$helpers_instance = ImportHelpers::getInstance();
+		if ( is_array( $header_array ) ) {
+			$header_array = $helpers_instance->normalize_header_array( $header_array );
 		}
 
 		$return_arr = [];
@@ -3263,6 +3349,52 @@ class SaveMapping
 		}
 
 		return CsvValidationController::import_gate_response($hash_key, $config);
+	}
+
+	/**
+	 * Write bulk_import benchmark lines to antony.log (or filtered path).
+	 *
+	 * @param string $log_file Log file path.
+	 * @param string $event    START|COMPLETE|ERROR.
+	 * @param array  $data     Benchmark fields.
+	 * @param float  $started  microtime(true) at batch start.
+	 */
+	private function log_bulk_import_benchmark( $log_file, $event, array $data, $started = 0 ) {
+		$payload = array_merge(
+			$data,
+			array(
+				'event'          => $event,
+				'duration_sec'   => $started ? round( microtime( true ) - $started, 3 ) : 0,
+				'memory_peak_mb' => (int) round( memory_get_peak_usage( true ) / 1048576 ),
+				'logged_at'      => gmdate( 'Y-m-d H:i:s' ),
+			)
+		);
+		error_log(
+			print_r( array( 'uci_free_import_benchmark' => $payload ), true ),
+			3,
+			$log_file
+		);
+	}
+
+	/**
+	 * Persist user-selected import module on the mapping template row.
+	 *
+	 * @param string $hash_key Import session hash.
+	 * @param string $module   Selected import module.
+	 */
+	private function sync_mapping_template_module( $hash_key, $module ) {
+		if ( $hash_key === '' || $module === '' ) {
+			return;
+		}
+		global $wpdb;
+		$table = $wpdb->prefix . 'ultimate_csv_importer_mappingtemplate';
+		$wpdb->update(
+			$table,
+			array( 'module' => $module ),
+			array( 'eventKey' => $hash_key ),
+			array( '%s' ),
+			array( '%s' )
+		);
 	}
 
 	public function deactivate_mail()

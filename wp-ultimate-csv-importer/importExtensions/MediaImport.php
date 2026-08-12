@@ -101,7 +101,7 @@ class MediaImport {
 				$attachment_id = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_type = 'attachment' AND post_title = 'image-failed' AND ID ={$attach_id}", ARRAY_A);
 			}else{
 				$core_instance->detailed_log[$line_number]['Message'] = "The provided image file is empty. Double-check your import file and retry";
-				$wpdb->get_results("UPDATE $import_detail_table_name SET failed = $failed_count WHERE $unikey_name = '$unikey'");
+				$wpdb->query( "UPDATE $import_detail_table_name SET failed = $failed_count WHERE $unikey_name = '$unikey'");
 				return array('MODE' => $mode, 'ERROR_MSG' =>"Can't insert this Image" );
 			}		
 			if(!empty($attachment_id)) {
@@ -124,7 +124,7 @@ class MediaImport {
 				}
 				$core_instance->media_log[$line_number] = $data;
 				$core_instance->detailed_log[$line_number]['state'] = 'Failed';
-				$wpdb->get_results("UPDATE $import_detail_table_name SET failed = $failed_count WHERE $unikey_name = '$unikey'");
+				$wpdb->query( "UPDATE $import_detail_table_name SET failed = $failed_count WHERE $unikey_name = '$unikey'");
 				return array('MODE' => $mode, 'ERROR_MSG' =>"Can't insert this Image" );
 			}else{
 				if($media_type == 'Local'){
@@ -137,7 +137,7 @@ class MediaImport {
 					$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Image ID: ' . $attach_id .' FileName: '.$file_name;
 				}
 				$core_instance->detailed_log[$line_number]['state'] = 'Inserted';
-				$wpdb->get_results("UPDATE $import_detail_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");				
+				$wpdb->query( "UPDATE $import_detail_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");				
 			}
 
 		}	

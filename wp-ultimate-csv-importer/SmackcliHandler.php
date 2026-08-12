@@ -463,7 +463,7 @@ class Smackuci_Cli{
         if(empty($get_details)){         
             $extension_object = new ExtensionHandler;
             $import_type = $extension_object->import_name_as($selected_type);   
-            $wpdb->insert($cli_template, array('template_name' => $template,'file_name' => $file_name, 'templatekey' => $templatekey,'type' => $import_type,'month' => date('M'),'Year' => date('Y') ));            
+            $wpdb->insert($cli_template, array('template_name' => $template,'file_name' => $file_name, 'templatekey' => $templatekey,'type' => $import_type,'month' => date('M'),'year' => date('Y') ));            
         }                     
     }
 

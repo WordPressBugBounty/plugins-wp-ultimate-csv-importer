@@ -28,7 +28,10 @@ class XmlHandler {
 
 
 	public function parse_xml(){
-		check_ajax_referer('smack-ultimate-csv-importer', 'securekey');
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
 		$row_count = isset($_POST['row']) ? intval(sanitize_text_field($_POST['row'])) : 0;
 		$hash_key = sanitize_key($_POST['HashKey']);
 

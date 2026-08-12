@@ -103,7 +103,7 @@ class TaxonomiesImport {
 			$core_instance->detailed_log[$line_number]['Message'] = 'Skipped. No matching record found.';
 			$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
 			$core_instance->detailed_log[$line_number]['cat_name'] = $_name;
-			$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+			$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 			return array('MODE' => $mode);
 		}
 
@@ -112,7 +112,7 @@ class TaxonomiesImport {
 			$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
 			$core_instance->detailed_log[$line_number]['cat_name'] = $_name;
 			$core_instance->detailed_log[$line_number]['id'] = $existing_id;
-			$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+			$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 			return array('MODE' => $mode, 'ID' => $existing_id);
 		}
 
@@ -128,7 +128,7 @@ class TaxonomiesImport {
 			$core_instance->detailed_log[$line_number]['Message'] = 'Skipped. No matching record found.';
 			$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
 			$core_instance->detailed_log[$line_number]['cat_name'] = $_name;
-			$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+			$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 			return array('MODE' => $mode);
 		} else {
 			$run_insert = true;
@@ -142,7 +142,7 @@ class TaxonomiesImport {
 				$core_instance->detailed_log[$line_number]['Message'] = 'Skipped, Due to duplicate Term update failed!.';
 				$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
 				$core_instance->detailed_log[$line_number]['cat_name'] = $_name;
-				$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+				$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 				return array('MODE' => $mode);
 			}
 			$termID = $result['ID'];
@@ -164,7 +164,7 @@ class TaxonomiesImport {
 				$file_table_name = $wpdb->prefix."smackcsv_file_events";
 				$get_id  = $wpdb->get_results( "SELECT file_name  FROM $file_table_name WHERE $unikey_name = '$unikey_value'");	
 				$file_name = $get_id[0]->file_name;
-				$wpdb->get_results("INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$termID}','{$importType}', '{$file_name}','Inserted')");
+				$wpdb->query( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$termID}','{$importType}', '{$file_name}','Inserted')");
 			}
 
 		if(!empty($termID) && !is_wp_error($termID)) {
@@ -219,19 +219,19 @@ class TaxonomiesImport {
 			$core_instance->detailed_log[$line_number]['Message'] = "Can't insert this " . $taxonomy . '. ' . $taxoID->get_error_message();
 			$core_instance->detailed_log[$line_number]['state'] = 'Skipped';
 			$core_instance->detailed_log[$line_number]['cat_name'] = $_name;
-			$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
+			$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 			return false;
 		}
 		$termID = $taxoID['term_id'];
 		$this->apply_term_meta($termID, $importType, $taxonomy, $data_array, $_image, $_display_type, $header_array, $value_array, $media_instance);
 		if (isset($parent_term_id)) {
-			$wpdb->get_results("UPDATE $terms_table SET `parent` = $parent_term_id WHERE `term_id` = $termID ");
+			$wpdb->query( "UPDATE $terms_table SET `parent` = $parent_term_id WHERE `term_id` = $termID ");
 		}
 		$core_instance->detailed_log[$line_number]['Message'] = 'Inserted ' . $taxonomy . ' ID: ' . $termID;
 		$core_instance->detailed_log[$line_number]['state'] = 'Inserted';
 		$core_instance->detailed_log[$line_number]['cat_name'] = $_name;
 		$core_instance->detailed_log[$line_number]['id'] = $termID;
-		$wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
+		$wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
 		return array('ID' => $termID, 'MODE' => 'Inserted');
 	}
 
@@ -260,7 +260,7 @@ class TaxonomiesImport {
 		$core_instance->detailed_log[$line_number]['state'] = 'Updated';
 		$core_instance->detailed_log[$line_number]['cat_name'] = $_name;
 		$core_instance->detailed_log[$line_number]['id'] = $termID;
-		$wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
+		$wpdb->query( "UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
 		return array('ID' => $termID, 'MODE' => 'Updated');
 	}
 }

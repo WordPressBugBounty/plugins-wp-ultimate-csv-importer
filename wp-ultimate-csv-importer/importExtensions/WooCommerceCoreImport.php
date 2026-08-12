@@ -55,13 +55,13 @@ class WooCommerceCoreImport {
 				if((!empty($term_details)) && ($term_details[0]->name != 'variable')){
 					
 					$core_instance->detailed_log[$line_number]['Message'] = "Skipped,Product is not variable in type.";
-					$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+					$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 					return array('MODE' => $mode,'ID' => '');					
 				}
 			} else {
 				$product_id = '';
 				$core_instance->detailed_log[$line_number]['Message'] = "Skipped,Product is not available.";
-					$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+					$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 					return array('MODE' => $mode,'ID' => '');
 			}			
 			if($mode == 'Insert'){
@@ -194,12 +194,12 @@ class WooCommerceCoreImport {
 				$parent_id = $wpdb->get_var( "SELECT post_parent FROM {$wpdb->prefix}posts WHERE id = '$variationid' " );								
 				$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Product ID: ' . $parent_id . '   Inserted Variation ID: ' . $variationid;				
 			}
-			$wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");		
+			$wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");		
 			$returnArr = array( 'ID' => $variationid, 'MODE' => 'Inserted' );
 			return $returnArr;
 		} elseif ($type == 'update_using_variation_id' || $type == 'update_using_variation_sku' || $type == 'update_using_variation_id_and_sku') {
 			$core_instance->detailed_log[$line_number]['Message'] = 'Updated Variation ID: ' . $variation_id;
-			$wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");
+			$wpdb->query( "UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");
 
 			$returnArr = array( 'ID' => $variation_id, 'MODE' => 'Updated');			
 			return $returnArr;
@@ -247,11 +247,11 @@ class WooCommerceCoreImport {
 			
 			if(is_wp_error($retID) || $retID == '') {
 				$core_instance->detailed_log[$line_number]['Message'] = "Can't insert this Order. " . $retID->get_error_message();
-				$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+				$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 				return array('MODE' => $mode, 'ERROR_MSG' => $retID->get_error_message());
 			}
 			$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Order ID: ' . $retID;
-			$wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
+			$wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
 
 		} else {
 			if ($mode == 'Update') {
@@ -268,16 +268,16 @@ class WooCommerceCoreImport {
 						$mode_of_affect = 'Updated';
 
 						$core_instance->detailed_log[$line_number]['Message'] = 'Updated Order ID: ' . $retID;
-						$wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");	
+						$wpdb->query( "UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");	
 					} else{
 						
 							$core_instance->detailed_log[$line_number]['Message'] = "Skipped.";
-							$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+							$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 							return array('MODE' => $mode);
 					}
 				}else{
 					$core_instance->detailed_log[$line_number]['Message'] = "Skipped.";
-					$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+					$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 					return array('MODE' => $mode);
 					
 				}
@@ -322,11 +322,11 @@ class WooCommerceCoreImport {
 			
 			if(is_wp_error($retID) || $retID == '') {
 				$core_instance->detailed_log[$line_number]['Message'] = "Can't insert this Coupon. " . $retID->get_error_message();
-				$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+				$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 				return array('MODE' => $mode, 'ERROR_MSG' => $retID->get_error_message());
 			}
 			$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Coupon ID: ' . $retID;
-			$wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
+			$wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
 
 		} else {
 				if($check == 'COUPONID'){
@@ -342,16 +342,16 @@ class WooCommerceCoreImport {
 						$mode_of_affect = 'Updated';
 
 						$core_instance->detailed_log[$line_number]['Message'] = 'Updated Coupon ID: ' . $retID;
-						$wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");			
+						$wpdb->query( "UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");			
 					} else{
 						$core_instance->detailed_log[$line_number]['Message'] = "Skipped.";
-						$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+						$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 						return array('MODE' => $mode);
 					}
 				}
 				else{
 					$core_instance->detailed_log[$line_number]['Message'] = "Skipped.";
-					$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+					$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 					return array('MODE' => $mode);
 				}
 			//} 
@@ -412,11 +412,11 @@ class WooCommerceCoreImport {
 
 			if(is_wp_error($retID) || $retID == '') {
 				$core_instance->detailed_log[$line_number]['Message'] = "Can't insert this Refund. " . $retID->get_error_message();
-				$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+				$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 				return array('MODE' => $mode, 'ERROR_MSG' => $retID->get_error_message());
 			}
 			$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Refund ID: ' . $retID;
-			$wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
+			$wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
 
 		}
 		
@@ -434,11 +434,11 @@ class WooCommerceCoreImport {
 					$mode_of_affect = 'Updated';
 
 					$core_instance->detailed_log[$line_number]['Message'] = 'Updated Refund ID: ' . $retID;
-					$wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");
+					$wpdb->query( "UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");
 				}else{
 					if($mode == 'Update'){
 						$core_instance->detailed_log[$line_number]['Message'] = "Skipped.";
-						$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+						$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 						return array('MODE' => $mode);
 					}
 					
@@ -447,7 +447,7 @@ class WooCommerceCoreImport {
 			}else{
 				if($mode == 'Update'){
 					$core_instance->detailed_log[$line_number]['Message'] = "Skipped.";
-					$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+					$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 					return array('MODE' => $mode);
 				}	
 			} 
@@ -492,23 +492,42 @@ class WooCommerceCoreImport {
 		$skipped_count = $updated_row_counts['skipped'];
 
 		if($check == 'name') { 
-			$result = $wpdb->get_row("select attribute_id from {$wpdb->prefix}woocommerce_attribute_taxonomies where attribute_label='".$name."'");
+			$result = $wpdb->get_row($wpdb->prepare(
+				"SELECT attribute_id FROM {$wpdb->prefix}woocommerce_attribute_taxonomies WHERE attribute_label = %s",
+				$name
+			));
 		}
 		if($check == 'slug') {
-			$result = $wpdb->get_row("select attribute_id from {$wpdb->prefix}woocommerce_attribute_taxonomies where attribute_name='".$slug."'");
+			$result = $wpdb->get_row($wpdb->prepare(
+				"SELECT attribute_id FROM {$wpdb->prefix}woocommerce_attribute_taxonomies WHERE attribute_name = %s",
+				$slug
+			));
 		}
-		$duplicate_check = $wpdb->get_row("select attribute_id from {$wpdb->prefix}woocommerce_attribute_taxonomies where attribute_name='".$slug."'");
+		$duplicate_check = $wpdb->get_row($wpdb->prepare(
+			"SELECT attribute_id FROM {$wpdb->prefix}woocommerce_attribute_taxonomies WHERE attribute_name = %s",
+			$slug
+		));
 	
 		if($mode == 'Insert') {
 
 			if (!empty($result) || (!empty($duplicate_check))) {
 				$core_instance->detailed_log[$line_number]['Message'] = 'Skipped Product attribute';
-				$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+				$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 				$returnArr['Mode'] = $mode;
 				return $returnArr;
 			}else{
 
-				$wpdb->query("insert into {$wpdb->prefix}woocommerce_attribute_taxonomies(attribute_label,attribute_name,attribute_type,attribute_orderby,attribute_public) values('".$name."','".$slug."','select','".$attr."','".$attribute."')");
+				$wpdb->insert(
+					$wpdb->prefix . 'woocommerce_attribute_taxonomies',
+					array(
+						'attribute_label' => $name,
+						'attribute_name' => $slug,
+						'attribute_type' => 'select',
+						'attribute_orderby' => $attr,
+						'attribute_public' => $attribute,
+					),
+					array('%s', '%s', '%s', '%s', '%s')
+				);
 				$id = $wpdb->insert_id;
 
 				$existing_attributes = array();
@@ -542,7 +561,7 @@ class WooCommerceCoreImport {
 				}
 
 				$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Product attribute ID: '.$id;
-				$wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
+				$wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
 			}
 			
 		}
@@ -554,8 +573,23 @@ class WooCommerceCoreImport {
 						$id = $value;
 					}
 
-					$wpdb->query("update {$wpdb->prefix}woocommerce_attribute_taxonomies set attribute_label='".$name."',attribute_name='".$slug."',attribute_type='select',attribute_orderby='".$attr."',attribute_public='".$attribute."' where attribute_id='".$id."'");
-					$wpdb->query("delete from ".$wpdb->prefix."options where option_name='_transient_wc_attribute_taxonomies'");
+					$wpdb->update(
+						$wpdb->prefix . 'woocommerce_attribute_taxonomies',
+						array(
+							'attribute_label' => $name,
+							'attribute_name' => $slug,
+							'attribute_type' => 'select',
+							'attribute_orderby' => $attr,
+							'attribute_public' => $attribute,
+						),
+						array('attribute_id' => $id),
+						array('%s', '%s', '%s', '%s', '%s'),
+						array('%d')
+					);
+					$wpdb->query($wpdb->prepare(
+						"DELETE FROM {$wpdb->prefix}options WHERE option_name = %s",
+						'_transient_wc_attribute_taxonomies'
+					));
 
 					$at = array( 'attribute_id'=>$id,
 							'attribute_name'=>$slug,
@@ -583,12 +617,12 @@ class WooCommerceCoreImport {
 					}
 
 					$core_instance->detailed_log[$line_number]['Message'] = 'Updated Product attribute ID: '.$id;
-					$wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");
+					$wpdb->query( "UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");
 					
 				} else{
 					if($mode == 'Update'){
 						$core_instance->detailed_log[$line_number]['Message'] = 'Skipped';
-						$wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
+						$wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
 						return array('MODE' => $mode);
 					}
 				}                                                             
@@ -617,27 +651,49 @@ class WooCommerceCoreImport {
 
 		if ($check == 'TERMID') {
 			$term_id = $data_array['TERMID'];
-			$termid =$wpdb->get_row("select term_id from {$wpdb->prefix}terms where term_id = '$term_id' ");
+			$termid =$wpdb->get_row($wpdb->prepare(
+				"SELECT term_id FROM {$wpdb->prefix}terms WHERE term_id = %d",
+				(int) $term_id
+			));
 		}
 		if($check == 'slug') {
-			$termid =$wpdb->get_row("select term_id from {$wpdb->prefix}terms where slug='".$slug."'");
+			$termid =$wpdb->get_row($wpdb->prepare(
+				"SELECT term_id FROM {$wpdb->prefix}terms WHERE slug = %s",
+				$slug
+			));
 		}
 
 		if($mode == 'Insert') {
 			if (!empty($termid)) {
 
 				$core_instance->detailed_log[$line_number]['Message'] = 'Skipped Product tag';
-				$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+				$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 				$returnArr['Mode'] = $mode;
 				return $returnArr;
 				#skipped
 			}else{
-				$wpdb->query("insert into {$wpdb->prefix}terms(name,slug) values ('".$name."','".$slug."')");
+				$wpdb->insert(
+					$wpdb->prefix . 'terms',
+					array(
+						'name' => $name,
+						'slug' => $slug,
+					),
+					array('%s', '%s')
+				);
 				$id = $wpdb->insert_id;
-				$wpdb->query("insert into {$wpdb->prefix}term_taxonomy(term_taxonomy_id,term_id,taxonomy,description) values('".$id."','".$id."','product_tag','".$description."')");
+				$wpdb->insert(
+					$wpdb->prefix . 'term_taxonomy',
+					array(
+						'term_taxonomy_id' => $id,
+						'term_id' => $id,
+						'taxonomy' => 'product_tag',
+						'description' => $description,
+					),
+					array('%d', '%d', '%s', '%s')
+				);
 				
 				$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Product tag ID: '.$id;
-				$wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
+				$wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
 			}
 		}
 		
@@ -646,14 +702,34 @@ class WooCommerceCoreImport {
 				foreach($termid as $term =>$value) {
 					$id = $value;
 				}
-				$wpdb->query("update {$wpdb->prefix}terms set name='".$name."',slug='".$slug."' where term_id='".$id."'");
-				$wpdb->query("update {$wpdb->prefix}term_taxonomy set term_taxonomy_id='".$id."',term_id='".$id."',taxonomy='product_tag',description='".$description."' where term_id='".$id."'"); 
+				$wpdb->update(
+					$wpdb->prefix . 'terms',
+					array(
+						'name' => $name,
+						'slug' => $slug,
+					),
+					array('term_id' => $id),
+					array('%s', '%s'),
+					array('%d')
+				);
+				$wpdb->update(
+					$wpdb->prefix . 'term_taxonomy',
+					array(
+						'term_taxonomy_id' => $id,
+						'term_id' => $id,
+						'taxonomy' => 'product_tag',
+						'description' => $description,
+					),
+					array('term_id' => $id),
+					array('%d', '%d', '%s', '%s'),
+					array('%d')
+				);
 				
 				$core_instance->detailed_log[$line_number]['Message'] = 'Updated Product tag ID: '.$id;
-				$wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");
+				$wpdb->query( "UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");
 			}else{
 				$core_instance->detailed_log[$line_number]['Message'] = 'Skipped.';
-				$wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
+				$wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
 				$returnArr['Mode'] = $mode;
 				return $returnArr;
 				//return array('MODE' => $mode);
@@ -783,7 +859,7 @@ class WooCommerceCoreImport {
 			if (isset($get_result) && is_array($get_result) && !empty($get_result)) {
 				#skipped
 				$core_instance->detailed_log[$line_number]['Message'] = "Skipped, Due to duplicate Product found!.";
-				$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+				$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 				return array('MODE' => $mode);
 			}else{
 				
@@ -796,7 +872,7 @@ class WooCommerceCoreImport {
 				if(is_wp_error($post_id) || $post_id == '') {
 					# skipped
 					$core_instance->detailed_log[$line_number]['Message'] = "Can't insert this Product. " . $post_id->get_error_message();
-					$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+					$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 					return array('MODE' => $mode);
 				}
 
@@ -806,16 +882,16 @@ class WooCommerceCoreImport {
 					$file_table_name = $wpdb->prefix."smackcsv_file_events";
 					$get_id  = $wpdb->get_results( "SELECT file_name  FROM $file_table_name WHERE `$unikey_name` = '$unikey'");	
 					$file_name = $get_id[0]->file_name;
-					$wpdb->get_results("INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Inserted')");
+					$wpdb->query( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Inserted')");
 				}
 
 				$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Product ID: ' . $post_id . ', ' . $assigned_author;
-				$wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
+				$wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");
 			}	
 		}	
 		if($mode == 'Update'){			
 			if(isset($core_instance->detailed_log[$line_number]['Message']) && preg_match("(Skipped)", $core_instance->detailed_log[$line_number]['Message']) !== 0) {					
-				$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+				$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 				$returnArr['MODE'] = $mode_of_affect;
 			}	
 			else {						
@@ -840,11 +916,11 @@ class WooCommerceCoreImport {
 					$file_table_name = $wpdb->prefix."smackcsv_file_events";
 					$get_id  = $wpdb->get_results( "SELECT file_name  FROM $file_table_name WHERE `$unikey_name` = '$unikey'");	
 					$file_name = $get_id[0]->file_name;
-					$wpdb->get_results("INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Updated')");
+					$wpdb->query( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Updated')");
 				}
 
 				$core_instance->detailed_log[$line_number]['Message'] = 'Updated Product ID: ' . $post_id . ', ' . $assigned_author;
-				$wpdb->get_results("UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");
+				$wpdb->query( "UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey'");
 
 			}else{
 				$posttitle = $data_array['post_title'];
@@ -856,7 +932,7 @@ class WooCommerceCoreImport {
 					if(is_wp_error($post_id) || $post_id == '') {
 						# skipped
 						$core_instance->detailed_log[$line_number]['Message'] = "Can't insert this Product. " . $post_id->get_error_message();
-						$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+						$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 						return array('MODE' => $mode);
 					}
 					if($unmatched_row == 'true'){
@@ -865,14 +941,14 @@ class WooCommerceCoreImport {
 						$file_table_name = $wpdb->prefix."smackcsv_file_events";
 						$get_id  = $wpdb->get_results( "SELECT file_name  FROM $file_table_name WHERE `$unikey_name` = '$unikey'");	
 						$file_name = $get_id[0]->file_name;
-						$wpdb->get_results("INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Inserted')");
+						$wpdb->query( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Inserted')");
 					}
 					$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Product ID: ' . $post_id . ', ' . $assigned_author;
-					$wpdb->get_results("UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");	
+					$wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");	
 				}
 				else{
 					$core_instance->detailed_log[$line_number]["Message"] = "Skipped. SKU: ".$productsku."<br>";
-					$wpdb->get_results("UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
+					$wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey'");
 					// return array('MODE' => $mode);
 				}
 				

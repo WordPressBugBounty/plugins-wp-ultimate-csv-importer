@@ -49,8 +49,8 @@ class SmackCSVInstall {
 	 * Check WPUltimateCSVImporterPro version.
 	 */
 	public static function check_version() {
-		if ( get_option( 'ULTIMATE_CSV_IMP_VERSION' ) != Smackcoders\UCI\Core\UCICore::getInstance()->version )  {
-			self::install();
+		if ( get_option( 'ULTIMATE_CSV_IMP_VERSION' ) != UCICore::getInstance()->version )  {
+			self::getInstance()->install();
 			do_action( 'sm_uci_pro_updated' );
 		}
 	}
@@ -59,7 +59,7 @@ class SmackCSVInstall {
 	 * Install actions when a update button is clicked.
 	 */
 	public static function install_actions() {
-		if ( ! empty( sanitize_text_field($_GET['do_update_sm_uci_pro'] )) ) {
+		if ( isset( $_GET['do_update_sm_uci_pro'] ) && ! empty( sanitize_text_field( wp_unslash( $_GET['do_update_sm_uci_pro'] ) ) ) ) {
 			self::update();
 		}
 	}
@@ -101,7 +101,7 @@ class SmackCSVInstall {
 	 * Update UCI version to current.
 	 */
 	private static function update_uci_version() {
-		$version = '5.7';
+		$version = UCICore::getInstance()->version;
 		delete_option( 'ULTIMATE_CSV_IMP_VERSION' );
 		add_option( 'ULTIMATE_CSV_IMP_VERSION', $version );
 	}
@@ -162,7 +162,7 @@ class SmackCSVInstall {
 	 */
 	private static function update_db_version( $version = null ) {
 		delete_option( 'sm_uci_db_version' );
-		add_option( 'sm_uci_db_version', is_null( $version ) ? Smackcoders\UCI\Core\UCICore::getInstance()->version : $version );
+		add_option( 'sm_uci_db_version', is_null( $version ) ? UCICore::getInstance()->version : $version );
 	}
 
 	/**
