@@ -9,8 +9,23 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+$wpucsv_close_url = wp_nonce_url(
+	add_query_arg(
+		array(
+			'page'                   => 'wp-addons-page',
+			'wpucsv_dismiss_addons'  => '1',
+		),
+		admin_url( 'admin.php' )
+	),
+	'wpucsv_dismiss_addons'
+);
+$wpucsv_plugin_url = admin_url( 'admin.php?page=com.smackcoders.csvimporternew.menu' );
+
 ?>
 <div class="wpucsv-addons-wrapper">
+  <a href="<?php echo esc_url( $wpucsv_close_url ); ?>" class="wpucsv-addons-close" aria-label="<?php echo esc_attr__( 'Close', 'wp-ultimate-csv-importer' ); ?>">
+    <?php echo esc_html__( 'Close', 'wp-ultimate-csv-importer' ); ?>
+  </a>
   
   <div class="wpucsv-addons-header">
     <div class="wpucsv-logo-badge">
@@ -107,7 +122,7 @@ if ( !defined( 'ABSPATH' ) ) {
   </div>
 
   <div class="wpucsv-addons-footer">
-    <a href="admin.php?page=com.smackcoders.csvimporternew.menu" class="wpucsv-btn-back">
+    <a href="<?php echo esc_url( $wpucsv_plugin_url ); ?>" class="wpucsv-btn-back">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 6px;">
         <path d="M19 12H5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M12 19L5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -148,6 +163,34 @@ if ( !defined( 'ABSPATH' ) ) {
   margin: 40px auto;
   padding: 0 20px;
   box-sizing: border-box;
+  position: relative;
+}
+
+.wpucsv-addons-close {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid var(--wpucsv-dash-border);
+  background: #ffffff;
+  color: var(--wpucsv-dash-text-muted);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  z-index: 2;
+}
+
+.wpucsv-addons-close:hover,
+.wpucsv-addons-close:focus {
+  color: var(--wpucsv-dash-text);
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
 }
 
 .wpucsv-addons-header {

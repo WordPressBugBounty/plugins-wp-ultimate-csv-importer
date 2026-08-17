@@ -753,11 +753,19 @@ class WooCommerceCoreImport {
 		$post_type = $data_array['post_type'];
 		if($check == 'ID'){	
 			$ID = $data_array['ID'];	
-			$get_result =  $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE ID = '$ID' AND post_type = '$post_type' AND post_status != 'trash' order by ID DESC ");			
+			$get_result =  $wpdb->get_results($wpdb->prepare(
+				"SELECT ID FROM {$wpdb->prefix}posts WHERE ID = %d AND post_type = %s AND post_status != 'trash' order by ID DESC",
+				$ID,
+				$post_type
+			));			
 		}
 		if($check == 'post_title'){
 			$title = $data_array['post_title'];
-			$get_result =  $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = '$title' AND post_type = '$post_type' AND post_status != 'trash' order by ID DESC ");		
+			$get_result =  $wpdb->get_results($wpdb->prepare(
+				"SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_type = %s AND post_status != 'trash' order by ID DESC",
+				$title,
+				$post_type
+			));		
 		}
 		if($check == 'post_name'){
 			$name = $data_array['post_name'];
@@ -766,7 +774,11 @@ class WooCommerceCoreImport {
 			$get_result =  $wpdb->get_results("SELECT DISTINCT p.ID FROM {$wpdb->prefix}posts p join {$wpdb->prefix}icl_translations pm ON p.ID = pm.element_id WHERE p.post_name = '$name' AND p.post_type = '$post_type' AND p.post_status != 'trash' AND pm.language_code = '{$language_code}'");
 		}
 			else{
-			$get_result =  $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_name = '$name' AND post_type = '$post_type' AND post_status != 'trash' order by ID DESC ");	
+			$get_result =  $wpdb->get_results($wpdb->prepare(
+				"SELECT ID FROM {$wpdb->prefix}posts WHERE post_name = %s AND post_type = %s AND post_status != 'trash' order by ID DESC",
+				$name,
+				$post_type
+			));	
 			}
 			}
 		if($check == 'PRODUCTSKU'){
@@ -776,7 +788,10 @@ class WooCommerceCoreImport {
 				$get_result =  $wpdb->get_results("SELECT DISTINCT p.ID FROM {$wpdb->prefix}posts p join {$wpdb->prefix}postmeta pm ON p.ID = pm.post_id inner join {$wpdb->prefix}icl_translations icl ON pm.post_id = icl.element_id WHERE p.post_type = 'product' AND p.post_status != 'trash' and pm.meta_value = '$sku' and icl.language_code = '{$language_code}'");               
 			}
 			else{
-				$get_result =  $wpdb->get_results("SELECT DISTINCT p.ID FROM {$wpdb->prefix}posts p join {$wpdb->prefix}postmeta pm ON p.ID = pm.post_id WHERE p.post_type = 'product' AND p.post_status != 'trash' and pm.meta_value = '$sku' ");
+				$get_result =  $wpdb->get_results($wpdb->prepare(
+					"SELECT DISTINCT p.ID FROM {$wpdb->prefix}posts p join {$wpdb->prefix}postmeta pm ON p.ID = pm.post_id WHERE p.post_type = 'product' AND p.post_status != 'trash' and pm.meta_value = %s",
+					$sku
+				));
 			}
 		}
 
@@ -784,12 +799,12 @@ class WooCommerceCoreImport {
 			if(!in_array($check, $update)){
 				if(is_plugin_active('advanced-custom-fields-pro/acf.php')||is_plugin_active('advanced-custom-fields/acf.php')){
 					if(is_array($acf)){
-						$get_key = "";
+						$get_key = false;
 						foreach($acf as $acf_key => $acf_value){
 							if($acf_key == $check){
-								$get_key= array_search($acf_value , $header_array);
+								$get_key= $helpers_instance->find_header_index($acf_value , $header_array);
 							}
-							if($get_key && isset($value_array[$get_key])){
+							if($get_key !== false && isset($value_array[$get_key])){
 								$csv_element = $value_array[$get_key];								
 								$get_result = $wpdb->get_results("SELECT post_id FROM {$wpdb->prefix}postmeta as a join {$wpdb->prefix}posts as b on a.post_id = b.ID WHERE a.meta_key = '$check' AND a.meta_value = '$csv_element' AND b.post_status != 'trash' order by a.post_id DESC ");
 							}
@@ -806,7 +821,7 @@ class WooCommerceCoreImport {
 						
 						foreach($pods as $pods_key => $pods_value){
 							if($pods_key == $check){
-								$get_key= array_search($pods_value , $header_array);
+								$get_key= $helpers_instance->find_header_index($pods_value , $header_array);
 							}
 							if(isset($value_array[$get_key])){
 								$csv_element = $value_array[$get_key];	
@@ -825,7 +840,7 @@ class WooCommerceCoreImport {
 					if(is_array($toolset)){
 						foreach($toolset as $tool_key => $tool_value){
 							if($tool_key == $check){
-								$get_key= array_search($tool_value , $header_array);
+								$get_key= $helpers_instance->find_header_index($tool_value , $header_array);
 							}
 							if(isset($value_array[$get_key]) && isset($get_key)){
 								$csv_element = $value_array[$get_key];

@@ -1,12 +1,12 @@
 jQuery(document).ready(function ($) {
     function checkEditorHeader() {
-        const editorHeader = $('.editor-header__settings');
+        const editorHeader = $('.editor-header__settings, .edit-post-header__settings').first();
 
         if (editorHeader.length > 0) {
             clearInterval(editorHeaderInterval);
 
             const importExportButton = $(
-                `<button class="import-export-btn" title="Import/Export" style="display: flex; align-items: center; justify-content: center; gap: 6px; background-color: #e1f0ff; border: 1px solid #007cba; color: #007cba; padding: 5px 18px 4px 10px; cursor: pointer; border-radius: 2px; font-size: 12px;">
+                `<button type="button" class="import-export-btn" title="Import/Export" style="display: flex; align-items: center; justify-content: center; gap: 6px; background-color: #e1f0ff; border: 1px solid #007cba; color: #007cba; padding: 5px 18px 4px 10px; cursor: pointer; border-radius: 2px; font-size: 12px;">
                     <div style="rotate:270deg; font-size: 20px; color: #007cba;">&#8651;</div>
                     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
                         <span class="button-text" style="font-size: 8px; font-weight: bold; text-align: center; color: #007cba;">Import</span>
@@ -17,11 +17,11 @@ jQuery(document).ready(function ($) {
             );
 
             const slider = $(
-                `<div class="right-slider" style="position: absolute; right: 0; width: 280px; height: calc(100vh - 65px); background: #fff; box-shadow: -2px 6px 10px rgba(0, 0, 0, 0.2); overflow: auto; transition: transform 0.3s ease; transform: translateX(100%); z-index: 10000;">
-                    <div class="slider-header" style="position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ccc; margin-top: 5px;">
+                `<div class="right-slider" style="position: fixed; top: 32px; right: 0; width: 280px; height: calc(100vh - 32px); background: #fff; box-shadow: -2px 6px 10px rgba(0, 0, 0, 0.2); overflow: auto; transition: transform 0.3s ease; transform: translateX(100%); z-index: 100000;">
+                    <div class="slider-header" style="position: sticky; top: 0; background: #fff; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ccc; margin-top: 5px;">
                         <div class="tabs" style="display: flex; gap: 10px;">
-                            <button class="tab" style="background: none; border: none; cursor: pointer; padding:1rem; border-bottom: 2px solid #007cba; font-weight: 500;">Import</button>
-                            <button class="tab" style="background: none; border: none; cursor: pointer; padding:1rem 10px; border-bottom: 2px solid transparent; font-weight: 500;">Export</button>
+                            <button type="button" class="tab" style="background: none; border: none; cursor: pointer; padding:1rem; border-bottom: 2px solid #007cba; font-weight: 500;">Import</button>
+                            <button type="button" class="tab" style="background: none; border: none; cursor: pointer; padding:1rem 10px; border-bottom: 2px solid transparent; font-weight: 500;">Export</button>
                         </div>
                         <span class="close-slider" style="cursor: pointer; font-size: 25px; margin-right: 10px;">&times;</span>
                     </div>
@@ -48,47 +48,51 @@ jQuery(document).ready(function ($) {
                 </div>`
             );
 
-            const sliders = $('.interface-navigable-region.interface-interface-skeleton__sidebar');
-            sliders.append(slider);
+            $('body').append(slider);
+
+            function openSingleImportPanel() {
+                slider.addClass('is-open').css('transform', 'translateX(0)');
+            }
+
+            function closeSingleImportPanel() {
+                slider.removeClass('is-open').css('transform', 'translateX(100%)');
+            }
 
             let totalChildren = editorHeader.children().length;
-            editorHeader.children().eq(totalChildren - 3).after(importExportButton);
+            if (totalChildren >= 3) {
+                editorHeader.children().eq(totalChildren - 3).after(importExportButton);
+            } else {
+                editorHeader.prepend(importExportButton);
+            }
 
-            $('.import-export-btn').on('click', function () {
-                $('.right-slider').css({
-                    'transform': 'translateX(0)',
-                    'z-index': '10000',
-                });
-
-                $('.interface-navigable-region.interface-interface-skeleton__sidebar').css({
-                    'width': '280px'
-                });
-            });
-
-            $('.right-slider').on('click', '.close-slider', function () {
-                $('.right-slider').css({
-                    'transform': 'translateX(100%)',
-                    'z-index': '10',
-                });
-
-                $('.interface-navigable-region.interface-interface-skeleton__sidebar').css({
-                    'width': ''
-                });
-            });
-
-            $(document).on('click', function (event) {
-                if (!$(event.target).closest('.right-slider, .import-export-btn').length) {
-                    if ($('.right-slider').css('transform') !== 'translateX(0px)') {
-                        $('.right-slider').css({
-                            'transform': 'translateX(100%)',
-                            'z-index': '10',
-                        });
-
-                        $('.interface-navigable-region.interface-interface-skeleton__sidebar').css({
-                            'width': ''
-                        });
-                    }
+            document.addEventListener('click', function (event) {
+                const btn = event.target.closest('.import-export-btn');
+                if (!btn) {
+                    return;
                 }
+                event.preventDefault();
+                event.stopPropagation();
+                if (slider.hasClass('is-open')) {
+                    closeSingleImportPanel();
+                } else {
+                    openSingleImportPanel();
+                }
+            }, true);
+
+            slider.on('click', '.close-slider', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                closeSingleImportPanel();
+            });
+
+            $(document).on('click.wpucsvSingleImportOutside', function (event) {
+                if (!slider.hasClass('is-open')) {
+                    return;
+                }
+                if ($(event.target).closest('.right-slider, .import-export-btn').length) {
+                    return;
+                }
+                closeSingleImportPanel();
             });
 
             $('.tab').on('click', function () {

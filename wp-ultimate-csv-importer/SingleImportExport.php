@@ -60,26 +60,17 @@ class SingleImportExport {
 			return;
 		}
 		$upload = wp_upload_dir();
-		$upload_dir = $upload['basedir'];
-		if (is_user_logged_in() && current_user_can('administrator'))
-		{
-			$upload_dir = $upload_dir . '/smack_uci_uploads/imports/';
-			if (!is_dir($upload_dir)) {
-				wp_mkdir_p($upload_dir);
-				chmod($upload_dir, 0755);
-
-				$index_php_file = $upload_dir . 'index.php';
-				if (!file_exists($index_php_file)) {
-					$file_content = '<?php' . PHP_EOL . '?>';
-					file_put_contents($index_php_file, $file_content);
-				}
-			}
-		}
-		if ($mode != 'CLI') {
-			chmod($upload_dir, 0777);
+		$upload_dir = trailingslashit( $upload['basedir'] ) . 'smack_uci_uploads/imports/';
+		if ( ! is_dir( $upload_dir ) ) {
+			wp_mkdir_p( $upload_dir );
 		}
 
-		$upload_dir_path = $upload_dir. $file_name;
+		$index_php_file = $upload_dir . 'index.php';
+		if ( ! file_exists( $index_php_file ) ) {
+			file_put_contents( $index_php_file, "<?php\n// Silence is golden.\n" );
+		}
+
+		$upload_dir_path = $upload_dir . $file_name;
 		if (!is_dir($upload_dir_path)) {
 			wp_mkdir_p( $upload_dir_path);
 		}
@@ -90,8 +81,16 @@ class SingleImportExport {
 			if (($handle = fopen($csv_file, 'r')) !== false) {
 
 				$headers = fgetcsv($handle, 1000, ',', '"', '\\');
+				$post_id = 0;
 				while (($row = fgetcsv($handle, 1000, ',', '"', '\\')) !== false) {
+					if ( ! is_array( $headers ) || ! is_array( $row ) ) {
+						continue;
+					}
 					$data = array_combine($headers, $row);
+					if ( ! is_array( $data ) ) {
+						continue;
+					}
+					$post_data = array();
 					foreach ($data as $key => $value) {
 
 						if (strpos($key, 'core_') === 0) {
@@ -195,11 +194,12 @@ foreach ($data as $key => $value) {
 			}
 			$response['success'] = true;    
 			$response['message'] = 'Inserted Post   '. $post_id;
-			$response['redirect_link'] = get_edit_post_link( $post_id, true );
-			wp_redirect($response['redirect_link']);
+			$response['redirect_link'] = $post_id ? get_edit_post_link( $post_id, 'raw' ) : '';
 			echo wp_json_encode($response);
 			wp_die();
 		}
+
+		wp_send_json_error( array( 'message' => __( 'Unable to save the uploaded file.', 'wp-ultimate-csv-importer' ) ) );
 	}
 
 
@@ -224,15 +224,10 @@ foreach ($data as $key => $value) {
 			return;
 		}
 
-		if (!$post_id || get_post_status($post_id) !== 'publish') {
-			wp_send_json_error(['message' => __( 'Invalid or unpublished post ID.', 'wp-ultimate-csv-importer' )]);
+		if ( ! $post || ! $post_id || in_array( get_post_status( $post_id ), array( 'auto-draft', 'trash' ), true ) ) {
+			wp_send_json_error(['message' => __( 'Invalid post ID.', 'wp-ultimate-csv-importer' )]);
 			wp_die();
 		}
-
-		// Open output stream
-		header('Content-Type: text/csv; charset=UTF-8');
-		header('Content-Disposition: attachment; filename=post-data-' . $post_id . '.csv');
-
 
 		$meta_keys = $wpdb->get_col(
 			$wpdb->prepare("SELECT DISTINCT meta_key FROM {$wpdb->postmeta} WHERE post_id = %d", $post_id)
@@ -302,27 +297,25 @@ foreach ($meta_keys as $meta_key) {
 
 		
 
-		if (is_user_logged_in() && current_user_can('administrator'))
-		{
-			$upload_dir = ABSPATH . 'wp-content/uploads/smack_uci_uploads/exports/';
-			if (!is_dir($upload_dir))
-			{
-				wp_mkdir_p($upload_dir);
-			}
-			$base_dir = wp_upload_dir();
-			$upload_url = $base_dir['baseurl'] . '/smack_uci_uploads/exports/';
-			chmod($upload_dir, 0777);
+		$base_dir   = wp_upload_dir();
+		$upload_dir = trailingslashit( $base_dir['basedir'] ) . 'smack_uci_uploads/exports/';
+		if ( ! is_dir( $upload_dir ) ) {
+			wp_mkdir_p( $upload_dir );
 		}
 
-		$file_path = $upload_dir. $post_id . '.csv';
+		$file_path = $upload_dir . $post_id . '.csv';
 		$output = fopen($file_path, 'w');
+		if ( false === $output ) {
+			wp_send_json_error( array( 'message' => __( 'Unable to create export file.', 'wp-ultimate-csv-importer' ) ) );
+			wp_die();
+		}
 		fputcsv($output, $headers);
 		fputcsv($output, $row);
 		fclose($output);
 		$response['success'] = true;
 
-		$upload_url = $base_dir['baseurl'] . '/smack_uci_uploads/exports/';
-		$fileURL = $upload_url . $post_title. $post_id . '.csv';
+		$upload_url = trailingslashit( $base_dir['baseurl'] ) . 'smack_uci_uploads/exports/';
+		$fileURL = $upload_url . $post_id . '.csv';
 		$response['file_path'] = $fileURL;
 		echo wp_json_encode($response);
 		wp_die();

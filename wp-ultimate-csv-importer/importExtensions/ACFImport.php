@@ -59,8 +59,8 @@ class ACFImport {
 					$csv_element = $csv_value;
 					//foreach($matches[2] as $value){
 					foreach($matches[1] as $value){
-						$get_key = array_search($value , $header_array);
-						if(isset($value_array[$get_key])){
+						$get_key = $helpers_instance->find_header_index($value , $header_array);
+						if($get_key !== false && isset($value_array[$get_key])){
 							$csv_value_element = $value_array[$get_key];	
 							$value = '{'.$value.'}';
 							$csv_element = str_replace($value, $csv_value_element, $csv_element);
@@ -88,14 +88,14 @@ class ACFImport {
 					}
 				}
 
-				elseif(!in_array($csv_value , $header_array)){
+				elseif($helpers_instance->find_header_index($csv_value , $header_array) === false){
 					$wp_element= trim($key);
 					$this->acf_import_function($wp_element ,$post_values, $csv_value ,$type, $post_id,$mode, $hash_key,$line_number);
 				}
 
 				else{
-					$get_key= array_search($csv_value , $header_array);
-					if(isset($value_array[$get_key])){
+					$get_key= $helpers_instance->find_header_index($csv_value , $header_array);
+					if($get_key !== false && isset($value_array[$get_key])){
 						$csv_element = $value_array[$get_key];	
 
 						$wp_element= trim($key);

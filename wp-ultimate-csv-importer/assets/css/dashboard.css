@@ -804,6 +804,24 @@
   opacity: 1;
 }
 
+.wpucsv-menu-pro-tag {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 8px;
+  font-weight: 800;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #e04b4a, #dc2626);
+  color: #ffffff;
+  padding: 2.5px 6px 1.5px 6px;
+  border-radius: 9999px;
+  letter-spacing: 0.05em;
+  line-height: normal;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(224, 75, 74, 0.15);
+}
+
 /* Main Content Area */
 .wpucsv-main-layout {
   flex: 1;
@@ -1510,6 +1528,13 @@ body.smack-csv-importer #wpbody-content {
   font-weight: 500 !important;
   color: #334155 !important;
   margin: 0 !important;
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+}
+
+.wpucsv-settings-row__title .wpucsv-settings-pro-tag {
+  margin-left: 0;
 }
 
 .wpucsv-settings-row__desc {

@@ -27,6 +27,47 @@ class SecurityHelper {
 	}
 
 	/**
+	 * Whether the current user may run an import (capability, super admin, or administrator role).
+	 *
+	 * @return bool
+	 */
+	public static function current_user_can_import() {
+		if ( function_exists( 'is_super_admin' ) && is_super_admin() ) {
+			return true;
+		}
+		if ( self::check_capability( self::can_import() ) ) {
+			return true;
+		}
+		$user = wp_get_current_user();
+		return is_array( $user->roles ) && in_array( 'administrator', $user->roles, true );
+	}
+
+	/**
+	 * True when $path resolves inside $directory (realpath prefix check).
+	 *
+	 * @param string $path
+	 * @param string $directory
+	 * @return bool
+	 */
+	public static function is_path_inside_directory( $path, $directory ) {
+		$real_dir = realpath( $directory );
+		if ( false === $real_dir ) {
+			return false;
+		}
+		$real_path = realpath( $path );
+		if ( false === $real_path ) {
+			$real_path = realpath( dirname( $path ) );
+			if ( false === $real_path ) {
+				return false;
+			}
+			$real_path = $real_path . DIRECTORY_SEPARATOR . basename( $path );
+		}
+		$real_path = wp_normalize_path( $real_path );
+		$real_dir  = wp_normalize_path( trailingslashit( $real_dir ) );
+		return strpos( $real_path, $real_dir ) === 0;
+	}
+
+	/**
 	 * Get the required capability for exports.
 	 *
 	 * @return string Capability string.
@@ -214,7 +255,11 @@ class SecurityHelper {
 		if ( ! is_string( $data ) || $data === '' ) {
 			return false;
 		}
-		return @unserialize( $data, array( 'allowed_classes' => false ) );
+		$result = @unserialize( $data, array( 'allowed_classes' => false ) );
+		if ( is_object( $result ) ) {
+			return false;
+		}
+		return $result;
 	}
 
 	/**

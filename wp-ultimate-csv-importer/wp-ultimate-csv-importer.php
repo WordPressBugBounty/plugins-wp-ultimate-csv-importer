@@ -10,7 +10,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: WP Ultimate CSV Importer
- * Version:     9.0
+ * Version:     9.1
  * Plugin URI:  https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
  * Description: Seamlessly create posts, custom posts, pages, media, SEO and more from your CSV data with ease.
  * Author:      Smackcoders
@@ -169,7 +169,7 @@ class UCICore{
 	public static $persian_instance = null;
 	public static $chinese_instance = null;
 	private static $addon_instance = null;
-	public $version = '9.0';
+	public $version = '9.1';
 
 	/**
 	 * UCICore Instance
@@ -188,32 +188,216 @@ class UCICore{
 	}
 
 	/**
-	 * Redirect first-time activations to the Manage Addons screen.
+	 * Handle Manage Addons onboarding: dismiss, mark seen, and a one-time
+	 * post-activation redirect that must never lock the rest of wp-admin.
 	 *
 	 * Runs on admin_init (not init) so headers are not sent early and a failed
 	 * redirect cannot leave a blank white page from exit().
 	 */
 	public static function maybe_redirect_first_activation() {
-		if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
-			return;
-		}
+		self::maybe_handle_addons_dismiss();
+		self::maybe_mark_addons_page_seen();
 
-		if ( 'On' !== get_option( 'WP_ULTIMATE_CSV_FIRST_ACTIVATE' ) ) {
-			return;
-		}
-
-		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
-
-		if ( 'wp-addons-page' === $page ) {
+		if ( self::is_csv_importer_pro_active() ) {
 			delete_option( 'WP_ULTIMATE_CSV_FIRST_ACTIVATE' );
 			return;
 		}
 
+		if ( ! self::should_redirect_to_manage_addons() ) {
+			return;
+		}
+
+		// Consume the one-time flag before redirecting so a failed or partial
+		// navigation cannot trap the administrator in wp-admin.
 		delete_option( 'WP_ULTIMATE_CSV_FIRST_ACTIVATE' );
 
-		$redirect_url = admin_url( 'admin.php?page=wp-addons-page' );
-		wp_safe_redirect( $redirect_url );
+		wp_safe_redirect( admin_url( 'admin.php?page=wp-addons-page' ) );
 		exit;
+	}
+
+	/**
+	 * Persist Close/dismiss so onboarding cannot hijack wp-admin again.
+	 */
+	public static function dismiss_manage_addons_onboarding() {
+		delete_option( 'WP_ULTIMATE_CSV_FIRST_ACTIVATE' );
+		update_option( 'WP_ULTIMATE_CSV_ADDONS_DISMISSED', '1', false );
+	}
+
+	/**
+	 * Handle the Close button (nonce + capability). Works without JavaScript.
+	 */
+	public static function maybe_handle_addons_dismiss() {
+		if ( empty( $_GET['wpucsv_dismiss_addons'] ) ) {
+			return;
+		}
+
+		if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		check_admin_referer( 'wpucsv_dismiss_addons' );
+		self::dismiss_manage_addons_onboarding();
+		wp_safe_redirect( admin_url( 'admin.php?page=com.smackcoders.csvimporternew.menu' ) );
+		exit;
+	}
+
+	/**
+	 * Viewing Manage Addons completes the one-time landing. Never re-trap.
+	 */
+	public static function maybe_mark_addons_page_seen() {
+		if ( ! is_admin() || ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		if ( self::is_disallowed_addons_redirect_request() ) {
+			return;
+		}
+
+		$page = isset( $_GET['page'] ) ? sanitize_text_field( wp_unslash( $_GET['page'] ) ) : '';
+		if ( 'wp-addons-page' !== $page ) {
+			return;
+		}
+
+		delete_option( 'WP_ULTIMATE_CSV_FIRST_ACTIVATE' );
+		update_option( 'WP_ULTIMATE_CSV_ADDONS_DISMISSED', '1', false );
+	}
+
+	/**
+	 * Whether a Pro CSV Importer plugin is active (Free addons onboarding should not run).
+	 *
+	 * @return bool
+	 */
+	public static function is_csv_importer_pro_active() {
+		if ( ! function_exists( 'is_plugin_active' ) ) {
+			return false;
+		}
+
+		$pro_plugins = array(
+			'wp-ultimate-csv-importer-pro/wp-ultimate-csv-importer-pro.php',
+			'wp-importer-custom-fields-basic-pro/wp-importer-custom-fields-basic-pro.php',
+			'wordpress-importer-wpml-pro/wordpress-importer-wpml-pro.php',
+		);
+
+		foreach ( $pro_plugins as $plugin ) {
+			if ( is_plugin_active( $plugin ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/**
+	 * Background / non-UI admin requests must never be redirected.
+	 *
+	 * @param array $context Optional request context (for tests).
+	 * @return bool
+	 */
+	public static function is_disallowed_addons_redirect_request( $context = array() ) {
+		$context = self::normalize_addons_redirect_context( $context );
+
+		if ( ! empty( $context['doing_ajax'] ) || ! empty( $context['doing_cron'] ) || ! empty( $context['is_json'] ) || ! empty( $context['is_rest'] ) || ! empty( $context['is_cli'] ) ) {
+			return true;
+		}
+
+		$blocked_pages = array( 'admin-ajax.php', 'admin-post.php', 'async-upload.php', 'customize.php' );
+		if ( in_array( $context['pagenow'], $blocked_pages, true ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Decide whether the current (or provided) request should be sent to Manage Addons.
+	 *
+	 * Unrelated wp-admin screens are never hijacked. Fresh install onboarding is
+	 * limited to the plugins.php activation landing.
+	 *
+	 * @param array $context Optional request context (for tests).
+	 * @return bool
+	 */
+	public static function should_redirect_to_manage_addons( $context = array() ) {
+		$context = self::normalize_addons_redirect_context( $context );
+
+		if ( empty( $context['is_admin'] ) || empty( $context['can_manage'] ) ) {
+			return false;
+		}
+
+		if ( self::is_disallowed_addons_redirect_request( $context ) ) {
+			return false;
+		}
+
+		if ( ! empty( $context['dismiss_request'] ) || ! empty( $context['activate_multi'] ) || ! empty( $context['pro_active'] ) ) {
+			return false;
+		}
+
+		if ( self::is_addons_onboarding_dismissed( $context['dismissed'] ) ) {
+			return false;
+		}
+
+		if ( 'On' !== $context['first_activate'] ) {
+			return false;
+		}
+
+		if ( 'wp-addons-page' === $context['page'] ) {
+			return false;
+		}
+
+		// One-time welcome after activation only. Never redirect Dashboard/Posts/etc.
+		if ( 'plugins.php' !== $context['pagenow'] ) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * @param mixed $dismissed Raw option value.
+	 * @return bool
+	 */
+	public static function is_addons_onboarding_dismissed( $dismissed = null ) {
+		if ( null === $dismissed ) {
+			$dismissed = get_option( 'WP_ULTIMATE_CSV_ADDONS_DISMISSED' );
+		}
+
+		return '1' === (string) $dismissed || 1 === $dismissed || true === $dismissed;
+	}
+
+	/**
+	 * @param array $context Partial context.
+	 * @return array
+	 */
+	public static function normalize_addons_redirect_context( $context = array() ) {
+		if ( ! is_array( $context ) ) {
+			$context = array();
+		}
+
+		$page = '';
+		if ( isset( $context['page'] ) ) {
+			$page = $context['page'];
+		} elseif ( isset( $_GET['page'] ) ) {
+			$page = sanitize_text_field( wp_unslash( $_GET['page'] ) );
+		}
+
+		$defaults = array(
+			'is_admin'        => is_admin(),
+			'can_manage'      => function_exists( 'current_user_can' ) ? current_user_can( 'manage_options' ) : false,
+			'page'            => $page,
+			'pagenow'         => isset( $GLOBALS['pagenow'] ) ? $GLOBALS['pagenow'] : '',
+			'doing_ajax'      => function_exists( 'wp_doing_ajax' ) ? wp_doing_ajax() : false,
+			'doing_cron'      => function_exists( 'wp_doing_cron' ) ? wp_doing_cron() : false,
+			'is_json'         => function_exists( 'wp_is_json_request' ) ? wp_is_json_request() : false,
+			'is_rest'         => defined( 'REST_REQUEST' ) && REST_REQUEST,
+			'is_cli'          => defined( 'WP_CLI' ) && WP_CLI,
+			'activate_multi'  => isset( $_GET['activate-multi'] ),
+			'first_activate'  => get_option( 'WP_ULTIMATE_CSV_FIRST_ACTIVATE' ),
+			'dismissed'       => get_option( 'WP_ULTIMATE_CSV_ADDONS_DISMISSED' ),
+			'dismiss_request' => isset( $_GET['wpucsv_dismiss_addons'] ),
+			'pro_active'      => self::is_csv_importer_pro_active(),
+		);
+
+		return wp_parse_args( $context, $defaults );
 	}
 
 	public static function admin_body_class($classes) {
@@ -341,10 +525,45 @@ public function handle_review_notice_actions() {
     }
 }
 
-    public static function enqueue_all_assets() {
+    public static function is_single_import_export_enabled() {
+        $settings = get_option( 'sm_uci_pro_settings', array() );
+        $value    = isset( $settings['singleimport'] ) ? $settings['singleimport'] : '';
+
+        if ( true === $value || 1 === $value || '1' === $value ) {
+            return true;
+        }
+
+        return in_array( strtolower( (string) $value ), array( 'true', 'on' ), true );
+    }
+
+    public static function enqueue_single_import_export_assets() {
+        $script_path    = plugin_dir_path( __FILE__ ) . 'assets/js/react-app.js';
+        $script_version = file_exists( $script_path ) ? (string) filemtime( $script_path ) : self::getInstance()->version;
+
+        wp_enqueue_script(
+            'wpucsv-single-import-export',
+            plugins_url( 'assets/js/react-app.js', __FILE__ ),
+            array( 'jquery', 'wp-data' ),
+            $script_version,
+            true
+        );
+
+        $nonce_payload = array(
+            'url' => admin_url( 'admin-ajax.php' ),
+        );
+        if ( current_user_can( 'manage_options' ) ) {
+            $nonce_payload['nonce'] = wp_create_nonce( 'smack-ultimate-csv-importer' );
+        }
+        wp_localize_script( 'wpucsv-single-import-export', 'smack_nonce_object', $nonce_payload );
+    }
+
+    public static function enqueue_all_assets( $hook = '' ) {
         $page = isset($_REQUEST['page']) ? sanitize_text_field($_REQUEST['page']) : '';
-        $single_import_state = get_option('sm_uci_pro_settings');
-        $single_import = isset($single_import_state['singleimport']) ? $single_import_state['singleimport'] : '';
+        $single_import_enabled = self::is_single_import_export_enabled();
+
+        if ( $single_import_enabled && in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) {
+            self::enqueue_single_import_export_assets();
+        }
 
         $allowed_pages = array(
             'com.smackcoders.csvimporternew.menu',
@@ -374,7 +593,7 @@ public function handle_review_notice_actions() {
         do_action('sm_uci_enqueue_styles');
 
         $react_js_version = $plugin_instance->version;
-        if ($page === 'com.smackcoders.csvimporternew.menu' || $single_import == 'true') {
+        if ($page === 'com.smackcoders.csvimporternew.menu' || $single_import_enabled) {
             $react_js_path = plugin_dir_path(__FILE__) . 'assets/js/admin-v6.1.js';
             $react_js_version = file_exists($react_js_path) ? (string) filemtime($react_js_path) : $plugin_instance->version;
             wp_register_script('react-js', plugins_url('assets/js/admin-v6.1.js', __FILE__), array('wp-element', 'wp-components', 'wp-i18n', 'jquery'), $react_js_version);
@@ -570,7 +789,7 @@ public function handle_review_notice_actions() {
 		add_submenu_page(
 			'com.smackcoders.csvimporternew.menu',
 			__( 'Manage Addons', 'wp-ultimate-csv-importer' ),
-			'<span style="color:#00a699">' . esc_html__( 'Manage Addons', 'wp-ultimate-csv-importer' ) . '</span>',
+			__( 'Manage Addons', 'wp-ultimate-csv-importer' ),
 			'manage_options',
 			'wp-addons-page',
 			array(__CLASS__,'importer_addons_page')

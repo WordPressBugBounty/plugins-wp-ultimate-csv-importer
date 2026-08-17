@@ -181,7 +181,7 @@ class MappingExtension {
 					 if (($handles = fopen($temp, 'r')) !== FALSE){
 						while (($data = fgetcsv($handles, 0, $delimiter, '"', '\\')) !== FALSE)
 						{
-							$trimmed_array = array_map('trim', $data);
+							$trimmed_array = ImportHelpers::getInstance()->normalize_header_array( $data );
 							array_push($info , $trimmed_array);	
 							$exp_line = $info[0];
 							$response['success'] = true;
@@ -207,7 +207,7 @@ class MappingExtension {
 					{	
 						
 						// Read the data from a single line
-						$trimmed_info = array_map('trim', $data);
+						$trimmed_info = ImportHelpers::getInstance()->normalize_header_array( $data );
 						array_push($info , $trimmed_info);
 						$exp_line = $info[0];
 
@@ -246,7 +246,7 @@ class MappingExtension {
 					$line =file($hs, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 					// Read the data from a single line
 					$data = explode("\t", $line[0]); // Split by tab
-					$trimmed_info = array_map('trim', $data);
+					$trimmed_info = ImportHelpers::getInstance()->normalize_header_array( $data );
 						array_push($info , $trimmed_info);
 						$exp_line = $info[0];
 
@@ -342,7 +342,7 @@ class MappingExtension {
 	 * @return array
 	 */
 	public function mapping_fields_with_csv_headers( $import_type, $csv_headers = array(), $process_type = null ) {
-		$csv_headers = is_array( $csv_headers ) ? $csv_headers : array();
+		$csv_headers = is_array( $csv_headers ) ? ImportHelpers::getInstance()->normalize_header_array( $csv_headers ) : array();
 		add_filter( 'sm_uci_free_product_attr_csv_headers', static function () use ( $csv_headers ) {
 			return $csv_headers;
 		} );
@@ -656,7 +656,7 @@ class MappingExtension {
 					while (($data = fgetcsv($handles, 0, $delimiter, '"', '\\')) !== FALSE)
 					{
 						// Read the data from a single line
-						$trimmed_array = array_map('trim', $data);
+						$trimmed_array = ImportHelpers::getInstance()->normalize_header_array( $data );
 						array_push($info , $trimmed_array);
 						$exp_line = $info[0];									
 						
@@ -681,7 +681,7 @@ class MappingExtension {
 				while (($data = fgetcsv($h, 0, $delimiters[$array_index], '"', '\\')) !== FALSE) 
 				{		
 					// Read the data from a single line
-					$trimmed_array = array_map('trim', $data);
+					$trimmed_array = ImportHelpers::getInstance()->normalize_header_array( $data );
 					array_push($info , $trimmed_array);
 					$exp_line = $info[0];									
 					
@@ -718,7 +718,7 @@ class MappingExtension {
 					$hs = $upload_dir . $hash_key . '/' . $hash_key;
 					$line =file($hs, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 					$data = explode("\t", $line[0]); 
-					$trimmed_array = array_map('trim', $data);
+					$trimmed_array = ImportHelpers::getInstance()->normalize_header_array( $data );
 					array_push($info , $trimmed_array);
 					$exp_line = $info[0];		
 					$response['csv_fields'] = $exp_line;					
@@ -1086,9 +1086,13 @@ class MappingExtension {
 		if(!empty($templateName)){
 			global $wpdb;
 			$template_table_name = $wpdb->prefix."ultimate_csv_importer_mappingtemplate";
-			$mapping_fields = serialize($mappingList);
-			$mapping_fields = $wpdb->_real_escape($mapping_fields);
-			 $wpdb->query( "UPDATE $template_table_name SET mapping ='$mapping_fields' WHERE templatename = '$templateName' ");
+			$wpdb->update(
+				$template_table_name,
+				array('mapping' => serialize($mappingList)),
+				array('templatename' => $templateName),
+				array('%s'),
+				array('%s')
+			);
 		}
 
 		return $count;	

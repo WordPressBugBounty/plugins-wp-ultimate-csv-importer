@@ -8,6 +8,8 @@
 
 namespace Smackcoders\UCI\Core\Validation;
 
+use Smackcoders\UCI\Core\SecurityHelper;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -131,9 +133,11 @@ class ValidationEngine {
 			return $this->finalize_result( $result, $allow_critical );
 		}
 
-		$headers    = $reader->get_headers();
+		$headers    = $this->normalize_headers( $reader->get_headers() );
 		$total_rows = $reader->count_data_rows();
 		$reader->rewind_data();
+
+		$mapping = $this->normalize_mapping_columns( $mapping );
 
 		$report->set_total_rows( $total_rows );
 
@@ -213,24 +217,31 @@ class ValidationEngine {
 	 */
 	public function validateRow( $row_number, array $row, array $headers, array $mapping, $import_type = '' ) {
 		$issues      = array();
-		$assoc       = $this->combine_row( $headers, $row );
 		$core_map    = isset( $mapping['CORE'] ) && is_array( $mapping['CORE'] ) ? $mapping['CORE'] : array();
 		$header_count = count( $headers );
 		$row_count    = count( $row );
+		$original_row_count = $row_count;
 
-		if ( $header_count !== $row_count ) {
+		if ( $row_count < $header_count ) {
+			$row = array_pad( $row, $header_count, '' );
+			$row_count = $header_count;
+		}
+
+		$assoc = $this->combine_row( $headers, $row );
+
+		if ( $header_count !== $original_row_count && $original_row_count > $header_count ) {
 			$issues[] = new ValidationIssue(
 				$row_number,
 				'',
 				'',
-				ValidationIssue::SEVERITY_CRITICAL,
+				ValidationIssue::SEVERITY_WARNING,
 				self::ERROR_BROKEN_ROW_LENGTH,
 				sprintf(
 					/* translators: 1: row number, 2: expected columns, 3: actual columns */
 					__( 'Row %1$d has %3$d columns but %2$d were expected.', 'wp-ultimate-csv-importer' ),
 					$row_number,
 					$header_count,
-					$row_count
+					$original_row_count
 				)
 			);
 		}
@@ -244,7 +255,7 @@ class ValidationEngine {
 						$row_number,
 						$title_column,
 						'post_title',
-						ValidationIssue::SEVERITY_CRITICAL,
+						ValidationIssue::SEVERITY_WARNING,
 						self::ERROR_EMPTY_TITLE,
 						sprintf(
 							/* translators: %d: row number */
@@ -257,6 +268,9 @@ class ValidationEngine {
 		}
 
 		foreach ( $this->get_required_mapped_fields( $import_type ) as $field_key ) {
+			if ( 'post_title' === $field_key ) {
+				continue;
+			}
 			$column = isset( $core_map[ $field_key ] ) ? trim( (string) $core_map[ $field_key ] ) : '';
 			if ( '' === $column ) {
 				continue;
@@ -406,7 +420,7 @@ class ValidationEngine {
 			);
 			if ( $row ) {
 				if ( empty( $config['mapping'] ) && ! empty( $row['mapping'] ) ) {
-					$mapping = @unserialize( $row['mapping'] );
+					$mapping = SecurityHelper::safe_unserialize( $row['mapping'] );
 					if ( is_array( $mapping ) ) {
 						$config['mapping'] = $mapping;
 					}
@@ -539,13 +553,57 @@ class ValidationEngine {
 		$assoc = array();
 		$count = min( count( $headers ), count( $row ) );
 		for ( $i = 0; $i < $count; $i++ ) {
-			$key = (string) $headers[ $i ];
+			$key = $this->strip_utf8_bom( $headers[ $i ] );
 			if ( '' === $key ) {
 				continue;
 			}
 			$assoc[ $key ] = $row[ $i ];
 		}
 		return $assoc;
+	}
+
+	/**
+	 * @param string[] $headers
+	 * @return string[]
+	 */
+	private function normalize_headers( array $headers ) {
+		$out = array();
+		foreach ( $headers as $header ) {
+			$out[] = $this->strip_utf8_bom( $header );
+		}
+		return $out;
+	}
+
+	/**
+	 * Strip UTF-8 BOM from mapped CSV column names so Excel-exported files match.
+	 *
+	 * @param array $mapping
+	 * @return array
+	 */
+	private function normalize_mapping_columns( array $mapping ) {
+		foreach ( $mapping as $group => $fields ) {
+			if ( ! is_array( $fields ) ) {
+				continue;
+			}
+			foreach ( $fields as $field_key => $column ) {
+				if ( is_string( $column ) ) {
+					$mapping[ $group ][ $field_key ] = $this->strip_utf8_bom( $column );
+				}
+			}
+		}
+		return $mapping;
+	}
+
+	/**
+	 * @param mixed $text
+	 * @return string
+	 */
+	private function strip_utf8_bom( $text ) {
+		$text = (string) $text;
+		if ( strncmp( $text, "\xEF\xBB\xBF", 3 ) === 0 ) {
+			$text = substr( $text, 3 );
+		}
+		return trim( $text );
 	}
 
 	/**

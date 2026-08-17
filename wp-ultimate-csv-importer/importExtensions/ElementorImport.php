@@ -89,13 +89,15 @@ class ElementorImport {
 			
 			$style_encode= json_encode($style_data);
 			$style_encode = wp_slash( $style_encode );
+		$helpers_instance = ImportHelpers::getInstance();
+		$fallback_author = $helpers_instance->get_fallback_author();
 				$template_data = [
 					'post_title'   => $data[1],
 					'post_content' => $content['content'],
 					'post_type'    => 'elementor_library',
 					'post_status'  => $data[7],
 					'post_date'    => $data[5],
-					'post_author'  => 1,
+					'post_author'  => $fallback_author['ID'],
 				];
 			$post_id = wp_insert_post($template_data);
 			$id[]= $post_id;

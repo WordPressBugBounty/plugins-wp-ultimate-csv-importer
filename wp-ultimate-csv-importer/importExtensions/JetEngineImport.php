@@ -336,7 +336,10 @@ class JetEngineImport {
 							$jet_posts_field_value = $jet_posts;
 						}
 						else{
-							$query = "SELECT id FROM {$wpdb->prefix}posts WHERE post_title ='{$jet_posts}' AND post_status='publish'";
+							$query = $wpdb->prepare(
+								"SELECT id FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_status='publish'",
+								$jet_posts
+							);
 							$name = $wpdb->get_results($query);
 							if (!empty($name)) {
 								$jet_posts_field_value = $name[0]->id;
@@ -348,7 +351,10 @@ class JetEngineImport {
 						$jet_posts_value = array();
 						foreach($jet_posts_exp as $jet_posts_value){
 							$jet_posts_value = trim($jet_posts_value);
-							$query = "SELECT id FROM {$wpdb->prefix}posts WHERE post_title ='{$jet_posts_value}' AND post_status = 'publish' ORDER BY ID DESC";
+							$query = $wpdb->prepare(
+								"SELECT id FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_status = 'publish' ORDER BY ID DESC",
+								$jet_posts_value
+							);
 							$multiple_id = $wpdb->get_results($query);
 							$multiple_ids =$multiple_id[0];
 							if(!$multiple_id){

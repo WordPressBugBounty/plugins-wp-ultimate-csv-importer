@@ -1,0 +1,692 @@
+# Copyright (C) 2026 Smackcoders
+# This file is distributed under the GPL v3.
+# Copyright (C) 2026 Smackcoders
+# This file is distributed under the GPL v3.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Ultimate CSV Importer 9.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-ultimate-csv-"
+"importer\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-06-24T05:51:18+00:00\n"
+"PO-Revision-Date: 2026-06-24T05:51:18+00:00\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: wp-ultimate-csv-importer\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Plugin Name of the plugin
+#: wp-ultimate-csv-importer.php
+msgid "WP Ultimate CSV Importer"
+msgstr "Importatore CSV definitivo di WP"
+
+#. Plugin URI of the plugin
+#: wp-ultimate-csv-importer.php
+msgid "https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html"
+msgstr ""
+
+#. Description of the plugin
+#: wp-ultimate-csv-importer.php
+msgid ""
+"Seamlessly create posts, custom posts, pages, media, SEO and more from your "
+"CSV data with ease."
+msgstr ""
+
+#. Author of the plugin
+#: wp-ultimate-csv-importer.php
+msgid "Smackcoders"
+msgstr ""
+
+#. Author URI of the plugin
+#: wp-ultimate-csv-importer.php
+msgid "https://www.smackcoders.com/wordpress.html"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:167
+#: admin/class-deactivation-feedback.php:229
+msgid "Quick Feedback"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:168
+#: admin/class-deactivation-feedback.php:234
+msgid ""
+"If you have a moment, please share why you are deactivating WP Ultimate CSV "
+"Importer."
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:169
+#: admin/class-deactivation-feedback.php:254
+msgid "Please tell us more (optional)"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:170
+#: admin/class-deactivation-feedback.php:268
+msgid "Submit & Deactivate"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:171
+#: admin/class-deactivation-feedback.php:272
+msgid "Skip & Deactivate"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:172
+msgid "Sending feedback…"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:173
+#: admin/class-deactivation-feedback.php:282
+#: admin/class-deactivation-feedback.php:339
+msgid "Thank you for your feedback! Deactivating the plugin…"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:174
+#: admin/class-deactivation-feedback.php:331
+msgid "Could not send feedback. You can skip deactivation or try again."
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:185
+msgid "This is a temporary deactivation for testing."
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:186
+msgid "Something isn't working properly."
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:187
+msgid "I found a better alternative."
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:188
+msgid "It's missing a specific feature."
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:189
+msgid "I no longer need the plugin."
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:190
+msgid "Other"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:223
+#: admin/class-deactivation-feedback.php:224
+msgid "Close"
+msgstr "Chiudi"
+
+#: admin/class-deactivation-feedback.php:238
+msgid "Deactivation reason"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:260
+msgid "Share additional details…"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:301
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:313
+msgid "Invalid feedback reason."
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:367
+msgid "Plugin Deactivation Feedback"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:369
+msgid "Feedback Reason:"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:369
+msgid "Not specified"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:370
+msgid "Additional Comment:"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:370
+msgid "None"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:372
+msgid "Site URL:"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:373
+msgid "Plugin Version:"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:374
+msgid "WordPress Version:"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:375
+msgid "PHP Version:"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:376
+msgid "User ID:"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:377
+msgid "User Name:"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:378
+msgid "User Email:"
+msgstr ""
+
+#: admin/class-deactivation-feedback.php:379
+msgid "Date & Time:"
+msgstr ""
+
+#: controllers/CsvValidationController.php:44
+#: controllers/ImportResumeController.php:51
+msgid "Permission denied."
+msgstr ""
+
+#: controllers/CsvValidationController.php:89
+#: controllers/ImportResumeController.php:98
+#: controllers/ImportResumeController.php:130
+#: includes/ImportResumeService.php:703
+msgid "Invalid import session."
+msgstr ""
+
+#: controllers/DashboardController.php:62 controllers/SendPassword.php:85
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: controllers/HelperExtension.php:90
+msgid "No data found."
+msgstr ""
+
+#: controllers/ImportResumeController.php:108
+msgid "Unable to resume import."
+msgstr ""
+
+#: controllers/NeedHelperExtension.php:249
+msgid "Invalid ID passing."
+msgstr ""
+
+#: controllers/SendPassword.php:80
+msgid "Security check failed."
+msgstr ""
+
+#: extensionModules/MappingExtension.php:904
+#: managerExtensions/TemplateManager.php:415
+msgid "Uncategorized"
+msgstr ""
+
+#. translators: 1: post type, 2: error message
+#. translators: 1: post type, 2: extra message
+#: importExtensions/CoreFieldsImport.php:802
+#: importExtensions/CoreFieldsImport.php:812
+#, php-format
+msgid "Can't insert this %1$s. %2$s"
+msgstr ""
+
+#. translators: %s: post type
+#: importExtensions/CoreFieldsImport.php:820
+#, php-format
+msgid "Can't insert this %s"
+msgstr ""
+
+#. translators: 1: post type, 2: inserted post ID, 3: author info
+#: importExtensions/CoreFieldsImport.php:836
+#: importExtensions/CoreFieldsImport.php:846
+#: importExtensions/CoreFieldsImport.php:856
+#: importExtensions/CoreFieldsImport.php:866
+#: importExtensions/CoreFieldsImport.php:876
+#: importExtensions/CoreFieldsImport.php:886
+#: importExtensions/CoreFieldsImport.php:896
+#: importExtensions/CoreFieldsImport.php:906
+#: importExtensions/CoreFieldsImport.php:916
+#: importExtensions/CoreFieldsImport.php:926
+#: importExtensions/CoreFieldsImport.php:936
+#: importExtensions/CoreFieldsImport.php:948
+#, php-format
+msgid "Inserted %1$s ID: %2$d, %3$s"
+msgstr ""
+
+#: importExtensions/CoreFieldsImport.php:842
+msgid ""
+"<b style='color: red;'>Notice:</b> Cannot create content. Invalid API key "
+"provided. Please check your API key."
+msgstr ""
+
+#: importExtensions/CoreFieldsImport.php:852
+msgid ""
+"<b style='color: red;'>Notice:</b> Cannot create content. Rate limit reached "
+"for requests or you exceeded your current quota."
+msgstr ""
+
+#: importExtensions/CoreFieldsImport.php:862
+msgid ""
+"<b style='color: red;'>Notice:</b> Cannot create content. Please check your "
+"inputs."
+msgstr ""
+
+#: importExtensions/CoreFieldsImport.php:872
+msgid ""
+"<b style='color: red;'>Notice:</b> Cannot create content. The server had an "
+"error while processing your request."
+msgstr ""
+
+#: importExtensions/CoreFieldsImport.php:882
+msgid ""
+"<b style='color: red;'>Notice:</b> Cannot create content. The engine is "
+"currently overloaded, please try again later."
+msgstr ""
+
+#: importExtensions/CoreFieldsImport.php:892
+msgid ""
+"<b style='color: red;'>Notice:</b> Cannot create short description. Invalid "
+"API key provided. Please check your API key."
+msgstr ""
+
+#: importExtensions/CoreFieldsImport.php:902
+msgid ""
+"<b style='color: red;'>Notice:</b> Cannot create short description. Rate "
+"limit reached for requests or you exceeded your current quota."
+msgstr ""
+
+#: importExtensions/CoreFieldsImport.php:912
+msgid ""
+"<b style='color: red;'>Notice:</b> Cannot create short description. Please "
+"check your inputs."
+msgstr ""
+
+#: importExtensions/CoreFieldsImport.php:922
+msgid ""
+"<b style='color: red;'>Notice:</b> Cannot create short description. The "
+"server had an error while processing your request."
+msgstr ""
+
+#: importExtensions/CoreFieldsImport.php:932
+msgid ""
+"<b style='color: red;'>Notice:</b> Cannot create short description. The "
+"engine is currently overloaded, please try again later."
+msgstr ""
+
+#. translators: 1: post type, 2: updated post ID, 3: author info
+#: importExtensions/CoreFieldsImport.php:994
+#, php-format
+msgid "Updated %1$s ID: %2$d, %3$s"
+msgstr ""
+
+#: importExtensions/CoreFieldsImport.php:1003
+msgid "Skipped. No matching record found."
+msgstr ""
+
+#: includes/Dashboard/DashboardRepository.php:229
+msgid "WooCommerce Products"
+msgstr "Prodotti WooCommerce"
+
+#: includes/Dashboard/DashboardRepository.php:233
+msgid "Posts"
+msgstr "Messaggi"
+
+#: includes/Dashboard/DashboardRepository.php:237
+msgid "Pages"
+msgstr "Pages"
+
+#: includes/Dashboard/DashboardRepository.php:241
+msgid "Users / Customers"
+msgstr ""
+
+#: includes/Dashboard/DashboardRepository.php:245
+msgid "Media"
+msgstr "File Multimediali"
+
+#: includes/Dashboard/DashboardRepository.php:249
+msgid "Custom Post Types"
+msgstr ""
+
+#: includes/Dashboard/DashboardRepository.php:375
+msgid "Media Imported"
+msgstr "Media Imported"
+
+#: includes/Dashboard/DashboardRepository.php:378
+msgid "Import Failed"
+msgstr ""
+
+#: includes/Dashboard/DashboardRepository.php:381
+msgid "Import Completed"
+msgstr ""
+
+#: includes/Dashboard/DashboardRepository.php:392
+msgid "Failed"
+msgstr "Failed"
+
+#: includes/Dashboard/DashboardRepository.php:394
+msgid "Completed"
+msgstr ""
+
+#. translators: %d: number of imports in the last 30 days
+#. translators: %d: number of templates created in the last 30 days
+#: includes/Dashboard/DashboardService.php:121
+#: includes/Dashboard/DashboardService.php:139
+#, php-format
+msgid "+%d this month"
+msgstr ""
+
+#: includes/ImportResumeService.php:594
+msgid "No resumable import session found."
+msgstr ""
+
+#: includes/ImportResumeService.php:601
+msgid "This import is already completed."
+msgstr ""
+
+#: includes/ImportResumeService.php:614
+msgid "Import file metadata is missing. Cannot resume."
+msgstr ""
+
+#: includes/ImportResumeService.php:632
+msgid "Mapping template is missing. Cannot resume."
+msgstr ""
+
+#: includes/ImportResumeService.php:646
+msgid "Import file no longer exists on the server."
+msgstr ""
+
+#: includes/SecurityHelper.php:112
+msgid "You do not have sufficient permissions to download this file."
+msgstr ""
+
+#: includes/Validation/CsvPreflightReader.php:55
+msgid "CSV file is missing or not readable."
+msgstr ""
+
+#: includes/Validation/CsvPreflightReader.php:63
+msgid "CSV file is empty."
+msgstr ""
+
+#: includes/Validation/CsvPreflightReader.php:71
+msgid "Unable to read CSV file."
+msgstr ""
+
+#: includes/Validation/CsvPreflightReader.php:78
+msgid "CSV file is not valid UTF-8 encoding."
+msgstr ""
+
+#: includes/Validation/CsvPreflightReader.php:92
+msgid "Unable to open CSV file."
+msgstr ""
+
+#: includes/Validation/CsvPreflightReader.php:125
+msgid "CSV reader is not open."
+msgstr ""
+
+#: includes/Validation/CsvPreflightReader.php:133
+msgid "CSV header row is missing or corrupt."
+msgstr ""
+
+#: includes/Validation/CsvPreflightReader.php:141
+msgid "CSV header row is empty."
+msgstr ""
+
+#: includes/Validation/ValidationEngine.php:88
+msgid "CSV validation failed."
+msgstr ""
+
+#: includes/Validation/ValidationEngine.php:115
+msgid "CSV header is invalid."
+msgstr ""
+
+#: includes/Validation/ValidationEngine.php:148
+msgid "CSV file contains no data rows."
+msgstr ""
+
+#. translators: %d: row number
+#: includes/Validation/ValidationEngine.php:182
+#, php-format
+msgid "CSV row %d is corrupt or malformed."
+msgstr ""
+
+#. translators: 1: row number, 2: expected columns, 3: actual columns
+#: includes/Validation/ValidationEngine.php:230
+#, php-format
+msgid "Row %1$d has %3$d columns but %2$d were expected."
+msgstr ""
+
+#. translators: %d: row number
+#: includes/Validation/ValidationEngine.php:251
+#, php-format
+msgid "Row %d has an empty post title."
+msgstr ""
+
+#. translators: 1: row number, 2: field key
+#: includes/Validation/ValidationEngine.php:274
+#, php-format
+msgid "Row %1$d is missing required value for %2$s."
+msgstr ""
+
+#. translators: 1: row number, 2: value
+#: includes/Validation/ValidationEngine.php:302
+#, php-format
+msgid "Row %1$d has invalid date value \"%2$s\"."
+msgstr ""
+
+#. translators: 1: row number, 2: status value
+#: includes/Validation/ValidationEngine.php:319
+#, php-format
+msgid "Row %1$d has invalid post status \"%2$s\"."
+msgstr ""
+
+#. translators: 1: row number, 2: field key, 3: value
+#: includes/Validation/ValidationEngine.php:335
+#, php-format
+msgid "Row %1$d has invalid numeric value for %2$s: \"%3$s\"."
+msgstr ""
+
+#: includes/Validation/ValidationEngine.php:444
+msgid "Import is blocked due to critical validation errors."
+msgstr "L'importazione è bloccata a causa di errori critici di convalida."
+
+#: includes/Validation/ValidationEngine.php:471
+msgid "Post title is not mapped in WordPress Core Fields."
+msgstr ""
+
+#. translators: %s: field key
+#: includes/Validation/ValidationEngine.php:490
+#, php-format
+msgid "Required field %s is not mapped."
+msgstr ""
+
+#: managerExtensions/TemplateManager.php:57
+msgid "Template not found"
+msgstr ""
+
+#: managerExtensions/TemplateManager.php:62 SaveMapping.php:379
+msgid "Invalid mapping payload. Existing template mapping was not changed."
+msgstr ""
+
+#: managerExtensions/TemplateManager.php:81
+msgid "Template Name Already Exists"
+msgstr ""
+
+#: managerExtensions/TemplateManager.php:104
+msgid "Unable to save template mapping"
+msgstr ""
+
+#: MediaHandling.php:221 SingleImportExport.php:40 SingleImportExport.php:210
+#: SingleImportExport.php:223
+msgid "Unauthorized access."
+msgstr ""
+
+#: MediaHandling.php:235
+msgid "Invalid input."
+msgstr ""
+
+#: MediaHandling.php:247
+msgid "Upload directory not found."
+msgstr ""
+
+#: MediaHandling.php:264
+msgid "Invalid file path."
+msgstr ""
+
+#: recommended-addons.php:47
+msgid ""
+"Import your user records available in the CSV/XML file with custom fields, "
+"Woocommerce Shipping and Billing details."
+msgstr ""
+
+#: recommended-addons.php:64
+msgid ""
+"Import your WooCommerce Products records with attributes, categories, tags, "
+"and images available in the CSV/XML file."
+msgstr ""
+
+#: recommended-addons.php:82
+msgid ""
+"Export your Posts, Pages, Custom Posts, Users, Comments, and WooCommerce "
+"Products data as CSV files from the WordPress."
+msgstr ""
+
+#: recommended-addons.php:95
+msgid "Install & Activate All"
+msgstr ""
+
+#: SaveMapping.php:230
+msgid "Invalid file extension"
+msgstr ""
+
+#: SaveMapping.php:240
+msgid "CSV headers do not match the expected format."
+msgstr ""
+
+#: SaveMapping.php:280
+msgid "Template already exists"
+msgstr ""
+
+#: SaveMapping.php:298
+msgid "Unable to open the file"
+msgstr ""
+
+#: SaveMapping.php:498
+msgid "Invalid mapping payload. Template mapping was not saved."
+msgstr ""
+
+#: SaveMapping.php:1117 SaveMapping.php:1320 SaveMapping.php:1552
+msgid "Generate a short description."
+msgstr ""
+
+#: SaveMapping.php:3181
+msgid ""
+"ID is a mandatory field for Update mode. Please map ID in WordPress Core "
+"Fields."
+msgstr ""
+
+#: SingleImportExport.php:51
+msgid "File upload error."
+msgstr ""
+
+#: SingleImportExport.php:59
+msgid "Invalid file type. Only CSV files are allowed."
+msgstr ""
+
+#: SingleImportExport.php:228
+msgid "Invalid or unpublished post ID."
+msgstr ""
+
+#: SmackCSVImporterInstall.php:217
+msgid "Upgrade Notice:"
+msgstr ""
+
+#: SmackCSVImporterInstall.php:217
+msgid "Download and replace the latest version of"
+msgstr ""
+
+#: SmackCSVImporterInstall.php:217
+msgid "for 10x faster import performance with easy user interface."
+msgstr ""
+
+#: upgrade-to-pro.php:123
+msgid "Features Of Ultimate CSV Importer"
+msgstr ""
+
+#: upgrade-to-pro.php:168
+msgid "All-in-One SEO"
+msgstr ""
+
+#: upgrade-to-pro.php:186
+msgid "WP Customer Reviews"
+msgstr ""
+
+#: upgrade-to-pro.php:192
+msgid "Import from Google Sheets & Dropbox"
+msgstr ""
+
+#: upgrade-to-pro.php:198
+msgid "Update/Schedule"
+msgstr ""
+
+#: upgrade-to-pro.php:216
+msgid "Data Export"
+msgstr ""
+
+#: upgrade-to-pro.php:234
+msgid "Rank Math"
+msgstr ""
+
+#: upgrade-to-pro.php:240
+msgid "WooCommerce:Variations, Orders, Coupons"
+msgstr ""
+
+#: upgrade-to-pro.php:246
+msgid "5 Woocommerce Add-ons"
+msgstr ""
+
+#: upgrade-to-pro.php:252
+msgid "Events Manager, NextGEN Gallery"
+msgstr ""
+
+#: uploadModules/FtpUpload.php:110
+msgid "Invalid file type."
+msgstr ""
+
+#: wp-ultimate-csv-importer.php:282
+msgid "Loving WP Ultimate CSV Importer? 💙"
+msgstr ""
+
+#: wp-ultimate-csv-importer.php:284
+msgid ""
+"We’d be so grateful if you could share your experience in a quick review. It "
+"only takes a minute, and it really helps us reach more WordPress users like "
+"you."
+msgstr ""
+
+#: wp-ultimate-csv-importer.php:288
+msgid "⭐ Sure, I’ll Rate It"
+msgstr ""
+
+#: wp-ultimate-csv-importer.php:289
+msgid "Maybe Later"
+msgstr "Forse più tardi"
+
+#: wp-ultimate-csv-importer.php:290
+msgid "No, Thanks"
+msgstr ""
+
+#: wp-ultimate-csv-importer.php:524
+msgid "Maintenance Mode"
+msgstr ""
+
+#: wp-ultimate-csv-importer.php:531
+msgid "Site is under maintenance mode. Please wait a few minutes!"
+msgstr ""
+
+#: wp-ultimate-csv-importer.php:540 wp-ultimate-csv-importer.php:541
+msgid "Ultimate CSV Importer Free"
+msgstr ""
+
+#: wp-ultimate-csv-importer.php:546 wp-ultimate-csv-importer.php:547
+msgid "Manage Addons"
+msgstr ""

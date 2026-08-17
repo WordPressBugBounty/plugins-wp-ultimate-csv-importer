@@ -62,8 +62,13 @@ class UrlUpload implements Uploads
 		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
 			wp_die(__('You do not have sufficient permissions to access this page.'));
 		}
-		$file_url = esc_url_raw($_POST['url']);
-		$file_url = wp_http_validate_url($file_url);
+		$file_url = SecurityHelper::validate_remote_url(esc_url_raw(wp_unslash($_POST['url'])));
+		if (!$file_url) {
+			$response['success'] = false;
+			$response['message'] = 'Download Failed. Invalid or restricted URL destination.';
+			echo wp_json_encode($response);
+			die();
+		}
 		$host = wp_parse_url($file_url, PHP_URL_HOST);
 		$ip = gethostbyname($host);
 
@@ -229,13 +234,13 @@ class UrlUpload implements Uploads
 				$curlCh = curl_init();
 				curl_setopt($curlCh, CURLOPT_URL, $file_url);
 				curl_setopt($curlCh, CURLOPT_RETURNTRANSFER, true);
-				curl_setopt($curlCh, CURLOPT_FOLLOWLOCATION, true);
+				curl_setopt($curlCh, CURLOPT_FOLLOWLOCATION, false);
 				curl_setopt($curlCh, CURLOPT_FAILONERROR, true);
-				curl_setopt($curlCh, CURLOPT_MAXREDIRS, 10);
+				curl_setopt($curlCh, CURLOPT_MAXREDIRS, 0);
 				curl_setopt($curlCh, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 				curl_setopt($curlCh, CURLOPT_CUSTOMREQUEST, 'GET');
-				curl_setopt($curlCh, CURLOPT_SSL_VERIFYPEER, false);
-				curl_setopt($curlCh, CURLOPT_SSL_VERIFYHOST, FALSE);
+				curl_setopt($curlCh, CURLOPT_SSL_VERIFYPEER, true);
+				curl_setopt($curlCh, CURLOPT_SSL_VERIFYHOST, 2);
 
 				$curlData = curl_exec($curlCh);
 
@@ -333,17 +338,26 @@ class UrlUpload implements Uploads
 
 	public function unshorten_bitly_url($url)
 	{
-		$ch = curl_init($url);
+		$validated = SecurityHelper::validate_remote_url($url);
+		if (!$validated) {
+			return $url;
+		}
+		$ch = curl_init($validated);
 		curl_setopt_array($ch, array(
-			CURLOPT_FOLLOWLOCATION => TRUE,
+			CURLOPT_FOLLOWLOCATION => false,
 			CURLOPT_RETURNTRANSFER => TRUE,
-			CURLOPT_SSL_VERIFYHOST => FALSE, // suppress certain SSL errors
-			CURLOPT_SSL_VERIFYPEER => FALSE,
+			CURLOPT_HEADER => true,
+			CURLOPT_NOBODY => true,
+			CURLOPT_SSL_VERIFYHOST => 2,
+			CURLOPT_SSL_VERIFYPEER => true,
 		));
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 		curl_exec($ch);
-		$url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL);
+		$redirect = curl_getinfo($ch, CURLINFO_REDIRECT_URL);
 		curl_close($ch);
-		return $url;
+		if (!empty($redirect)) {
+			$resolved = SecurityHelper::validate_remote_url($redirect);
+			return $resolved ? $resolved : $url;
+		}
+		return $validated;
 	}
 }

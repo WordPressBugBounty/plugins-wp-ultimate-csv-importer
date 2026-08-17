@@ -1,0 +1,472 @@
+== Changelog ==
+
+Full version history for WP Ultimate CSV Importer. Releases 8.0 and later are listed in readme.txt.
+
+= 7.41 =
+Fixed: Category import mapping issue causing posts to fall back to "Uncategorized" during taxonomy imports
+Improved: Restructured plugin bootstrap architecture with a dedicated core namespace for better maintainability
+Improved: Optimized internal file loading for improved performance and third-party plugin compatibility
+Improved: Established a shared architectural foundation across CSV Pro, CF Pro, and WPML Pro addons
+
+= 7.40 =
+Fixed: Record count retrieval for WooCommerce customers in export
+Fixed: Image resolution from import hash folder and smack_uci_uploads/import_images directory
+Added: WordPress 7.0 compatibility updates across core plugin components
+Added: WordPress 7.0 Global AI integration support
+
+= 7.39.2 =
+Added: Compatibility for WordPress 6.9.3
+Fixed: Minor bugs in simple mode import
+
+= 7.39.1 =
+Fixed: Added compatibility with WooCommerce High-Performance Order Storage (HPOS) to ensure the plugin works correctly when HPOS is enabled.
+
+= 7.39 =
+Added: Support for SureCart modules import export
+
+= 7.38 =
+Fixed: Minor bugs
+Fixed: Gemini API issue
+
+= 7.37 =
+Added: Easy Digital Downloads support for importing and exporting Downloads, Customers, and Discounts.
+
+= 7.36 =
+Fixed: Security fix strengthening URL validation after redirects.
+
+= 7.35 =
+Added: Compatibility with WordPress 6.9.
+Added: Support for the Listeo theme, including import of profile meta fields such as phone, address, social links, and more.
+
+= 7.34 =
+Added: Support for importing and exporting Events Calendar data
+Improved: General performance and stability enhancements
+Fixed: Bugs reported
+Security: Resolved an issue affecting the Single CSV Import feature
+
+= 7.33.1 =
+Security: Added capability check to the showSettings to restrict access to authorized users.
+
+= 7.33 =
+Added: Support for importing and exporting data with the Slim SEO plugin.
+
+= 7.32 =
+Fixed: Only the first image in post content was being replaced after downloading to the media library.
+
+= 7.31 =
+Fixed: Issues with handling special characters in CSV files.
+Added: Compatibility with the latest versions of ACF and WooCommerce.
+
+= 7.30 =
+Added: Import and export support for Jetengine CCTs.
+Improvements: Minor upload validation.
+
+= 7.29 =
+Security: Added capability check to the oneClickUpload feature to restrict access to authorized users.
+Updated: write_to_customfile() to no longer write arbitrary PHP code to a file.
+
+= 7.28 =
+Security fix: Use wp_verify_nonce for nonce validation
+Security fix: Add capability checks to FTP credential access
+Added: Single page import & export for elementor page builder
+Added: Auto-detect field separator (comma, semicolon, tab) Implemented
+Feedback: Implement to get feedback after one week of usage.
+
+= 7.27 =
+Improved: Compatibility with Business Directory plugin for smoother import and export.
+
+= 7.26 =
+Added: Ability to analyze uploaded CSV files and display the first 3 sample rows in field selection during advanced drop-down mapping.
+Improved: Preview UI with minor fixes for a smoother experience.
+
+= 7.25 =
+New: Gemini & Claude AI integration for smarter, automated content generation
+Enhanced: Header Manipulation section with improved UI and functionality for a smoother workflow
+Added: HTML-safe rendering support for post content to ensure clean and secure output
+
+= 7.24 =
+Added: Support for MetaBox OpenStreetMap & Custom Icon fields
+Improved: Enhanced server-side and file validation error handling to reduce server-related import failures
+
+= 7.23 =
+Added: Redirect to WordPress.org support forum for free users.
+Added: "Pro" tag label for all Pro-only plugin features.
+Improved: AI integration with ChatGPT for better performance.
+Fixed: Addons conflict issue during CSV Importer deactivation.
+Fixed: Minor bugs and stability improvements.
+
+= 7.22 =
+Added: Support for ACF Advanced fields, Date Picker, Datetime Picker, Icon Picker, Color Picker, and Time Picker.
+Fixed: Minor bugs and stability improvements.
+
+= 7.21.3 =
+Added: Import export compatibility for ACF WYSIWYG editor field
+Fixed: Product category export related issue
+
+= 7.21.2 =
+Fixed: Uncategorized imported while product import
+Fixed: Minor bugs
+
+= 7.21.1 =
+Fixed: Resolved minor bugs
+Added: New Iteration-based export for handling large data sets efficiently
+Updated: Compatibility confirmed with the latest version of WordPress
+
+= 7.21 =
+Added: WP_Query results export, export dynamic content using WP_Query for posts, users, and comments
+Added: Preview option, view the first 10 records before full export
+Added: Support for BMP image format, import and export BMP images to the WordPress media library
+Added: Font faces and font families, import/export complete font groups including styles and weights
+Added: Global styles support, transfer design presets like color schemes and typography across sites
+Added: Full templates import/export, migrate complete page layouts or full templates in block themes
+
+= 7.20.1 =
+Fixed: Arbitrary File Upload issue
+
+= 7.20 =
+Added: Introducing migrate and one-click import feature for seamless data transfer
+Fixed: Minor bugs
+
+= 7.19.1 =
+Fixed: Arbitrary File Upload issue
+
+= 7.19 =
+Added: Advanced filtering options with support for multiple conditions
+Added: TSV (Tab-Separated Values) file format support
+Added: Compatibility with the latest MetaBox update (MetaBox AIO now includes MetaBox)
+
+= 7.18 =
+New Feature: Added compatibility for Secure Custom Fields.
+New Feature: Added support for XLS & XLSX import and export.
+
+= 7.17 =
+New Feature: Added import support for WooCommerce Customers module.
+Enhancement: Improved UI for a better user experience.
+Fixes: Minor bug fixes for better performance.
+
+= 7.16 =
+Added: Single CSV Import for WooCommerce product variations.
+
+= 7.15 =
+Added: Import support for WooCommerce orders, including personalized product details from Extra Product Options For WooCommerce fields.
+
+= 7.14 =
+Added: Single Page CSV Export & Import directly from the post edit view
+
+= 7.13.3 =
+Added: support for importing Jet Reviews data.
+Fixed: Term & Taxonomies Hierarchy import issue
+
+= 7.13.2 =
+Fixed: Polylang import issue
+Fixed: Format issues with XML rss feed
+Fixed: TypeError occured during xml import * php 8.2
+
+= 7.13.1 =
+Added: support for importing Jet Booking data.
+Added: compatibility with WooCommerce EAN/GTIN fields.
+
+= 7.13 =
+Added: Import/Export support for listings in Business Directory Plugin.
+Added: Import/Export of listings in Advanced Classifieds & Directory Pro.
+Added: Import/Export compatibility for Places in GeoDirectory.
+
+= 7.12.2 =
+Compatibility Updates: Verified and ensured compatibility with WordPress version 6.7.
+Added: Support for JetEngine's advanced date field, allowing users to handle complex date data more effectively.
+Fixed: Various bugs and enhanced the Help section for a smoother user experience.
+
+= 7.12.1 =
+Added: Support for importing RankMath dataset schema-type fields.
+Added: Import of array/object custom fields in JSON format.
+
+= 7.12 =
+Added: Import support for WooCommerce orders, including personalized product details from PPOM (Personalized Product Option Manager) fields.
+Added: Export support for WooCommerce orders, with personalized product information generated from PPOM fields.
+
+= 7.11.10 =
+Added: Support for importing and exporting JetEngine Custom Content Types (CCTs).
+
+= 7.11.9 =
+Added: Support for YITH Barcodes and Cost of Goods plugin.
+Added: Import support for ACF Dashicon Field.
+
+= 7.11.8 =
+Added: Introducing WooCommerce Orders, Coupons import and export.
+Improved: WooCommerce Products import and export via API.
+Fixed: JetEngine Custom Fields import issues.
+Resolved: Minor bugs.
+
+= 7.11.7 =
+Added: Support for WooCommerce Reviews Import.
+Fixed: Minor issues in the media section.
+
+= 7.11.6 =
+Fixed: Custom field value with serialized format issue
+Resolved: Missing pause resume option issue
+
+= 7.11.5 =
+Added: Language translation support for Media section content
+Improved handling of zip image uploads
+Enhanced dropdown functionality for custom post types
+Updated display for the media tab screen
+Added reporting for failed image URLs with status codes 401, 403, 408, 502, and 504
+Corrected media log and summary path
+
+= 7.11.4 =
+CSV Export for Media Details: Users can now download a comprehensive CSV file after importing media. This CSV includes columns for status, mediaid, mediaurl, filename, title, caption, alttext, and description.
+CSV Export for Post Failed Image Details: Users can now download a detailed CSV file after importing posts. This CSV includes columns for mediaid, posttitle, postid, and actualurl.
+Added New Media Import Tab: A new tab has been introduced, dedicated to media import and updates. This feature allows users to upload both local and external images directly.
+Featured Image Metadata: Added new metadata options in the mapping section, including imagetitle, imagefilename, imagealttext, imagedescription, and imagecaption.
+Enhanced Logging: Improved logging details for more comprehensive tracking of import and media processes. Post-import logs now display the count of images associated with the post and the count of any failed images.
+Log Manager Improvement: Implemented a Log Manager where users can access and download summary logs, media logs, and failed media logs as CSV files.
+
+= 7.11.3 =
+Added: Import support for Toolset Types plugin basic fields.
+Fixed: Posttitle mandatory not display in drag and drop section.
+Fixed: Pods relationship field front end display issue.
+Fixed: Product category image import issue.
+
+= 7.11.2 =
+Fixed: PHP Custom function imports getting 500 error issue.
+Fixed: Resolved issue with one column csv file import.
+Fixed: JetEngine relation post not assign issue.
+Fixed: ACF taxonomy field and Relationship field value stores db issue.
+
+= 7.11.1 =
+Added: Introducing the Elementor templates bulk export (addon) and import feature in a single CSV file format. This allows you to back up your Elementor templates as an easily portable single CSV file.
+Added: Introducing content import support for Posts, Pages, Custom Post Types (CPTs), and WooCommerce Products designed with Elementor, simplifying the content migration process for Elementor websites.
+
+= 7.11.0 =
+Added: Introducing a new WPML import feature, enabling users to import multilingual content as posts and pages using the WordPress CSV Importer plugin for both CSV and XML files.
+
+= 7.10.21 =
+Added: Implemented one-to-one relationship for JetEngine meta fields
+Fixed: Resolved issue with exporting data using authors' advanced filter.
+Fixed: Resolved issue with the specific authors select box.
+
+= 7.10.20 =
+Fixed: Security issue.
+Fixed: PHP Deprecated issue with optional parameters $unikeyvalue, $unikeyname, $linenumber.
+Fixed: Import back button from mapping section skips previous stage.
+Fixed: Plugin language loads from the site language not admin language
+
+= 7.10.19 =
+Fixed: undefined variable: $importtype.
+Fixed: issue with XML file upload error in PHP 7.4 & PHP 8.1
+Fixed: deprecated function warnings (autodetectlineendings, SpecificStatus, SpecificAuthor, & SpecificPeriod).
+Fixed: import issues for draft pages.
+Fixed: prefix value empty notice on the settings page.
+Fixed: array conversion error
+Fixed: null array access error.
+Fixed: import issues for math functions & custom functions.
+Fixed: post content formatting.
+Fixed: import of tab-separated CSV files.
+
+= 7.10.18 =
+Fixed: term import with same slug name different taxonomy issue
+
+= 7.10.17 =
+Fixed: category hierarchical import issue
+Fixed: Undefined variable $nextnotice issue warning
+Fixed: addon section and title alignment post-install view
+Added: translation for upgrade notice message
+Added: popup box for all pro button
+Added: header and back button to main page addon section for Plugin active functionality
+Updated: background color to light and professional across all areas
+
+= 7.10.16 =
+Fixed: unwanted widget showing the issue
+Fixed: LifterLMS course multiple instructor import issue
+Fixed: Mapping section popup
+
+= 7.10.15 =
+Fixed: Resolved Lifter LMS issue related to courses import.
+Fixed: bug with Lifter LMS instructor field import
+Fixed: activation conflict when the Meta Box plugin is active.
+
+= 7.10.14 =
+Fixed: XML import issue and error.
+Updated: Event Manager (Events) Import support.
+Fixed: Polylang issue resolved.
+
+= 7.10.13 =
+Fixed: minor bug with the import process
+Fixed: UI & cosmetic issues
+
+= 7.10.12 =
+Fixed: FIFU support for custom post type.
+Fixed: PHP deprecated error.
+Removed: Additional carriage returns.
+Fixed: WooCommerce postdate import & product count issue.
+Fixed: Custom Post Type (CPT) product count display showing '0' issue.
+Fixed: Email Subscription issue
+
+= 7.10.11 =
+Fixed: minor bug related to the evaluation function
+Fixed: an issue where image URLs containing spaces were not imported correctly.
+Fixed: the problem causing the admin-view to malfunction after image import.
+
+= 7.10.10 =
+Removed: Unwanted Upgrade Notice Removed
+
+= 7.10.9 =
+Added: Polylang multilingual support
+Fixed: Elementor Style Import Issue
+Fixed: Custom taxonomy import issue Created by CptUI plugin
+Fixed: Metabox custom field import issue which is assigned to taxonomy
+Added: support for image, tag, category
+Added: export support for tag, category
+
+= 7.10.8 =
+Fixed: Addon vulnerability fix
+
+= 7.10.7 =
+Fixed: RankMath SEO Import Issue
+Fixed: All-in-one SEO Import Issue
+Fixed: Yoast SEO Import Issue
+Added: Language support for New Zealand, Australia, Pirate, Polish
+
+= 7.10.6 =
+Added: WP Version 6.4.2 compatibility
+Modified: Minor UI changes
+Fixed: Support for all postdate formats
+
+= 7.10.5 =
+Resolved: posttitle mandatory bug in advanced mode
+
+= 7.10.4 =
+Added: ChatGPT integration for content and featured image
+
+= 7.10.3 =
+Fixed: WP Error when import empty post title.
+
+= 7.10.2 =
+Added: Bulk Import & Export Support for Elementor Templates
+
+= 7.10.1 =
+Added: WP Version 6.4.1 compatibility
+
+= 7.10.0 =
+Added: Support for ACF Bidirectional Relationship Import (User, Post Object, Relationship, Taxonomy)
+
+= 7.9.10.9 =
+Added: Restriction added for Masterstudy LMS Import & Export
+
+= 7.9.10.8 =
+Added: WP Version 6.3.2 compatibility
+Added: Exmage image import support
+
+= 7.9.10.7 =
+Added: Import support for WPComplete plugin
+
+= 7.9.10.6 =
+Fixed: Minor bugs in the meta box checkbox list
+Updated: admin notice
+
+= 7.9.10.5 =
+Fixed: Minor bugs in totalpress import
+Updated: Banner image
+
+= 7.9.10.4 =
+Added: Support for TotalPress Custom Post Types and Fields Import & Export
+
+= 7.9.10.3 =
+Fixed: Minor bugs
+Removed: Unwanted code
+
+= 7.9.10.2 =
+Added: Support for CFS loop fields import
+
+= 7.9.10.1 =
+Added: WP Version 6.3 compatibility
+Fixed: CFS Import issue
+
+= 7.9.10 =
+Fixed: Delete from WordPress * XML limit issue
+Fixed: 500 issues
+
+= 7.9.9 =
+Added: Yoast SEO Free import and export support
+Updated: Security fix * Restriction in import folder indexing
+Removed: Author/Editor import option from settings for security reasons
+
+= 7.9.8 =
+Fixed: Restricted advanced manipulation options for author role
+Updated: Security fix * Restriction in export folder indexing
+
+= 7.9.7 =
+Fixed: JetEngine default time import
+
+= 7.9.6 =
+Added: ACF Basic Fields under Taxonomies
+
+= 7.9.5 =
+Resolved: ACF Fields Missing under Users Module
+
+= 7.9.4 =
+Resolved: Issue with Upload txt file via FTP, SFTP sections
+
+= 7.9.3 =
+Modified: Media table image url data type
+Fixed: WooCommerce Stock Status issue
+
+= 7.9.2 =
+Modified: Displays plugin menu based on the selected user roles
+
+= 7.9.1 =
+Fixed: WooCommerce bundle product sort order issue
+Added: MetaBox plugin's video field import support
+
+= 7.9 =
+Added: Support for BuddyPress Users Import
+
+= 7.8 =
+Fixed: PHP 7.4 Warnings & Notices & Deprecated Errors
+Fixed: Minor bugs in MasterStudy LMS Import
+
+= 7.7 =
+Added: Support for FIFU (Featured Image From Url) import and export
+Cleared: PHP 7.4 Warnings & Notices
+
+= 7.6 =
+Added: Support for MasterStudy LMS plugin: Courses, Lessons, Quizzes, Questions, Orders
+Checked: 6.2 version compatibility
+Fixed: Minor bugs
+
+= 7.5 =
+Added: Support for Lifter-LMS plugin: Courses, Coupons, Reviews, Lessons
+Fixed: Missing language translations
+Fixed: XML Zip file upload
+
+= 7.4 =
+Fixed: Turkish & Chinese language translations
+Added: WooCommerce Orders, Coupons & Refunds export support
+
+= 7.3 =
+Added: SEOPress import integration with complete support
+Fixed: UI/UX issues and minor bugs
+Fixed: Now install and manage add-ons directly from the plugin interface
+
+= 7.2 =
+Added: options for WooCommerce Orders exporter addon
+Added: options for WooCommerce Coupon exporter addon
+Added: options for WooCommerce Refund exporter addon
+Added: Usability and UI Improvements
+Added: Translation added for missing strings for 4 languages
+Checked: 6.1.1 version compatibility
+
+= 7.1 =
+Resolved: PHP Version 8.0 check array values
+Checked: Compatibility for WordPress 6.1
+Changed: XML limits for files with fewer than 10 records to three
+
+= 7.0.1 =
+Added: Arabic language
+Added: Persian language
+Added: Language support for Chinese(Simplified)
+Added: Language support for Tamil
+
+= 7.0 =
+Added: Support for Advanced Custom Fields Basic, Choices, and JQuery Fields
+Checked: Compatibility for WordPress 6.0.2

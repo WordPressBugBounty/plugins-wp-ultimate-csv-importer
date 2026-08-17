@@ -134,7 +134,7 @@ class CsvPreflightReader {
 			);
 		}
 
-		$this->headers = array_map( 'trim', $row );
+		$this->headers = $this->normalize_header_row( $row );
 		if ( $this->is_header_empty() ) {
 			return array(
 				'success' => false,
@@ -199,7 +199,7 @@ class CsvPreflightReader {
 			return false;
 		}
 
-		return array_map( 'trim', $row );
+		return $this->pad_row_to_header_count( array_map( 'trim', $row ) );
 	}
 
 	public function close() {
@@ -301,5 +301,45 @@ class CsvPreflightReader {
 			}
 		}
 		return true;
+	}
+
+	/**
+	 * Strip UTF-8 BOM and trim each header cell.
+	 *
+	 * @param array $row
+	 * @return string[]
+	 */
+	private function normalize_header_row( array $row ) {
+		$headers = array();
+		foreach ( $row as $cell ) {
+			$headers[] = $this->strip_utf8_bom( $cell );
+		}
+		return $headers;
+	}
+
+	/**
+	 * Excel/Google Sheets often omit trailing empty columns on the last row.
+	 *
+	 * @param array $row
+	 * @return array
+	 */
+	private function pad_row_to_header_count( array $row ) {
+		$header_count = count( $this->headers );
+		if ( $header_count > 0 && count( $row ) < $header_count ) {
+			$row = array_pad( $row, $header_count, '' );
+		}
+		return $row;
+	}
+
+	/**
+	 * @param mixed $text
+	 * @return string
+	 */
+	private function strip_utf8_bom( $text ) {
+		$text = (string) $text;
+		if ( strncmp( $text, "\xEF\xBB\xBF", 3 ) === 0 ) {
+			$text = substr( $text, 3 );
+		}
+		return trim( $text );
 	}
 }

@@ -38,7 +38,6 @@ class AjaxAuthorization {
 			'bulk_import',
 			'PauseImport',
 			'ResumeImport',
-			'DeactivateMail',
 			'smackuci_check_review_popup',
 			'helperImport',
 			'helperSearch',

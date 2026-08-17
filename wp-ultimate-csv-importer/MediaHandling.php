@@ -637,7 +637,7 @@ class MediaHandling{
 				$rel = substr($url_path, strpos($url_path, $uploads_path) + strlen($uploads_path));
 				$rel = ltrim(str_replace('\\', '/', $rel), '/');
 				$abs = wp_normalize_path($basedir . $rel);
-				if (is_file($abs) && is_readable($abs)) {
+				if (SecurityHelper::is_path_inside_directory($abs, $basedir) && is_file($abs) && is_readable($abs)) {
 					return $abs;
 				}
 			}
@@ -646,14 +646,14 @@ class MediaHandling{
 
 		$maybe = wp_normalize_path($candidate);
 		if (preg_match('#^/#', $maybe) || preg_match('#^[A-Za-z]:/#', $maybe)) {
-			if (strpos($maybe, $basedir) === 0 && is_file($maybe) && is_readable($maybe)) {
+			if (SecurityHelper::is_path_inside_directory($maybe, $basedir) && is_file($maybe) && is_readable($maybe)) {
 				return $maybe;
 			}
 		}
 
 		$rel = ltrim($candidate, '/');
 		$direct = wp_normalize_path($basedir . $rel);
-		if (is_file($direct) && is_readable($direct)) {
+		if (SecurityHelper::is_path_inside_directory($direct, $basedir) && is_file($direct) && is_readable($direct)) {
 			return $direct;
 		}
 
@@ -683,13 +683,13 @@ class MediaHandling{
 
 		if (!empty($uploads['path'])) {
 			$p = wp_normalize_path(trailingslashit($uploads['path']) . $basename);
-			if (is_file($p) && is_readable($p)) {
+			if (SecurityHelper::is_path_inside_directory($p, $basedir) && is_file($p) && is_readable($p)) {
 				return $p;
 			}
 		}
 
 		$root_try = wp_normalize_path($basedir . $basename);
-		if (is_file($root_try) && is_readable($root_try)) {
+		if (SecurityHelper::is_path_inside_directory($root_try, $basedir) && is_file($root_try) && is_readable($root_try)) {
 			return $root_try;
 		}
 
@@ -1822,7 +1822,11 @@ class MediaHandling{
 		if (empty($new_filetype)) {
 			$new_filetype = 'image/jpeg';
 		}
-		if (preg_match_all('/\b(?:(?:https?|http|ftp|file):\/\/|www\.|ftp\.)[-A-Z0-9+&@#\/%=~_|$?!:,.]*[A-Z0-9+&@#\/%=~_|$]/i', $img_url, $matchedlist, PREG_PATTERN_ORDER)) {
+		$scheme = strtolower((string) (wp_parse_url($img_url, PHP_URL_SCHEME) ?? ''));
+		if (in_array($scheme, array('file', 'php', 'data', 'phar'), true)) {
+			return false;
+		}
+		if (preg_match_all('/\b(?:(?:https?|http|ftp):\/\/|www\.|ftp\.)[-A-Z0-9+&@#\/%=~_|$?!:,.]*[A-Z0-9+&@#\/%=~_|$]/i', $img_url, $matchedlist, PREG_PATTERN_ORDER)) {
 			$img_url = $img_url;
 		} else {
 			$media_dir = wp_get_upload_dir();
@@ -1840,12 +1844,27 @@ class MediaHandling{
 			}
 			return true;
 		}
-		$original_file_perms = fileperms($current_file) & 0777;
+		$original_file_perms = file_exists($current_file) ? (fileperms($current_file) & 0777) : 0644;
 		$this->emr_delete_current_files($current_file, $post_id, $current_metadata);
 		//	$new_filename = wp_unique_filename( $current_path, $new_filename );
 		$new_file = $current_path . "/" . $new_filename;
 
-		$data = file_get_contents($img_url);
+		$validated_url = SecurityHelper::validate_remote_url($img_url);
+		if (!$validated_url) {
+			return false;
+		}
+		$response = wp_remote_get($validated_url, array(
+			'timeout'     => 30,
+			'redirection' => 0,
+			'sslverify'   => true,
+		));
+		if (is_wp_error($response) || (int) wp_remote_retrieve_response_code($response) !== 200) {
+			return false;
+		}
+		$data = wp_remote_retrieve_body($response);
+		if ($data === '' || $data === null) {
+			return false;
+		}
 		file_put_contents($new_file, $data);
 		@chmod($current_file, $original_file_perms);
 		$new_filetitle = preg_replace('/\.[^.]+$/', '', basename($new_file));

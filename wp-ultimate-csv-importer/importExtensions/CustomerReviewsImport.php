@@ -85,8 +85,9 @@ class CustomerReviewsImport {
 							$data_array['status'] = 'publish';
 						}
 					}
+		$fallback_author = $helpers_instance->get_fallback_author();
 					$review_array = array(
-						'post_author' => '1',
+						'post_author' => $fallback_author['ID'],
 						'post_date' => $review_date,
 						'post_content' => $data_array['review_text'],
 						'post_title' => $review_title,
@@ -179,8 +180,9 @@ class CustomerReviewsImport {
 								$data_array['status'] = 'publish';
 							}
 						}
+						$fallback_author = $helpers_instance->get_fallback_author();
 						$review_array = array(
-							'post_author' => '1',
+							'post_author' => $fallback_author['ID'],
 							'post_date' => $review_date,
 							'post_content' => $data_array['review_text'],
 							'post_title' => $review_title,

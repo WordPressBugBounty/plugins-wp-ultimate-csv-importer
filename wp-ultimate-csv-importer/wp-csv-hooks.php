@@ -68,7 +68,6 @@ $plugin_ajax_hooks = [
     'active_addons',
     'install_plugins',
     'activate_addon',
-    'DeactivateMail',
     'get_ftp_details',
     'delete_log',
     'install_addon',

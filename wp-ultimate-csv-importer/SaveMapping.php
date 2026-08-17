@@ -39,7 +39,6 @@ class SaveMapping
 		add_action('wp_ajax_bulk_import', array($this, 'bulk_import'));
 		add_action('wp_ajax_PauseImport', array($this, 'pause_import'));
 		add_action('wp_ajax_ResumeImport', array($this, 'resume_import'));
-		add_action('wp_ajax_DeactivateMail', array($this, 'deactivate_mail'));
 		add_action('wp_ajax_smackuci_check_review_popup', array($this, 'smackuci_check_review_popup'));
 
 
@@ -152,9 +151,8 @@ class SaveMapping
 			return $message;
 		}
 		$response = json_decode($response);
-		$current_plugin_version = '7.14';
-		if ($current_plugin_version < $response->version[0]) {
-
+		$current_plugin_version = UCICore::getInstance()->version;
+		if ( isset( $response->version[0] ) && version_compare( $current_plugin_version, $response->version[0], '<' ) ) {
 			$message = $response->message[0];
 		}
 		return $message;
@@ -688,7 +686,9 @@ class SaveMapping
 		$upload_dir = SaveMapping::$smackcsv_instance->create_upload_dir();
 
 		$import_txt_path = $upload_dir . 'import_state.txt';
-		chmod($import_txt_path, 0777);
+		if (file_exists($import_txt_path)) {
+			chmod($import_txt_path, 0777);
+		}
 		$import_state_arr = array();
 
 		/* Gets string 'true' when Resume button is clicked  */
@@ -739,7 +739,9 @@ class SaveMapping
 		/* Gets string 'false' when page is refreshed */
 		if (sanitize_text_field($_POST['Stop']) == 'false') {
 			$import_txt_path = $upload_dir . 'import_state.txt';
-			chmod($import_txt_path, 0777);
+			if (file_exists($import_txt_path)) {
+				chmod($import_txt_path, 0777);
+			}
 			$import_state_arr = array();
 
 			$open_file = fopen($import_txt_path, "w");
@@ -1787,51 +1789,54 @@ class SaveMapping
 		}
 
 		if (($unmatched_row == 'true') && ($page_number >= $total_pages)) {
-
-			$post_entries_table = $wpdb->prefix . "ultimate_post_entries";
-			$post_entries_value = $wpdb->get_results("select ID from {$wpdb->prefix}ultimate_post_entries ", ARRAY_A);
-			$type = $wpdb->get_var("select type from {$wpdb->prefix}ultimate_post_entries ");
+			$entries_array = array();
+			$type = '';
+			$post_entries_value = $wpdb->get_results("SELECT ID, type FROM {$wpdb->prefix}ultimate_post_entries", ARRAY_A);
 			if (!empty($post_entries_value)) {
 				foreach ($post_entries_value as $post_entries) {
-					$entries_array[] = $post_entries['ID'];
+					$entries_array[] = absint($post_entries['ID']);
+					if ($type === '' && !empty($post_entries['type'])) {
+						$type = $post_entries['type'];
+					}
 				}
-
+			}
+			// Empty keep-list would delete the entire post type — refuse that.
+			if (!empty($entries_array)) {
 				$unmatched_object = new ExtensionHandler;
 				$import_type = $unmatched_object->import_type_as($selected_type);
 				$import_type_value = $unmatched_object->import_post_types($import_type);
 				$import_name_as = $unmatched_object->import_name_as($import_type);
 				if ($type == 'cct') {
-					$jettable = $wpdb->prefix . 'jet_cct_' . $import_type;
+					$jettable = $wpdb->prefix . 'jet_cct_' . sanitize_key($import_type);
 					$get_total_row_count = $wpdb->get_col("SELECT DISTINCT _ID FROM $jettable WHERE cct_status != 'trash' ");
-					$unmatched_id = array_diff($get_total_row_count, $test);
-					foreach ($unmatched_id as $keys => $values) {
-						$wpdb->query( "DELETE FROM $jettable WHERE `_ID`='$values' ");
+					$unmatched_id = array_diff($get_total_row_count, $entries_array);
+					foreach ($unmatched_id as $values) {
+						$wpdb->delete($jettable, array('_ID' => absint($values)), array('%d'));
 					}
 				} else {
 					if ($import_type_value == 'category' || $import_type_value == 'post_tag' || $import_type_value == 'product_cat' || $import_type_value == 'product_tag') {
-
-						$get_total_row_count = $wpdb->get_col("SELECT term_id FROM {$wpdb->prefix}term_taxonomy WHERE taxonomy = '$import_type_value'");
-						if (is_array($entries_array)) {
-							$unmatched_id = array_diff($get_total_row_count, $entries_array);
-						}
-
-						foreach ($unmatched_id as $keys => $values) {
-							$wpdb->query( "DELETE FROM {$wpdb->prefix}terms WHERE `term_id` = '$values' ");
+						$get_total_row_count = $wpdb->get_col($wpdb->prepare(
+							"SELECT term_id FROM {$wpdb->prefix}term_taxonomy WHERE taxonomy = %s",
+							$import_type_value
+						));
+						$unmatched_id = array_diff($get_total_row_count, $entries_array);
+						foreach ($unmatched_id as $values) {
+							wp_delete_term(absint($values), $import_type_value);
 						}
 					}
 					if ($import_type_value == 'post' || $import_type_value == 'product' || $import_type_value == 'page' || $import_name_as == 'CustomPosts') {
-
-						$get_total_row_count = $wpdb->get_col("SELECT DISTINCT ID FROM {$wpdb->prefix}posts WHERE post_type = '{$import_type_value}' AND post_status != 'trash' ");
-						if (is_array($entries_array)) {
-							$unmatched_id = array_diff($get_total_row_count, $entries_array);
-						}
-						foreach ($unmatched_id as $keys => $values) {
-							$wpdb->query( "DELETE FROM {$wpdb->prefix}posts WHERE `ID` = '$values' ");
+						$get_total_row_count = $wpdb->get_col($wpdb->prepare(
+							"SELECT DISTINCT ID FROM {$wpdb->prefix}posts WHERE post_type = %s AND post_status != 'trash'",
+							$import_type_value
+						));
+						$unmatched_id = array_diff($get_total_row_count, $entries_array);
+						foreach ($unmatched_id as $values) {
+							wp_delete_post(absint($values), true);
 						}
 					}
 				}
-				$wpdb->query( "DELETE FROM {$wpdb->prefix}ultimate_post_entries");
 			}
+			$wpdb->query("DELETE FROM {$wpdb->prefix}ultimate_post_entries");
 		}
 
 		if (!empty($core_instance->detailed_log) && is_countable($core_instance->detailed_log)) {
@@ -2094,7 +2099,7 @@ class SaveMapping
 			$duplicate_action = 'skip';
 		}
 		$unmatched_row_value = get_option('sm_uci_pro_settings');
-		$unmatched_row = $unmatched_row_value['unmatchedrow'];
+		$unmatched_row = (is_array($unmatched_row_value) && isset($unmatched_row_value['unmatchedrow'])) ? $unmatched_row_value['unmatchedrow'] : '';
 		$file_iteration = get_option('sm_bulk_import_free_iteration_limit');
 		global $wpdb;
 
@@ -2111,7 +2116,9 @@ class SaveMapping
 		//first check then set on	
 		$upload_dir = SaveMapping::$smackcsv_instance->create_upload_dir();
 		$import_txt_path = $upload_dir . 'import_state.txt';
-		chmod($import_txt_path, 0777);
+		if (file_exists($import_txt_path)) {
+			chmod($import_txt_path, 0777);
+		}
 		$import_state_arr = array();
 
 		$open_file = fopen($import_txt_path, "w");
@@ -2161,7 +2168,7 @@ class SaveMapping
 		$remain_records = $total_rows - 1;
 		$fields = $wpdb->insert($log_table_name, array('file_name' => $file_name, 'hash_key' => $hash_key, 'total_records' => $total_rows, 'filesize' => $filesize, 'processing_records' => 1, 'remaining_records' => $remain_records));
 
-		$map = unserialize($mapped_fields_values);
+		$map = SecurityHelper::safe_unserialize($mapped_fields_values);
 		$id_validation = $this->validate_update_mode_core_id_mapping($get_mode, $selected_type, $map);
 		if ($id_validation !== true) {
 			echo wp_json_encode($id_validation);
@@ -2241,7 +2248,7 @@ class SaveMapping
 					// get the pause or resume state
 					$open_txt = fopen($import_txt_path, "r");
 					$read_text_ser = fread($open_txt, filesize($import_txt_path));
-					$read_state = unserialize($read_text_ser);
+					$read_state = SecurityHelper::safe_unserialize($read_text_ser);
 					fclose($open_txt);
 
 					if ($read_state['import_stop'] == 'off') {
@@ -2251,7 +2258,7 @@ class SaveMapping
 					while ($read_state['import_state'] == 'off') {
 						$open_txts = fopen($import_txt_path, "r");
 						$read_text_sers = fread($open_txts, filesize($import_txt_path));
-						$read_states = unserialize($read_text_sers);
+						$read_states = SecurityHelper::safe_unserialize($read_text_sers);
 						fclose($open_txts);
 
 						if ($read_states['import_state'] == 'on') {
@@ -2318,7 +2325,7 @@ class SaveMapping
 					// get the pause or resume state
 					$open_txt = fopen($import_txt_path, "r");
 					$read_text_ser = fread($open_txt, filesize($import_txt_path));
-					$read_state = unserialize($read_text_ser);
+					$read_state = SecurityHelper::safe_unserialize($read_text_ser);
 					fclose($open_txt);
 
 					if ($read_state['import_stop'] == 'off') {
@@ -2328,7 +2335,7 @@ class SaveMapping
 					while ($read_state['import_state'] == 'off') {
 						$open_txts = fopen($import_txt_path, "r");
 						$read_text_sers = fread($open_txts, filesize($import_txt_path));
-						$read_states = unserialize($read_text_sers);
+						$read_states = SecurityHelper::safe_unserialize($read_text_sers);
 						fclose($open_txts);
 
 						if ($read_states['import_state'] == 'on') {
@@ -2422,7 +2429,7 @@ class SaveMapping
 
 				$open_txt = fopen($import_txt_path, "r");
 				$read_text_ser = fread($open_txt, filesize($import_txt_path));
-				$read_state = unserialize($read_text_ser);
+				$read_state = SecurityHelper::safe_unserialize($read_text_ser);
 				fclose($open_txt);
 
 				if ($read_state['import_stop'] == 'off') {
@@ -2432,7 +2439,7 @@ class SaveMapping
 				while ($read_state['import_state'] == 'off') {
 					$open_txts = fopen($import_txt_path, "r");
 					$read_text_sers = fread($open_txts, filesize($import_txt_path));
-					$read_states = unserialize($read_text_sers);
+					$read_states = SecurityHelper::safe_unserialize($read_text_sers);
 					fclose($open_txts);
 
 					if ($read_states['import_state'] == 'on') {
@@ -3076,13 +3083,13 @@ class SaveMapping
 				}
 			}
 			if (get_option('total_attachment_ids')) {
-				$stored_ids = unserialize(get_option('total_attachment_ids', ''));
+				$stored_ids = SecurityHelper::safe_unserialize(get_option('total_attachment_ids', ''));
 				delete_option('total_attachment_ids');
 				$core_instance->detailed_log[$line_number]['total_image'] = (is_array($stored_ids) && count($stored_ids) > 0) ? count($stored_ids) : '';
 				$core_instance->detailed_log[$line_number]['failed_image_count'] = null;
 			}
 			if (get_option('failed_attachment_ids')) {
-				$stored_ids = unserialize(get_option('failed_attachment_ids', ''));
+				$stored_ids = SecurityHelper::safe_unserialize(get_option('failed_attachment_ids', ''));
 				delete_option('failed_attachment_ids');
 				$core_instance->detailed_log[$line_number]['failed_image_count'] = (is_array($stored_ids) && count($stored_ids) > 0) ? count($stored_ids) : '';
 			}
@@ -3337,6 +3344,16 @@ class SaveMapping
 			return null;
 		}
 
+		global $wpdb;
+		$file_name = $wpdb->get_var($wpdb->prepare(
+			"SELECT file_name FROM {$wpdb->prefix}smackcsv_file_events WHERE hash_key = %s ORDER BY id DESC LIMIT 1",
+			$hash_key
+		));
+		$ext = strtolower(pathinfo((string) $file_name, PATHINFO_EXTENSION));
+		if ($ext !== '' && !in_array($ext, array('csv', 'txt', 'tsv'), true)) {
+			return null;
+		}
+
 		$config = array();
 		if (isset($_POST['validation_scan_mode'])) {
 			$config['scan_mode'] = sanitize_key(wp_unslash($_POST['validation_scan_mode']));
@@ -3395,22 +3412,5 @@ class SaveMapping
 			array( '%s' ),
 			array( '%s' )
 		);
-	}
-
-	public function deactivate_mail()
-	{
-		SecurityHelper::verify_ajax_nonce();
-		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
-			wp_die(__('You do not have sufficient permissions to access this page.'));
-		}
-		$headers = array("Content-type: text/html; charset=UTF-8");
-		$headers .= 'MIME-Version: 1.0' . "\r\n";
-		$to = 'support@smackcoders.com';
-		$subject = 'Reason for csv importer plugin deactivation';
-		$message = sanitize_text_field($_REQUEST["reason"]);
-		wp_mail($to, $subject, $message, $headers);
-		$response = array('success' => true, 'code' => 200);
-		echo wp_json_encode($response);
-		wp_die();
 	}
 }

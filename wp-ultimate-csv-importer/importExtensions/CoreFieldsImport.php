@@ -115,7 +115,7 @@ class CoreFieldsImport
 			if ($type == 'WooCommerce Product') {
 				$product_meta_data = $helpers_instance->get_header_values($meta_data, $header_array, $value_array);
 				//$result = $uci_woocomm_instance->woocommerce_product_import_new($post_values , $mode , $type, $unmatched_row, $check , $unikey_value , $unikey_name, $line_number, $acf ,$pods, $toolset,$header_array, $value_array,  $wpml_values,$poly_values,$update_based_on,$product_meta_data,$attr_data,$image_meta);	
-				$result = $uci_woocomm_instance->woocommerce_product_import($post_values, $mode, $check, $unikey_value, $unikey_name, $hash_key, $line_number, $unmatched_row, $header_array, $value_array, $wpml_values, $product_meta_data, $attr_data, $update_based_on, $duplicate_action);
+				$result = $woocommerce_core_instance->woocommerce_product_import($post_values, $mode, $type, $unmatched_row, $check, $unikey_value, $unikey_name, $line_number, null, null, null, $header_array, $value_array, $wpml_values);
 			}
 			if ($type == 'JetBooking') {
 
@@ -136,13 +136,13 @@ class CoreFieldsImport
 						$post_values['ORDERID'] = $resolved_match;
 					}
 				}
-				$result = $uci_woocomm_instance->woocommerce_orders_import($post_values, $mode, $check, $unikey_value, $unikey_name, $line_number, $order_meta_data, $update_based_on, $duplicate_action);
+				$result = $woocommerce_core_instance->woocommerce_orders_import($post_values, $mode, $check, $unikey_value, $unikey_name, $line_number);
 			}
 			if ($type == 'WooCommerce Product Variations') {
-				$result = $uci_woocomm_instance->woocommerce_variations_import($post_values, $mode, $check, $unikey_value, $unikey_name, $line_number, $variation_count = null);
+				$result = $woocommerce_core_instance->woocommerce_variations_import($post_values, $mode, $check, $unikey_value, $unikey_name, $line_number, null);
 			}
 			if ($type == 'WooCommerce Coupons') {
-				$result = $uci_woocomm_instance->woocommerce_coupons_import($post_values, $mode, $check, $unikey_value, $unikey_name, $line_number);
+				$result = $woocommerce_core_instance->woocommerce_coupons_import($post_values, $mode, $check, $unikey_value, $unikey_name, $line_number);
 			}
 			if ($type == 'WooCommerce Refunds') {
 				$result = $woocommerce_core_instance->woocommerce_refunds_import($post_values, $mode, $check, $unikey_value, $unikey_name, $line_number);
@@ -423,10 +423,10 @@ class CoreFieldsImport
 				return $post_id;
 			}
 		} else {
-			$current_user = wp_get_current_user();
-			$current_user_role = $current_user->roles[0];
-			if ($current_user_role == 'administrator') {
-				$post_values = [];
+			if (!SecurityHelper::current_user_can_import()) {
+				return $post_id;
+			}
+			$post_values = [];
 				$get_result = null;
 				$post_values['post_content'] = '';
 				$map = $this->filterNumKeys($map);
@@ -482,8 +482,8 @@ class CoreFieldsImport
 								$csv_element = $csv_value;
 								//foreach($matches[2] as $value){
 								foreach ($matches[1] as $value) {
-									$get_key = array_search($value, $header_array);
-									if (isset($value_array[$get_key])) {
+									$get_key = $helpers_instance->find_header_index($value, $header_array);
+									if ($get_key !== false && isset($value_array[$get_key])) {
 										$csv_value_element = $value_array[$get_key];
 										$value = '{' . $value . '}';
 										$csv_element = str_replace($value, $csv_value_element, $csv_element);
@@ -512,15 +512,15 @@ class CoreFieldsImport
 							if ( ! empty( $wp_element ) && isset( $csv_element1 ) ) {
 								$post_values[ $wp_element ] = $helpers_instance->apply_field_override( $wp_element, $csv_element1, $csv_value );
 							}
-						} elseif (!in_array($csv_value, $header_array)) {
+						} elseif ($helpers_instance->find_header_index($csv_value, $header_array) === false) {
 							$wp_element = trim($key);
 							$post_values[$wp_element] = $helpers_instance->apply_field_override( $wp_element, $csv_value, $csv_value );
 							$post_values['post_type'] = $import_as;
 							//$post_values = $this->import_core_fields($post_values,$mode);
 						} else {
 
-							$get_key = array_search($csv_value, $header_array);
-							if (isset($value_array[$get_key])) {
+							$get_key = $helpers_instance->find_header_index($csv_value, $header_array);
+							if ($get_key !== false && isset($value_array[$get_key])) {
 								$csv_element = $value_array[$get_key];
 								$wp_element = trim($key);
 								$extension_object = new ExtensionHandler;
@@ -534,7 +534,11 @@ class CoreFieldsImport
 									if ((isset($post_values['post_parent'])) && (!is_numeric($post_values['post_parent'])) && (!empty($post_values['post_parent']))) {
 										$p_type = $post_values['post_type'];
 										$parent_title = $post_values['post_parent'];
-										$parent_id = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_title = '$parent_title' and post_status !='trash' and post_type='$p_type'");
+										$parent_id = $wpdb->get_var($wpdb->prepare(
+											"SELECT ID FROM {$wpdb->posts} WHERE post_title = %s AND post_status != 'trash' AND post_type = %s",
+											$parent_title,
+											$p_type
+										));
 										$post_values['post_parent'] = $parent_id;
 									}
 								}
@@ -572,7 +576,7 @@ class CoreFieldsImport
 							foreach ($background_values as $values) {
 								$mapped_fields_values = $values->mapping;
 							}
-							$map_wpml = unserialize($mapped_fields_values);
+							$map_wpml = SecurityHelper::safe_unserialize($mapped_fields_values);
 
 							$wpml_values = $helpers_instance->get_header_values($map_wpml['WPML'], $header_array, $value_array);
 							$get_results = array();
@@ -676,13 +680,13 @@ class CoreFieldsImport
 								foreach ($background_values as $values) {
 									$mapped_fields_values = $values->mapping;
 								}
-								$map_wpml = unserialize($mapped_fields_values);
+								$map_wpml = SecurityHelper::safe_unserialize($mapped_fields_values);
 
 								$wpml_values = $helpers_instance->get_header_values($map_wpml['WPML'], $header_array, $value_array);
 								if (in_array($wpml_values['language_code'], $active)) {
 									$post_id = wp_insert_post($post_values);
 									$status = $post_values['post_status'];
-									$update = $wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$status' where id = $post_id");
+									$update = $wpdb->update($wpdb->posts, array('post_status' => sanitize_key($status)), array('ID' => absint($post_id)), array('%s'), array('%d'));
 								} else {
 									$wpml_message = "The given language code not configured in WPML";
 								}
@@ -695,7 +699,7 @@ class CoreFieldsImport
 								unset($post_values['ID']);
 								$post_id = wp_insert_post($post_values);
 								$status = $post_values['post_status'];
-								$update = $wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$status' where id = $post_id");
+								$update = $wpdb->update($wpdb->posts, array('post_status' => sanitize_key($status)), array('ID' => absint($post_id)), array('%s'), array('%d'));
 							}
 
 							if (!empty($post_values['wp_page_template']) && $type == 'Pages') {
@@ -794,7 +798,6 @@ class CoreFieldsImport
 						}
 
 
-						$fields = $wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
 						if (is_wp_error($post_id) || $post_id == '') {
 							if (is_wp_error($post_id)) {
 								$this->detailed_log[$line_number]['Message'] = sprintf(
@@ -825,6 +828,7 @@ class CoreFieldsImport
 							}
 							$fields = $wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 						} else {
+							$wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
 							$post_values['specific_author'] = isset($post_values['specific_author']) ? $post_values['specific_author'] : '';
 
 							$content = $this->openAI_response;
@@ -958,11 +962,7 @@ class CoreFieldsImport
 						}
 						if ($post_values['post_type'] == 'page') {
 							$status = $post_values['post_status'];
-							$wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$status' where id = $post_id");
-						}
-						if ($post_values['post_type'] == 'page') {
-							$status = $post_values['post_status'];
-							$wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$status' where id = $post_id");
+							$wpdb->update($wpdb->posts, array('post_status' => sanitize_key($status)), array('ID' => absint($post_id)), array('%s'), array('%d'));
 						}
 						$import_row_finished = true;
 					}
@@ -1010,7 +1010,6 @@ class CoreFieldsImport
 							$format = str_replace("post-format-", "", $post_values['post_format']);
 							set_post_format($post_id, $format);
 						}
-						$fields = $wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
 						if (is_wp_error($post_id) || $post_id == '') {
 							if (is_wp_error($post_id)) {
 								$this->detailed_log[$line_number]['Message'] = "Can't insert this " . $post_values['post_type'] . ". " . $post_id->get_error_message();
@@ -1021,6 +1020,7 @@ class CoreFieldsImport
 							}
 							$fields = $wpdb->query( "UPDATE $log_table_name SET skipped = $skipped_count WHERE $unikey_name = '$unikey_value'");
 						} else {
+							$wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey_value'");
 							$this->detailed_log[$line_number]['Message'] = 'Inserted ' . $post_values['post_type'] . ' ID: ' . $post_id . ', ' . $post_values['specific_author'];
 						}
 					}
@@ -1133,7 +1133,6 @@ class CoreFieldsImport
 			}
 			return $post_id;
 		}
-	}
 
 	public function multiLang($post_values)
 	{
@@ -1284,7 +1283,7 @@ class CoreFieldsImport
 		if (is_array($header_array) && is_array($value_array)) {
 			$header_lookup = array();
 			foreach ($header_array as $idx => $header_name) {
-				$header_lookup[strtolower(trim((string) $header_name))] = $idx;
+				$header_lookup[strtolower(trim($helpers_instance->strip_utf8_bom((string) $header_name)))] = $idx;
 			}
 			$aliases = array(
 				'ID' => array('id'),
@@ -1337,8 +1336,9 @@ class CoreFieldsImport
 			}
 		}
 
-		if (!isset($data_array['post_author'])) {
-			$data_array['post_author'] = 1;
+		if (!isset($data_array['post_author']) || $data_array['post_author'] === '') {
+			$fallback = $helpers_instance->get_fallback_author();
+			$data_array['post_author'] = $fallback['ID'];
 		} else {
 			if (isset($data_array['post_author'])) {
 				$user_records = $helpers_instance->get_from_user_details($data_array['post_author']);

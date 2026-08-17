@@ -100,13 +100,19 @@ class ImportHelpers {
 		} else {
 			$postauthor = $wpdb->get_results($wpdb->prepare("select ID,user_login from $wpdb->users where user_login = %s", $request_user));
 		}
-		if (empty($postauthor) || !$postauthor[0]->ID) {
-			$request_user = 1;
-			$admindet = $wpdb->get_results($wpdb->prepare("select ID,user_login from $wpdb->users where ID = %d", 1));
-			$message = " <b>Author :- </b> not found (assigned to <b>" . $admindet[0]->user_login . "</b>)";
+		if (empty($postauthor) || empty($postauthor[0]->ID)) {
+			$fallback = $this->get_fallback_author();
+			$request_user = $fallback['ID'];
+			$admindet = array( (object) $fallback );
+			$message = " <b>Author :- </b> not found (assigned to <b>" . $fallback['user_login'] . "</b>)";
 		} else {
 			$request_user = $postauthor[0]->ID;
-			$admindet = $wpdb->get_results($wpdb->prepare("select ID,user_login from $wpdb->users where ID = %s", $request_user));
+			$admindet = $wpdb->get_results($wpdb->prepare("select ID,user_login from $wpdb->users where ID = %d", $request_user));
+			if ( empty( $admindet ) || empty( $admindet[0]->ID ) ) {
+				$fallback = $this->get_fallback_author();
+				$request_user = $fallback['ID'];
+				$admindet = array( (object) $fallback );
+			}
 			$message = " <b>Author :- </b>" . $admindet[0]->user_login;
 		}
 		$userDetails['user_id'] = $request_user;
@@ -121,27 +127,31 @@ class ImportHelpers {
 			$data_array ['post_status'] = $data_array['is_post_status'];
 			unset($data_array['is_post_status']);
 		}
-		// if (isset($data_array ['post_type']) && $data_array ['post_type'] == 'page') {
-		// 	$data_array ['post_status'] = 'publish';
-		// }
-		if($data_array['post_status'] == 'trash'){
-				$title=$data_array['post_title'];
-				$trash = $wpdb->query( $wpdb->prepare(
-					"DELETE FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_status='publish'",
-					$title
-				) );
+		$post_status = isset($data_array['post_status']) ? $data_array['post_status'] : '';
+		if($post_status == 'trash'){
+			// Keep trash as the status for this row. Do not delete other posts by title.
+			$data_array['post_status'] = 'trash';
 		}
-		elseif($data_array['post_status'] == 'delete'){
-				$post_title=$data_array['post_title'];
-		$id = $wpdb->get_results( $wpdb->prepare(
-			"SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s",
-			$post_title
-		) );
-		foreach ($id as $delete_id){
-			$del_id=$delete_id->ID;
-			wp_delete_post($del_id, true); 	
-		}		
-	}
+		elseif($post_status == 'delete'){
+			$post_type = !empty($data_array['post_type']) ? $data_array['post_type'] : 'post';
+			$delete_id = 0;
+			if (!empty($data_array['ID'])) {
+				$delete_id = absint($data_array['ID']);
+			} elseif (!empty($data_array['post_title'])) {
+				$delete_id = absint($wpdb->get_var($wpdb->prepare(
+					"SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_type = %s ORDER BY ID DESC LIMIT 1",
+					$data_array['post_title'],
+					$post_type
+				)));
+			}
+			if ($delete_id > 0) {
+				$existing = get_post($delete_id);
+				if ($existing && $existing->post_type === $post_type) {
+					wp_delete_post($delete_id, true);
+				}
+			}
+			$data_array['post_status'] = 'delete';
+		}
 		 else {
 			if(isset($data_array['post_status']) || isset($data_array['coupon_status'])) {
 				if(isset($data_array['post_status'])) {
@@ -260,6 +270,53 @@ class ImportHelpers {
 	}
 
 	/**
+	 * First existing administrator, current user, or lowest user ID.
+	 *
+	 * @return array{ID:int,user_login:string}
+	 */
+	public function get_fallback_author() {
+		$current_id = get_current_user_id();
+		if ( $current_id ) {
+			$user = get_userdata( $current_id );
+			if ( $user && ! empty( $user->ID ) ) {
+				return array(
+					'ID'         => (int) $user->ID,
+					'user_login' => $user->user_login,
+				);
+			}
+		}
+
+		$admins = get_users(
+			array(
+				'role'    => 'administrator',
+				'number'  => 1,
+				'orderby' => 'ID',
+				'order'   => 'ASC',
+			)
+		);
+		if ( ! empty( $admins[0]->ID ) ) {
+			return array(
+				'ID'         => (int) $admins[0]->ID,
+				'user_login' => $admins[0]->user_login,
+			);
+		}
+
+		global $wpdb;
+		$row = $wpdb->get_row( "SELECT ID, user_login FROM {$wpdb->users} ORDER BY ID ASC LIMIT 1" );
+		if ( $row && ! empty( $row->ID ) ) {
+			return array(
+				'ID'         => (int) $row->ID,
+				'user_login' => $row->user_login,
+			);
+		}
+
+		return array(
+			'ID'         => 1,
+			'user_login' => 'admin',
+		);
+	}
+
+	/**
 	 * Strip UTF-8 BOM from header labels.
 	 *
 	 * @param string $text Header text.
@@ -320,9 +377,10 @@ class ImportHelpers {
 	}
 
 	public function get_header_values($map , $header_array , $value_array){
-		$current_user = wp_get_current_user();
-		$current_user_role = ! empty( $current_user->roles[0] ) ? $current_user->roles[0] : '';
-		if($current_user_role == 'administrator'){
+		$post_values = [];
+		if(!SecurityHelper::current_user_can_import()){
+			return $post_values;
+		}
 		
 		$post_values = [];
 		$trim_content = array(
@@ -383,8 +441,8 @@ class ImportHelpers {
 
 							//foreach($matches[2] as $value){
 							foreach($matches[1] as $value){
-								$get_key = array_search($value , $header_array);
-								if(isset($value_array[$get_key])){
+								$get_key = $this->find_header_index($value , $header_array);
+								if($get_key !== false && isset($value_array[$get_key])){
 									$csv_value_element = $value_array[$get_key];	
 									//}
 									$value = '{'.$value.'}';
@@ -434,15 +492,15 @@ class ImportHelpers {
 }
 
 					
-					elseif(!in_array($csv_value , $header_array)){
+					elseif($this->find_header_index($csv_value , $header_array) === false){
 						$wp_element= trim($key);
 						$post_values[ $wp_element ] = $this->apply_field_override( $wp_element, $csv_value, $csv_value );
 					}
 
 					else{
-						$get_key = array_search($csv_value , $header_array);
+						$get_key = $this->find_header_index($csv_value , $header_array);
 
-						if(isset($value_array[$get_key])){
+						if($get_key !== false && isset($value_array[$get_key])){
 							$csv_element = $value_array[$get_key];		
 							//}
 							$wp_element = trim($key);
@@ -454,7 +512,6 @@ class ImportHelpers {
 				}
 			}
 		}
-		}	
 		return $post_values;
 	}
 
@@ -473,8 +530,8 @@ class ImportHelpers {
 	    	$executor = new MathExecutor();
 
 			return	$executor->execute($equation);
-	    } catch (Exception $e) {
-	        $return("Unable to calculate equation");
+	    } catch (\Exception $e) {
+	        return '';
 	    }
 	}
 
@@ -714,8 +771,8 @@ class ImportHelpers {
 
 	public function replace_header_with_values($csv_header, $header_array, $value_array){
 		$csv_value = $csv_header;
-		$get_key = array_search($csv_header , $header_array);
-		if(isset($value_array[$get_key])){
+		$get_key = $this->find_header_index($csv_header , $header_array);
+		if($get_key !== false && isset($value_array[$get_key])){
 			$csv_value = $value_array[$get_key];
 		}
 		return $csv_value;

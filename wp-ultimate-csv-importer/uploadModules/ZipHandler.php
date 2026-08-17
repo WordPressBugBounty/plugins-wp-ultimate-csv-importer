@@ -82,7 +82,11 @@ class ZipHandler {
                 continue;
             }
 
-            $file_extension = strtolower(pathinfo($filterfiles, PATHINFO_EXTENSION));
+			$file_extension = strtolower(pathinfo($filterfiles, PATHINFO_EXTENSION));
+            $member_name = str_replace('\\', '/', $filterfiles);
+            if (strpos($member_name, '..') !== false || preg_match('#^(/|[a-zA-Z]:)#', $member_name)) {
+                continue;
+            }
 
             if (in_array($file_extension, $supported_formats, true)){
                 $zip->extractTo($dir,$filterfiles);

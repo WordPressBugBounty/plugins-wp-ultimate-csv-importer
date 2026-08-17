@@ -1,0 +1,143 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Ultimate CSV Importer 7.42.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-05-28 00:00+0000\n"
+"PO-Revision-Date: 2026-06-11 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: wp-ultimate-csv-importer\n"
+
+msgid "Loving WP Ultimate CSV Importer? 💙"
+msgstr "¿Te encanta WP Ultimate CSV Importer? 💙"
+
+msgid "We’d be so grateful if you could share your experience in a quick review. It only takes a minute, and it really helps us reach more WordPress users like you."
+msgstr "Estaríamos muy agradecidos si pudieras compartir tu experiencia en una rápida reseña. Solo toma un minuto y realmente nos ayuda a llegar a más usuarios de WordPress como tú."
+
+msgid "⭐ Sure, I’ll Rate It"
+msgstr "⭐ Claro, lo calificaré"
+
+msgid "Maybe Later"
+msgstr "Quizás más tarde"
+
+msgid "No, Thanks"
+msgstr "No, gracias"
+
+msgid "Maintenance Mode"
+msgstr "Modo de mantenimiento"
+
+msgid "Site is under maintenance mode. Please wait a few minutes!"
+msgstr "El sitio está en modo de mantenimiento. ¡Por favor, espera unos minutos!"
+
+msgid "Ultimate CSV Importer Free"
+msgstr "Ultimate CSV Importer Free"
+
+msgid "Manage Addons"
+msgstr "Gestionar complementos"
+
+msgid "Can't insert this %s"
+msgstr "No se puede insertar este %s"
+
+msgid "Can't insert this %1$s. %2$s"
+msgstr "No se puede insertar este %1$s. %2$s"
+
+msgid "Inserted %1$s ID: %2$d, %3$s"
+msgstr "Insertado %1$s ID: %2$d, %3$s"
+
+msgid "Updated %1$s ID: %2$d, %3$s"
+msgstr "Actualizado %1$s ID: %2$d, %3$s"
+
+msgid "Skipped. No matching record found."
+msgstr "Omitido. No se encontró ningún registro coincidente."
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create content. Invalid API key provided. Please check your API key."
+msgstr "<b style='color: red;'>Aviso:</b> No se puede crear el contenido. Se proporcionó una clave API inválida. Por favor, verifica tu clave API."
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create content. Rate limit reached for requests or you exceeded your current quota."
+msgstr "<b style='color: red;'>Aviso:</b> No se puede crear el contenido. Se alcanzó el límite de solicitudes o excediste tu cuota actual."
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create content. Please check your inputs."
+msgstr "<b style='color: red;'>Aviso:</b> No se puede crear el contenido. Por favor, verifica tus entradas."
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create content. The server had an error while processing your request."
+msgstr "<b style='color: red;'>Aviso:</b> No se puede crear el contenido. El servidor tuvo un error al procesar tu solicitud."
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create content. The engine is currently overloaded, please try again later."
+msgstr "<b style='color: red;'>Aviso:</b> No se puede crear el contenido. El motor está actualmente sobrecargado, por favor intenta de nuevo más tarde."
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create short description. Invalid API key provided. Please check your API key."
+msgstr "<b style='color: red;'>Aviso:</b> No se puede crear la descripción corta. Se proporcionó una clave API inválida. Por favor, verifica tu clave API."
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create short description. Rate limit reached for requests or you exceeded your current quota."
+msgstr "<b style='color: red;'>Aviso:</b> No se puede crear la descripción corta. Se alcanzó el límite de solicitudes o excediste tu cuota actual."
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create short description. Please check your inputs."
+msgstr "<b style='color: red;'>Aviso:</b> No se puede crear la descripción corta. Por favor, verifica tus entradas."
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create short description. The server had an error while processing your request."
+msgstr "<b style='color: red;'>Aviso:</b> No se puede crear la descripción corta. El servidor tuvo un error al procesar tu solicitud."
+
+msgid "<b style='color: red;'>Notice:</b> Cannot create short description. The engine is currently overloaded, please try again later."
+msgstr "<b style='color: red;'>Aviso:</b> No se puede crear la descripción corta. El motor está actualmente sobrecargado, por favor intenta de nuevo más tarde."
+
+msgid "Unauthorized access."
+msgstr "Acceso no autorizado."
+
+msgid "Invalid or unpublished post ID."
+msgstr "ID de entrada inválido o no publicado."
+
+msgid "Invalid ID passing."
+msgstr "Paso de ID inválido."
+
+msgid "Upload directory not found."
+msgstr "Directorio de subida no encontrado."
+
+msgid "File upload error."
+msgstr "Error en la subida del archivo."
+
+msgid "ID is a mandatory field for Update mode. Please map ID in WordPress Core Fields."
+msgstr "El ID es un campo obligatorio para el modo de actualización. Por favor, mapea el ID en los Campos Principales de WordPress."
+
+msgid "Invalid file type. Only CSV files are allowed."
+msgstr "Tipo de archivo inválido. Solo se permiten archivos CSV."
+
+msgid "No data found."
+msgstr "No se encontraron datos."
+
+msgid "Invalid mapping payload. Template mapping was not saved."
+msgstr "Carga útil de mapeo inválida. El mapeo de la plantilla no se guardó."
+
+msgid "Invalid file extension"
+msgstr "Extensión de archivo inválida"
+
+msgid "Unable to open the file"
+msgstr "No se puede abrir el archivo"
+
+msgid "Template already exists"
+msgstr "La plantilla ya existe"
+
+msgid "Unable to save template mapping"
+msgstr "No se puede guardar el mapeo de la plantilla"
+
+msgid "Invalid mapping payload. Existing template mapping was not changed."
+msgstr "Carga útil de mapeo inválida. El mapeo de plantilla existente no fue modificado."
+
+msgid "Template Name Already Exists"
+msgstr "El nombre de la plantilla ya existe"
+
+msgid "Template not found"
+msgstr "Plantilla no encontrada"
+
+msgid "Invalid file path."
+msgstr "Ruta de archivo inválida."
+
+msgid "Invalid input."
+msgstr "Entrada inválida."
+
+msgid "CSV headers do not match the expected format."
+msgstr "Las cabeceras del CSV no coinciden con el formato esperado."

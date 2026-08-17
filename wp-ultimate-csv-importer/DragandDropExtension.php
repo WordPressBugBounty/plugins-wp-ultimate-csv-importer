@@ -41,7 +41,7 @@ class DragandDropExtension {
         $row = $get_row - 1;
 
         if(empty($hashkey)){	
-			$get_detail   = $wpdb->get_results( "SELECT eventKey FROM $template_table_name WHERE templatename = '$templatename' " );
+			$get_detail   = $wpdb->get_results( $wpdb->prepare( "SELECT eventKey FROM $template_table_name WHERE templatename = %s", $templatename ) );
 			$hashkey = $get_detail[0]->eventKey;
         }
 
@@ -65,7 +65,7 @@ class DragandDropExtension {
             while (($data = fgetcsv($h, 0, "\t", '"', '\\')) !== FALSE) 
             {		
                 // Read the data from a single line
-                $trimmed_info = array_map('trim', $data);
+                $trimmed_info = ImportHelpers::getInstance()->normalize_header_array( $data );
                 array_push($info , $trimmed_info);
                 if($line_number == 0){
                     $Headers = $info[$line_number];
@@ -83,7 +83,7 @@ class DragandDropExtension {
             while (($data = fgetcsv($h, 0, $delimiters[$array_index], '"', '\\')) !== FALSE) 
             {		
                 // Read the data from a single line
-                $trimmed_info = array_map('trim', $data);
+                $trimmed_info = ImportHelpers::getInstance()->normalize_header_array( $data );
                 array_push($info , $trimmed_info);
                 if($line_number == 0){
                     $Headers = $info[$line_number];

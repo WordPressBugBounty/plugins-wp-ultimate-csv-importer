@@ -49,8 +49,14 @@ class SmackCSVInstall {
 	 * Check WPUltimateCSVImporterPro version.
 	 */
 	public static function check_version() {
-		if ( get_option( 'ULTIMATE_CSV_IMP_VERSION' ) != UCICore::getInstance()->version )  {
+		$stored  = get_option( 'ULTIMATE_CSV_IMP_VERSION' );
+		$current = UCICore::getInstance()->version;
+		if ( $stored != $current )  {
+			$is_upgrade = ! empty( $stored );
 			self::getInstance()->install();
+			if ( $is_upgrade ) {
+				delete_option( 'WP_ULTIMATE_CSV_FIRST_ACTIVATE' );
+			}
 			do_action( 'sm_uci_pro_updated' );
 		}
 	}
@@ -79,22 +85,52 @@ class SmackCSVInstall {
 	 * Install WUCI.
 	 */
 	public  function install() {
-		$current_uci_version    = get_option( 'ULTIMATE_CSV_IMP_VERSION', null );
-		if(empty($current_uci_version)){
-			add_option("WP_ULTIMATE_CSV_FIRST_ACTIVATE", 'On');
+		$current_uci_version = get_option( 'ULTIMATE_CSV_IMP_VERSION', null );
+		$has_existing_settings = ( false !== get_option( 'sm_uci_pro_settings', false ) );
+
+		if ( self::should_enable_first_activate_flag( $current_uci_version, $has_existing_settings ) ) {
+			update_option( 'WP_ULTIMATE_CSV_FIRST_ACTIVATE', 'On', false );
+		} else {
+			// Upgrades and existing installs must never re-open the onboarding trap.
+			delete_option( 'WP_ULTIMATE_CSV_FIRST_ACTIVATE' );
 		}
-		
-		self::$tables_instance->create_tables(); 
-		if ( is_null( $current_uci_version )) {
-			self::create_options();         // Create option data on the initial stage
-	        
-		} 
+
+		self::$tables_instance->create_tables();
+		if ( is_null( $current_uci_version ) || false === $current_uci_version || '' === $current_uci_version ) {
+			self::create_options();
+		}
 
 		self::update_uci_version();
 
-
-		// Trigger action
 		do_action( 'sm_uci_installed' );
+	}
+
+	/**
+	 * First-activate onboarding is only for a true fresh install.
+	 *
+	 * @param mixed $current_uci_version Stored plugin version option.
+	 * @param bool  $has_existing_settings Whether plugin settings already exist.
+	 * @param bool|null $already_dismissed Optional dismissed state override (tests).
+	 * @return bool
+	 */
+	public static function should_enable_first_activate_flag( $current_uci_version, $has_existing_settings, $already_dismissed = null ) {
+		if ( null === $already_dismissed ) {
+			$already_dismissed = UCICore::is_addons_onboarding_dismissed();
+		}
+
+		if ( $already_dismissed ) {
+			return false;
+		}
+
+		if ( ! empty( $current_uci_version ) ) {
+			return false;
+		}
+
+		if ( $has_existing_settings ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -102,8 +138,7 @@ class SmackCSVInstall {
 	 */
 	private static function update_uci_version() {
 		$version = UCICore::getInstance()->version;
-		delete_option( 'ULTIMATE_CSV_IMP_VERSION' );
-		add_option( 'ULTIMATE_CSV_IMP_VERSION', $version );
+		update_option( 'ULTIMATE_CSV_IMP_VERSION', $version );
 	}
 
 
