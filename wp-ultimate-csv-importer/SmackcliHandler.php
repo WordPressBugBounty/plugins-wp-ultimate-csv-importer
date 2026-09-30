@@ -79,9 +79,7 @@ class Smackuci_Cli{
                 $map = unserialize($mapped_fields_values);
                 //Template Directory
                 $uploadpath = $upload_dir.$hash_key.'/'.$templatekey;
-                if (!is_dir($uploadpath)) {
-                    wp_mkdir_p($uploadpath);
-                }
+                SecurityHelper::ensure_secure_directory($uploadpath);
                   
 		        if(empty($file_extension)){
                     $file_extension = 'xml';                    

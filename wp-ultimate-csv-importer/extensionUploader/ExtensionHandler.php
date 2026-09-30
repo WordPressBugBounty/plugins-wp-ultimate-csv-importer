@@ -116,6 +116,8 @@ class ExtensionHandler{
 			if(!in_array($value, $custom_array)) {
 				if(is_plugin_active('events-manager/events-manager.php') && $value == 'event') {
 					$importas['Events'] = $value;
+				} elseif(is_plugin_active('events-manager/events-manager.php') && $value == 'location') {
+					$importas['Event Locations'] = $value;
 				} else {
 					$importas[$value] = $value;
 
@@ -186,7 +188,7 @@ class ExtensionHandler{
 		}
 
 
-		if(array_key_exists('location' , $importas) && array_key_exists('event-recurring' , $importas)){
+		if((array_key_exists('location' , $importas) || array_key_exists('Event Locations' , $importas)) && array_key_exists('event-recurring' , $importas)){
 			unset($importas['location']);
 			unset($importas['event-recurring']);
 		}
@@ -334,10 +336,7 @@ class ExtensionHandler{
 		}
 		if($file_extension == 'xml'){
 			$upload_dir_path = $upload_dir. $hashkey;
-			if (!is_dir($upload_dir_path)) {
-				wp_mkdir_p( $upload_dir_path);
-			}
-			chmod($upload_dir_path, 0777);   
+			SecurityHelper::ensure_secure_directory($upload_dir_path);
 			$path = $upload_dir . $hashkey . '/' . $hashkey;   
 
 			$xml = simplexml_load_file($path);

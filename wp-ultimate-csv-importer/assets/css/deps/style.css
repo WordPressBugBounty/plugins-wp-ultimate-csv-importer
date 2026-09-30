@@ -4126,8 +4126,8 @@ i#smsumicon {
 }
 
 .wp-ultimate-csv-importer.rtl .table.table-mapping tbody tr td.action .manipulation-screen {
-  right: unset;
-  left: 25px;
+  right: auto !important;
+  left: 0 !important;
 }
 
 .wp-ultimate-csv-importer.rtl .ajax-loader.loading:before,

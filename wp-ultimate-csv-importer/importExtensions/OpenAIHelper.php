@@ -173,6 +173,9 @@ class OpenAIHelper {
 		}
 		$ext    = strtolower( $m[1] );
 		$ext    = ( $ext === 'jpeg' ) ? 'jpg' : $ext;
+		if ( ! in_array( $ext, array( 'jpg', 'png', 'gif', 'webp' ), true ) ) {
+			return null;
+		}
 		$binary = base64_decode( $m[2], true );
 		if ( $binary === false || strlen( $binary ) < 100 ) {
 			return null;

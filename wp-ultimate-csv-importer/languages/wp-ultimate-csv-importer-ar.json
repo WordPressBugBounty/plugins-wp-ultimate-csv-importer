@@ -1,0 +1,4121 @@
+{
+  "translation-revision-date": "2026-08-21 00:00:00+0000",
+  "generator": "WP-CLI/2.12.0",
+  "domain": "wp-ultimate-csv-importer",
+  "locale_data": {
+    "wp-ultimate-csv-importer": {
+      "": {
+        "domain": "wp-ultimate-csv-importer",
+        "lang": "ar",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "SelectAllImages": [
+        "حدد جميع الصور في ملف الاستيراد الخاص بك لتجنب فشل الاستيراد"
+      ],
+      "ChooseImagesToImport": [
+        "اختر الصور للاستيراد. استخدم مربع الاختيار أدناه لاختيار جميع الصور."
+      ],
+      "FileName": [
+        "اسم الملف"
+      ],
+      "OK": [
+        "موافق"
+      ],
+      "Exporterwithadvancedfilters": [
+        "مصدر بفلاتر متقدمة"
+      ],
+      "Buynow": [
+        "اشتري الآن!"
+      ],
+      "Exportfiltereddata": [
+        "تصدير البيانات المفلترة"
+      ],
+      "Exportfiltereddatadesc": [
+        "يتيح لك الحصول على البيانات المطلوبة فقط باستخدام عوامل التصفية المتقدمة المختلفة"
+      ],
+      "Backupineditableformat": [
+        "نسخة احتياطية في شكل قابل للتحرير"
+      ],
+      "Backupineditableformatdesc": [
+        "النسخ الاحتياطي في 4 تنسيقات ملفات مختلفة مثلCSV, XML, JSON,XLS."
+      ],
+      "AutoScheduledBackups": [
+        "النسخ الاحتياطي التلقائي المجدولة"
+      ],
+      "AutoScheduledBackupsdesc": [
+        "يساعد التصدير المجدول في النسخ الاحتياطي كتنسيق ملف نصي قابل للتحرير في فاصل زمني منتظم."
+      ],
+      "Updateolderpostsfromsingleimport": [
+        "تحديث المنشورات القديمة من استيراد واحد"
+      ],
+      "JetEngineMetaboxToolsetTypesACFproFreeandPodsFieldPostPluginsImporter": [
+        "JetEngine, Metabox, Toolset Types, ACF pro / Free and Pods Field/Post مستورد الإضافات"
+      ],
+      "AutoSchedulewithreusabletemplates": [
+        "جدولة تلقائية مع قوالب قابلة لإعادة الاستخدام"
+      ],
+      "WPMLImporter": [
+        "مستورد WPML"
+      ],
+      "SEOPluginsDataImporterRankMathYoastandAllinOneSEO": [
+        "مستورد بيانات إضافات تحسين محركات البحث (SEO) - RankMath, SEOPress, Yoast and All in One SEO"
+      ],
+      "AIOWooCommerceImportSuit": [
+        "بدلة استيراد AIO WooCommerce"
+      ],
+      "ImportUpdate": [
+        "استيراد / تحديث"
+      ],
+      "Dashboard": [
+        "لوحة التحكم"
+      ],
+      "Manager": [
+        "إدارة"
+      ],
+      "Export": [
+        "تصدير"
+      ],
+      "Settings": [
+        "الإعدادات"
+      ],
+      "Support": [
+        "الدعم"
+      ],
+      "UploadfromDesktop": [
+        "التحميل من سطح المكتب"
+      ],
+      "UploadfromFTPSFTP": [
+        "التحميل عبر FTP / SFTP"
+      ],
+      "UploadfromFTP": [
+        "تحميل من FTPSFTP"
+      ],
+      "UploadfromURL": [
+        "التحميل عبر رابط URL"
+      ],
+      "ChoosFileintheServer": [
+        "اختر الملف في الخادم"
+      ],
+      "Drag&Dropyourfilesor": [
+        "سحب وإسقاط الملفات أو"
+      ],
+      "SIMPLEMODE": [
+        "الوضع البسيط"
+      ],
+      "Browse": [
+        "تصفح"
+      ],
+      "NewItem": [
+        "عنصر جديد"
+      ],
+      "ExistingItems": [
+        "العناصر الموجودة"
+      ],
+      "ImportEachRecordAs": [
+        "استيراد كل سجل كـ"
+      ],
+      "Continue": [
+        "يكمل"
+      ],
+      "Search": [
+        "يبحث"
+      ],
+      "FromDate": [
+        "من التاريخ"
+      ],
+      "ToDate": [
+        "حتي اليوم"
+      ],
+      "SEARCH": [
+        "بحث"
+      ],
+      "SavedTemplate": [
+        "القالب المحفوظ"
+      ],
+      "TEMPLATES": [
+        "القوالب"
+      ],
+      "MATCHEDCOLUMNSCOUNT": [
+        "مطابقة العدد"
+      ],
+      "MODULE": [
+        "وحدة"
+      ],
+      "CREATEDTIME": [
+        "وقت الإنشاء"
+      ],
+      "ACTION": [
+        "عمل"
+      ],
+      "USETEMPLATE": [
+        "استخدم القالب"
+      ],
+      "CREATENEWMAPPING": [
+        "إنشاء الخرائط"
+      ],
+      "BACK": [
+        "الى الخلف"
+      ],
+      "ADVANCEDMODE": [
+        "الوضع المتقدم"
+      ],
+      "DRAGDROPMODE": [
+        "وضع السحب والإفلات"
+      ],
+      "WordpressFields": [
+        "حقول ووردبريس"
+      ],
+      "WPFIELDS": [
+        "حقول ووردبريس"
+      ],
+      "CSVHEADER": [
+        "رأس ملف CSV"
+      ],
+      "Action": [
+        "عمل"
+      ],
+      "Name": [
+        "اسم"
+      ],
+      "HINT": [
+        "ملحوظة"
+      ],
+      "Example": [
+        "مثال"
+      ],
+      "WordPressCoreFields": [
+        "حقول ووردبريس الأساسية"
+      ],
+      "ACFFreeFields": [
+        "حقول ACF المجانية"
+      ],
+      "ACFFields": [
+        "الحقول المخصصة المتقدمة (ACF)"
+      ],
+      "ACFGroupFields": [
+        "حقول المجموعة المتقدمة (ACF)"
+      ],
+      "ACFProFields": [
+        "الحقول المخصصة المتقدمة (ACF)"
+      ],
+      "ACFRepeaterFields": [
+        "الحقول المكررة المتقدمة (ACF)"
+      ],
+      "TypesCustomFields": [
+        "حقول Types المخصصة"
+      ],
+      "PodsFields": [
+        "حقول Pods"
+      ],
+      "JobListingFields": [
+        "حقول قائمة الوظائف"
+      ],
+      "CustomFieldSuite": [
+        "مجموعة الحقول المخصصة"
+      ],
+      "AllInOneSeoFields": [
+        "حقول All In One SEO"
+      ],
+      "MetaBoxFields": [
+        "حقول Meta Box"
+      ],
+      "YoastSeoFields": [
+        "حقول Yoast SEO"
+      ],
+      "RankMathFields": [
+        "حقول Rank Math"
+      ],
+      "RankMathProFields": [
+        "حقول Rank Math Pro"
+      ],
+      "BillingAndShippingInformation": [
+        "معلومات الفوترة والشحن"
+      ],
+      "CustomFieldsWPMemberFields": [
+        "حقول أعضاء WP المخصصة"
+      ],
+      "CustomFieldsMemberFields": [
+        "حقول الأعضاء المخصصة"
+      ],
+      "ProductMetaFields": [
+        "حقول ميتا منتجات ووكومرس"
+      ],
+      "ProductAttrFields": [
+        "حقول سمات منتج WooCommerce"
+      ],
+      "ProductBundleMetaFields": [
+        "حقول حزمة منتج WooCommerce"
+      ],
+      "OrderMetaFields": [
+        "حقول ميتا طلبات ووكومرس"
+      ],
+      "CouponMetaFields": [
+        "حقول ميتا قسائم ووكومرس"
+      ],
+      "RefundMetaFields": [
+        "حقول تعريف الاسترداد"
+      ],
+      "WPECommerceCustomFields": [
+        "حقول WP eCommerce المخصصة"
+      ],
+      "EventsManagerFields": [
+        "حقول مدير الأحداث"
+      ],
+      "WPMLFields": [
+        "حقول WPML"
+      ],
+      "CMB2CustomFields": [
+        "حقول CMB2 المخصصة"
+      ],
+      "JetEngineFields": [
+        "حقول JetEngine"
+      ],
+      "JetEngineRFFields": [
+        "حقول JetEngine RF"
+      ],
+      "JetEngineCPTFields": [
+        "حقول JetEngine CPT"
+      ],
+      "JetEngineCPTRFFields": [
+        "حقول JetEngine CPT RF"
+      ],
+      "JetEngineTaxonomyFields": [
+        "حقول تصنيف JetEngine"
+      ],
+      "JetEngineTaxonomyRFFields": [
+        "حقول تصنيف JetEngine RF"
+      ],
+      "JetEngineRelationsFields": [
+        "حقول علاقات JetEngine"
+      ],
+      "CourseSettingsFields": [
+        "حقول إعدادات الدورة"
+      ],
+      "CurriculumSettingsFields": [
+        "حقول إعدادات المنهج"
+      ],
+      "QuizSettingsFields": [
+        "حقول إعدادات الاختبار"
+      ],
+      "LessonSettingsFields": [
+        "حقول إعدادات الدرس"
+      ],
+      "QuestionSettingsFields": [
+        "حقول إعدادات السؤال"
+      ],
+      "OrderSettingsFields": [
+        "حقول إعدادات الطلب"
+      ],
+      "WordPressCustomFields": [
+        "حقول ووردبريس المخصصة"
+      ],
+      "TermsandTaxonomies": [
+        "المصطلحات والتصنيفات"
+      ],
+      "IsSerialized": [
+        "متسلسل"
+      ],
+      "NoCustomFieldsFound": [
+        "لم يتم العثور على حقول مخصصة"
+      ],
+      "MediaUploadFields": [
+        "حقول تحميل الوسائط"
+      ],
+      "UploadMedia": [
+        "تحميل الوسائط"
+      ],
+      "UploadedListofFiles": [
+        "Uploaded List of Files"
+      ],
+      "UploadedMediaFileLists": [
+        "Uploaded Media File Lists"
+      ],
+      "SavethismappingasTemplate": [
+        "حفظ هذا المخطط كقالب"
+      ],
+      "Save": [
+        "يحفظ"
+      ],
+      "Doyouneedtoupdatethecurrentmapping": [
+        "يرجى الاطلاع على الخرائط الحالية"
+      ],
+      "Savethecurrentmappingasnewtemplate": [
+        "حفظ الخرائط الحالية كنموذج جديد"
+      ],
+      "Back": [
+        "خلف"
+      ],
+      "Size": [
+        "بحجم"
+      ],
+      "MediaHandling": [
+        "التعامل مع وسائل الإعلام"
+      ],
+      "Downloadexternalimagestoyourmedia": [
+        "تنزيل الصور الخارجية على الوسائط"
+      ],
+      "ImageHandling": [
+        "إيماج هاندلينج"
+      ],
+      "Usemediaimagesifalreadyavailable": [
+        "صور مفيدة متاحة بالفعل"
+      ],
+      "Doyouwanttooverwritetheexistingimages": [
+        "تريد الكتابة فوق الصور الموجودة"
+      ],
+      "ImageSizes": [
+        "أحجام الصور"
+      ],
+      "Thumbnail": [
+        "ظفري"
+      ],
+      "Medium": [
+        "متوسط"
+      ],
+      "MediumLarge": [
+        "متوسطة: كبيرة"
+      ],
+      "Large": [
+        "كبير"
+      ],
+      "Custom": [
+        "العادة"
+      ],
+      "Slug": [
+        "سبيكة"
+      ],
+      "Width": [
+        "عرض"
+      ],
+      "Height": [
+        "ارتفاع"
+      ],
+      "Addcustomsizes": [
+        "إضافة تخصيص"
+      ],
+      "PostContentImageOption": [
+        "خيارات صور محتوى المنشور"
+      ],
+      "DownloadPostContentExternalImagestoMedia": [
+        "تنزيل الصور الخارجية في محتوى المنشور إلى الوسائط"
+      ],
+      "MediaSEOAdvancedOptions": [
+        "خيارات الوسائط والـ SEO المتقدمة"
+      ],
+      "polylangfields": [
+        "حقول إعدادات Polylang"
+      ],
+      "SetimageTitle": [
+        "Set image Title"
+      ],
+      "SetimageCaption": [
+        "التسمية التوضيحية"
+      ],
+      "SetimageAltText": [
+        "Set image Alt Text"
+      ],
+      "SetimageDescription": [
+        "الوصف"
+      ],
+      "Changeimagefilenameto": [
+        "Change image file name to"
+      ],
+      "ImportconfigurationSection": [
+        "قسم تكوين الاستيراد"
+      ],
+      "EnablesafeprestateRollback": [
+        "تمكين التراجع الآمن إلى الحالة السابقة (نسخ احتياطي قبل الاستيراد)"
+      ],
+      "Backupbeforeimport": [
+        "نسخ احتياطي قبل الاستيراد"
+      ],
+      "DoyouwanttoSWITCHONMaintenancemodewhileimport": [
+        "هل تريد تشغيل وضع الصيانة أثناء الاستيراد؟"
+      ],
+      "Doyouwanttohandletheduplicateonexistingrecords": [
+        "هل تريد التعامل مع المكررات في السجلات الحالية؟"
+      ],
+      "Mentionthefieldswhichyouwanttohandleduplicates": [
+        "اذكر الحقول التي تريدها للتعامل مع المضاعفات"
+      ],
+      "DoyouwanttoUpdateanexistingrecords": [
+        "هل تريد تحديث السجلات الموجودة"
+      ],
+      "Updaterecordsbasedon": [
+        "Update records based on"
+      ],
+      "DeletedatafromWordPress": [
+        "حذف البيانات من WordPress"
+      ],
+      "EnabletodeletetheitemsnotpresentinCSVXMLfile": [
+        "تمكين حذف العناصر غير الموجودة في ملف CSV/XML"
+      ],
+      "DoyouwanttoSchedulethisImport": [
+        "هل تريد جدولة هذا الاستيراد"
+      ],
+      "ScheduleDate": [
+        "تاريخ الجدول الزمني"
+      ],
+      "ScheduleFrequency": [
+        "الجدول الزمني"
+      ],
+      "TimeZone": [
+        "وحدة زمنية"
+      ],
+      "ScheduleTime": [
+        "الجدول الزمني"
+      ],
+      "Schedule": [
+        "برنامج"
+      ],
+      "Import": [
+        "يستورد"
+      ],
+      "Update": [
+        "تحديث"
+      ],
+      "Format": [
+        "التنسيق"
+      ],
+      "OneTime": [
+        "مره واحده"
+      ],
+      "Daily": [
+        "اليومي"
+      ],
+      "Weekly": [
+        "أسبوعي"
+      ],
+      "Monthly": [
+        "شهريا"
+      ],
+      "Hourly": [
+        "ساعيا"
+      ],
+      "Every30mins": [
+        "كل 30 دقيقة"
+      ],
+      "Every15mins": [
+        "كل 15 دقيقة"
+      ],
+      "Every10mins": [
+        "كل 10 دقائق"
+      ],
+      "Every5mins": [
+        "كل 5 دقائق"
+      ],
+      "FileSize": [
+        "حجم الملف"
+      ],
+      "Process": [
+        "معالجة"
+      ],
+      "Totalnoofrecords": [
+        "Total no of records"
+      ],
+      "CurrentProcessingRecord": [
+        "جاري تجهيز السجل"
+      ],
+      "RemainingRecord": [
+        "السجل المتبقي"
+      ],
+      "Completed": [
+        "مكتمل"
+      ],
+      "TimeElapsed": [
+        "الوقت المنقضي"
+      ],
+      "approximate": [
+        "تقريبي"
+      ],
+      "DownloadLog": [
+        "View Log"
+      ],
+      "NoRecord": [
+        "لا سجلات"
+      ],
+      "UploadedCSVFileLists": [
+        "Uploaded CSV File Lists"
+      ],
+      "Hostname": [
+        "اسم المضيف"
+      ],
+      "HostPort": [
+        "استضافة الميناء"
+      ],
+      "HostUsername": [
+        "اسم مستخدم المضيف"
+      ],
+      "HostPassword": [
+        "HostPassword"
+      ],
+      "HostPath": [
+        "هوستباث"
+      ],
+      "DefaultPort": [
+        "منفذ افتراضي"
+      ],
+      "FTPUsername": [
+        "اسم مستخدم FTP"
+      ],
+      "FTPPassword": [
+        "كلمة مرور FTP"
+      ],
+      "ConnectionType": [
+        "نوع الاتصال"
+      ],
+      "ImportersActivity": [
+        "نشاط المستوردين"
+      ],
+      "ImportStatistics": [
+        "استيراد الإحصائيات"
+      ],
+      "FileManager": [
+        "مدير الملفات"
+      ],
+      "SmartSchedule": [
+        "الجدول الذكي"
+      ],
+      "ScheduledExport": [
+        "جدولة التصدير"
+      ],
+      "Templates": [
+        "القوالب"
+      ],
+      "LogManager": [
+        "مدير السجلات"
+      ],
+      "NotSelectedAnyTab": [
+        "Not Selected Any Tab"
+      ],
+      "EventInfo": [
+        "معلومات الحدث"
+      ],
+      "EventDate": [
+        "تاريخ الحدث"
+      ],
+      "EventStatus": [
+        "حالة الحدث"
+      ],
+      "Actions": [
+        "الإجراءات"
+      ],
+      "Date": [
+        "التاريخ"
+      ],
+      "Purpose": [
+        "غاية"
+      ],
+      "Revision": [
+        "مراجعة"
+      ],
+      "Select": [
+        "يختار"
+      ],
+      "Inserted": [
+        "تم إدراجها"
+      ],
+      "Updated": [
+        "المحدثة"
+      ],
+      "Skipped": [
+        "المتجاهلة"
+      ],
+      "Delete": [
+        "حذف"
+      ],
+      "Noeventsfound": [
+        "No events found"
+      ],
+      "ScheduleInfo": [
+        "معلومات الجدول"
+      ],
+      "ScheduledDate": [
+        "التاريخ المجدول"
+      ],
+      "ScheduledTime": [
+        "جدول زمني"
+      ],
+      "Youhavenotscheduledanyevent": [
+        "Youhavenotscheduled أي حدث"
+      ],
+      "Frequency": [
+        "التكرار"
+      ],
+      "Time": [
+        "زمن"
+      ],
+      "EditSchedule": [
+        "تحرير الجدول"
+      ],
+      "SaveChanges": [
+        "Save Changes"
+      ],
+      "TemplateInfo": [
+        "معلومات القالب"
+      ],
+      "TemplateName": [
+        "اسم القالب"
+      ],
+      "Module": [
+        "وحدة"
+      ],
+      "CreatedTime": [
+        "وقت الإنشاء"
+      ],
+      "NoTemplateFound": [
+        "تم العثور على قالب"
+      ],
+      "Download": [
+        "تحميل"
+      ],
+      "NoLogRecordFound": [
+        "لم يتم العثور على سجلات"
+      ],
+      "GeneralSettings": [
+        "الإعدادات العامة"
+      ],
+      "DatabaseOptimization": [
+        "تحسين قاعدة البيانات"
+      ],
+      "SecurityandPerformance": [
+        "الأمان والأداء"
+      ],
+      "Documentation": [
+        "التوثيق"
+      ],
+      "MediaReport": [
+        "وسائل الإعلام"
+      ],
+      "DropTable": [
+        "حذف الجدول"
+      ],
+      "Ifenabledplugindeactivationwillremoveplugindatathiscannotberestored": [
+        "إذا تم التمكين، فإن إلغاء تفعيل الإضافة سيزيل بياناتها ولا يمكن استعادتها."
+      ],
+      "Scheduledlogmails": [
+        "رسائل السجل المجدولة"
+      ],
+      "Enabletogetscheduledlogmails": [
+        "تمكين استلام رسائل السجل المجدولة."
+      ],
+      "Sendpasswordtouser": [
+        "إرسال كلمة المرور للمستخدم"
+      ],
+      "Enabletosendpasswordinformationthroughemail": [
+        "تمكين إرسال معلومات كلمة المرور عبر البريد الإلكتروني."
+      ],
+      "WoocommerceCustomattribute": [
+        "سمة WooCommerce المخصصة"
+      ],
+      "Enablestoregisterwoocommercecustomattribute": [
+        "يتيح تسجيل سمة WooCommerce المخصصة."
+      ],
+      "PleasemakesurethatyoutakenecessarybackupbeforeproceedingwithdatabaseoptimizationThedatalostcantbereverted": [
+        "نود التأكيد على أنه يتم إجراء نسخ احتياطي ضروري قبل المتابعة مع تحسين قاعدة البيانات"
+      ],
+      "DeleteallorphanedPostPageMeta": [
+        "Delete all orphaned Post/Page Meta"
+      ],
+      "Deleteallunassignedtags": [
+        "حذف العلامات غير المعينة"
+      ],
+      "DeleteallPostPagerevisions": [
+        "Delete all Post/Page revisions"
+      ],
+      "DeleteallautodraftedPostPage": [
+        "Delete all auto drafted Post/Page"
+      ],
+      "DeleteallPostPageintrash": [
+        "Delete all Post/Page in trash"
+      ],
+      "DeleteallCommentsintrash": [
+        "حذف كافة التعليقات"
+      ],
+      "DeleteallUnapprovedComments": [
+        "Deleteall التعليقات غير المعتمدة"
+      ],
+      "DeleteallPingbackComments": [
+        "DeleteallPingback تعليقات"
+      ],
+      "DeleteallTrackbackComments": [
+        "Deleteall تتبع التعليقات"
+      ],
+      "DeleteallSpamComments": [
+        "حذف التعليقات غير المرغوب فيها"
+      ],
+      "RunDBOptimizer": [
+        "Run DB Optimizer"
+      ],
+      "DatabaseOptimizationLog": [
+        "سجل تحسين قاعدة البيانات"
+      ],
+      "noofOrphanedPostPagemetahasbeenremoved": [
+        "تم حذف علامة noofOrphanedPostPagemeta"
+      ],
+      "noofUnassignedtagshasbeenremoved": [
+        "تم حذف العلامات noofUnassignedtags"
+      ],
+      "noofPostPagerevisionhasbeenremoved": [
+        "تم حذف noofPostPagerevision"
+      ],
+      "noofAutodraftedPostPagehasbeenremoved": [
+        "تمت إزالة noofAutodraftedPostPage"
+      ],
+      "noofPostPageintrashhasbeenremoved": [
+        "تمت إزالة noofPostPageintrashhasbeen"
+      ],
+      "noofSpamcommentshasbeenremoved": [
+        "تمت إزالة التعليقات غير المرغوب فيها"
+      ],
+      "noofCommentsintrashhasbeenremoved": [
+        "تمت إزالة التعليقات"
+      ],
+      "noofUnapprovedcommentshasbeenremoved": [
+        "تمت إزالة التعليقات غير المعتمدة"
+      ],
+      "noofPingbackcommentshasbeenremoved": [
+        "تمت إزالة تعليقات بينغباك"
+      ],
+      "noofTrackbackcommentshasbeenremoved": [
+        "تمت إزالة التعليقات التراجعية"
+      ],
+      "Allowauthorseditorstoimport": [
+        "Allow authors/editors to import"
+      ],
+      "Thisenablesauthorseditorstoimport": [
+        "هذا ممكن من المؤلفين المحررون الاستيراد"
+      ],
+      "MinimumrequiredphpinivaluesIniconfiguredvalues": [
+        "الحد الأدنى لقيم php.ini المطلوبة (القيم المكونة)"
+      ],
+      "Variables": [
+        "المتغيرات"
+      ],
+      "SystemValues": [
+        "قيم النظام"
+      ],
+      "MinimumRequirements": [
+        "الحد الأدنى للمتطلبات"
+      ],
+      "RequiredtoenabledisableLoadersExtentionsandmodules": [
+        "مطلوب لتمكين/تعطيل المحمّلات والإضافات والوحدات:"
+      ],
+      "DebugInformation": [
+        "معلومات التصحيح:"
+      ],
+      "SmackcodersGuidelines": [
+        "إرشادات Smackcoders"
+      ],
+      "DevelopmentNews": [
+        "أخبار التنمية"
+      ],
+      "WhatsNew": [
+        "ما هو الجديد"
+      ],
+      "YoutubeChannel": [
+        "قناة يوتيوب"
+      ],
+      "OtherWordPressPlugins": [
+        "إضافات WordPress أخرى"
+      ],
+      "Count": [
+        "عدد"
+      ],
+      "ImageType": [
+        "نوع الصورة"
+      ],
+      "Status": [
+        "حالة"
+      ],
+      "Loading": [
+        "جار التحميل"
+      ],
+      "LoveWPUltimateCSVImporterGivea5starreviewon": [
+        "أعجبك مستورد CSV النهائي؟ قيّمنا على wordpress.org"
+      ],
+      "ContactSupport": [
+        "الاتصال بالدعم"
+      ],
+      "Email": [
+        "البريد الإلكتروني"
+      ],
+      "Supporttype": [
+        "نوع الدعم"
+      ],
+      "BugReporting": [
+        "تقرير الشوائب"
+      ],
+      "FeatureEnhancement": [
+        "ميزة التحسين"
+      ],
+      "Message": [
+        "رسالة"
+      ],
+      "Send": [
+        "إرسال"
+      ],
+      "NewsletterSubscription": [
+        "الاشتراك في النشرة الإخبارية"
+      ],
+      "Subscribe": [
+        "الإشتراك"
+      ],
+      "Note": [
+        "ملحوظة"
+      ],
+      "SubscribetoSmackcodersMailinglistafewmessagesayear": [
+        "الاشتراك في الرسائل النصية"
+      ],
+      "Pleasedraftamailto": [
+        "Please draft a mail to"
+      ],
+      "Ifyoudoesnotgetanyacknowledgementwithinanhour": [
+        "إذا لم تحصل على أي إعلان معترف به في غضون ساعة"
+      ],
+      "Selectyourmoduletoexportthedata": [
+        "حدد وحدتك لتصدير البيانات"
+      ],
+      "Toexportdatabasedonthefilters": [
+        "قاعدة بيانات التصدير على أساس المرشحات"
+      ],
+      "ExportFileName": [
+        "اسم ملف التصدير"
+      ],
+      "AdvancedSettings": [
+        "إعدادات متقدمة"
+      ],
+      "ExportType": [
+        "نوع التصدير"
+      ],
+      "SplittheRecord": [
+        "سجل سبليت"
+      ],
+      "AdvancedFilters": [
+        "مرشحات متقدمة"
+      ],
+      "Exportdatawithautodelimiters": [
+        "تصدير البيانات في محددات السيارات"
+      ],
+      "Delimiters": [
+        "المحددات"
+      ],
+      "OtherDelimiters": [
+        "المطهرات الأخرى"
+      ],
+      "Exportdataforthespecificperiod": [
+        "تصدير بيانات ذات فترة محددة"
+      ],
+      "StartFrom": [
+        "يبدأ من"
+      ],
+      "EndTo": [
+        "نهاية ل"
+      ],
+      "Exportdatawiththespecificstatus": [
+        "تصدير البيانات مع الوضع الخاص"
+      ],
+      "All": [
+        "الجميع"
+      ],
+      "Publish": [
+        "ينشر"
+      ],
+      "Sticky": [
+        "لزج"
+      ],
+      "Private": [
+        "خاص"
+      ],
+      "Protected": [
+        "محمي"
+      ],
+      "Draft": [
+        "مسودة"
+      ],
+      "Pending": [
+        "قيد الانتظار"
+      ],
+      "Exportdatabyspecificauthors": [
+        "تصدير بيانات المؤلفين المحددين"
+      ],
+      "Authors": [
+        "المؤلفون"
+      ],
+      "ExportdatabasedonspecificInclusions": [
+        "تصدير البيانات المستندة إلى شوائب محددة"
+      ],
+      "DoyouwanttoSchedulethisExport": [
+        "الجدول الزمني للتصدير"
+      ],
+      "SelectTimeZone": [
+        "اختر المجال الزمني"
+      ],
+      "ScheduleExport": [
+        "الجدول الزمني"
+      ],
+      "DataExported": [
+        "تصدير البيانات"
+      ],
+      "FilePath": [
+        "مسار الملف"
+      ],
+      "Thisfeatureisavailablein": [
+        "هذه الميزة متوفرة في"
+      ],
+      "WPUltimateCSVImporter": [
+        "WP Ultimate CSV Importer"
+      ],
+      "PremiumVersion": [
+        "الإصدار المتميز"
+      ],
+      "ContactusforPresaleEnquiry": [
+        "اتصل بنا للحصول على الاستفسار قبل البيع"
+      ],
+      "importwoocommerce": [
+        "استيراد woocommerce"
+      ],
+      "ImportanybulkWooCommerceProductsdatainCSV": [
+        "قم باستيراد أي بيانات مجمعة لمنتجات WooCommerce في ملف CSV"
+      ],
+      "Highlights": [
+        "أبرز الميزات"
+      ],
+      "ProductTypessimplegroupedvariableexternaltypeimport": [
+        "Product Types simple, grouped, variable, external type import"
+      ],
+      "FeaturedProductImportfromURL": [
+        "استيراد منتج مميز من URL"
+      ],
+      "Galleryimageimport": [
+        "استيراد صور المعرض"
+      ],
+      "Duplicatedetection": [
+        "كشف مكرر"
+      ],
+      "FileType": [
+        "نوع الملف"
+      ],
+      "SupportsUTF_8CSVfile": [
+        "يدعم ملف UTF-8 CSV"
+      ],
+      "AlreadyInstalled": [
+        "مثبت مسبقا"
+      ],
+      "Install": [
+        "ثَبَّتَ"
+      ],
+      "ImportUsers": [
+        "استيراد المستخدمين"
+      ],
+      "ImportUserinfointoWordPressinbulk": [
+        "استيراد معلومات المستخدم إلى WordPress بكميات كبيرة"
+      ],
+      "WPMembersaddonsupport": [
+        "دعم إضافة أعضاء WP"
+      ],
+      "Defaultcustomfieldsimport": [
+        "استيراد الحقول المخصصة الافتراضية"
+      ],
+      "Sendsautomatedpasswordnotificationemailoptional": [
+        "يرسل بريدًا إلكترونيًا لإشعار كلمة المرور تلقائيًا (اختياري)"
+      ],
+      "WPUltimateExporter": [
+        "WP Ultimate Exporter"
+      ],
+      "ExportallyourWordPressdataasCSVfileforbackup": [
+        "قم بتصدير جميع بيانات WordPress الخاصة بك كملف CSV للنسخ الاحتياطي"
+      ],
+      "Supportsdefaultcustomfields": [
+        "يدعم الحقول المخصصة الافتراضية"
+      ],
+      "UTF8encodedCSVfile": [
+        "ملف CSV بترميز UTF-8"
+      ],
+      "SupportPostPageCustomPost": [
+        "دعم المنشور والصفحة والمنشور المخصص"
+      ],
+      "Filteredexportbasedonperiodoftimeauthors": [
+        "تصدير تمت تصفيته بناءً على الفترة الزمنية والمؤلفين"
+      ],
+      "Addons": [
+        "الإضافات"
+      ],
+      "Posts": [
+        "المقالات"
+      ],
+      "CustomPosts": [
+        "منشورات مخصصة"
+      ],
+      "PostTags": [
+        "وسوم المقالات"
+      ],
+      "PostCategories": [
+        "تصنيفات المقالات"
+      ],
+      "Users": [
+        "المستخدمون"
+      ],
+      "Taxonomies": [
+        "التصنيفات"
+      ],
+      "Comments": [
+        "التعليقات"
+      ],
+      "CustomerReviews": [
+        "مراجعات العملاء"
+      ],
+      "WooCommerceReviews": [
+        "تقييمات ووكومرس"
+      ],
+      "WooCommerceCoupons": [
+        "كوبونات WooCommerce"
+      ],
+      "WooCommerceRefunds": [
+        "المبالغ المستردة WooCommerce"
+      ],
+      "WooCommerceVariations": [
+        "الاختلافات في WooCommerce"
+      ],
+      "Found": [
+        "تم العثور عليها"
+      ],
+      "CreateTopic": [
+        "إنشاء موضوع"
+      ],
+      "Createasupport": [
+        "قم بإنشاء موضوع دعم هنا للمساعدة"
+      ],
+      "Learnfrom": [
+        "تعلم من منشورات مدونتنا"
+      ],
+      "TechnicalDocumentation": [
+        "التوثيق التقني"
+      ],
+      "Getsampleandexamplefiles": [
+        "احصل على نماذج وأمثلة للملفات"
+      ],
+      "PleaseinstalltheUltimateExportertoexportallyourWordPressdataasCSV": [
+        "يرجى تثبيت Ultimate Exporter لتصدير جميع بيانات WordPress الخاصة بك بتنسيق CSV"
+      ],
+      "Clickheretoinstall": [
+        "انقر هنا للتثبيت"
+      ],
+      "Hire_us": [
+        "استئجار لنا"
+      ],
+      "GetSupport": [
+        "احصل على الدعم"
+      ],
+      "SampleCSVXML": [
+        "نموذج CSV & XML"
+      ],
+      "WarningImportforsomedataaredisabledInstallandactivatebelowpluginsfirst": [
+        "تحذير: بعض الإضافات مفقودة ، فمن المستحسن"
+      ],
+      "ChooseUploadMethod": [
+        "اختر طريقة التحميل"
+      ],
+      "Media": [
+        "الوسائط"
+      ],
+      "CsvUploadFields": [
+        "رفع ملف"
+      ],
+      "Device": [
+        "جهاز"
+      ],
+      "Remote": [
+        "بعيد"
+      ],
+      "SelectDeviceZIPfile": [
+        "اختر الجهاز لتحميل الصور مباشرة من جهازك كملف ZIP."
+      ],
+      "SelectDeviceCSVfile": [
+        "اختر بعيد لتحميل الصور من عناوين URL لمواقع الويب البعيدة."
+      ],
+      "MediaContinue": [
+        "استمر"
+      ],
+      "FreshImport": [
+        "استيراد جديد"
+      ],
+      "UpdateContent": [
+        "تحديث المحتوى"
+      ],
+      "UpdateThisMappingAs": [
+        "تحديث هذا التعيين كـ"
+      ],
+      "Overwritetheavailableimages": [
+        "استبدال الصور المتاحة"
+      ],
+      "AlwaysCreateAsNewImage": [
+        "أنشئ دائمًا كصورة جديدة"
+      ],
+      "ImportCompleted": [
+        "تم استيراد البيانات!"
+      ],
+      "importHasFinished": [
+        "تم استيراد البيانات بنجاح. انقر على الزر أدناه لتنزيل والوصول إلى سجل استيراد مفصل."
+      ],
+      "ImportLog": [
+        "سجل الاستيراد"
+      ],
+      "FailedMedia": [
+        "وسائط فاشلة"
+      ],
+      "UseTheFailedImages": [
+        "استخدم ملف CSV للصور الفاشلة لتصحيح عناوين URL وإعادة استيراد الصور"
+      ],
+      "FeaturedFields": [
+        "الحقول المميزة"
+      ],
+      "Summary": [
+        "ملخص"
+      ],
+      "csv_importlink": [
+        "click here"
+      ],
+      "DragDropyourfilesor": [
+        "اسحب وأفلت ملفاتك أو"
+      ],
+      "AccessKey": [
+        "AccessKey"
+      ],
+      "newtabfailedMedia": [
+        "Media"
+      ],
+      "MediaFields": [
+        "حقول الوسائط"
+      ],
+      "ACFFlexibleFields": [
+        "الحقول المرنة المتقدمة (ACF)"
+      ],
+      "SlimSeoFields": [
+        "حقول Slim SEO"
+      ],
+      "EDDDownloadsFields": [
+        "حقول تنزيلات EDD"
+      ],
+      "EDDCustomersFields": [
+        "حقول عملاء EDD"
+      ],
+      "EDDDiscountsFields": [
+        "حقول خصومات EDD"
+      ],
+      "SureCartProductsFields": [
+        "حقول منتجات SureCart"
+      ],
+      "SureCartCustomersFields": [
+        "حقول عملاء SureCart"
+      ],
+      "SureCartCouponsFields": [
+        "حقول قسائم SureCart"
+      ],
+      "ListeoFields": [
+        "حقول Listeo"
+      ],
+      "jetEngineCPTRFFields": [
+        "Jet Engine CPT RF Fields"
+      ],
+      "JetEngineCCTFields": [
+        "حقول JetEngine CCT"
+      ],
+      "JetEngineCCTRFFields": [
+        "حقول JetEngine CCT RF"
+      ],
+      "jetEngineTaxonomyFields": [
+        "Jet Engine Taxonomy Fields"
+      ],
+      "jetEngineTaxonomyRFFields": [
+        "Jet Engine Taxonomy Repeater Fields"
+      ],
+      "JetEngineBookingFields": [
+        "حقول حجز JetEngine"
+      ],
+      "SeoPressFields": [
+        "حقول SEOPress"
+      ],
+      "ElementorFields": [
+        "حقول المنتور"
+      ],
+      "TotalPressFields": [
+        "حقول TotalPress"
+      ],
+      "replyattributesfields": [
+        "حقول سمات الرد"
+      ],
+      "forumattributesfields": [
+        "حقول سمات المنتدى"
+      ],
+      "topicattributesfields": [
+        "حقول سمات الموضوع"
+      ],
+      "PPOMMetaFields": [
+        "حقول تعريف PPOM"
+      ],
+      "EventCalendarMetaFields": [
+        "حقول تعريف Event Calendar"
+      ],
+      "EPOMetaFields": [
+        "حقول تعريف EPO"
+      ],
+      "WCPAMetaFields": [
+        "حقول تعريف WCPA"
+      ],
+      "ListingMetaFields": [
+        "حقول القائمة"
+      ],
+      "Pages": [
+        "الصفحات"
+      ],
+      "WooCommerceProducts": [
+        "منتجات ووكومرس"
+      ],
+      "Thisfeatureisavailable": [
+        "This feature is available in"
+      ],
+      "UltimateCSVImporterPro": [
+        "Ultimate CSV Importer Pro"
+      ],
+      "installactivate": [
+        "to install and activate now"
+      ],
+      "EnableSingleImportOption": [
+        "تمكين خيار الاستيراد/التصدير الفردي"
+      ],
+      "subcribe": [
+        "Subscribe"
+      ],
+      "EnableSingleImport": [
+        "تمكين الاستيراد/التصدير الفردي"
+      ],
+      "Scheduledexporthelpsbackupaseditabletextfileformat": [
+        "Scheduled export helps support as editable text file format at regular interval."
+      ],
+      "ExportfeatureisdisabledInstallandactivatetheaddonpluginfirst": [
+        "Warning: the export function is disabled. Install and activate the additional plugin first"
+      ],
+      "Gotoaddons": [
+        "Go to addons"
+      ],
+      "toaform": [
+        "to support the forum"
+      ],
+      "instruction": [
+        "(No.of records per file)"
+      ],
+      "backupineditableformat": [
+        "backup copy in editable format"
+      ],
+      "Letsyougetonlyrequireddataw    iththedifferentadvancedfilters": [
+        "Allows you to get only the required data with the different advanced filters"
+      ],
+      "Backupin4differentfileformatslikeCSV": [
+        "Backup in 4 different file formats like CSV, XML, JSON, XLS."
+      ],
+      "WooCommerceOrders": [
+        "WooCommerce Orders"
+      ],
+      "UltimateExporterPro": [
+        "Ultimate Exporter Pro"
+      ],
+      "Dashboard_ImportsRun": [
+        "عمليات الاستيراد المنفذة"
+      ],
+      "Dashboard_RecordsCreated": [
+        "السجلات المنشأة"
+      ],
+      "Dashboard_RecordsExported": [
+        "السجلات المصدرة"
+      ],
+      "Dashboard_AIAssists": [
+        "AI Assists"
+      ],
+      "Dashboard_TotalTemplates": [
+        "إجمالي القوالب"
+      ],
+      "Dashboard_SavedTemplates": [
+        "قوالب التعيين المحفوظة"
+      ],
+      "Dashboard_TotalInserted": [
+        "إجمالي السجلات المدرجة"
+      ],
+      "Dashboard_ExportVolume": [
+        "حجم المصدرات"
+      ],
+      "Dashboard_ValidationFixes": [
+        "Validation fixes"
+      ],
+      "Dashboard_AIDetail": [
+        "Auto / Corrections / Validation"
+      ],
+      "Dashboard_ImportVolume": [
+        "حجم الاستيراد"
+      ],
+      "Dashboard_Last12Months": [
+        "آخر 12 شهرًا"
+      ],
+      "Dashboard_MonthlyImports": [
+        "الاستيراد الشهري"
+      ],
+      "Dashboard_NoChartData": [
+        "لا تتوفر بيانات استيراد حتى الآن."
+      ],
+      "Dashboard_ContentDistribution": [
+        "توزيع المحتوى"
+      ],
+      "Dashboard_RecentActivity": [
+        "النشاط الأخير"
+      ],
+      "Dashboard_ViewAllLogs": [
+        "عرض جميع السجلات"
+      ],
+      "Dashboard_Activity": [
+        "النشاط"
+      ],
+      "Dashboard_Records": [
+        "السجلات"
+      ],
+      "Dashboard_QuickStats": [
+        "Quick Stats"
+      ],
+      "Dashboard_TotalImports": [
+        "Total Imports"
+      ],
+      "Dashboard_TotalExports": [
+        "Total Exports"
+      ],
+      "Dashboard_ScheduledJobs": [
+        "Scheduled Jobs"
+      ],
+      "Dashboard_FailedJobs": [
+        "Failed Jobs"
+      ],
+      "Dashboard_TemplatesSaved": [
+        "Templates Saved"
+      ],
+      "Dashboard_MediaImported": [
+        "تم استيراد الوسائط"
+      ],
+      "SelectField": [
+        "Select Field"
+      ],
+      "Failed": [
+        "فشل"
+      ],
+      "PluginVersion": [
+        "إصدار الإضافة"
+      ],
+      "LifterCourseSettingsFields": [
+        "حقول إعدادات دورة Lifter"
+      ],
+      "LifterReviewSettingsFields": [
+        "حقول إعدادات مراجعة Lifter"
+      ],
+      "LifterCouponSettingsFields": [
+        "حقول إعدادات قسيمة Lifter"
+      ],
+      "LifterLessonSettingsFields": [
+        "حقول إعدادات درس Lifter"
+      ],
+      "FifuPostFields": [
+        "حقول منشور FIFU"
+      ],
+      "FifuPageFields": [
+        "حقول صفحة FIFU"
+      ],
+      "FifuCustomPostFields": [
+        "حقول منشور مخصص FIFU"
+      ],
+      "BuddyFields": [
+        "حقول BuddyPress"
+      ],
+      "WPCompleteFields": [
+        "حقول WPComplete"
+      ],
+      "IterationId": [
+        "Interation Limit"
+      ],
+      "Iteration": [
+        "Iteration"
+      ],
+      "Exportiteration_id": [
+        "معالجة التصدير في تكرارات"
+      ],
+      "Toast_PleaseChooseHeaderManipulation": [
+        "Please choose Header Manipulation in the drop down"
+      ],
+      "Toast_ConfigureAISettingsConnectors": [
+        "Configure AI at Settings → Connectors."
+      ],
+      "Toast_NoImagesInZip": [
+        "There is no image files in the uploaded zip file"
+      ],
+      "Toast_MandatoryField": [
+        "{field} is a mandatory field"
+      ],
+      "Toast_UpgradeToProFeature": [
+        "Please upgrade to PRO for this feature"
+      ],
+      "Toast_SettingsUpdated": [
+        "Settings successfully updated"
+      ],
+      "Toast_AdminOnlyOption": [
+        "Only admin can change this option"
+      ],
+      "Toast_MailSent": [
+        "Mail sent successfully"
+      ],
+      "Toast_NewsletterSubscribed": [
+        "Successfully subscribed to newsletter"
+      ],
+      "Toast_InvalidEmail": [
+        "The email you entered is not valid"
+      ],
+      "Toast_BucketSelected": [
+        "Bucket selected"
+      ],
+      "Toast_LogDoesNotExist": [
+        "Log doesn\\\\"
+      ],
+      "Toast_NoFailedMediaLog": [
+        "No failed media log available for this import."
+      ],
+      "Toast_SelectModuleToExport": [
+        "Select a module to export"
+      ],
+      "Toast_FilePathMissing": [
+        "File path is missing!"
+      ],
+      "Toast_TypeExportFileName": [
+        "Please type export file name"
+      ],
+      "Support_RateUsPrefix": [
+        "هل تستمتع بـ WP Ultimate CSV Importer؟ قيّمنا على"
+      ],
+      "Support_RateUsLinkText": [
+        "wordpress.org!"
+      ],
+      "Support_NeedHelp": [
+        "هل تحتاج إلى مساعدة؟"
+      ],
+      "Support_ThanksForUsing": [
+        "شكرًا لاستخدامك إضافة ووردبريس الخاصة بنا!"
+      ],
+      "Support_FreeSupportPrefix": [
+        "إذا كنت تستخدم النسخة المجانية، يرجى إنشاء موضوع دعم في"
+      ],
+      "Support_ForumSuffix": [
+        ". يراقب فريقنا المنتدى بنشاط وسيسعد بمساعدتك هناك."
+      ],
+      "Support_PreSalePrefix": [
+        "هل لديك سؤال قبل الشراء أو تفكر في الترقية إلى Pro؟ لا تتردد في مراسلتنا مباشرة على"
+      ],
+      "Support_PreSaleSuffix": [
+        "، نحن هنا لمساعدتك في اختيار الحل المناسب."
+      ],
+      "Support_ThanksAgain": [
+        "شكرًا مرة أخرى لاختيارك Smackcoders!"
+      ],
+      "Support_SubmitQuery": [
+        "إرسال الاستفسار"
+      ],
+      "Banner_MaintenanceEnabled": [
+        "Maintenance mode is enabled"
+      ],
+      "Common_Disable": [
+        "Disable"
+      ],
+      "ImportResumeDetected": [
+        "An unfinished import was detected. Would you like to resume it?"
+      ],
+      "ImportResumeFile": [
+        "File"
+      ],
+      "ImportResumeProgress": [
+        "Progress"
+      ],
+      "ImportResumeButton": [
+        "Resume"
+      ],
+      "ImportResumeDiscard": [
+        "Discard"
+      ],
+      "ImportResumeDiscarding": [
+        "Discarding…"
+      ],
+      "ImportResumePreparing": [
+        "Preparing resume…"
+      ],
+      "ImportResumeFailed": [
+        "Could not resume this import."
+      ],
+      "ImportResumeDiscardFailed": [
+        "Could not discard this import session."
+      ],
+      "Banner_UpgradeMessage": [
+        "افتح التحديثات والجدولة والحقول المتقدمة وميزات الاستيراد والتصدير المتقدمة مع Pro. احصل على خصم يصل إلى 22٪ في تخفيضات عيد ميلادنا الخامس عشر"
+      ],
+      "Common_UpgradeToPro": [
+        "الترقية إلى الإصدار الاحترافي"
+      ],
+      "Modal_ProOnlyMessage": [
+        "This feature is available in the Pro version only. Upgrade now to access!"
+      ],
+      "Help_ButtonLabel": [
+        "Help"
+      ],
+      "Help_MenuTitle": [
+        "Help Menu"
+      ],
+      "Help_FetchingData": [
+        "Fetching Data..."
+      ],
+      "Help_NoResults": [
+        "No results found"
+      ],
+      "Help_SearchPlaceholder": [
+        "Search here..."
+      ],
+      "Common_NeedHelp": [
+        "هل تحتاج إلى مساعدة؟"
+      ],
+      "Month_January": [
+        "January"
+      ],
+      "Month_February": [
+        "February"
+      ],
+      "Month_March": [
+        "March"
+      ],
+      "Month_April": [
+        "April"
+      ],
+      "Month_May": [
+        "May"
+      ],
+      "Month_June": [
+        "June"
+      ],
+      "Month_July": [
+        "July"
+      ],
+      "Month_August": [
+        "August"
+      ],
+      "Month_September": [
+        "September"
+      ],
+      "Month_October": [
+        "October"
+      ],
+      "Month_November": [
+        "November"
+      ],
+      "Month_December": [
+        "December"
+      ],
+      "Toast_SelectFileToUpload": [
+        "Please select a file to upload."
+      ],
+      "Toast_MissingRequiredFields": [
+        "Some required fields are missing. Please check the file and try again."
+      ],
+      "Toast_FailedImportTryAgain": [
+        "Failed to import CSV. Please try again."
+      ],
+      "Toast_ErrorOccurredTryAgain": [
+        "An error occurred while importing. Please try again."
+      ],
+      "Toast_InstallPhpZip": [
+        "Please install php-zip extension"
+      ],
+      "Error_ServerTimeout": [
+        "Server connection has timed out"
+      ],
+      "Link_FixThisError": [
+        "Click here to fix this error"
+      ],
+      "Toast_UpdateUrlToProcess": [
+        "Please update URL to process"
+      ],
+      "Label_MatchBy": [
+        "Match by:"
+      ],
+      "Toast_SelectMatchField": [
+        "Please select a match field."
+      ],
+      "Toast_MatchFieldNotMapped": [
+        "{field} field is not mapped in the mapping section. Please map it in WordPress Core Fields."
+      ],
+      "Common_AdminOnly": [
+        "This is only for administrator"
+      ],
+      "Common_FieldSettings": [
+        "Field Settings"
+      ],
+      "Common_ContentGenerator": [
+        "Content Generator"
+      ],
+      "Common_CustomFunction": [
+        "Custom Function"
+      ],
+      "Common_SearchField": [
+        "Search field..."
+      ],
+      "Common_HeaderManipulation": [
+        "Header Manipulation"
+      ],
+      "Common_ChooseCsvFile": [
+        "Choose CSV File"
+      ],
+      "Common_ImportConfigurationSection": [
+        "قسم تكوين الاستيراد"
+      ],
+      "Common_ProFeatureTooltip": [
+        "This feature is available in the Pro version"
+      ],
+      "MediaImportPath": [
+        "مسار استيراد الوسائط"
+      ],
+      "MediaImportPath_RetainOriginal": [
+        "الاحتفاظ بمسار الملف الأصلي بدلاً من مجلد الشهر الحالي"
+      ],
+      "Module_WooCommerceReviews": [
+        "مراجعات"
+      ],
+      "Module_WooCommerceProducts": [
+        "منتجات"
+      ],
+      "Module_WooCommerceOrders": [
+        "طلبات"
+      ],
+      "Module_WooCommerceCustomers": [
+        "عملاء"
+      ],
+      "Common_Images": [
+        "الصور"
+      ],
+      "Common_Data": [
+        "بيانات"
+      ],
+      "Common_PRO": [
+        "احترافي"
+      ],
+      "Common_SupportedFileTypes": [
+        "أنواع الملفات المدعومة"
+      ],
+      "Common_UploadTemplates": [
+        "قوالب التحميل"
+      ],
+      "Common_SmartSchedule": [
+        "الجدولة الذكية"
+      ],
+      "Common_ScheduleExport": [
+        "جدولة التصدير"
+      ],
+      "Common_GoogleSheet": [
+        "جداول بيانات Google"
+      ],
+      "Common_DragDropFilesFor": [
+        "Drag & Drop your files for"
+      ],
+      "Pro_UpsellLong": [
+        "افتح الإمكانيات الكاملة لهذه الميزة مع إصدار PRO الخاص بنا! قم بترقية تجربتك واحصل على مزايا حصرية الآن."
+      ],
+      "Pro_UpgradeNow": [
+        "الترقية إلى PRO الآن!"
+      ],
+      "Label_WhenDuplicateFound": [
+        "When duplicate found:"
+      ],
+      "DuplicateAction_Skip": [
+        "Skip"
+      ],
+      "DuplicateAction_UpdateExisting": [
+        "Update existing"
+      ],
+      "DuplicateAction_CreateNew": [
+        "Create new"
+      ],
+      "ImportConfig_NoCreateNewIfNoMatch": [
+        "Do not create new posts if no matching record is found"
+      ],
+      "ImportConfig_AdaptiveFileProcessing": [
+        "هل تريد المعالجة التكيفية للملف سجلًا بسجل؟"
+      ],
+      "ImportConfig_IterativePieceByPiece": [
+        "معالجة تكرارية جزء بجزء"
+      ],
+      "ImportConfig_RecordsPerIteration": [
+        "في كل تكرار، كم سجل يجب معالجته"
+      ],
+      "ImportConfig_FilterByCategory": [
+        "هل تريد استيراد البيانات المفلترة حسب الفئة؟"
+      ],
+      "Mapping_CreateWpCustomFields": [
+        "إنشاء حقول مخصصة لـ WP"
+      ],
+      "Mapping_ManageFilteringOptions": [
+        "إدارة خيارات التصفية"
+      ],
+      "Mapping_AddCustomField": [
+        "إضافة حقل مخصص"
+      ],
+      "Mapping_AddRule": [
+        "إضافة قاعدة"
+      ],
+      "Mapping_NoWpCustomFields": [
+        "لا توجد حقول مخصصة لـ WP"
+      ],
+      "Mapping_ProductAttribute": [
+        "PRODUCT ATTRIBUTE {n}"
+      ],
+      "Common_Of": [
+        "من"
+      ],
+      "Common_Add": [
+        "Add"
+      ],
+      "Filter_AND": [
+        "AND"
+      ],
+      "Filter_OR": [
+        "OR"
+      ],
+      "Export_WPQuery": [
+        "استعلام WP"
+      ],
+      "Export_QueryPostType": [
+        "استعلام نوع المنشور"
+      ],
+      "Export_QueryUser": [
+        "استعلام المستخدم"
+      ],
+      "Export_QueryComment": [
+        "استعلام التعليق"
+      ],
+      "Export_QueryArgsHint": [
+        "أدخل وسائط WP_Query ككائن يشبه JSON."
+      ],
+      "Export_QueryArgsTooltipTitle": [
+        "يمكنك إدخال وسائط مثل:"
+      ],
+      "Export_GoogleSheetCsv": [
+        "تصدير بيانات CSV إلى جدول بيانات Google"
+      ],
+      "Export_ClientMode": [
+        "السماح لغير المسؤولين بتشغيل هذا التصدير في وضع العميل"
+      ],
+      "Export_ByLanguageCode": [
+        "تصدير البيانات بناءً على رمز اللغة"
+      ],
+      "Export_ByPostId": [
+        "تصدير البيانات حسب معرف المنشور المحدد"
+      ],
+      "Export_ByPostTitle": [
+        "تصدير البيانات حسب عنوان المنشور المحدد"
+      ],
+      "Export_CustomersPurchased": [
+        "Export customers based on customer purchased"
+      ],
+      "Export_CustomersRole": [
+        "Export customers based on role"
+      ],
+      "Export_CustomersByProduct": [
+        "Export customers based on the product that the customer purchased"
+      ],
+      "Export_EnableRollback": [
+        "Enable Rollback"
+      ],
+      "Export_OrdersByProduct": [
+        "Export Orders based on the Product that the order is placed."
+      ],
+      "Export_OrderByPayment": [
+        "Export Order based on Payment Options."
+      ],
+      "Export_Bundle": [
+        "حزمة"
+      ],
+      "Export_DataPreview": [
+        "معاينة البيانات"
+      ],
+      "Export_WithIteration": [
+        "Export with Iteration"
+      ],
+      "Export_EnterIterationId": [
+        "Enter Iteration ID"
+      ],
+      "Module_JetBooking": [
+        "Jet Booking"
+      ],
+      "Module_JetReviews": [
+        "Jet Reviews"
+      ],
+      "Export_SplitRecord": [
+        "تقسيم السجل"
+      ],
+      "Export_AvailableRecords": [
+        "Available records"
+      ],
+      "Export_ZeroRecordsHint": [
+        "If record count is zero, kindly change the filter settings and click Export."
+      ],
+      "Common_Preview": [
+        "معاينة"
+      ],
+      "Export_Migrate": [
+        "ترحيل"
+      ],
+      "Feedback_Title": [
+        "How was your experience?"
+      ],
+      "Feedback_Subtitle": [
+        "Help us improve WP Ultimate CSV Importer"
+      ],
+      "Feedback_RateOnWpOrg": [
+        "Rate our plugin on WordPress.org"
+      ],
+      "Feedback_RatingHelps": [
+        "Your rating helps other users discover our plugin"
+      ],
+      "Feedback_RateButton": [
+        "Rate on WordPress.org"
+      ],
+      "Common_Or": [
+        "or"
+      ],
+      "Feedback_UnlockPremium": [
+        "Unlock Premium Features"
+      ],
+      "Feedback_FeatureMapping": [
+        "Advanced field mapping"
+      ],
+      "Feedback_FeatureScheduled": [
+        "Scheduled imports"
+      ],
+      "Feedback_FeatureCPT": [
+        "Custom post types support"
+      ],
+      "Feedback_FeatureSupport": [
+        "Priority support"
+      ],
+      "Feedback_UpgradePremium": [
+        "Upgrade to Premium"
+      ],
+      "Feedback_DontShowAgain": [
+        "Don\\\\"
+      ],
+      "Mapping_AddedRules": [
+        "القواعد المضافة:"
+      ],
+      "Mapping_DelimiterDetected": [
+        "الفاصل المكتشف من الملف المرفوع :"
+      ],
+      "Common_SelectOption": [
+        "--select--"
+      ],
+      "Common_SelectDash": [
+        "-- Select --"
+      ],
+      "Common_CsvFields": [
+        "CSV Fields"
+      ],
+      "Filter_Elements": [
+        "العناصر"
+      ],
+      "Filter_Rule": [
+        "القاعدة"
+      ],
+      "Filter_Value": [
+        "القيمة"
+      ],
+      "Filter_Rules": [
+        "Rules"
+      ],
+      "Filter_Values": [
+        "Values"
+      ],
+      "Filter_Condition": [
+        "Condition"
+      ],
+      "Filter_Actions": [
+        "الإجراءات"
+      ],
+      "Filter_EnterValue": [
+        "Enter value"
+      ],
+      "FilterRule_Equals": [
+        "Equals"
+      ],
+      "FilterRule_NotEquals": [
+        "Not Equals"
+      ],
+      "FilterRule_GreaterThan": [
+        "Greater Than"
+      ],
+      "FilterRule_EqualsOrGreaterThan": [
+        "Equals or Greater Than"
+      ],
+      "FilterRule_LessThan": [
+        "Less Than"
+      ],
+      "FilterRule_EqualsOrLessThan": [
+        "Equals or Less Than"
+      ],
+      "FilterRule_Contains": [
+        "Contains"
+      ],
+      "FilterRule_NotContains": [
+        "Not Contains"
+      ],
+      "FilterRule_IsEmpty": [
+        "Is Empty"
+      ],
+      "FilterRule_IsNotEmpty": [
+        "Is Not Empty"
+      ],
+      "DelimiterName_Comma": [
+        "فاصلة"
+      ],
+      "DelimiterName_Semicolon": [
+        "فاصلة منقوطة"
+      ],
+      "DelimiterName_Tab": [
+        "علامة جدولة"
+      ],
+      "DelimiterName_Pipe": [
+        "أنبوب"
+      ],
+      "DelimiterName_Unknown": [
+        "unknown"
+      ],
+      "FieldLabel_Title": [
+        "Title"
+      ],
+      "FieldLabel_ID": [
+        "ID"
+      ],
+      "FieldLabel_Content": [
+        "Content"
+      ],
+      "FieldLabel_ShortDescription": [
+        "Short Description"
+      ],
+      "FieldLabel_PublishDate": [
+        "Publish Date"
+      ],
+      "FieldLabel_Slug": [
+        "Slug"
+      ],
+      "FieldLabel_Author": [
+        "Author"
+      ],
+      "FieldLabel_Status": [
+        "Status"
+      ],
+      "FieldLabel_FeaturedImage": [
+        "Featured Image"
+      ],
+      "FieldLabel_Format": [
+        "Format"
+      ],
+      "FieldLabel_CommentStatus": [
+        "Comment Status"
+      ],
+      "FieldLabel_PingStatus": [
+        "Ping Status"
+      ],
+      "FieldLabel_Parent": [
+        "Parent"
+      ],
+      "FieldLabel_Order": [
+        "Order"
+      ],
+      "FieldLabel_PageTemplate": [
+        "Page Template"
+      ],
+      "FieldLabel_LanguageCode": [
+        "Language Code"
+      ],
+      "FieldLabel_PostExpirator": [
+        "Post Expirator"
+      ],
+      "FieldLabel_PostExpiratorStatus": [
+        "Post Expirator Status"
+      ],
+      "FieldLabel_TemplateTitle": [
+        "Template title"
+      ],
+      "FieldLabel_TemplateContent": [
+        "Template content"
+      ],
+      "FieldLabel_Style": [
+        "Style"
+      ],
+      "FieldLabel_TemplateType": [
+        "Template type"
+      ],
+      "FieldLabel_CreatedTime": [
+        "Created time"
+      ],
+      "FieldLabel_CreatedBy": [
+        "Created by"
+      ],
+      "FieldLabel_TemplateStatus": [
+        "Template status"
+      ],
+      "FieldLabel_Category": [
+        "Category"
+      ],
+      "Validation_ValidateCsv": [
+        "التحقق من CSV"
+      ],
+      "Validation_ResultsTitle": [
+        "نتائج التحقق من CSV"
+      ],
+      "Validation_ScanMode": [
+        "وضع الفحص"
+      ],
+      "Validation_Quick10": [
+        "فحص سريع (10 صفوف)"
+      ],
+      "Validation_Quick50": [
+        "فحص سريع (50 صفًا)"
+      ],
+      "Validation_FullScan": [
+        "فحص كامل"
+      ],
+      "Validation_HealthScore": [
+        "درجة الصحة"
+      ],
+      "Validation_Warnings": [
+        "تحذيرات"
+      ],
+      "Validation_Critical": [
+        "أخطاء حرجة"
+      ],
+      "Validation_CanImport": [
+        "يمكن الاستيراد"
+      ],
+      "Validation_ScannedSummary": [
+        "تم فحص {scanned} من {total} صفوف."
+      ],
+      "Validation_Row": [
+        "صف"
+      ],
+      "Validation_Column": [
+        "عمود"
+      ],
+      "Validation_Field": [
+        "حقل"
+      ],
+      "Validation_Severity": [
+        "الخطورة"
+      ],
+      "Validation_Message": [
+        "الرسالة"
+      ],
+      "Validation_NoIssues": [
+        "No validation issues found."
+      ],
+      "Common_Yes": [
+        "Yes"
+      ],
+      "Common_No": [
+        "No"
+      ],
+      "Common_Close": [
+        "Close"
+      ],
+      "Toast_ValidationBlocked": [
+        "Import is blocked due to critical validation errors."
+      ],
+      "Toast_ValidationWarnings": [
+        "Validation completed with warnings. You can still import."
+      ],
+      "Toast_ValidationPassed": [
+        "CSV validation passed."
+      ],
+      "Toast_ValidationFailed": [
+        "CSV validation request failed."
+      ],
+      "UpgradetoPROusingcode": [
+        "الترقية إلى PREMIUM باستخدام الرمز"
+      ],
+      "Unlockfeatureslikebulkimportadvanced exportschedulingcontentupdatemorepluslifetimesupport": [
+        "افتح ميزات مثل الاستيراد المجمع، والتصدير المتقدم، والجدولة الزمنية، وتحديث المحتوى، والمزيد، بالإضافة إلى دعم مدى الحياة"
+      ],
+      "upgradenow": [
+        "قم بالترقية الآن"
+      ],
+      "WP Ultimate CSV Importer": [
+        ""
+      ],
+      "https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html": [
+        ""
+      ],
+      "Seamlessly create posts, custom posts, pages, media, SEO and more from your CSV data with ease.": [
+        ""
+      ],
+      "Smackcoders": [
+        ""
+      ],
+      "https://www.smackcoders.com/wordpress.html": [
+        ""
+      ],
+      "Quick Feedback": [
+        ""
+      ],
+      "If you have a moment, please share why you are deactivating WP Ultimate CSV Importer.": [
+        ""
+      ],
+      "Please tell us more (optional)": [
+        ""
+      ],
+      "Submit & Deactivate": [
+        ""
+      ],
+      "Skip & Deactivate": [
+        ""
+      ],
+      "Sending feedback…": [
+        ""
+      ],
+      "Thank you for your feedback! Deactivating the plugin…": [
+        ""
+      ],
+      "Could not send feedback. You can skip deactivation or try again.": [
+        ""
+      ],
+      "This is a temporary deactivation for testing.": [
+        ""
+      ],
+      "Something isn't working properly.": [
+        ""
+      ],
+      "I found a better alternative.": [
+        ""
+      ],
+      "It's missing a specific feature.": [
+        ""
+      ],
+      "I no longer need the plugin.": [
+        ""
+      ],
+      "Other": [
+        ""
+      ],
+      "Close": [
+        "إغلاق"
+      ],
+      "Deactivation reason": [
+        ""
+      ],
+      "Share additional details…": [
+        ""
+      ],
+      "You do not have permission to perform this action.": [
+        ""
+      ],
+      "Invalid feedback reason.": [
+        ""
+      ],
+      "Plugin Deactivation Feedback": [
+        ""
+      ],
+      "Feedback Reason:": [
+        ""
+      ],
+      "Not specified": [
+        ""
+      ],
+      "Additional Comment:": [
+        ""
+      ],
+      "None": [
+        ""
+      ],
+      "Site URL:": [
+        ""
+      ],
+      "Plugin Version:": [
+        ""
+      ],
+      "WordPress Version:": [
+        ""
+      ],
+      "PHP Version:": [
+        ""
+      ],
+      "User ID:": [
+        ""
+      ],
+      "User Name:": [
+        ""
+      ],
+      "User Email:": [
+        ""
+      ],
+      "Date & Time:": [
+        ""
+      ],
+      "Permission denied.": [
+        ""
+      ],
+      "Invalid import session.": [
+        ""
+      ],
+      "You do not have sufficient permissions to access this page.": [
+        ""
+      ],
+      "No data found.": [
+        ""
+      ],
+      "Unable to resume import.": [
+        ""
+      ],
+      "Invalid ID passing.": [
+        ""
+      ],
+      "Security check failed.": [
+        ""
+      ],
+      "Uncategorized": [
+        ""
+      ],
+      "Can't insert this %1$s. %2$s": [
+        ""
+      ],
+      "Can't insert this %s": [
+        ""
+      ],
+      "Inserted %1$s ID: %2$d, %3$s": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create content. Invalid API key provided. Please check your API key.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create content. Rate limit reached for requests or you exceeded your current quota.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create content. Please check your inputs.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create content. The server had an error while processing your request.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create content. The engine is currently overloaded, please try again later.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create short description. Invalid API key provided. Please check your API key.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create short description. Rate limit reached for requests or you exceeded your current quota.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create short description. Please check your inputs.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create short description. The server had an error while processing your request.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create short description. The engine is currently overloaded, please try again later.": [
+        ""
+      ],
+      "Updated %1$s ID: %2$d, %3$s": [
+        ""
+      ],
+      "Skipped. No matching record found.": [
+        ""
+      ],
+      "WooCommerce Products": [
+        ""
+      ],
+      "Users / Customers": [
+        "المستخدمون / العملاء"
+      ],
+      "Custom Post Types": [
+        ""
+      ],
+      "Media Imported": [
+        "تم استيراد الوسائط"
+      ],
+      "Import Failed": [
+        ""
+      ],
+      "Import Completed": [
+        ""
+      ],
+      "+%d this month": [
+        ""
+      ],
+      "No resumable import session found.": [
+        ""
+      ],
+      "This import is already completed.": [
+        ""
+      ],
+      "Import file metadata is missing. Cannot resume.": [
+        ""
+      ],
+      "Mapping template is missing. Cannot resume.": [
+        ""
+      ],
+      "Import file no longer exists on the server.": [
+        ""
+      ],
+      "You do not have sufficient permissions to download this file.": [
+        ""
+      ],
+      "CSV file is missing or not readable.": [
+        ""
+      ],
+      "CSV file is empty.": [
+        ""
+      ],
+      "Unable to read CSV file.": [
+        ""
+      ],
+      "CSV file is not valid UTF-8 encoding.": [
+        ""
+      ],
+      "Unable to open CSV file.": [
+        ""
+      ],
+      "CSV reader is not open.": [
+        ""
+      ],
+      "CSV header row is missing or corrupt.": [
+        ""
+      ],
+      "CSV header row is empty.": [
+        ""
+      ],
+      "CSV validation failed.": [
+        ""
+      ],
+      "CSV header is invalid.": [
+        ""
+      ],
+      "CSV file contains no data rows.": [
+        ""
+      ],
+      "CSV row %d is corrupt or malformed.": [
+        ""
+      ],
+      "Row %1$d has %3$d columns but %2$d were expected.": [
+        ""
+      ],
+      "Row %d has an empty post title.": [
+        ""
+      ],
+      "Row %1$d is missing required value for %2$s.": [
+        ""
+      ],
+      "Row %1$d has invalid date value \\": [
+        ""
+      ],
+      "Row %1$d has invalid post status \\": [
+        ""
+      ],
+      "Row %1$d has invalid numeric value for %2$s: \\": [
+        ""
+      ],
+      "Import is blocked due to critical validation errors.": [
+        ""
+      ],
+      "Post title is not mapped in WordPress Core Fields.": [
+        ""
+      ],
+      "Required field %s is not mapped.": [
+        ""
+      ],
+      "Template not found": [
+        ""
+      ],
+      "Invalid mapping payload. Existing template mapping was not changed.": [
+        ""
+      ],
+      "Template Name Already Exists": [
+        ""
+      ],
+      "Unable to save template mapping": [
+        ""
+      ],
+      "Unauthorized access.": [
+        ""
+      ],
+      "Invalid input.": [
+        ""
+      ],
+      "Upload directory not found.": [
+        ""
+      ],
+      "Invalid file path.": [
+        ""
+      ],
+      "Import your user records available in the CSV/XML file with custom fields, Woocommerce Shipping and Billing details.": [
+        ""
+      ],
+      "Import your WooCommerce Products records with attributes, categories, tags, and images available in the CSV/XML file.": [
+        "استورد سجلات منتجات WooCommerce مع السمتين والفئات والعلامات والصور المتاحة في ملف CSV/XML."
+      ],
+      "Export your Posts, Pages, Custom Posts, Users, Comments, and WooCommerce Products data as CSV files from the WordPress.": [
+        "قم بتصدير مقالاتك وصفحاتك ومنشوراتك المخصصة والمستخدمين والتعليقات ومنتجات WooCommerce كملفات CSV من ووردبريس."
+      ],
+      "Install & Activate All": [
+        "تثبيت وتفعيل الكل"
+      ],
+      "Invalid file extension": [
+        ""
+      ],
+      "CSV headers do not match the expected format.": [
+        ""
+      ],
+      "Template already exists": [
+        ""
+      ],
+      "Unable to open the file": [
+        ""
+      ],
+      "Invalid mapping payload. Template mapping was not saved.": [
+        ""
+      ],
+      "Generate a short description.": [
+        ""
+      ],
+      "ID is a mandatory field for Update mode. Please map ID in WordPress Core Fields.": [
+        ""
+      ],
+      "File upload error.": [
+        ""
+      ],
+      "Invalid file type. Only CSV files are allowed.": [
+        ""
+      ],
+      "Invalid or unpublished post ID.": [
+        ""
+      ],
+      "Upgrade Notice:": [
+        ""
+      ],
+      "Download and replace the latest version of": [
+        ""
+      ],
+      "for 10x faster import performance with easy user interface.": [
+        ""
+      ],
+      "Features Of Ultimate CSV Importer": [
+        ""
+      ],
+      "All-in-One SEO": [
+        ""
+      ],
+      "WP Customer Reviews": [
+        ""
+      ],
+      "Import from Google Sheets & Dropbox": [
+        ""
+      ],
+      "Update/Schedule": [
+        ""
+      ],
+      "Data Export": [
+        ""
+      ],
+      "Rank Math": [
+        ""
+      ],
+      "WooCommerce:Variations, Orders, Coupons": [
+        ""
+      ],
+      "5 Woocommerce Add-ons": [
+        ""
+      ],
+      "Events Manager, NextGEN Gallery": [
+        ""
+      ],
+      "Invalid file type.": [
+        ""
+      ],
+      "Loving WP Ultimate CSV Importer? 💙": [
+        ""
+      ],
+      "We’d be so grateful if you could share your experience in a quick review. It only takes a minute, and it really helps us reach more WordPress users like you.": [
+        ""
+      ],
+      "⭐ Sure, I’ll Rate It": [
+        ""
+      ],
+      "Maybe Later": [
+        ""
+      ],
+      "No, Thanks": [
+        ""
+      ],
+      "Maintenance Mode": [
+        ""
+      ],
+      "Site is under maintenance mode. Please wait a few minutes!": [
+        ""
+      ],
+      "Ultimate CSV Importer Free": [
+        "Ultimate CSV Importer Free"
+      ],
+      "Manage Addons": [
+        "إدارة الإضافات"
+      ],
+      "SureCartMigrationSubtitle": [
+        "قم بنقل بيانات متجرك بسهولة بكفاءة عالية وبدون توقف."
+      ],
+      "ConnectionWooActive": [
+        "الاتصال: ووكمرس نشط"
+      ],
+      "ConnectionWooInactive": [
+        "الاتصال: ووكمرس غير نشط"
+      ],
+      "ApiConfiguration": [
+        "تكوين API"
+      ],
+      "SurecartApiToken": [
+        "رمز SureCart API"
+      ],
+      "EnterSurecartApiTokenPlaceholder": [
+        "أدخل رمز SureCart API الخاص بك"
+      ],
+      "SaveToken": [
+        "حفظ الرمز"
+      ],
+      "SelectModule": [
+        "حدد وحدة"
+      ],
+      "ModuleProducts": [
+        "المنتجات"
+      ],
+      "ModuleCustomers": [
+        "العملاء"
+      ],
+      "ModuleCoupons": [
+        "القسائم"
+      ],
+      "ModuleOrders": [
+        "الطلبات"
+      ],
+      "Scheduling": [
+        "الجدولة"
+      ],
+      "RunImmediately": [
+        "التشغيل فوراً"
+      ],
+      "ScheduleForLater": [
+        "الجدولة لوقت لاحق"
+      ],
+      "StartMigration": [
+        "بدء الترحيل"
+      ],
+      "FieldMappingPreview": [
+        "معاينة تعيين الحقول"
+      ],
+      "FieldMappingPreviewDesc": [
+        "راجع كيفية تحويل البيانات بين المنصات."
+      ],
+      "WooCommerceFields": [
+        "حقول ووكمرس"
+      ],
+      "SurecartFields": [
+        "حقول SureCart"
+      ],
+      "MigrationFieldProductName": [
+        "اسم المنتج"
+      ],
+      "MigrationFieldProductTitle": [
+        "عنوان المنتج"
+      ],
+      "MigrationFieldSku": [
+        "رمز المنتج (SKU)"
+      ],
+      "MigrationFieldSkuCode": [
+        "رمز SKU"
+      ],
+      "MigrationFieldPrice": [
+        "السعر"
+      ],
+      "MigrationFieldRegularPrice": [
+        "السعر الافتراضي"
+      ],
+      "MigrationFieldStockStatus": [
+        "حالة المخزون"
+      ],
+      "MigrationFieldInventoryAvailability": [
+        "توفر المخزون"
+      ],
+      "FieldMappingViewOnlyNote": [
+        "وضع العرض فقط: تم تحسين تعيين الحقول تلقائيًا لـ SureCart."
+      ],
+      "CurrentMigrationProgress": [
+        "تقدم الترحيل الحالي"
+      ],
+      "StatusStartingMigration": [
+        "بدء ترحيل {module}"
+      ],
+      "StatusProcessingModule": [
+        "جاري معالجة {module}..."
+      ],
+      "StatusMigrationCompleted": [
+        "اكتمل الترحيل"
+      ],
+      "StatusMigrationFailed": [
+        "فشل الترحيل"
+      ],
+      "StatusErrorOccurred": [
+        "حدث خطأ"
+      ],
+      "StatusIdle": [
+        "خامل"
+      ],
+      "RecordsLabel": [
+        "سجلات"
+      ],
+      "StartedMinutesAgo": [
+        "بدأ منذ 5 دقائق"
+      ],
+      "EstimatedTimeRemaining": [
+        "الوقت المتبقي المقدر:"
+      ],
+      "ImportControls": [
+        "عناصر التحكم في الاستيراد"
+      ],
+      "StartPauseStopSub": [
+        "بدء عملية الاستيراد أو إيقافها مؤقتًا أو إيقافها"
+      ],
+      "ImportError": [
+        "خطأ في الاستيراد"
+      ],
+      "ImportComplete": [
+        "اكتمل الاستيراد"
+      ],
+      "ImportProgress": [
+        "تقدم الاستيراد"
+      ],
+      "Pause": [
+        "إيقاف مؤقت"
+      ],
+      "Resume": [
+        "استئناف"
+      ],
+      "rows": [
+        "صفوف"
+      ],
+      "done": [
+        "منتهي"
+      ],
+      "error": [
+        "خطأ"
+      ],
+      "Ready": [
+        "جاهز"
+      ],
+      "Elapsed": [
+        "الوقت المنقضي"
+      ],
+      "Processed": [
+        "معالجة"
+      ],
+      "TotalRecords": [
+        "إجمالي السجلات"
+      ],
+      "Imported": [
+        "المستوردة"
+      ],
+      "Remaining": [
+        "المتبقية"
+      ],
+      "LiveActivityLog": [
+        "سجل النشاط"
+      ],
+      "events": [
+        "أحداث"
+      ],
+      "ErrorsOnly": [
+        "الأخطاء فقط"
+      ],
+      "CSV": [
+        "CSV"
+      ],
+      "WaitingForEvents": [
+        "في انتظار الأحداث..."
+      ],
+      "View": [
+        "View"
+      ],
+      "Edit": [
+        "Edit"
+      ],
+      "ClickToFixError": [
+        "Click to fix error"
+      ],
+      "RollbackNow": [
+        "Rollback now"
+      ],
+      "GoDashboard": [
+        "الانتقال إلى لوحة التحكم"
+      ],
+      "NewImport": [
+        "استيراد جديد"
+      ],
+      "NewMediaImport": [
+        "استيراد وسائط جديد"
+      ],
+      "ImagePrefix": [
+        "Image:"
+      ],
+      "CategoryPrefix": [
+        "Category:"
+      ],
+      "FilePrefix": [
+        "File:"
+      ],
+      "RecordProcessed": [
+        "Record processed"
+      ],
+      "DueToDuplicateFound": [
+        "بسبب العثور على تكرار!"
+      ],
+      "SkippedNoMatching": [
+        "Skipped. No matching record found."
+      ],
+      "SampleCSV": [
+        "عينة CSV"
+      ],
+      "Export_InstallExporterMessage": [
+        "Install Ultimate Exporter to export all your WordPress data as CSV."
+      ],
+      "Export_ClickToInstall": [
+        "CLICK HERE TO INSTALL"
+      ],
+      "Export_CompletedSuccessfully": [
+        "تم التصدير بنجاح"
+      ],
+      "Export_InProgress": [
+        "جاري التصدير"
+      ],
+      "Export_DownloadFile": [
+        "تنزيل الملف"
+      ],
+      "Common_Cancel": [
+        "Cancel"
+      ],
+      "Export_Rows": [
+        "rows"
+      ],
+      "Export_Done": [
+        "done"
+      ],
+      "Export_ExportingProgress": [
+        "exporting..."
+      ],
+      "Export_Date": [
+        "Date"
+      ],
+      "Export_Elapsed": [
+        "Elapsed"
+      ],
+      "Export_StatExported": [
+        "المصدرة"
+      ],
+      "Export_StatTotalRecords": [
+        "إجمالي السجلات"
+      ],
+      "Export_StatRemaining": [
+        "المتبقية"
+      ],
+      "Export_StatFormat": [
+        "الصيغة"
+      ],
+      "Export_StatErrors": [
+        "الأخطاء"
+      ],
+      "Export_At": [
+        "في"
+      ],
+      "Export_ExportingPrefix": [
+        "جاري التصدير"
+      ],
+      "Export_To": [
+        "إلى"
+      ],
+      "Support_UsefulResources": [
+        "موارد مفيدة"
+      ],
+      "Support_UserGuideDoc": [
+        "دليل المستخدم والتوثيق"
+      ],
+      "Support_TroubleshootingGuide": [
+        "دليل استكشاف الأخطاء وإصلاحها"
+      ],
+      "Support_EnterEmailPlaceholder": [
+        "أدخل عنوان بريدك الإلكتروني"
+      ],
+      "NeedHelp": [
+        "هل تحتاج مساعدة؟"
+      ],
+      "Dashboard_JumpInImports": [
+        "هذه زيادة بنسبة {growthPercent}% في عمليات الاستيراد — مزامنة بياناتك تسير بشكل رائع!"
+      ],
+      "Dashboard_DecreaseInImports": [
+        "هذا انخفاض بنسبة {growthPercent}% في حجم السجلات المكتملة مقارنة بالفترة السابقة."
+      ],
+      "Dashboard_SameCompletedVolume": [
+        "نفس حجم السجلات المكتملة تقريبًا مقارنة بالفترة السابقة."
+      ],
+      "Dashboard_NoCompletedRecordVolume": [
+        "لا يوجد حجم سجل مكتمل حتى الآن. ابدأ الاستيراد لمشاهدة المؤشرات هنا."
+      ],
+      "Dashboard_ImportVolumeSubtitle": [
+        "السجلات المستوردة لكل {period}، جميع المصادر مجتمعة."
+      ],
+      "Dashboard_Last5Years": [
+        "آخر 5 سنوات"
+      ],
+      "Dashboard_Last12Weeks": [
+        "آخر 12 أسبوعًا"
+      ],
+      "Dashboard_Period_weekly": [
+        "أسبوعي"
+      ],
+      "Dashboard_Period_monthly": [
+        "شهري"
+      ],
+      "Dashboard_Period_yearly": [
+        "سنوي"
+      ],
+      "Dashboard_RecordTypeShare": [
+        "التوزيع عبر السجلات"
+      ],
+      "Dashboard_NoDistributionData": [
+        "لا توجد بيانات توزيع للسجلات حتى الآن."
+      ],
+      "Dashboard_ActivityLogs": [
+        "أحدث أنشطة استيراد البيانات"
+      ],
+      "YouImported": [
+        "لقد قمت باستيراد"
+      ],
+      "Records": [
+        "سجلات"
+      ],
+      "InTotal": [
+        "إجمالاً."
+      ],
+      "Importer": [
+        "المستورد"
+      ],
+      "UploadfromRESTAPI": [
+        "الاستيراد عبر REST API"
+      ],
+      "UploadfromDatabase": [
+        "الاستيراد من قاعدة البيانات"
+      ],
+      "UploadfromExternal": [
+        "التحميل من مصدر خارجي"
+      ],
+      "AiNaturalLanguage": [
+        "الاستيراد باللغة الطبيعية للذكاء الاصطناعي"
+      ],
+      "ImportUpdateHeaderTitle": [
+        "استيراد وتحديث البيانات"
+      ],
+      "ImportUpdateHeaderDesc": [
+        "قم باستيراد بيانات جديدة أو تحديث محتوى ووردبريس الحالي من ملفات CSV أو XML أو XLSX أو TXT أو ZIP أو TSV."
+      ],
+      "ImportMediaHeaderTitle": [
+        "استيراد ملفات الوسائط"
+      ],
+      "ImportMediaHeaderDesc": [
+        "قم بتحميل ملفات الوسائط وبيانات CSV المطلوبة لاستيرادها إلى موقع ووردبريس الخاص بك."
+      ],
+      "ExportDataHeaderTitle": [
+        "تصدير بيانات ووردبريس"
+      ],
+      "ExportDataHeaderDesc": [
+        "حدد المحتوى الذي تريد تصديره وأنشئ ملفًا للنسخ الاحتياطي أو النقل أو التحليل أو إعادة الاستخدام."
+      ],
+      "ConfigureSettingsHeaderTitle": [
+        "تكوين الإعدادات"
+      ],
+      "ConfigureSettingsHeaderDesc": [
+        "قم بتخصيص كيفية التعامل مع البيانات والأداء والتكامل وميزات الاستيراد المتقدمة."
+      ],
+      "SupportHeaderTitle": [
+        "المساعدة والدعم"
+      ],
+      "SupportHeaderDesc": [
+        "تصفح المستندات واستكشف المشكلات الشائعة وواجه الدعم الفني للاستيراد والتصدير."
+      ],
+      "ExportCompletedSuccessfully": [
+        "تم التصدير بنجاح"
+      ],
+      "DownloadFile": [
+        "تنزيل الملف"
+      ],
+      "Exported": [
+        "تم التصدير"
+      ],
+      "UnlockProFeature": [
+        "فتح إصدار Pro"
+      ],
+      "PluginBrandTitle": [
+        "مستورد CSV النهائي"
+      ],
+      "PluginBrandSubtitle": [
+        "مجاني"
+      ],
+      "WooToSureTab": [
+        "من وو إلى شير"
+      ],
+      "ToastTemplateSaved": [
+        "Template saved successfully"
+      ],
+      "ToastChooseAnotherName": [
+        "Please Choose Another Name"
+      ],
+      "ToastSaveFailed": [
+        "Save failed"
+      ],
+      "SaveMappingAs": [
+        "حفظ هذا التعيين كـ"
+      ],
+      "HIN": [
+        "HIN"
+      ],
+      "Media_UseExistingDesc": [
+        "Use existing media images if they are already available in the media library"
+      ],
+      "Media_OverwriteDesc": [
+        "Replace existing images with new ones during import"
+      ],
+      "Media_AlwaysCreateDesc": [
+        "Always upload and create a new image record"
+      ],
+      "Media_PostContentDesc": [
+        "تنزيل الصور المشار إليها في محتوى المنشور إلى مكتبة الوسائط المحلية"
+      ],
+      "ToastTemplateLoadFailed": [
+        "Unable to load template. Please try again."
+      ],
+      "ToastTemplateDeleted": [
+        "Template Deleted Successfully"
+      ],
+      "AreYouSure": [
+        "هل أنت تأكد؟"
+      ],
+      "ConfirmDeleteTemplate": [
+        "هل تريد حذف هذا النموذج؟"
+      ],
+      "NotNow": [
+        "ليس الآن"
+      ],
+      "Searching": [
+        "Searching..."
+      ],
+      "ClearSearch": [
+        "مسح البحث"
+      ],
+      "Prev": [
+        "Prev"
+      ],
+      "Next": [
+        "Next"
+      ],
+      "Validation_Status": [
+        "حالة التحقق"
+      ],
+      "MediaUpdate": [
+        "Media Update"
+      ],
+      "ImportMode": [
+        "وضع الاستيراد"
+      ],
+      "ImportModeDesc": [
+        "حدد كيفية التعامل مع السجلات الموجودة أثناء الاستيراد"
+      ],
+      "PostType": [
+        "نوع المقال"
+      ],
+      "Taxonomy": [
+        "التصنيف"
+      ],
+      "Import_AdvancedOptions": [
+        "خيارات متقدمة"
+      ],
+      "Validation_RunningScan": [
+        "Validating CSV file, please wait..."
+      ],
+      "Feedback_MaybeLater": [
+        "Maybe Later"
+      ],
+      "locale": [
+        "it-IT"
+      ],
+      "FOR_ALREADY_EXISTING_RECORDS": [
+        "FOR_ALREADY_EXISTING_RECORDS"
+      ],
+      "Type": [
+        "Type"
+      ],
+      "SureCartMigrationTitle": [
+        "الترحيل إلى SureCart"
+      ],
+      "Export_WPQueryTitle": [
+        "تصدير استعلام WP"
+      ],
+      "Export_QueryTypeLabel": [
+        "اختر نوع الاستعلام"
+      ],
+      "Export_QueryArgsLabel": [
+        "وسائط WP_Query"
+      ],
+      "Export_Available": [
+        "Available"
+      ],
+      "Export_FileSettings": [
+        "إعدادات الملف"
+      ],
+      "Export_Format": [
+        "تنسيق التصدير"
+      ],
+      "Export_SpecificPeriodDesc": [
+        "تصفية العناصر المُصدَّرة حسب نطاق التاريخ"
+      ],
+      "Export_IterationIdDesc": [
+        "تصدير العناصر من تنفيذ دفعة محددة"
+      ],
+      "Export_SpecificAuthorsDesc": [
+        "تصفية العناصر المُصدَّرة حسب المؤلفين المحددين"
+      ],
+      "Export_SplitRecordDesc": [
+        "تصدير البيانات إلى ملفات متعددة بحجم مخصص"
+      ],
+      "Export_SpecificStatusDesc": [
+        "تصدير العناصر بحالة منشور محددة"
+      ],
+      "Export_AutoDelimitersDesc": [
+        "تصدير البيانات بفواصل تلقائية مخصصة"
+      ],
+      "Export_SpecificInclusionsDesc": [
+        "تصدير البيانات بناءً على حقول الأعمدة المحددة"
+      ],
+      "Export_ScheduleDesc": [
+        "جدولة التصديرات التلقائية على فترات مُكوَّنة"
+      ],
+      "Export_GoogleSheetDesc": [
+        "دفع نتائج التصدير تلقائيًا إلى جدول بيانات Google"
+      ],
+      "Export_ClientModeDesc": [
+        "السماح لأدوار غير المسؤول بتنفيذ هذا التصدير"
+      ],
+      "Export_ByLanguageDesc": [
+        "تصفية المنشورات/الصفحات متعددة اللغات حسب رمز اللغة"
+      ],
+      "Export_ByPostIdDesc": [
+        "تصدير المنشورات/المنتجات المحددة فقط حسب المعرف"
+      ],
+      "Export_SpecificCategoryDesc": [
+        "تصدير السجلات التي تنتمي إلى الفئات المحددة"
+      ],
+      "Export_ByPostTitleDesc": [
+        "البحث وتصدير عناوين المنشورات/المنتجات المطابقة"
+      ],
+      "Export_CustomersPurchasedDesc": [
+        "Export customers with purchase records"
+      ],
+      "Export_CustomersRoleDesc": [
+        "Export WordPress users based on user role"
+      ],
+      "Export_CustomersByProductDesc": [
+        "Export users who purchased a specific product ID"
+      ],
+      "Export_EnableRollbackDesc": [
+        "Allow rolling back to original user state after export"
+      ],
+      "Export_OrdersByProductDesc": [
+        "Export orders matching a specific product ID"
+      ],
+      "Export_OrderByPaymentDesc": [
+        "Export orders matching selected gateway methods"
+      ],
+      "Exportdatabyspecificcategory": [
+        "تصدير البيانات حسب فئة محددة"
+      ],
+      "There": [
+        "هناك"
+      ],
+      "Dashboard_StartNewImport": [
+        "بدء استيراد جديد"
+      ],
+      "Dashboard_BrowseTemplates": [
+        "تصفح القوالب"
+      ],
+      "Dashboard_RecordsTotal": [
+        "إجمالي السجلات"
+      ],
+      "loginfo": [
+        "مدير السجلات"
+      ],
+      "ToastSelectRevision": [
+        "Please Select any Revision"
+      ],
+      "AutomationLoadError": [
+        "Could not load API settings."
+      ],
+      "SaveAutomationSettings": [
+        "Save automation settings"
+      ],
+      "Copied": [
+        "Copied"
+      ],
+      "CopyTemplateId": [
+        "Copy ID"
+      ],
+      "SearchTemplatesOrModules": [
+        "البحث في القوالب أو الوحدات..."
+      ],
+      "TemplatesCount": [
+        "Templates"
+      ],
+      "TemplateId": [
+        "معرف القالب"
+      ],
+      "AutomationTemplateSettings": [
+        "API / Webhook Settings"
+      ],
+      "TemplateIdHelp": [
+        "انسخ معرّف القالب من المدير ← القوالب ثم استخدمه في الرابط."
+      ],
+      "AutomationApiTriggerUrl": [
+        "API trigger URL"
+      ],
+      "AutomationWebhookUrl": [
+        "Webhook URL"
+      ],
+      "EnableApiTrigger": [
+        "Enable API trigger"
+      ],
+      "EnableWebhook": [
+        "Enable webhook"
+      ],
+      "WebhookSecret": [
+        "Webhook secret"
+      ],
+      "AllowedIps": [
+        "Allowed IPs"
+      ],
+      "ManageImportsHeaderTitle": [
+        "إدارة الواردات والجداول"
+      ],
+      "ManageImportsHeaderDesc": [
+        "اعرض سجل الاستيراد، وأدر الملفات والقوالب، والاستيراد/التصدير المجدول المتكرر، وراجع سجلات الاستيراد."
+      ],
+      "ToastInstallPhpZip": [
+        "Please install php-zip extension"
+      ],
+      "ToastTemplateUploadMissingFile": [
+        "Uploaded file details are missing. Please upload the template CSV again."
+      ],
+      "ToastTemplateUploadCsvOnly": [
+        "Only CSV template files are supported."
+      ],
+      "ToastTemplateUploaded": [
+        "Template uploaded successfully."
+      ],
+      "ToastTemplateUploadFailed": [
+        "Template upload failed."
+      ],
+      "UploadTemplate": [
+        "Upload Template"
+      ],
+      "Support_ForumLinkText": [
+        "منتدى دعم wordpress.org"
+      ],
+      "MinimumrequiredphpinivaluesIniconconfiguredvalues": [
+        "الحد الأدنى لقيم php.ini المطلوبة (القيم المكونة)"
+      ],
+      "AiImportSettings": [
+        "استيراد الذكاء الاصطناعي"
+      ],
+      "AutomationApiTitle": [
+        "واجهة برمجة التطبيقات والويب هوك للاستيراد"
+      ],
+      "MediaDownloadSettingsTitle": [
+        "إعدادات تنزيل الوسائط"
+      ],
+      "FeatureModulesTitle": [
+        "وحدات الميزات"
+      ],
+      "UsersCustomers": [
+        "المستخدمين / العملاء"
+      ],
+      "CustomPostTypes": [
+        "أنواع المنشورات المخصصة"
+      ],
+      "posts": [
+        "المقالات"
+      ],
+      "Dashboard_ThisMonthPlus": [
+        "+{num} هذا الشهر"
+      ],
+      "SupportedFileTypesWithZipTxt": [
+        "أنواع الملفات المدعومة .csv .xml .xlsx .txt .zip .tsv"
+      ],
+      "Dashboard_ImporterTag": [
+        "المستورد"
+      ],
+      "GoodMorning": [
+        "صباح الخير"
+      ],
+      "GoodAfternoon": [
+        "مساء الخير"
+      ],
+      "GoodEvening": [
+        "مساء الخير"
+      ],
+      "Uploading": [
+        "جارٍ التحميل"
+      ],
+      "SelectHowToHandleRecords": [
+        "اختر كيفية التعامل مع السجلات الموجودة أثناء الاستيراد"
+      ],
+      "POSTTYPE": [
+        "نوع المنشور"
+      ],
+      "TAXONOMY": [
+        "التصنيف"
+      ],
+      "CSVValidationResults": [
+        "نتائج التحقق من صحة CSV"
+      ],
+      "StartPauseOrStopImportProcess": [
+        "ابدأ أو أوقف عملية الاستيراد مؤقتًا أو نهائيًا"
+      ],
+      "AreYouSureDeleteLog": [
+        "هل أنت تأكد؟"
+      ],
+      "DoYouReallyWantToDeleteThisLog": [
+        "هل تريد حقًا حذف هذا السجل؟ لا يمكن التراجع عن هذا الإجراء."
+      ],
+      "DeleteLog": [
+        "حذف السجل"
+      ],
+      "Cancel": [
+        "إلغاء"
+      ],
+      "Module_WooCommerceRefunds": [
+        "استرداد الأموال"
+      ],
+      "Module_WooCommerceCoupons": [
+        "قسائم"
+      ],
+      "Module_WooCommerce": [
+        "منتجات"
+      ],
+      "Poweredby": [
+        "مدعوم بواسطة"
+      ],
+      "Images": [
+        "الصور"
+      ],
+      "SelectFile": [
+        "اختر ملفاً"
+      ],
+      "SelectProvider": [
+        "اختر المزود"
+      ],
+      "SelectProviderPlaceholder": [
+        "--اختر المزود--"
+      ],
+      "Model": [
+        "النموذج"
+      ],
+      "SelectModelPlaceholder": [
+        "--اختر النموذج--"
+      ],
+      "EnterYourPrompt": [
+        "أدخل مطالبك"
+      ],
+      "AiPromptFormattingNote": [
+        "ملاحظة: بالنسبة لحقول ACF أو JetEngine أو Meta Box، قدّم تعليمات تفصيلية حول تنسيق البيانات."
+      ],
+      "TypeInstructionsPlaceholder": [
+        "اكتب تعليماتك هنا..."
+      ],
+      "ChooseFromFileServer": [
+        "اختر من خادم الملفات"
+      ],
+      "ChooseFromFileServerDesc": [
+        "تصفح مجلدات الخادم المسموح بها — CSV, TSV, JSON, XML, XLS, XLSX"
+      ],
+      "BrowseRoots": [
+        "تصفح الجذور"
+      ],
+      "SearchPlaceholder": [
+        "بحث..."
+      ],
+      "ExternalSources": [
+        "مصادر خارجية"
+      ],
+      "AppKeyPlaceholder": [
+        "مفتاح التطبيق"
+      ],
+      "AppSecretPlaceholder": [
+        "سر التطبيق"
+      ],
+      "RedirectURLPlaceholder": [
+        "رابط إعادة التوجيه"
+      ],
+      "RestApiEndpoint": [
+        "رابط API"
+      ],
+      "RestApiRequiredField": [
+        "مطلوب"
+      ],
+      "RestApiEndpointHint": [
+        "الرابط الكامل، شاملاً سلسلة الاستعلام. العناصر النائبة {page}، {limit}، {offset} مدعومة."
+      ],
+      "RestApiRequiredLegend": [
+        "* الحقل المطلوب فقط. المدخلات الأخرى اختيارية."
+      ],
+      "RestApiHttpMethod": [
+        "الطريقة"
+      ],
+      "RestApiRecordsPath": [
+        "مسار السجلات"
+      ],
+      "RestApiRecordsPathHint": [
+        "مسار منقط اختياري في JSON (مثال: data.items). اتركه فارغاً للجذر."
+      ],
+      "RestApiPageSize": [
+        "حجم الصفحة"
+      ],
+      "RestApiPageSizeHint": [
+        "للعناصر النائبة {limit} / {offset} (الافتراضي 100). مع وجود {page} في الرابط يتم جلب الصفحات حتى الانتهاء."
+      ],
+      "RestApiBearer": [
+        "رمز Bearer"
+      ],
+      "RestApiApiKeyHeader": [
+        "ترويسة مفتاح API"
+      ],
+      "RestApiApiKeyValue": [
+        "مفتاح API"
+      ],
+      "RestApiExtraHeaders": [
+        "ترويسات إضافية (JSON)"
+      ],
+      "RestApiTestConnection": [
+        "اختبار الاتصال"
+      ],
+      "RestApiContinueImport": [
+        "متابعة"
+      ],
+      "DbMigrationSavedConnections": [
+        "الاتصالات المحفوظة"
+      ],
+      "DbMigrationNewConnection": [
+        "— اتصال جديد —"
+      ],
+      "DbMigrationConnectionName": [
+        "اسم الاتصال"
+      ],
+      "DbMigrationDbType": [
+        "نوع قاعدة البيانات"
+      ],
+      "DbMigrationHost": [
+        "المضيف"
+      ],
+      "DbMigrationPort": [
+        "المنفذ"
+      ],
+      "DbMigrationDatabase": [
+        "قاعدة البيانات"
+      ],
+      "DbMigrationUsername": [
+        "اسم المستخدم"
+      ],
+      "DbMigrationPassword": [
+        "كلمة المرور"
+      ],
+      "DbMigrationSsl": [
+        "استخدام SSL"
+      ],
+      "DbMigrationTestConnection": [
+        "اختبار الاتصال"
+      ],
+      "DbMigrationSaveConnection": [
+        "حفظ الاتصال"
+      ],
+      "DbMigrationBrowseTables": [
+        "تصفح الجداول"
+      ],
+      "AppKey": [
+        "مفتاح التطبيق"
+      ],
+      "AppSecretkey": [
+        "سر التطبيق"
+      ],
+      "RedirectURL": [
+        "رابط إعادة التوجيه"
+      ],
+      "RememberMe": [
+        "تذكرني"
+      ],
+      "ConnectDropbox": [
+        "الاتصال بـ Dropbox"
+      ],
+      "LastRun": [
+        "آخر تشغيل"
+      ],
+      "NextRun": [
+        "التشغيل التالي"
+      ],
+      "DragDropTemplateZip": [
+        "اسحب وأسقط ملف CSV أو ZIP للقالب هنا، أو انقر للتصفح"
+      ],
+      "ConfirmDeleteLog": [
+        "هل تريد حقًا حذف هذا السجل؟ لا يمكن التراجع عن هذا الإجراء."
+      ],
+      "LogNotExists": [
+        "السجل غير موجود"
+      ],
+      "FailedLogNotExists": [
+        "سجل الفشل غير موجود"
+      ],
+      "MediaLogNotExists": [
+        "سجل الوسائط غير موجود"
+      ],
+      "DownloadSummaryLog": [
+        "تحميل ملخص السجل"
+      ],
+      "DownloadFailedCsvFile": [
+        "تحميل ملف CSV الفاشل"
+      ],
+      "DownloadMediaFile": [
+        "تحميل ملف الوسائط"
+      ],
+      "YesDeleteIt": [
+        "نعم، احذفه!"
+      ],
+      "ChooseCSVFile": [
+        "اختر ملف CSV"
+      ],
+      "Upload": [
+        "رفع"
+      ],
+      "SaveFailed": [
+        "فشل الحفظ"
+      ],
+      "LeaveBlankKeepExisting": [
+        "اتركه فارغًا للحفاظ على الموجود"
+      ],
+      "EVENTINFO": [
+        "معلومات الحدث"
+      ],
+      "EVENTSTATUS": [
+        "حالة الحدث"
+      ],
+      "EVENTDATE": [
+        "تاريخ الحدث"
+      ],
+      "COMPLETED": [
+        "مكتمل"
+      ],
+      "PENDING": [
+        "قيد الانتظار"
+      ],
+      "Mapping_SourceFields": [
+        "حقول المصدر"
+      ],
+      "Mapping_SearchSourceFields": [
+        "البحث في حقول المصدر..."
+      ],
+      "ImportFailed": [
+        "فشل الاستيراد"
+      ],
+      "ImportConfig_HighSpeedSmallFile": [
+        "معالجة عالية السرعة للملفات الصغيرة"
+      ],
+      "Validation_DataReady": [
+        "البيانات جاهزة للاستيراد"
+      ],
+      "Validation_DataNotReady": [
+        "البيانات غير جاهزة"
+      ],
+      "Validation_Excellent": [
+        "ممتاز"
+      ],
+      "Validation_PerfectMatch": [
+        "بنية بياناتك تطابق متطلبات الوجهة بشكل مثالي."
+      ],
+      "Validation_AllFieldsVerified": [
+        "تم تعيين جميع الحقول والتحقق منها وفق مخطط النظام الحالي."
+      ],
+      "Settings_GeneralDesc": [
+        "قم بتكوين السلوكيات الأساسية والخيارات العامة لإضافة مستورد CSV."
+      ],
+      "SettingsNav_General": [
+        "عام"
+      ],
+      "SettingsNav_Performance": [
+        "الأداء"
+      ],
+      "SettingsNav_Connectors": [
+        "الموصلات"
+      ],
+      "SettingsNav_Features": [
+        "الميزات"
+      ],
+      "MediaImportPathDesc": [
+        "الاحتفاظ بمسار الملف الأصلي بدلاً من مجلد الشهر الحالي"
+      ],
+      "EmailPrefix": [
+        "البريد:"
+      ],
+      "IDPrefix": [
+        "المعرف:"
+      ],
+      "Toast_UpgradeToProSchedule": [
+        "يرجى الترقية إلى PRO لجدولة الاستيراد"
+      ],
+      "FAILED": [
+        "فشل"
+      ],
+      "Export_FormatLabel": [
+        "التنسيق"
+      ],
+      "Export_Remaining": [
+        "المتبقي"
+      ],
+      "Export_TotalRecords": [
+        "إجمالي السجلات"
+      ],
+      "Export_Exported": [
+        "تم التصدير"
+      ],
+      "Settings_SecurityPerfDesc": [
+        "راجع إعدادات تكوين الخادم ومتطلبات النظام وتفاصيل البيئة."
+      ],
+      "Settings_StatusConfig": [
+        "الحالة / التكوين"
+      ],
+      "Settings_Required": [
+        "مطلوب"
+      ],
+      "Settings_On": [
+        "تشغيل"
+      ],
+      "Settings_EnvVariable": [
+        "متغير البيئة"
+      ],
+      "Settings_SystemValue": [
+        "قيمة النظام"
+      ],
+      "Settings_WordPressVersion": [
+        "إصدار WordPress"
+      ],
+      "Settings_PHPVersion": [
+        "إصدار PHP"
+      ],
+      "Settings_MySQLVersion": [
+        "إصدار MySQL"
+      ],
+      "Settings_ServerSoftware": [
+        "برنامج الخادم"
+      ],
+      "Settings_UserAgent": [
+        "وكيل المستخدم الخاص بك"
+      ],
+      "Settings_WPDBPrefix": [
+        "بادئة WPDB"
+      ],
+      "Settings_WPMultisiteMode": [
+        "وضع WP متعدد المواقع"
+      ],
+      "Settings_WPMemoryLimit": [
+        "حد ذاكرة WP"
+      ],
+      "Export_DataPreviewDesc": [
+        "معاينة هيكل مجموعة البيانات المُصدَّرة"
+      ],
+      "Settings_DocumentationDesc": [
+        "الوصول إلى أدلتنا والدروس التوضيحية بالفيديو والوثائق المرجعية."
+      ],
+      "FilePond_TapToCancel": [
+        "اضغط للإلغاء"
+      ],
+      "FilePond_UploadComplete": [
+        "اكتمل التحميل"
+      ],
+      "FilePond_UploadCancelled": [
+        "تم إلغاء التحميل"
+      ],
+      "FilePond_UploadError": [
+        "خطأ أثناء التحميل"
+      ],
+      "FilePond_TapToRetry": [
+        "اضغط لإعادة المحاولة"
+      ],
+      "Addons_Description": [
+        "وسّع وظائف مستورد CSV النهائي باستخدام الإضافات المجانية والمميزة."
+      ],
+      "AiImportSettingsDesc": [
+        "اقتراحات وترجمة اختيارية بالذكاء الاصطناعي. لا يُطبَّق شيء حتى توافق في خطوة المراجعة."
+      ],
+      "AiMasterEnable": [
+        "تمكين ميزات الاستيراد بالذكاء الاصطناعي"
+      ],
+      "AiFeatureHintConnectors": [
+        "التصنيف والوسوم وSEO والوصف التعريفي والترجمة تستخدم موصلات WordPress."
+      ],
+      "AiCategorySuggestions": [
+        "اقتراحات التصنيف"
+      ],
+      "AiTaxonomySuggestions": [
+        "اقتراحات الوسوم / التصنيف"
+      ],
+      "AiSeoTitle": [
+        "اقتراحات عنوان SEO"
+      ],
+      "AiMetaDescription": [
+        "اقتراحات الوصف التعريفي"
+      ],
+      "AiTranslation": [
+        "الترجمة (عبر WordPress AI)"
+      ],
+      "AiTargetLanguage": [
+        "لغة الترجمة المستهدفة"
+      ],
+      "AiBatchSize": [
+        "حجم الدفعة"
+      ],
+      "AiRequestTimeout": [
+        "مهلة الطلب (ثوانٍ)"
+      ],
+      "AiMetaLimit": [
+        "حد أحرف الوصف التعريفي"
+      ],
+      "FeatureModulesDisclaimer": [
+        "عطّل الوحدات الاختيارية لتقليل الحمل أثناء الاستيراد. تُعاد تحميل الصفحة تلقائيًا بعد الحفظ."
+      ],
+      "Feature_AIImport": [
+        "ميزات الاستيراد بالذكاء الاصطناعي"
+      ],
+      "Feature_AIImportDesc": [
+        "استيراد باللغة الطبيعية بالذكاء الاصطناعي، وتعيين الحقول، والحوكمة، ووحدات AIBootstrap ذات الصلة."
+      ],
+      "Feature_WPBakery": [
+        "WPBakery Page Builder"
+      ],
+      "Feature_WPBakeryDesc": [
+        "امتدادات حقول الاستيراد والتصدير لـ WPBakery."
+      ],
+      "Feature_Bricks": [
+        "Bricks Builder"
+      ],
+      "Feature_BricksDesc": [
+        "امتدادات حقول الاستيراد والتصدير لـ Bricks Builder."
+      ],
+      "Feature_Oxygen": [
+        "Oxygen Builder"
+      ],
+      "Feature_OxygenDesc": [
+        "امتدادات حقول الاستيراد والتصدير لـ Oxygen Builder."
+      ],
+      "Feature_DBMigration": [
+        "ترحيل قاعدة بيانات خارجية"
+      ],
+      "Feature_DBMigrationDesc": [
+        "الاستيراد من مصادر قواعد بيانات خارجية عبر DatabaseMigrationBootstrap."
+      ],
+      "Feature_GoogleSheets": [
+        "تحميل جداول بيانات Google"
+      ],
+      "Feature_GoogleSheetsDesc": [
+        "مسار نقل HTTP لجداول بيانات Google وسير عمل تحميل جدول البيانات."
+      ],
+      "Feature_AutomationAPI": [
+        "REST API والويب هوك"
+      ],
+      "Feature_AutomationAPIDesc": [
+        "واجهة أتمتة (uci-pro/v1) والويب هوك ونقاط نهاية REST للاستيراد."
+      ],
+      "Feature_ExtendedHooks": [
+        "خطافات استيراد/تصدير موسعة"
+      ],
+      "Feature_ExtendedHooksDesc": [
+        "سطح إجراءات ومرشحات HooksHandler الموسّع المضاف في 8.16."
+      ],
+      "GSheet_ConnectDesc": [
+        "قم بربط حساب Google الخاص بك لاستيراد البيانات مباشرة من جداول بيانات Google."
+      ],
+      "ClientID": [
+        "معرّف العميل"
+      ],
+      "ClientSecret": [
+        "سر العميل"
+      ],
+      "GSheet_ClientIdDesc": [
+        "معرف عميل Google OAuth الخاص بك من وحدة التحكم في Google Cloud."
+      ],
+      "GSheet_ClientSecretDesc": [
+        "سر عميل Google OAuth الخاص بك من وحدة التحكم في Google Cloud."
+      ],
+      "GSheet_RedirectDesc": [
+        "URI إعادة التوجيه المعتمد المكوّن في مشروع Google Cloud الخاص بك."
+      ],
+      "EnterRedirectUrlPlaceholder": [
+        "أدخل عنوان URL لإعادة التوجيه"
+      ],
+      "EnterClientIdPlaceholder": [
+        "أدخل معرّف العميل"
+      ],
+      "EnterClientSecretPlaceholder": [
+        "أدخل سر العميل"
+      ],
+      "MediaDownloadSettingsDescription": [
+        "محرك وسائط متقدم: تنزيلات قائمة الانتظار، وإعادة المحاولة، واكتشاف التكرار، وبدائل الصورة المميزة."
+      ],
+      "EnableQueueProcessing": [
+        "تمكين معالجة قائمة الانتظار"
+      ],
+      "EnableQueueProcessingDesc": [
+        "معالجة تنزيلات الوسائط على دفعات في الخلفية بدلًا من مضمّنة."
+      ],
+      "RetryFailedDownloads": [
+        "إعادة محاولة التنزيلات الفاشلة (تلقائي)"
+      ],
+      "RetryFailedDownloadsDesc": [
+        "إعادة محاولة تنزيلات الوسائط التي فشلت في المحاولة الأولى تلقائيًا."
+      ],
+      "QueueBatchSize": [
+        "التنزيلات لكل دفعة"
+      ],
+      "QueueBatchSizeDesc": [
+        "عدد ملفات الوسائط للتنزيل في كل دفعة خلفية."
+      ],
+      "MaximumRetryCount": [
+        "الحد الأقصى لإعادة المحاولة"
+      ],
+      "MaximumRetryCountDesc": [
+        "الحد الأقصى لمحاولات إعادة المحاولة قبل تعليم التنزيل كفاشل نهائيًا."
+      ],
+      "ConnectionTimeout": [
+        "مهلة الاتصال (ثوانٍ)"
+      ],
+      "ConnectionTimeoutDesc": [
+        "مدة الانتظار عند إنشاء اتصال بالخادم البعيد."
+      ],
+      "DownloadTimeout": [
+        "مهلة التنزيل (ثوانٍ)"
+      ],
+      "DownloadTimeoutDesc": [
+        "الوقت الأقصى المسموح لإكمال تنزيل ملف واحد."
+      ],
+      "DuplicateHandling": [
+        "معالجة التكرارات"
+      ],
+      "DuplicateHandlingDesc": [
+        "كيفية التعامل مع ملفات الوسائط الموجودة بالفعل في المكتبة."
+      ],
+      "ReuseExisting": [
+        "إعادة استخدام الموجود"
+      ],
+      "SkipDuplicate": [
+        "تخطي التكرار"
+      ],
+      "ForceNew": [
+        "فرض جديد"
+      ],
+      "FeaturedImageFallback": [
+        "بديل الصورة المميزة"
+      ],
+      "FeaturedImageFallbackDesc": [
+        "ما يُستخدم كصورة مميزة عند فشل تنزيل الصورة الأساسية."
+      ],
+      "FallbackNone": [
+        "لا شيء"
+      ],
+      "FallbackFirstGallery": [
+        "أول صورة في المعرض"
+      ],
+      "FallbackPlaceholder": [
+        "عنصر نائب"
+      ],
+      "ManualRetryFailedMedia": [
+        "إعادة محاولة الوسائط الفاشلة الآن"
+      ],
+      "AutomationApiDescription": [
+        "استخدم REST API لتشغيل قوالب الاستيراد المحفوظة. اضبط الخيارات في المدير ← القوالب."
+      ],
+      "AutomationApiKey": [
+        "مفتاح API للموقع"
+      ],
+      "RegenerateApiKey": [
+        "إعادة إنشاء"
+      ],
+      "AutomationNoKey": [
+        "لم يتم إنشاء مفتاح بعد"
+      ],
+      "AutomationTriggerEndpoint": [
+        "نقطة نهاية التشغيل (استبدل {template_id})"
+      ],
+      "AutomationApiKeyUsage": [
+        "أرسل المفتاح كـ JSON {\"api_key\":\"...\"} أو استعلام ?api_key= أو رأس X-UCI-API-Key أو Authorization: Bearer ..."
+      ],
+      "AutomationWebhookHeader": [
+        "الويب هوك: POST /wp-json/uci-pro/v1/webhook/{template_id} مع رأس X-UCI-Signature."
+      ],
+      "MetaBoxRelationFields": [
+        "حقول علاقة Meta Box"
+      ],
+      "MetaBoxGroupFields": [
+        "حقول مجموعة Meta Box"
+      ],
+      "SureCartOrdersFields": [
+        "حقول طلبات SureCart"
+      ],
+      "SureCartSubscriptionsFields": [
+        "حقول اشتراكات SureCart"
+      ],
+      "SureCartReportsFields": [
+        "حقول تقارير SureCart"
+      ],
+      "SureCartCoreFields": [
+        "حقول SureCart الأساسية"
+      ],
+      "SureCartProductMetaFields": [
+        "حقول تعريف منتج SureCart"
+      ],
+      "SureCartOrderMetaFields": [
+        "حقول تعريف طلب SureCart"
+      ],
+      "SureCartCustomerMetaFields": [
+        "حقول تعريف عميل SureCart"
+      ],
+      "WooCommerce": [
+        "ووكومرس"
+      ],
+      "Banner_OfferText": [
+        "احصل على خصم يصل إلى 22% في تخفيضات عيد ميلادنا الـ 15"
+      ],
+      "Banner_ViewDeals": [
+        "عرض العروض"
+      ],
+      "Banner_Dismiss": [
+        "إغلاق إشعار الترقية"
+      ],
+      "Category": [
+        "Category"
+      ],
+      "AuditlogsandTools": [
+        "Audit logs and Tools"
+      ],
+      "Toast_NoFailedMediaRecords": [
+        "No failed media records found for this import."
+      ],
+      "SCHEDULED": [
+        "SCHEDULED"
+      ],
+      "Dashboard_Period_Weekly": [
+        "Dashboard_Period_Weekly"
+      ],
+      "Every2hours": [
+        "Every2hours"
+      ],
+      "ProductImageMetaFields": [
+        "ProductImageMetaFields"
+      ],
+      "Getsample": [
+        "Getsample"
+      ],
+      "PROCESSING": [
+        "PROCESSING"
+      ],
+      "Letsyougetonlyrequireddatawiththedifferentadvancedfilters": [
+        "Letsyougetonlyrequireddatawiththedifferentadvancedfilters"
+      ],
+      "DirectoryProFields": [
+        "DirectoryProFields"
+      ],
+      "ACFImageMetaFields": [
+        "ACFImageMetaFields"
+      ],
+      "TypesImageMetaFields": [
+        "TypesImageMetaFields"
+      ],
+      "Dashboard_Period_Monthly": [
+        "Dashboard_Period_Monthly"
+      ],
+      "poweredBy": [
+        "poweredBy"
+      ],
+      "jetEngineRelationsFields": [
+        "jetEngineRelationsFields"
+      ],
+      "Dashboard_Period_Yearly": [
+        "Dashboard_Period_Yearly"
+      ],
+      "NextGENGalleryFields": [
+        "NextGENGalleryFields"
+      ],
+      "WooCommerceProduct": [
+        "WooCommerce Product"
+      ],
+      "Scheduled": [
+        "Scheduled"
+      ],
+      "Posttags": [
+        "Posttags"
+      ],
+      "Every4hours": [
+        "Every4hours"
+      ],
+      "PodsImageMetaFields": [
+        "PodsImageMetaFields"
+      ],
+      "Import-Update": [
+        "Import-Update"
+      ],
+      "Manage": [
+        "Manage"
+      ],
+      "EnterTheURLOfYourCSVXMLFile": [
+        "Enter the URL of your CSV/XML file"
+      ],
+      "Common_Continue": [
+        "متابعة"
+      ],
+      "Modal_ChooseAFile": [
+        "اختر ملفًا"
+      ],
+      "GoogleSheet": [
+        "جداول بيانات Google"
+      ],
+      "OneDrive": [
+        "وان درايف"
+      ],
+      "DropBox": [
+        "دروب بوكس"
+      ],
+      "GoogleDrive": [
+        "جوجل درايف"
+      ],
+      "Dashboard_Year": [
+        "سنة"
+      ],
+      "Dashboard_Week": [
+        "أسبوع"
+      ],
+      "Dashboard_Month": [
+        "شهر"
+      ],
+      "Do you want adaptive file processing of record": [
+        "هل تريد المعالجة التكيفية للملف سجلًا بسجل؟"
+      ],
+      "Do you want to import data filtered by category?": [
+        "هل تريد استيراد البيانات المفلترة حسب الفئة؟"
+      ],
+      "Download images referenced in post content to local media library": [
+        "تنزيل الصور المشار إليها في محتوى المنشور إلى مكتبة الوسائط المحلية"
+      ],
+      "Due to duplicate found!.": [
+        "بسبب العثور على تكرار!"
+      ],
+      "New Import": [
+        "استيراد جديد"
+      ],
+      "Are you sure?": [
+        "هل أنت تأكد؟"
+      ],
+      "Do you really want to delete this log? This action cannot be undone.": [
+        "هل تريد حقًا حذف هذا السجل؟ لا يمكن التراجع عن هذا الإجراء."
+      ],
+      "You want to delete this template?": [
+        "هل تريد حذف هذا النموذج؟"
+      ],
+      "Not Now": [
+        "ليس الآن"
+      ],
+      "ExportCompletedsuccessfully": [
+        "تم التصدير بنجاح"
+      ],
+      "Export completed successfully": [
+        "تم التصدير بنجاح"
+      ],
+      "Bundle": [
+        "حزمة"
+      ],
+      "Download File": [
+        "تنزيل الملف"
+      ],
+      "EXPORTED": [
+        "المصدرة"
+      ],
+      "TOTAL RECORDS": [
+        "إجمالي السجلات"
+      ],
+      "REMAINING": [
+        "المتبقية"
+      ],
+      "FORMAT": [
+        "الصيغة"
+      ],
+      "Exporting": [
+        "جاري التصدير"
+      ],
+      "to": [
+        "إلى"
+      ],
+      "at": [
+        "في"
+      ],
+      "Yes, Delete it!": [
+        "نعم، احذفه!"
+      ],
+      "Delete Log": [
+        "حذف السجل"
+      ],
+      "Extend the core functionalities of Ultimate CSV Importer Free by activating specialized addons.": [
+        "قم بتوسيع الوظائف الأساسية لـ Ultimate CSV Importer Free من خلال تفعيل الإضافات المتخصصة."
+      ],
+      "Import Users": [
+        "استيراد المستخدمين"
+      ],
+      "Import your user records available in the CSV/XML file with custom fields, WooCommerce Shipping and Billing details.": [
+        "استورد سجلات المستخدمين المتاحة في ملف CSV/XML مع الحقول المخصصة وتفاصيل الشحن والفوترة لـ WooCommerce."
+      ],
+      "Install & Activate": [
+        "تثبيت وتفعيل"
+      ],
+      "Activated": [
+        "مفعل"
+      ],
+      "Import WooCommerce": [
+        "استيراد WooCommerce"
+      ],
+      "Export Wordpress Data": [
+        "تصدير بيانات ووردبريس"
+      ],
+      "Back to Our Plugin": [
+        "العودة إلى إضافتنا"
+      ],
+      "Manage Add-ons": [
+        "إدارة الإضافات"
+      ],
+      "Preview": [
+        "معاينة"
+      ]
+    }
+  }
+}

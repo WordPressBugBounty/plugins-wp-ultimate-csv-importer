@@ -222,10 +222,7 @@ class UrlUpload implements Uploads
 					$file_extension = 'xml';
 				}
 				$upload_dir_path = $upload_dir . $event_key;
-				if (!is_dir($upload_dir_path)) {
-					wp_mkdir_p($upload_dir_path);
-				}
-				chmod($upload_dir_path, 0777);
+				SecurityHelper::ensure_secure_directory($upload_dir_path);
 
 				$wpdb->insert($file_table_name, array('file_name' => $url_file_name, 'hash_key' => $event_key, 'status' => 'Downloading', 'lock' => true));
 				$last_id = $wpdb->get_results("SELECT id FROM $file_table_name ORDER BY id DESC LIMIT 1", ARRAY_A);
@@ -234,9 +231,9 @@ class UrlUpload implements Uploads
 				$curlCh = curl_init();
 				curl_setopt($curlCh, CURLOPT_URL, $file_url);
 				curl_setopt($curlCh, CURLOPT_RETURNTRANSFER, true);
-				curl_setopt($curlCh, CURLOPT_FOLLOWLOCATION, false);
+				curl_setopt($curlCh, CURLOPT_FOLLOWLOCATION, true);
 				curl_setopt($curlCh, CURLOPT_FAILONERROR, true);
-				curl_setopt($curlCh, CURLOPT_MAXREDIRS, 0);
+				curl_setopt($curlCh, CURLOPT_MAXREDIRS, 10);
 				curl_setopt($curlCh, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 				curl_setopt($curlCh, CURLOPT_CUSTOMREQUEST, 'GET');
 				curl_setopt($curlCh, CURLOPT_SSL_VERIFYPEER, true);
@@ -254,12 +251,12 @@ class UrlUpload implements Uploads
 					$path = $upload_dir . $event_key . '/' . $event_key;
 					if ($file_extension == 'xlsx' || $file_extension == 'xls') {
 						$this->convertXlsxToCsv($curlData, $upload_dir_path, $event_key);
-						chmod($path, 0777);
+						SecurityHelper::secure_file($path);
 						$file_extension = 'csv';
 					} else {
 						$file = fopen($path, "w+");
 						fputs($file, $curlData);
-						chmod($path, 0777);
+						SecurityHelper::secure_file($path);
 						fclose($file);
 					}
 					$real_path = $path;
@@ -320,19 +317,16 @@ class UrlUpload implements Uploads
 
 	public function get_filename_from_headers($file_full_name)
 	{
-		// Extract the filename part
-		preg_match('/filename\*?=([^;]+)/', $file_full_name, $matches);
-
-		if (!empty($matches[1])) {
-			$filename = trim($matches[1], " \"");
-			// Handle cases with encoded filenames (filename*=UTF-8'')
-			if (strpos($filename, "UTF-8''") === 0) {
-				$filename = urldecode(substr($filename, 7)); // Decode URL-encoded filename
-			}
-		} else {
-			return '';
+		if (is_array($file_full_name)) {
+			$file_full_name = end($file_full_name);
 		}
-		return $filename;
+		if (preg_match('/filename\*=UTF-8\'\'([^\s;]+)/i', $file_full_name, $matches)) {
+			return urldecode($matches[1]);
+		}
+		if (preg_match('/filename="?([^";]+)"?/i', $file_full_name, $matches)) {
+			return trim($matches[1], " \"");
+		}
+		return '';
 	}
 
 

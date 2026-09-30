@@ -1,0 +1,4121 @@
+{
+  "translation-revision-date": "2026-08-21 00:00:00+0000",
+  "generator": "WP-CLI/2.12.0",
+  "domain": "wp-ultimate-csv-importer",
+  "locale_data": {
+    "wp-ultimate-csv-importer": {
+      "": {
+        "domain": "wp-ultimate-csv-importer",
+        "lang": "fa_IR",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "ImportUpdate": [
+        "وارد کردن / به‌روزرسانی"
+      ],
+      "SelectAllImages": [
+        "تمام تصاویر موجود در فایل واردات خود را انتخاب کنید تا از بروز خطاهای واردات جلوگیری شود"
+      ],
+      "ChooseImagesToImport": [
+        "تصاویر را برای واردات انتخاب کنید. از جعبه انتخاب زیر برای انتخاب تمام تصاویر استفاده کنید."
+      ],
+      "FileName": [
+        "نام فایل"
+      ],
+      "OK": [
+        "تایید"
+      ],
+      "Buynow": [
+        "هم اکنون خریداری کنید!"
+      ],
+      "Exportfiltereddata": [
+        "صادرات داده های فیلتر شده"
+      ],
+      "Exportfiltereddatadesc": [
+        "به شما امکان می دهد فقط داده های مورد نیاز را با فیلترهای مختلف پیشرفته دریافت کنید"
+      ],
+      "Backupineditableformat": [
+        "پشتیبان گیری با فرمت قابل ویرایش"
+      ],
+      "Backupineditableformatdesc": [
+        "پشتیبان گیری در 4 فرمت فایل مختلف مانند CSV، XML، JSON، XLS."
+      ],
+      "AutoScheduledBackups": [
+        "پشتیبان گیری برنامه ریزی شده خودکار"
+      ],
+      "AutoScheduledBackupsdesc": [
+        "صادرات برنامه ریزی شده به پشتیبان گیری به عنوان فرمت فایل متنی قابل ویرایش در بازه زمانی منظم کمک می کند."
+      ],
+      "AutoSchedulewithreusabletemplates": [
+        "برنامه ریزی خودکار با قالب های قابل استفاده مجدد"
+      ],
+      "AIOWooCommerceImportSuit": [
+        "لباس وارداتی AIO WooCommerce"
+      ],
+      "WPMLImporter": [
+        "وارد کننده WPML"
+      ],
+      "SEOPluginsDataImporterRankMathYoastandAllinOneSEO": [
+        "واردکننده داده پلاگین سئو - RankMath, SEOPress, Yoast and All in One SEO"
+      ],
+      "Exporterwithadvancedfilters": [
+        "صادرکننده با فیلترهای پیشرفته"
+      ],
+      "Updateolderpostsfromsingleimport": [
+        "پست‌های قدیمی‌تر را از یک واردات به‌روزرسانی کنید"
+      ],
+      "JetEngineMetaboxToolsetTypesACFproFreeandPodsFieldPostPluginsImporter": [
+        "JetEngine, Metabox, Toolset Types, ACF pro / Free and Pods Field/Post وارد کننده پلاگین ها"
+      ],
+      "Dashboard": [
+        "پیشخوان"
+      ],
+      "Manager": [
+        "مدیریت"
+      ],
+      "Export": [
+        "خروجی"
+      ],
+      "Settings": [
+        "تنظیمات"
+      ],
+      "Support": [
+        "پشتیبانی"
+      ],
+      "UploadfromDesktop": [
+        "بارگذاری از دسکتاپ"
+      ],
+      "UploadfromFTPSFTP": [
+        "بارگذاری از طریق FTP / SFTP"
+      ],
+      "UploadfromFTP": [
+        "آپلود ازFTPSFTP"
+      ],
+      "UploadfromURL": [
+        "بارگذاری از طریق نشانی وب"
+      ],
+      "ChoosFileintheServer": [
+        "انتخاب فایل در سرور"
+      ],
+      "Drag&Dropyourfilesor": [
+        "Drag&Dropyourfilesor"
+      ],
+      "Browse": [
+        "مرور"
+      ],
+      "NewItem": [
+        "گزینه جدید"
+      ],
+      "ExistingItems": [
+        "موارد موجود"
+      ],
+      "ImportEachRecordAs": [
+        "واردکردن هر رکورد به عنوان"
+      ],
+      "Continue": [
+        "ادامه هید"
+      ],
+      "Search": [
+        "جستجو کردن"
+      ],
+      "FromDate": [
+        "از تاریخ"
+      ],
+      "SIMPLEMODE": [
+        "حالت ساده"
+      ],
+      "ToDate": [
+        "به روز"
+      ],
+      "SEARCH": [
+        "جستجو کردن"
+      ],
+      "SavedTemplate": [
+        "Saved Template"
+      ],
+      "TEMPLATES": [
+        "الگوها"
+      ],
+      "MATCHEDCOLUMNSCOUNT": [
+        "MATCHED COLUMNS COUNT"
+      ],
+      "MODULE": [
+        "مدول"
+      ],
+      "CREATEDTIME": [
+        "CREATED TIME"
+      ],
+      "ACTION": [
+        "عمل"
+      ],
+      "USETEMPLATE": [
+        "USE TEMPLATE"
+      ],
+      "CREATENEWMAPPING": [
+        "CREATE NEW MAPPING"
+      ],
+      "BACK": [
+        "بازگشت"
+      ],
+      "ADVANCEDMODE": [
+        "حالت پیشرفته"
+      ],
+      "DRAGDROPMODE": [
+        "حالت کشیدن و رها کردن"
+      ],
+      "WordpressFields": [
+        "وردپرس فیلدز"
+      ],
+      "WPFIELDS": [
+        "فیلدهای وردپرس"
+      ],
+      "CSVHEADER": [
+        "سربرگ CSV"
+      ],
+      "Action": [
+        "عمل"
+      ],
+      "Name": [
+        "نام"
+      ],
+      "HINT": [
+        "اشاره"
+      ],
+      "Example": [
+        "مثال"
+      ],
+      "WordPressCoreFields": [
+        "فیلدهای اصلی وردپرس"
+      ],
+      "ACFFreeFields": [
+        "فیلدهای رایگان ACF"
+      ],
+      "ACFFields": [
+        "زمینه‌های دلخواه پیشرفته (ACF)"
+      ],
+      "ACFGroupFields": [
+        "زمینه‌های گروهی پیشرفته (ACF)"
+      ],
+      "ACFProFields": [
+        "زمینه‌های دلخواه پیشرفته (ACF)"
+      ],
+      "ACFRepeaterFields": [
+        "زمینه‌های تکرارکننده پیشرفته (ACF)"
+      ],
+      "TypesCustomFields": [
+        "Types Custom Fields"
+      ],
+      "PodsFields": [
+        "Pods Fields"
+      ],
+      "JobListingFields": [
+        "Job Listing Fields"
+      ],
+      "CustomFieldSuite": [
+        "Custom Field Suite"
+      ],
+      "AllInOneSeoFields": [
+        "فیلدهای All In One SEO"
+      ],
+      "MetaBoxFields": [
+        "فیلدهای Meta Box"
+      ],
+      "YoastSeoFields": [
+        "فیلدهای Yoast SEO"
+      ],
+      "RankMathFields": [
+        "فیلدهای Rank Math"
+      ],
+      "RankMathProFields": [
+        "Rank Math Pro Fields"
+      ],
+      "BillingAndShippingInformation": [
+        "اطلاعات صورتحساب و ارسال"
+      ],
+      "CustomFieldsWPMemberFields": [
+        "Custom Fields WP Member Fields"
+      ],
+      "CustomFieldsMemberFields": [
+        "Custom Fields Member Fields"
+      ],
+      "ProductMetaFields": [
+        "فیلدهای متای محصول ووکامرس"
+      ],
+      "ProductAttrFields": [
+        "WooCommerce Product Attribute Fields"
+      ],
+      "ProductBundleMetaFields": [
+        "WooCommerce Product Bundle Meta Fields"
+      ],
+      "OrderMetaFields": [
+        "فیلدهای متای سفارش ووکامرس"
+      ],
+      "CouponMetaFields": [
+        "فیلدهای متای کوپن ووکامرس"
+      ],
+      "RefundMetaFields": [
+        "Refund Meta Fields"
+      ],
+      "WPECommerceCustomFields": [
+        "WP ECommerce Custom Fields"
+      ],
+      "EventsManagerFields": [
+        "Events Manager Fields"
+      ],
+      "WPMLFields": [
+        "فیلدهای WPML"
+      ],
+      "CMB2CustomFields": [
+        "CMB2 Custom Fields"
+      ],
+      "JetEngineFields": [
+        "فیلدهای JetEngine"
+      ],
+      "JetEngineRFFields": [
+        "Jet Engine RF Fields"
+      ],
+      "JetEngineCPTFields": [
+        "Jet Engine CPT Fields"
+      ],
+      "JetEngineCPTRFFields": [
+        "Jet Engine CPT RF Fields"
+      ],
+      "JetEngineCCTFields": [
+        "Jet Engine CCT Fields"
+      ],
+      "JetEngineCCTRFFields": [
+        "Jet Engine CCT RF Fields"
+      ],
+      "JetEngineTaxonomyFields": [
+        "Jet Engine Taxonomy Fields"
+      ],
+      "JetEngineTaxonomyRFFields": [
+        "Jet Engine Taxonomy RF Fields"
+      ],
+      "JetEngineRelationsFields": [
+        "Jet Engine Relations Fields"
+      ],
+      "CourseSettingsFields": [
+        "Course Settings Fields"
+      ],
+      "CurriculumSettingsFields": [
+        "Curriculum Settings Fields"
+      ],
+      "QuizSettingsFields": [
+        "Quiz Settings Fields"
+      ],
+      "LessonSettingsFields": [
+        "Lesson Settings Fields"
+      ],
+      "QuestionSettingsFields": [
+        "Question Settings Fields"
+      ],
+      "OrderSettingsFields": [
+        "Order Settings Fields"
+      ],
+      "WordPressCustomFields": [
+        "فیلدهای سفارشی وردپرس"
+      ],
+      "TermsandTaxonomies": [
+        "اصطلاحات و طبقه‌بندی‌ها"
+      ],
+      "IsSerialized": [
+        "سریال شده است"
+      ],
+      "NoCustomFieldsFound": [
+        "No Custom Fields Found"
+      ],
+      "MediaUploadFields": [
+        "Upload Media Zip"
+      ],
+      "UploadMedia": [
+        "آپلود رسانه"
+      ],
+      "UploadedListofFiles": [
+        "Uploaded List of Files"
+      ],
+      "UploadedMediaFileLists": [
+        "فهرستهای فایل رسانه آپلود شده"
+      ],
+      "SavethismappingasTemplate": [
+        "Save this mapping as Template"
+      ],
+      "Save": [
+        "صرفه جویی"
+      ],
+      "Doyouneedtoupdatethecurrentmapping": [
+        "نقشه‌برداری فعلی را به‌روزرسانی کنید"
+      ],
+      "Savethecurrentmappingasnewtemplate": [
+        "ذخیره نقشه جریان در قالب جدید"
+      ],
+      "Back": [
+        "بازگشت"
+      ],
+      "Size": [
+        "اندازه"
+      ],
+      "MediaHandling": [
+        "مدیا هندلینگ"
+      ],
+      "Downloadexternalimagestoyourmedia": [
+        "تصاویر خارجی را در رسانه خود دانلود کنید"
+      ],
+      "ImageHandling": [
+        "Image Handling"
+      ],
+      "Usemediaimagesifalreadyavailable": [
+        "Usemedia Imagesifreadyavailable"
+      ],
+      "Doyouwanttooverwritetheexistingimages": [
+        "آیا می خواهید تصاویر موجود را بیش از حد بنویسید"
+      ],
+      "ImageSizes": [
+        "اندازه های تصویر"
+      ],
+      "Thumbnail": [
+        "بند انگشتی"
+      ],
+      "Medium": [
+        "متوسط"
+      ],
+      "MediumLarge": [
+        "متوسط ​​بزرگ"
+      ],
+      "Large": [
+        "بزرگ"
+      ],
+      "Custom": [
+        "سفارشی"
+      ],
+      "Slug": [
+        "حلزون حرکت کردن"
+      ],
+      "Width": [
+        "عرض"
+      ],
+      "Height": [
+        "ارتفاع"
+      ],
+      "Addcustomsizes": [
+        "اضافه کردن سفارشی"
+      ],
+      "PostContentImageOption": [
+        "گزینه‌های تصویر محتوای پست"
+      ],
+      "DownloadPostContentExternalImagestoMedia": [
+        "دانلود تصاویر خارجی محتوای پست به کتابخانه رسانه"
+      ],
+      "MediaSEOAdvancedOptions": [
+        "Media SEO & Advanced Options"
+      ],
+      "polylangfields": [
+        "Polylang Settings Fields"
+      ],
+      "SetimageTitle": [
+        "Set image Title"
+      ],
+      "SetimageCaption": [
+        "Set image Caption"
+      ],
+      "SetimageAltText": [
+        "Set image Alt Text"
+      ],
+      "SetimageDescription": [
+        "Set image Description"
+      ],
+      "Changeimagefilenameto": [
+        "تغییر نامفایل به"
+      ],
+      "ImportconfigurationSection": [
+        "Import configuration Section"
+      ],
+      "EnablesafeprestateRollback": [
+        "فعالسازی بازگشت ایمن به حالت قبلی (پشتیبان‌گیری قبل از واردات)"
+      ],
+      "Backupbeforeimport": [
+        "پشتیبان گیری قبل از وارد کردن"
+      ],
+      "DoyouwanttoSWITCHONMaintenancemodewhileimport": [
+        "آیا می‌خواهید در هنگام واردات حالت نگهداری را روشن کنید؟"
+      ],
+      "Doyouwanttohandletheduplicateonexistingrecords": [
+        "آیا می‌خواهید همپوشانی‌ها را در رکوردهای موجود مدیریت کنید؟"
+      ],
+      "Mentionthefieldswhichyouwanttohandleduplicates": [
+        "فیلدهایی را که می خواهید با موارد تکراری مدیریت کنید ذکر کنید"
+      ],
+      "DoyouwanttoUpdateanexistingrecords": [
+        "آیا می خواهید سوابق موجود را به روز کنید"
+      ],
+      "Updaterecordsbasedon": [
+        "به روز رسانی رکوردها بر اساس"
+      ],
+      "DeletedatafromWordPress": [
+        "حذف داده از WordPress"
+      ],
+      "EnabletodeletetheitemsnotpresentinCSVXMLfile": [
+        "برای حذف مواردی که در فایل CSV/XML نیستند فعال کنید"
+      ],
+      "DoyouwanttoSchedulethisImport": [
+        "آیا می خواهید این واردات را برنامه ریزی کنید"
+      ],
+      "ScheduleDate": [
+        "Schedule Date"
+      ],
+      "ScheduleFrequency": [
+        "زمانبندی فرکانس"
+      ],
+      "TimeZone": [
+        "منطقه زمانی"
+      ],
+      "ScheduleTime": [
+        "Schedule Time"
+      ],
+      "Schedule": [
+        "برنامه"
+      ],
+      "Import": [
+        "وارد كردن"
+      ],
+      "Update": [
+        "به‌روزرسانی"
+      ],
+      "Format": [
+        "قالب"
+      ],
+      "OneTime": [
+        "سر وقت"
+      ],
+      "Daily": [
+        "روزانه"
+      ],
+      "Weekly": [
+        "هفتگی"
+      ],
+      "Monthly": [
+        "ماهانه"
+      ],
+      "Hourly": [
+        "ساعتی"
+      ],
+      "Every30mins": [
+        "هر 30 دقیقه"
+      ],
+      "Every15mins": [
+        "هر 15 دقیقه"
+      ],
+      "Every10mins": [
+        "هر 10 دقیقه"
+      ],
+      "Every5mins": [
+        "هر 5 دقیقه"
+      ],
+      "FileSize": [
+        "حجم فایل"
+      ],
+      "Process": [
+        "روند"
+      ],
+      "Totalnoofrecords": [
+        "Total no of records"
+      ],
+      "CurrentProcessingRecord": [
+        "Current Processing Record"
+      ],
+      "RemainingRecord": [
+        "Remaining Record"
+      ],
+      "Completed": [
+        "تکمیل شده"
+      ],
+      "TimeElapsed": [
+        "زمان گذشت"
+      ],
+      "approximate": [
+        "تقریبی"
+      ],
+      "DownloadLog": [
+        "View Log"
+      ],
+      "NoRecord": [
+        "No Record"
+      ],
+      "UploadedCSVFileLists": [
+        "CSVFileLists آپلود شد"
+      ],
+      "Hostname": [
+        "نام میزبان"
+      ],
+      "HostPort": [
+        "Host Port"
+      ],
+      "HostUsername": [
+        "Host Username"
+      ],
+      "HostPassword": [
+        "رمز عبور میزبان"
+      ],
+      "HostPath": [
+        "HostPath"
+      ],
+      "DefaultPort": [
+        "Default Port"
+      ],
+      "FTPUsername": [
+        "نام کاربری FTPU"
+      ],
+      "FTPPassword": [
+        "رمز عبور FTP"
+      ],
+      "ConnectionType": [
+        "نوع اتصال"
+      ],
+      "ImportersActivity": [
+        "Importers Activity"
+      ],
+      "ImportStatistics": [
+        "آمار واردات"
+      ],
+      "FileManager": [
+        "مدیر فایل"
+      ],
+      "SmartSchedule": [
+        "زمان‌بندی هوشمند"
+      ],
+      "ScheduledExport": [
+        "صادرات زمان‌بندی‌شده"
+      ],
+      "Templates": [
+        "قالب‌ها"
+      ],
+      "LogManager": [
+        "مدیر گزارش"
+      ],
+      "NotSelectedAnyTab": [
+        "Not Selected Any Tab"
+      ],
+      "EventInfo": [
+        "اطلاعات رویداد"
+      ],
+      "EventDate": [
+        "تاریخ رویداد"
+      ],
+      "EventStatus": [
+        "وضعیت رویداد"
+      ],
+      "Actions": [
+        "اقدامات"
+      ],
+      "Date": [
+        "تاریخ"
+      ],
+      "Purpose": [
+        "هدف"
+      ],
+      "Revision": [
+        "تجدید نظر"
+      ],
+      "Select": [
+        "انتخاب کنید"
+      ],
+      "Inserted": [
+        "درج شده است"
+      ],
+      "Updated": [
+        "به‌روزرسانی شده"
+      ],
+      "Skipped": [
+        "نادیاده گرفته شده"
+      ],
+      "Delete": [
+        "حذف"
+      ],
+      "Noeventsfound": [
+        "Noevents پیدا شد"
+      ],
+      "ScheduleInfo": [
+        "اطلاعات زمان‌بندی"
+      ],
+      "ScheduledDate": [
+        "تاریخ برنامه ریزی شده"
+      ],
+      "ScheduledTime": [
+        "زمان برنامه ریزی شده"
+      ],
+      "Youhavenotscheduledanyevent": [
+        "رویدادی را برنامه ریزی نکرده اید"
+      ],
+      "Frequency": [
+        "فرکانس"
+      ],
+      "Time": [
+        "زمان"
+      ],
+      "EditSchedule": [
+        "ویرایش برنامه"
+      ],
+      "SaveChanges": [
+        "ذخیره تغییرات"
+      ],
+      "TemplateInfo": [
+        "اطلاعات الگو"
+      ],
+      "TemplateName": [
+        "نام الگو"
+      ],
+      "Module": [
+        "مدول"
+      ],
+      "CreatedTime": [
+        "Created Time"
+      ],
+      "NoTemplateFound": [
+        "No Template Found"
+      ],
+      "Download": [
+        "دانلود"
+      ],
+      "NoLogRecordFound": [
+        "No Log Record Found"
+      ],
+      "GeneralSettings": [
+        "تنظیمات عمومی"
+      ],
+      "DatabaseOptimization": [
+        "بهینه‌سازی پایگاه داده"
+      ],
+      "SecurityandPerformance": [
+        "امنیت و عملکرد"
+      ],
+      "Documentation": [
+        "مستندات"
+      ],
+      "MediaReport": [
+        "Media Report"
+      ],
+      "DropTable": [
+        "حذف جدول"
+      ],
+      "Ifenabledplugindeactivationwillremoveplugindatathiscannotberestored": [
+        "در صورت فعال بودن، غیرفعال‌سازی افزونه داده‌های آن را حذف می‌کند و قابل بازیابی نیست."
+      ],
+      "Scheduledlogmails": [
+        "ایمیل‌های گزارش زمان‌بندی‌شده"
+      ],
+      "Enabletogetscheduledlogmails": [
+        "برای دریافت ایمیل‌های گزارش زمان‌بندی‌شده فعال کنید."
+      ],
+      "Sendpasswordtouser": [
+        "ارسال رمز عبور به کاربر"
+      ],
+      "Enabletosendpasswordinformationthroughemail": [
+        "برای ارسال اطلاعات رمز عبور از طریق ایمیل فعال کنید."
+      ],
+      "WoocommerceCustomattribute": [
+        "ویژگی سفارشی WooCommerce"
+      ],
+      "Enablestoregisterwoocommercecustomattribute": [
+        "امکان ثبت ویژگی سفارشی WooCommerce را فراهم می‌کند."
+      ],
+      "PleasemakesurethatyoutakenecessarybackupbeforeproceedingwithdatabaseoptimizationThedatalostcantbereverted": [
+        "لطفاً مطمئن شوید که قبل از انجام بهینه‌سازی پایگاه داده‌ها، پشتیبان‌گیری لازم را نداشته باشید،"
+      ],
+      "DeleteallorphanedPostPageMeta": [
+        "Delete all orphaned Post/Page Meta"
+      ],
+      "Deleteallunassignedtags": [
+        "حذف همه تگ های اختصاص داده شده"
+      ],
+      "DeleteallPostPagerevisions": [
+        "Delete all Post/Page revisions"
+      ],
+      "DeleteallautodraftedPostPage": [
+        "پاک کردنصفحه پستالautodrafted"
+      ],
+      "DeleteallPostPageintrash": [
+        "Delete all Post/Page in trash"
+      ],
+      "DeleteallCommentsintrash": [
+        "Delete all Comments in trash"
+      ],
+      "DeleteallUnapprovedComments": [
+        "حذف همه نظرات تایید نشده"
+      ],
+      "DeleteallPingbackComments": [
+        "Delete all Pingback Comments"
+      ],
+      "DeleteallTrackbackComments": [
+        "Delete all Trackback Comments"
+      ],
+      "DeleteallSpamComments": [
+        "حذف همه هرزنامه ها"
+      ],
+      "RunDBOptimizer": [
+        "Run DB Optimizer"
+      ],
+      "DatabaseOptimizationLog": [
+        "Database Optimization Log"
+      ],
+      "noofOrphanedPostPagemetahasbeenremoved": [
+        "noofOrphanedPostPagemetahas حذف شده است"
+      ],
+      "noofUnassignedtagshasbeenremoved": [
+        "noofUnassignedtagshas حذف شده است"
+      ],
+      "noofPostPagerevisionhasbeenremoved": [
+        "noofPostPagerevision حذف شده است"
+      ],
+      "noofAutodraftedPostPagehasbeenremoved": [
+        "noofAutodraftedPostPagehas حذف شد"
+      ],
+      "noofPostPageintrashhasbeenremoved": [
+        "noofPostPageintrash حذف شده است"
+      ],
+      "noofSpamcommentshasbeenremoved": [
+        "noofSpamcommentحذف شده است"
+      ],
+      "noofCommentsintrashhasbeenremoved": [
+        "noofCommentsintrashhas حذف شده است"
+      ],
+      "noofUnapprovedcommentshasbeenremoved": [
+        "noofUnapprovedCommentحذف شده است"
+      ],
+      "noofPingbackcommentshasbeenremoved": [
+        "noofPingbackcommentحذف شده است"
+      ],
+      "noofTrackbackcommentshasbeenremoved": [
+        "noofTrackbackcomments حذف شده است"
+      ],
+      "Allowauthorseditorstoimport": [
+        "Allow authors/editors to import"
+      ],
+      "Thisenablesauthorseditorstoimport": [
+        "This enables authors/editors to import."
+      ],
+      "MinimumrequiredphpinivaluesIniconfiguredvalues": [
+        "حداقل مقادیر php.ini مورد نیاز (مقادیر Ini پیکربندی‌شده)"
+      ],
+      "Variables": [
+        "متغیرها"
+      ],
+      "SystemValues": [
+        "مقادیر سیستم"
+      ],
+      "MinimumRequirements": [
+        "حداقل نیازمندی‌ها"
+      ],
+      "RequiredtoenabledisableLoadersExtentionsandmodules": [
+        "برای فعال/غیرفعال کردن بارگذارها، افزونه‌ها و ماژول‌ها لازم است:"
+      ],
+      "DebugInformation": [
+        "اطلاعات اشکال‌زدایی:"
+      ],
+      "SmackcodersGuidelines": [
+        "راهنمای Smackcoders"
+      ],
+      "DevelopmentNews": [
+        "اخبار توسعه"
+      ],
+      "WhatsNew": [
+        "چه خبر"
+      ],
+      "YoutubeChannel": [
+        "کانال یوتیوب"
+      ],
+      "OtherWordPressPlugins": [
+        "افزونه‌های دیگر WordPress"
+      ],
+      "Count": [
+        "شمردن"
+      ],
+      "ImageType": [
+        "Image Type"
+      ],
+      "Status": [
+        "وضعیت"
+      ],
+      "Loading": [
+        "بارگذاری"
+      ],
+      "LoveWPUltimateCSVImporterGivea5starreviewon": [
+        "Love WP Ultimate CSV Importer, Give a 5 star review on"
+      ],
+      "ContactSupport": [
+        "تماس با پشتیبانی"
+      ],
+      "Email": [
+        "پست الکترونیک"
+      ],
+      "Supporttype": [
+        "نوع پشتیبانی"
+      ],
+      "BugReporting": [
+        "گزارش اشکال"
+      ],
+      "FeatureEnhancement": [
+        "افزایش ویژگی"
+      ],
+      "Message": [
+        "پیام"
+      ],
+      "Send": [
+        "ارسال"
+      ],
+      "NewsletterSubscription": [
+        "اشتراک در خبرنامه"
+      ],
+      "Subscribe": [
+        "اشتراک در"
+      ],
+      "Note": [
+        "یادداشت"
+      ],
+      "SubscribetoSmackcodersMailinglistafewmessagesayear": [
+        "اشتراک درSmackcodersMailinglistafewmessagesayear"
+      ],
+      "Pleasedraftamailto": [
+        "خواهشمندیم درفتامیلتو"
+      ],
+      "Ifyoudoesnotgetanyacknowledgementwithinanhour": [
+        "اگر در طول یک ساعت تأیید نخواهید کرد"
+      ],
+      "Selectyourmoduletoexportthedata": [
+        "ماژول خود را برای صادر کردن داده‌ها انتخاب کنید"
+      ],
+      "Toexportdatabasedonthefilters": [
+        "برای صادرات پایگاه داده بر روی فیلترها"
+      ],
+      "ExportFileName": [
+        "Export File Name"
+      ],
+      "AdvancedSettings": [
+        "تنظیمات پیشرفته"
+      ],
+      "ExportType": [
+        "نوع صادرات"
+      ],
+      "SplittheRecord": [
+        "Split the export into every"
+      ],
+      "AdvancedFilters": [
+        "فیلترهای پیشرفته"
+      ],
+      "Exportdatawithautodelimiters": [
+        "صادرات داده ها با جداکننده های خودکار"
+      ],
+      "Delimiters": [
+        "تعیین کننده ها"
+      ],
+      "OtherDelimiters": [
+        "سایر مرزها"
+      ],
+      "Exportdataforthespecificperiod": [
+        "صادرات داده برای دوره خاص"
+      ],
+      "StartFrom": [
+        "از ... شروع کنید"
+      ],
+      "EndTo": [
+        "End To"
+      ],
+      "Exportdatawiththespecificstatus": [
+        "صادرات داده با وضعیت خاص"
+      ],
+      "All": [
+        "همه"
+      ],
+      "Publish": [
+        "انتشار"
+      ],
+      "Sticky": [
+        "چسبنده"
+      ],
+      "Private": [
+        "خصوصی"
+      ],
+      "Protected": [
+        "حفاظت شده"
+      ],
+      "Draft": [
+        "پیش نویس"
+      ],
+      "Pending": [
+        "در انتظار"
+      ],
+      "Exportdatabyspecificauthors": [
+        "Export data by specific authors"
+      ],
+      "Authors": [
+        "نویسندگان"
+      ],
+      "ExportdatabasedonspecificInclusions": [
+        "صادرکردن پایگاه داده دربرداشت های خاص"
+      ],
+      "DoyouwanttoSchedulethisExport": [
+        "آیا می خواهید این صادرات را برنامه ریزی کنید"
+      ],
+      "SelectTimeZone": [
+        "TimeZone را انتخاب کنید"
+      ],
+      "ScheduleExport": [
+        "Schedule Export"
+      ],
+      "DataExported": [
+        "داده صادر شد"
+      ],
+      "FilePath": [
+        "مسیر فایل"
+      ],
+      "UltimateCSVImporterPro": [
+        "UltimateCSV Importer Pro"
+      ],
+      "loginfo": [
+        "مدیر گزارش"
+      ],
+      "ContactusforPresaleEnquiry": [
+        "برای استعلام پیش فروش با ما تماس بگیرید"
+      ],
+      "PremiumVersion": [
+        "نسخه پریمیوم"
+      ],
+      "Thisfeatureisavailablein": [
+        "این ویژگی در دسترس است"
+      ],
+      "WPUltimateCSVImporter": [
+        "وارد کننده WP Ultimate CSV"
+      ],
+      "SampleCSV": [
+        "نمونه CSV"
+      ],
+      "Poweredby": [
+        "قدرت گرفته از"
+      ],
+      "AlreadyInstalled": [
+        "قبلاً نصب شده است"
+      ],
+      "importwoocommerce": [
+        "واردات ووکامرس"
+      ],
+      "ImportanybulkWooCommerceProductsdatainCSV": [
+        "هرگونه داده انبوه محصولات WooCommerce را در CSV وارد کنید."
+      ],
+      "Highlights": [
+        "نکات برجسته"
+      ],
+      "ProductTypessimplegroupedvariableexternaltypeimport": [
+        "انواع محصول ساده، گروه بندی شده، متغیر، واردات نوع خارجی."
+      ],
+      "FeaturedProductImportfromURL": [
+        "واردات محصول ویژه از URL"
+      ],
+      "Galleryimageimport": [
+        "واردات تصویر گالری"
+      ],
+      "Duplicatedetection": [
+        "تشخیص تکراری"
+      ],
+      "FileType": [
+        "نوع فایل"
+      ],
+      "SupportsUTF_8CSVfile": [
+        "از فایل CSV UTF-8 پشتیبانی می کند"
+      ],
+      "Install": [
+        "نصب"
+      ],
+      "ImportUsers": [
+        "وارد کردن کاربران"
+      ],
+      "ImportUserinfointoWordPressinbulk": [
+        "اطلاعات کاربر را به صورت انبوه به وردپرس وارد کنید"
+      ],
+      "WPMembersaddonsupport": [
+        "پشتیبانی از افزونه WP-Members"
+      ],
+      "Defaultcustomfieldsimport": [
+        "وارد کردن فیلدهای سفارشی پیش‌فرض"
+      ],
+      "Sendsautomatedpasswordnotificationemailoptional": [
+        "ایمیل اعلان رمز عبور خودکار را ارسال می کند (اختیاری)"
+      ],
+      "WPUltimateExporter": [
+        "WP Ultimate Exporter"
+      ],
+      "ExportallyourWordPressdataasCSVfileforbackup": [
+        "تمام داده های وردپرس خود را به عنوان فایل CSV برای پشتیبان گیری صادر کنید"
+      ],
+      "Supportsdefaultcustomfields": [
+        "از فیلدهای سفارشی پیش فرض پشتیبانی می کند"
+      ],
+      "UTF8encodedCSVfile": [
+        "فایل CSV کدگذاری شده UTF-8"
+      ],
+      "SupportPostPageCustomPost": [
+        "پشتیبانی از پست، صفحه و پست سفارشی"
+      ],
+      "Filteredexportbasedonperiodoftimeauthors": [
+        "صادرات فیلتر شده بر اساس دوره زمانی و نویسندگان"
+      ],
+      "Addons": [
+        "افزودنی‌ها"
+      ],
+      "Posts": [
+        "نوشته‌ها"
+      ],
+      "CustomPosts": [
+        "پست‌های سفارشی"
+      ],
+      "PostTags": [
+        "برچسب‌های نوشته"
+      ],
+      "PostCategories": [
+        "دسته‌های نوشته"
+      ],
+      "Users": [
+        "کاربران"
+      ],
+      "Taxonomies": [
+        "طبقه‌بندی‌ها"
+      ],
+      "Comments": [
+        "دیدگاه‌ها"
+      ],
+      "CustomerReviews": [
+        "نظرات مشتریان"
+      ],
+      "WooCommerceCoupons": [
+        "کوپن های ووکامرس"
+      ],
+      "WooCommerceRefunds": [
+        "بازپرداخت ووکامرس"
+      ],
+      "WooCommerceVariations": [
+        "تغییرات ووکامرس"
+      ],
+      "Found": [
+        "یافت شد"
+      ],
+      "CreateTopic": [
+        "ایجاد موضوع"
+      ],
+      "Createasupport": [
+        "یک موضوع پشتیبانی برای کمک در اینجا ایجاد کنید"
+      ],
+      "Learnfrom": [
+        "از پست های وبلاگ ما بیاموزید"
+      ],
+      "TechnicalDocumentation": [
+        "مستندات فنی"
+      ],
+      "Getsampleandexamplefiles": [
+        "فایل های نمونه و نمونه را دریافت کنید"
+      ],
+      "PleaseinstalltheUltimateExportertoexportallyourWordPressdataasCSV": [
+        "لطفاً Ultimate Exporter را نصب کنید تا تمام داده های وردپرس خود را به صورت CSV صادر کنید"
+      ],
+      "Clickheretoinstall": [
+        "برای نصب اینجا کلیک کنید"
+      ],
+      "poweredBy": [
+        "پشتیبانی شده توسط"
+      ],
+      "Hire_us": [
+        "ما را استخدام کنید"
+      ],
+      "GetSupport": [
+        "دریافت پشتیبانی"
+      ],
+      "SampleCSVXML": [
+        "نمونه CSV&XML"
+      ],
+      "WarningImportforsomedataaredisabledInstallandactivatebelowpluginsfirst": [
+        "هشدار: برخی از افزونه ها گم شده اند، توصیه می شود"
+      ],
+      "DragDropyourfilesor": [
+        "فایل‌های خود را بکشید و رها کنید یا"
+      ],
+      "WPCompleteFields": [
+        "WPComplete Fields"
+      ],
+      "ChooseUploadMethod": [
+        "روش آپلود را انتخاب کنید"
+      ],
+      "Media": [
+        "رسانه‌ها"
+      ],
+      "CsvUploadFields": [
+        "فایل را آپلود کنید"
+      ],
+      "Device": [
+        "دستگاه"
+      ],
+      "Remote": [
+        "راه دور"
+      ],
+      "SelectDeviceZIPfile": [
+        "دستگاه را انتخاب کنید تا تصاویر را مستقیماً از دستگاه خود به عنوان یک فایل ZIP آپلود کنید."
+      ],
+      "SelectDeviceCSVfile": [
+        "راه دور را انتخاب کنید تا تصاویر را از URLهای وب‌سایت‌های راه دور وارد کنید."
+      ],
+      "MediaContinue": [
+        "ادامه دهید"
+      ],
+      "FreshImport": [
+        "واردات جدید"
+      ],
+      "UpdateContent": [
+        "محتوا را به‌روزرسانی کنید"
+      ],
+      "UpdateThisMappingAs": [
+        "به‌روزرسانی این نگاشت به عنوان"
+      ],
+      "Overwritetheavailableimages": [
+        "تصاویر موجود را بازنویسی کنید"
+      ],
+      "AlwaysCreateAsNewImage": [
+        "همیشه به عنوان تصویر جدید ایجاد کنید"
+      ],
+      "ImportCompleted": [
+        "واردات کامل شد!"
+      ],
+      "importHasFinished": [
+        "واردات شما با موفقیت به پایان رسید. برای دانلود و دسترسی به یک گزارش واردات دقیق روی دکمه زیر کلیک کنید."
+      ],
+      "ImportLog": [
+        "گزارش واردات"
+      ],
+      "FailedMedia": [
+        "رسانه‌های ناموفق"
+      ],
+      "UseTheFailedImages": [
+        "از فایل CSV تصاویر ناموفق برای تصحیح URLها و واردات دوباره تصاویر استفاده کنید"
+      ],
+      "FeaturedFields": [
+        "فیلدهای ویژه"
+      ],
+      "Summary": [
+        "خلاصه"
+      ],
+      "csv_importlink": [
+        "click here"
+      ],
+      "AccessKey": [
+        "AccessKey"
+      ],
+      "newtabfailedMedia": [
+        "Media"
+      ],
+      "MediaFields": [
+        "فیلدهای رسانه"
+      ],
+      "ACFFlexibleFields": [
+        "زمینه‌های انعطاف‌پذیر پیشرفته (ACF)"
+      ],
+      "SlimSeoFields": [
+        "Slim SEO Fields"
+      ],
+      "EDDDownloadsFields": [
+        "EDD Downloads Fields"
+      ],
+      "EDDCustomersFields": [
+        "EDD Customers Fields"
+      ],
+      "EDDDiscountsFields": [
+        "EDD Discounts Fields"
+      ],
+      "SureCartProductsFields": [
+        "SureCart Products Fields"
+      ],
+      "SureCartCustomersFields": [
+        "SureCart Customers Fields"
+      ],
+      "SureCartCouponsFields": [
+        "SureCart Coupons Fields"
+      ],
+      "ListeoFields": [
+        "Listeo Fields"
+      ],
+      "jetEngineCPTRFFields": [
+        "Jet Engine CPT RF Fields"
+      ],
+      "jetEngineTaxonomyFields": [
+        "Jet Engine Taxonomy Fields"
+      ],
+      "jetEngineTaxonomyRFFields": [
+        "Jet Engine Taxonomy Repeater Fields"
+      ],
+      "JetEngineBookingFields": [
+        "Jet Engine Booking Fields"
+      ],
+      "SeoPressFields": [
+        "SEOPress Fields"
+      ],
+      "ElementorFields": [
+        "فیلدهای المنتور"
+      ],
+      "TotalPressFields": [
+        "TotalPress Fields"
+      ],
+      "replyattributesfields": [
+        "Reply Attributes Fields"
+      ],
+      "forumattributesfields": [
+        "Forum Attributes Fields"
+      ],
+      "topicattributesfields": [
+        "Topic Attributes Fields"
+      ],
+      "PPOMMetaFields": [
+        "PPOM Meta Fields"
+      ],
+      "EventCalendarMetaFields": [
+        "EventCalendar Meta Fields"
+      ],
+      "EPOMetaFields": [
+        "EPO Meta Fields"
+      ],
+      "WCPAMetaFields": [
+        "WCPA Meta Fields"
+      ],
+      "ListingMetaFields": [
+        "Listing Fields"
+      ],
+      "WooCommerceReviews": [
+        "WooCommerce Reviews"
+      ],
+      "Pages": [
+        "برگه‌ها"
+      ],
+      "WooCommerceProducts": [
+        "WooCommerceProducts"
+      ],
+      "Thisfeatureisavailable": [
+        "This feature is available in"
+      ],
+      "installactivate": [
+        "to install and activate now"
+      ],
+      "EnableSingleImportOption": [
+        "فعال‌سازی گزینه واردات/صادرات تکی"
+      ],
+      "subcribe": [
+        "Subscribe"
+      ],
+      "EnableSingleImport": [
+        "فعال‌سازی واردات/صادرات تکی"
+      ],
+      "Scheduledexporthelpsbackupaseditabletextfileformat": [
+        "Scheduled export helps support as editable text file format at regular interval."
+      ],
+      "ExportfeatureisdisabledInstallandactivatetheaddonpluginfirst": [
+        "Warning: the export function is disabled. Install and activate the additional plugin first"
+      ],
+      "Gotoaddons": [
+        "Go to addons"
+      ],
+      "toaform": [
+        "to support the forum"
+      ],
+      "instruction": [
+        "(No.of records per file)"
+      ],
+      "backupineditableformat": [
+        "backup copy in editable format"
+      ],
+      "Letsyougetonlyrequireddataw    iththedifferentadvancedfilters": [
+        "Allows you to get only the required data with the different advanced filters"
+      ],
+      "Backupin4differentfileformatslikeCSV": [
+        "Backup in 4 different file formats like CSV, XML, JSON, XLS."
+      ],
+      "WooCommerceOrders": [
+        "WooCommerce Orders"
+      ],
+      "UltimateExporterPro": [
+        "Ultimate Exporter Pro"
+      ],
+      "Dashboard_ImportsRun": [
+        "Imports Run"
+      ],
+      "Dashboard_RecordsCreated": [
+        "Records Created"
+      ],
+      "Dashboard_RecordsExported": [
+        "Records Exported"
+      ],
+      "Dashboard_AIAssists": [
+        "AI Assists"
+      ],
+      "Dashboard_TotalTemplates": [
+        "Total Templates"
+      ],
+      "Dashboard_SavedTemplates": [
+        "Saved mapping templates"
+      ],
+      "Dashboard_TotalInserted": [
+        "Total inserted records"
+      ],
+      "Dashboard_ExportVolume": [
+        "Export volume"
+      ],
+      "Dashboard_ValidationFixes": [
+        "Validation fixes"
+      ],
+      "Dashboard_AIDetail": [
+        "Auto / Corrections / Validation"
+      ],
+      "Dashboard_ImportVolume": [
+        "Import Volume"
+      ],
+      "Dashboard_Last12Months": [
+        "Dashboard_Last12Months"
+      ],
+      "Dashboard_MonthlyImports": [
+        "Monthly Imports"
+      ],
+      "Dashboard_NoChartData": [
+        "No import data available yet."
+      ],
+      "Dashboard_ContentDistribution": [
+        "Content Distribution"
+      ],
+      "Dashboard_RecentActivity": [
+        "Recent Activity"
+      ],
+      "Dashboard_ViewAllLogs": [
+        "View All Logs"
+      ],
+      "Dashboard_Activity": [
+        "Activity"
+      ],
+      "Dashboard_Records": [
+        "Records"
+      ],
+      "Dashboard_QuickStats": [
+        "Quick Stats"
+      ],
+      "Dashboard_TotalImports": [
+        "Total Imports"
+      ],
+      "Dashboard_TotalExports": [
+        "Total Exports"
+      ],
+      "Dashboard_ScheduledJobs": [
+        "Scheduled Jobs"
+      ],
+      "Dashboard_FailedJobs": [
+        "Failed Jobs"
+      ],
+      "Dashboard_TemplatesSaved": [
+        "Templates Saved"
+      ],
+      "Dashboard_MediaImported": [
+        "رسانه وارد شد"
+      ],
+      "SelectField": [
+        "Select Field"
+      ],
+      "Failed": [
+        "Failed"
+      ],
+      "PluginVersion": [
+        "نسخه افزونه"
+      ],
+      "LifterCourseSettingsFields": [
+        "Lifter Course Settings Fields"
+      ],
+      "LifterReviewSettingsFields": [
+        "Lifter Review Settings Fields"
+      ],
+      "LifterCouponSettingsFields": [
+        "Lifter Coupon Settings Fields"
+      ],
+      "LifterLessonSettingsFields": [
+        "Lifter Lesson Settings Fields"
+      ],
+      "FifuPostFields": [
+        "Fifu Post Fields"
+      ],
+      "FifuPageFields": [
+        "Fifu Page Fields"
+      ],
+      "FifuCustomPostFields": [
+        "Fifu Custom Post Fields"
+      ],
+      "BuddyFields": [
+        "فیلدهای BuddyPress"
+      ],
+      "IterationId": [
+        "Interation Limit"
+      ],
+      "Iteration": [
+        "Iteration"
+      ],
+      "Exportiteration_id": [
+        "پردازش صادرات در تکرارها"
+      ],
+      "Toast_PleaseChooseHeaderManipulation": [
+        "Please choose Header Manipulation in the drop down"
+      ],
+      "Toast_ConfigureAISettingsConnectors": [
+        "Configure AI at Settings → Connectors."
+      ],
+      "Toast_NoImagesInZip": [
+        "There is no image files in the uploaded zip file"
+      ],
+      "Toast_MandatoryField": [
+        "{field} is a mandatory field"
+      ],
+      "Toast_UpgradeToProFeature": [
+        "Please upgrade to PRO for this feature"
+      ],
+      "Toast_SettingsUpdated": [
+        "Settings successfully updated"
+      ],
+      "Toast_AdminOnlyOption": [
+        "Only admin can change this option"
+      ],
+      "Toast_MailSent": [
+        "Mail sent successfully"
+      ],
+      "Toast_NewsletterSubscribed": [
+        "Successfully subscribed to newsletter"
+      ],
+      "Toast_InvalidEmail": [
+        "The email you entered is not valid"
+      ],
+      "Toast_BucketSelected": [
+        "Bucket selected"
+      ],
+      "Toast_LogDoesNotExist": [
+        "Log doesn\\\\"
+      ],
+      "Toast_NoFailedMediaLog": [
+        "No failed media log available for this import."
+      ],
+      "Toast_SelectModuleToExport": [
+        "Select a module to export"
+      ],
+      "Toast_FilePathMissing": [
+        "File path is missing!"
+      ],
+      "Toast_TypeExportFileName": [
+        "Please type export file name"
+      ],
+      "Support_RateUsPrefix": [
+        "از WP Ultimate CSV Importer لذت می‌برید؟ به ما امتیاز دهید در"
+      ],
+      "Support_RateUsLinkText": [
+        "wordpress.org!"
+      ],
+      "Support_NeedHelp": [
+        "نیاز به کمک دارید؟"
+      ],
+      "Support_ThanksForUsing": [
+        "از استفاده شما از افزونه ما سپاسگزاریم!"
+      ],
+      "Support_FreeSupportPrefix": [
+        "If you\\\\"
+      ],
+      "Support_ForumSuffix": [
+        ". Our team actively monitors the forum and will be happy to assist you there."
+      ],
+      "Support_PreSalePrefix": [
+        "Have a pre-sale question or thinking about upgrading to Pro? Feel free to email us directly at"
+      ],
+      "Support_PreSaleSuffix": [
+        ", we’re here to help you choose the right solution."
+      ],
+      "Support_ThanksAgain": [
+        "Thanks again for choosing Smackcoders!"
+      ],
+      "Support_SubmitQuery": [
+        "ارسال درخواست"
+      ],
+      "Banner_MaintenanceEnabled": [
+        "Maintenance mode is enabled"
+      ],
+      "Common_Disable": [
+        "Disable"
+      ],
+      "ImportResumeDetected": [
+        "An unfinished import was detected. Would you like to resume it?"
+      ],
+      "ImportResumeFile": [
+        "File"
+      ],
+      "ImportResumeProgress": [
+        "Progress"
+      ],
+      "ImportResumeButton": [
+        "Resume"
+      ],
+      "ImportResumeDiscard": [
+        "Discard"
+      ],
+      "ImportResumeDiscarding": [
+        "Discarding…"
+      ],
+      "ImportResumePreparing": [
+        "Preparing resume…"
+      ],
+      "ImportResumeFailed": [
+        "Could not resume this import."
+      ],
+      "ImportResumeDiscardFailed": [
+        "Could not discard this import session."
+      ],
+      "Banner_UpgradeMessage": [
+        "به‌روزرسانی‌ها، زمان‌بندی، فیلدهای پیشرفته و ویژگی‌های پیشرفته واردسازی و برون‌بری را با نسخه Pro فعال کنید. تا ۲۲٪ تخفیف در حراج ۱۵ سالگی ما دریافت کنید"
+      ],
+      "Common_UpgradeToPro": [
+        "ارتقا به نسخه حرفه‌ای"
+      ],
+      "Modal_ProOnlyMessage": [
+        "This feature is available in the Pro version only. Upgrade now to access!"
+      ],
+      "Help_ButtonLabel": [
+        "Help"
+      ],
+      "Help_MenuTitle": [
+        "Help Menu"
+      ],
+      "Help_FetchingData": [
+        "Fetching Data..."
+      ],
+      "Help_NoResults": [
+        "No results found"
+      ],
+      "Help_SearchPlaceholder": [
+        "Search here..."
+      ],
+      "Common_NeedHelp": [
+        "نیاز به کمک دارید؟"
+      ],
+      "Month_January": [
+        "January"
+      ],
+      "Month_February": [
+        "February"
+      ],
+      "Month_March": [
+        "March"
+      ],
+      "Month_April": [
+        "April"
+      ],
+      "Month_May": [
+        "May"
+      ],
+      "Month_June": [
+        "June"
+      ],
+      "Month_July": [
+        "July"
+      ],
+      "Month_August": [
+        "August"
+      ],
+      "Month_September": [
+        "September"
+      ],
+      "Month_October": [
+        "October"
+      ],
+      "Month_November": [
+        "November"
+      ],
+      "Month_December": [
+        "December"
+      ],
+      "Toast_SelectFileToUpload": [
+        "Please select a file to upload."
+      ],
+      "Toast_MissingRequiredFields": [
+        "Some required fields are missing. Please check the file and try again."
+      ],
+      "Toast_FailedImportTryAgain": [
+        "Failed to import CSV. Please try again."
+      ],
+      "Toast_ErrorOccurredTryAgain": [
+        "An error occurred while importing. Please try again."
+      ],
+      "Toast_InstallPhpZip": [
+        "Please install php-zip extension"
+      ],
+      "Error_ServerTimeout": [
+        "Server connection has timed out"
+      ],
+      "Link_FixThisError": [
+        "Click here to fix this error"
+      ],
+      "Toast_UpdateUrlToProcess": [
+        "Please update URL to process"
+      ],
+      "Label_MatchBy": [
+        "Match by:"
+      ],
+      "Toast_SelectMatchField": [
+        "Please select a match field."
+      ],
+      "Toast_MatchFieldNotMapped": [
+        "{field} field is not mapped in the mapping section. Please map it in WordPress Core Fields."
+      ],
+      "Common_AdminOnly": [
+        "This is only for administrator"
+      ],
+      "Common_FieldSettings": [
+        "Field Settings"
+      ],
+      "Common_ContentGenerator": [
+        "Content Generator"
+      ],
+      "Common_CustomFunction": [
+        "Custom Function"
+      ],
+      "Common_SearchField": [
+        "Search field..."
+      ],
+      "Common_HeaderManipulation": [
+        "Header Manipulation"
+      ],
+      "Common_ChooseCsvFile": [
+        "Choose CSV File"
+      ],
+      "Common_ImportConfigurationSection": [
+        "بخش پیکربندی واردات"
+      ],
+      "Common_ProFeatureTooltip": [
+        "This feature is available in the Pro version"
+      ],
+      "MediaImportPath": [
+        "Media Import Path"
+      ],
+      "MediaImportPath_RetainOriginal": [
+        "Retaining the original file path instead of current month folder"
+      ],
+      "Module_WooCommerceReviews": [
+        "نظرات"
+      ],
+      "Module_WooCommerceProducts": [
+        "محصولات"
+      ],
+      "Module_WooCommerceOrders": [
+        "سفارشات"
+      ],
+      "Module_WooCommerceCustomers": [
+        "مشتریان"
+      ],
+      "Common_Images": [
+        "تصاویر"
+      ],
+      "Common_Data": [
+        "داده‌ها"
+      ],
+      "Common_PRO": [
+        "حرفه‌ای"
+      ],
+      "Common_SupportedFileTypes": [
+        "انواع فایل های پشتیبانی شده"
+      ],
+      "Common_UploadTemplates": [
+        "قالب‌های آپلود"
+      ],
+      "Common_SmartSchedule": [
+        "زمان‌بندی هوشمند"
+      ],
+      "Common_ScheduleExport": [
+        "زمان‌بندی صادرات"
+      ],
+      "Common_GoogleSheet": [
+        "صفحه گسترده Google"
+      ],
+      "Common_DragDropFilesFor": [
+        "Drag & Drop your files for"
+      ],
+      "Pro_UpsellLong": [
+        "پتانسیل کامل این ویژگی را با نسخه PRO ما باز کنید! تجربه خود را ارتقا دهید و همین حالا به مزایای انحصاری دسترسی پیدا کنید."
+      ],
+      "Pro_UpgradeNow": [
+        "ارتقا به PRO همین حالا!"
+      ],
+      "Label_WhenDuplicateFound": [
+        "When duplicate found:"
+      ],
+      "DuplicateAction_Skip": [
+        "Skip"
+      ],
+      "DuplicateAction_UpdateExisting": [
+        "Update existing"
+      ],
+      "DuplicateAction_CreateNew": [
+        "Create new"
+      ],
+      "ImportConfig_NoCreateNewIfNoMatch": [
+        "Do not create new posts if no matching record is found"
+      ],
+      "ImportConfig_AdaptiveFileProcessing": [
+        "آیا می‌خواهید پردازش تطبیقی فایل به صورت رکورد به رکورد انجام شود؟"
+      ],
+      "ImportConfig_IterativePieceByPiece": [
+        "Iterative, Piece-by-Piece Processing"
+      ],
+      "ImportConfig_RecordsPerIteration": [
+        "In each iteration how many records need to process"
+      ],
+      "ImportConfig_FilterByCategory": [
+        "آیا می‌خواهید داده‌های فیلتر شده بر اساس دسته‌بندی را وارد کنید؟"
+      ],
+      "Mapping_CreateWpCustomFields": [
+        "ایجاد فیلدهای سفارشی وردپرس"
+      ],
+      "Mapping_ManageFilteringOptions": [
+        "مدیریت گزینه‌های فیلتر"
+      ],
+      "Mapping_AddCustomField": [
+        "افزودن فیلد سفارشی"
+      ],
+      "Mapping_AddRule": [
+        "افزودن قانون"
+      ],
+      "Mapping_NoWpCustomFields": [
+        "هیچ فیلد سفارشی WP وجود ندارد"
+      ],
+      "Mapping_ProductAttribute": [
+        "PRODUCT ATTRIBUTE {n}"
+      ],
+      "Common_Of": [
+        "از"
+      ],
+      "Common_Add": [
+        "Add"
+      ],
+      "Filter_AND": [
+        "AND"
+      ],
+      "Filter_OR": [
+        "OR"
+      ],
+      "Export_WPQuery": [
+        "کوئری WP"
+      ],
+      "Export_QueryPostType": [
+        "کوئری نوع نوشته"
+      ],
+      "Export_QueryUser": [
+        "کوئری کاربر"
+      ],
+      "Export_QueryComment": [
+        "کوئری دیدگاه"
+      ],
+      "Export_QueryArgsHint": [
+        "آرگومان‌های WP_Query را به‌صورت شیء شبیه JSON وارد کنید."
+      ],
+      "Export_QueryArgsTooltipTitle": [
+        "می‌توانید آرگومان‌هایی مانند این وارد کنید:"
+      ],
+      "Export_GoogleSheetCsv": [
+        "صادر کردن داده‌های CSV به صفحه گسترده گوگل"
+      ],
+      "Export_ClientMode": [
+        "اجازه اجرای این صادرات در حالت مشتری به غیرمدیران"
+      ],
+      "Export_ByLanguageCode": [
+        "صادرات داده بر اساس کد زبان"
+      ],
+      "Export_ByPostId": [
+        "صادرات داده بر اساس شناسه نوشته مشخص"
+      ],
+      "Export_ByPostTitle": [
+        "صادرات داده بر اساس عنوان نوشته مشخص"
+      ],
+      "Export_CustomersPurchased": [
+        "Export customers based on customer purchased"
+      ],
+      "Export_CustomersRole": [
+        "Export customers based on role"
+      ],
+      "Export_CustomersByProduct": [
+        "Export customers based on the product that the customer purchased"
+      ],
+      "Export_EnableRollback": [
+        "Enable Rollback"
+      ],
+      "Export_OrdersByProduct": [
+        "Export Orders based on the Product that the order is placed."
+      ],
+      "Export_OrderByPayment": [
+        "Export Order based on Payment Options."
+      ],
+      "Export_Bundle": [
+        "بسته"
+      ],
+      "Export_DataPreview": [
+        "پیش‌نمایش داده"
+      ],
+      "Export_WithIteration": [
+        "Export with Iteration"
+      ],
+      "Export_EnterIterationId": [
+        "Enter Iteration ID"
+      ],
+      "Module_JetBooking": [
+        "Jet Booking"
+      ],
+      "Module_JetReviews": [
+        "Jet Reviews"
+      ],
+      "Export_SplitRecord": [
+        "تقسیم رکورد"
+      ],
+      "Export_AvailableRecords": [
+        "Available records"
+      ],
+      "Export_ZeroRecordsHint": [
+        "If record count is zero, kindly change the filter settings and click Export."
+      ],
+      "Common_Preview": [
+        "پیش‌نمایش"
+      ],
+      "Export_Migrate": [
+        "مهاجرت"
+      ],
+      "Feedback_Title": [
+        "How was your experience?"
+      ],
+      "Feedback_Subtitle": [
+        "Help us improve WP Ultimate CSV Importer"
+      ],
+      "Feedback_RateOnWpOrg": [
+        "Rate our plugin on WordPress.org"
+      ],
+      "Feedback_RatingHelps": [
+        "Your rating helps other users discover our plugin"
+      ],
+      "Feedback_RateButton": [
+        "Rate on WordPress.org"
+      ],
+      "Common_Or": [
+        "or"
+      ],
+      "Feedback_UnlockPremium": [
+        "Unlock Premium Features"
+      ],
+      "Feedback_FeatureMapping": [
+        "Advanced field mapping"
+      ],
+      "Feedback_FeatureScheduled": [
+        "Scheduled imports"
+      ],
+      "Feedback_FeatureCPT": [
+        "Custom post types support"
+      ],
+      "Feedback_FeatureSupport": [
+        "Priority support"
+      ],
+      "Feedback_UpgradePremium": [
+        "Upgrade to Premium"
+      ],
+      "Feedback_DontShowAgain": [
+        "Don\\\\"
+      ],
+      "Mapping_AddedRules": [
+        "قوانین افزوده شده:"
+      ],
+      "Mapping_DelimiterDetected": [
+        "جداکننده شناسایی شده از فایل آپلود شده شما :"
+      ],
+      "Common_SelectOption": [
+        "--select--"
+      ],
+      "Common_SelectDash": [
+        "-- Select --"
+      ],
+      "Common_CsvFields": [
+        "CSV Fields"
+      ],
+      "Filter_Elements": [
+        "عناصر"
+      ],
+      "Filter_Rule": [
+        "قاعده"
+      ],
+      "Filter_Value": [
+        "مقدار"
+      ],
+      "Filter_Rules": [
+        "Rules"
+      ],
+      "Filter_Values": [
+        "Values"
+      ],
+      "Filter_Condition": [
+        "Condition"
+      ],
+      "Filter_Actions": [
+        "اقدامات"
+      ],
+      "Filter_EnterValue": [
+        "Enter value"
+      ],
+      "FilterRule_Equals": [
+        "Equals"
+      ],
+      "FilterRule_NotEquals": [
+        "Not Equals"
+      ],
+      "FilterRule_GreaterThan": [
+        "Greater Than"
+      ],
+      "FilterRule_EqualsOrGreaterThan": [
+        "Equals or Greater Than"
+      ],
+      "FilterRule_LessThan": [
+        "Less Than"
+      ],
+      "FilterRule_EqualsOrLessThan": [
+        "Equals or Less Than"
+      ],
+      "FilterRule_Contains": [
+        "Contains"
+      ],
+      "FilterRule_NotContains": [
+        "Not Contains"
+      ],
+      "FilterRule_IsEmpty": [
+        "Is Empty"
+      ],
+      "FilterRule_IsNotEmpty": [
+        "Is Not Empty"
+      ],
+      "DelimiterName_Comma": [
+        "کاما"
+      ],
+      "DelimiterName_Semicolon": [
+        "نقطه‌کاما"
+      ],
+      "DelimiterName_Tab": [
+        "تب"
+      ],
+      "DelimiterName_Pipe": [
+        "خط عمودی"
+      ],
+      "DelimiterName_Unknown": [
+        "unknown"
+      ],
+      "FieldLabel_Title": [
+        "Title"
+      ],
+      "FieldLabel_ID": [
+        "ID"
+      ],
+      "FieldLabel_Content": [
+        "Content"
+      ],
+      "FieldLabel_ShortDescription": [
+        "Short Description"
+      ],
+      "FieldLabel_PublishDate": [
+        "Publish Date"
+      ],
+      "FieldLabel_Slug": [
+        "Slug"
+      ],
+      "FieldLabel_Author": [
+        "Author"
+      ],
+      "FieldLabel_Status": [
+        "Status"
+      ],
+      "FieldLabel_FeaturedImage": [
+        "Featured Image"
+      ],
+      "FieldLabel_Format": [
+        "Format"
+      ],
+      "FieldLabel_CommentStatus": [
+        "Comment Status"
+      ],
+      "FieldLabel_PingStatus": [
+        "Ping Status"
+      ],
+      "FieldLabel_Parent": [
+        "Parent"
+      ],
+      "FieldLabel_Order": [
+        "Order"
+      ],
+      "FieldLabel_PageTemplate": [
+        "Page Template"
+      ],
+      "FieldLabel_LanguageCode": [
+        "Language Code"
+      ],
+      "FieldLabel_PostExpirator": [
+        "Post Expirator"
+      ],
+      "FieldLabel_PostExpiratorStatus": [
+        "Post Expirator Status"
+      ],
+      "FieldLabel_TemplateTitle": [
+        "Template title"
+      ],
+      "FieldLabel_TemplateContent": [
+        "Template content"
+      ],
+      "FieldLabel_Style": [
+        "Style"
+      ],
+      "FieldLabel_TemplateType": [
+        "Template type"
+      ],
+      "FieldLabel_CreatedTime": [
+        "Created time"
+      ],
+      "FieldLabel_CreatedBy": [
+        "Created by"
+      ],
+      "FieldLabel_TemplateStatus": [
+        "Template status"
+      ],
+      "FieldLabel_Category": [
+        "Category"
+      ],
+      "Validation_ValidateCsv": [
+        "اعتبارسنجی CSV"
+      ],
+      "Validation_ResultsTitle": [
+        "CSV Validation Results"
+      ],
+      "Validation_ScanMode": [
+        "Scan mode"
+      ],
+      "Validation_Quick10": [
+        "Quick scan (10 rows)"
+      ],
+      "Validation_Quick50": [
+        "Quick scan (50 rows)"
+      ],
+      "Validation_FullScan": [
+        "Full scan"
+      ],
+      "Validation_HealthScore": [
+        "Health Score"
+      ],
+      "Validation_Warnings": [
+        "Warnings"
+      ],
+      "Validation_Critical": [
+        "Critical Errors"
+      ],
+      "Validation_CanImport": [
+        "Can Import"
+      ],
+      "Validation_ScannedSummary": [
+        "Scanned {scanned} of {total} rows."
+      ],
+      "Validation_Row": [
+        "Row"
+      ],
+      "Validation_Column": [
+        "Column"
+      ],
+      "Validation_Field": [
+        "Field"
+      ],
+      "Validation_Severity": [
+        "Severity"
+      ],
+      "Validation_Message": [
+        "Message"
+      ],
+      "Validation_NoIssues": [
+        "No validation issues found."
+      ],
+      "Common_Yes": [
+        "Yes"
+      ],
+      "Common_No": [
+        "No"
+      ],
+      "Common_Close": [
+        "Close"
+      ],
+      "Toast_ValidationBlocked": [
+        "Import is blocked due to critical validation errors."
+      ],
+      "Toast_ValidationWarnings": [
+        "Validation completed with warnings. You can still import."
+      ],
+      "Toast_ValidationPassed": [
+        "CSV validation passed."
+      ],
+      "Toast_ValidationFailed": [
+        "CSV validation request failed."
+      ],
+      "UpgradetoPROusingcode": [
+        "ارتقا به PREMIUM با استفاده از کد"
+      ],
+      "Unlockfeatureslikebulkimportadvanced exportschedulingcontentupdatemorepluslifetimesupport": [
+        "باز کردن ویژگی هایی مانند واردات فله، صادرات پیشرفته، برنامه ریزی، به روز رسانی محتوا، و بیشتر، به علاوه پشتیبانی طول عمر"
+      ],
+      "upgradenow": [
+        "ارتقاء دهید"
+      ],
+      "WP Ultimate CSV Importer": [
+        ""
+      ],
+      "https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html": [
+        ""
+      ],
+      "Seamlessly create posts, custom posts, pages, media, SEO and more from your CSV data with ease.": [
+        ""
+      ],
+      "Smackcoders": [
+        ""
+      ],
+      "https://www.smackcoders.com/wordpress.html": [
+        ""
+      ],
+      "Quick Feedback": [
+        ""
+      ],
+      "If you have a moment, please share why you are deactivating WP Ultimate CSV Importer.": [
+        ""
+      ],
+      "Please tell us more (optional)": [
+        ""
+      ],
+      "Submit & Deactivate": [
+        ""
+      ],
+      "Skip & Deactivate": [
+        ""
+      ],
+      "Sending feedback…": [
+        ""
+      ],
+      "Thank you for your feedback! Deactivating the plugin…": [
+        ""
+      ],
+      "Could not send feedback. You can skip deactivation or try again.": [
+        ""
+      ],
+      "This is a temporary deactivation for testing.": [
+        ""
+      ],
+      "Something isn't working properly.": [
+        ""
+      ],
+      "I found a better alternative.": [
+        ""
+      ],
+      "It's missing a specific feature.": [
+        ""
+      ],
+      "I no longer need the plugin.": [
+        ""
+      ],
+      "Other": [
+        ""
+      ],
+      "Close": [
+        "بستن"
+      ],
+      "Deactivation reason": [
+        ""
+      ],
+      "Share additional details…": [
+        ""
+      ],
+      "You do not have permission to perform this action.": [
+        ""
+      ],
+      "Invalid feedback reason.": [
+        ""
+      ],
+      "Plugin Deactivation Feedback": [
+        ""
+      ],
+      "Feedback Reason:": [
+        ""
+      ],
+      "Not specified": [
+        ""
+      ],
+      "Additional Comment:": [
+        ""
+      ],
+      "None": [
+        ""
+      ],
+      "Site URL:": [
+        ""
+      ],
+      "Plugin Version:": [
+        ""
+      ],
+      "WordPress Version:": [
+        ""
+      ],
+      "PHP Version:": [
+        ""
+      ],
+      "User ID:": [
+        ""
+      ],
+      "User Name:": [
+        ""
+      ],
+      "User Email:": [
+        ""
+      ],
+      "Date & Time:": [
+        ""
+      ],
+      "Permission denied.": [
+        ""
+      ],
+      "Invalid import session.": [
+        ""
+      ],
+      "You do not have sufficient permissions to access this page.": [
+        ""
+      ],
+      "No data found.": [
+        ""
+      ],
+      "Unable to resume import.": [
+        ""
+      ],
+      "Invalid ID passing.": [
+        ""
+      ],
+      "Security check failed.": [
+        ""
+      ],
+      "Uncategorized": [
+        ""
+      ],
+      "Can't insert this %1$s. %2$s": [
+        ""
+      ],
+      "Can't insert this %s": [
+        ""
+      ],
+      "Inserted %1$s ID: %2$d, %3$s": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create content. Invalid API key provided. Please check your API key.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create content. Rate limit reached for requests or you exceeded your current quota.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create content. Please check your inputs.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create content. The server had an error while processing your request.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create content. The engine is currently overloaded, please try again later.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create short description. Invalid API key provided. Please check your API key.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create short description. Rate limit reached for requests or you exceeded your current quota.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create short description. Please check your inputs.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create short description. The server had an error while processing your request.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create short description. The engine is currently overloaded, please try again later.": [
+        ""
+      ],
+      "Updated %1$s ID: %2$d, %3$s": [
+        ""
+      ],
+      "Skipped. No matching record found.": [
+        ""
+      ],
+      "WooCommerce Products": [
+        ""
+      ],
+      "Users / Customers": [
+        ""
+      ],
+      "Custom Post Types": [
+        ""
+      ],
+      "Media Imported": [
+        "رسانه وارد شد"
+      ],
+      "Import Failed": [
+        ""
+      ],
+      "Import Completed": [
+        ""
+      ],
+      "+%d this month": [
+        ""
+      ],
+      "No resumable import session found.": [
+        ""
+      ],
+      "This import is already completed.": [
+        ""
+      ],
+      "Import file metadata is missing. Cannot resume.": [
+        ""
+      ],
+      "Mapping template is missing. Cannot resume.": [
+        ""
+      ],
+      "Import file no longer exists on the server.": [
+        ""
+      ],
+      "You do not have sufficient permissions to download this file.": [
+        ""
+      ],
+      "CSV file is missing or not readable.": [
+        ""
+      ],
+      "CSV file is empty.": [
+        ""
+      ],
+      "Unable to read CSV file.": [
+        ""
+      ],
+      "CSV file is not valid UTF-8 encoding.": [
+        ""
+      ],
+      "Unable to open CSV file.": [
+        ""
+      ],
+      "CSV reader is not open.": [
+        ""
+      ],
+      "CSV header row is missing or corrupt.": [
+        ""
+      ],
+      "CSV header row is empty.": [
+        ""
+      ],
+      "CSV validation failed.": [
+        ""
+      ],
+      "CSV header is invalid.": [
+        ""
+      ],
+      "CSV file contains no data rows.": [
+        ""
+      ],
+      "CSV row %d is corrupt or malformed.": [
+        ""
+      ],
+      "Row %1$d has %3$d columns but %2$d were expected.": [
+        ""
+      ],
+      "Row %d has an empty post title.": [
+        ""
+      ],
+      "Row %1$d is missing required value for %2$s.": [
+        ""
+      ],
+      "Row %1$d has invalid date value \\": [
+        ""
+      ],
+      "Row %1$d has invalid post status \\": [
+        ""
+      ],
+      "Row %1$d has invalid numeric value for %2$s: \\": [
+        ""
+      ],
+      "Import is blocked due to critical validation errors.": [
+        ""
+      ],
+      "Post title is not mapped in WordPress Core Fields.": [
+        ""
+      ],
+      "Required field %s is not mapped.": [
+        ""
+      ],
+      "Template not found": [
+        ""
+      ],
+      "Invalid mapping payload. Existing template mapping was not changed.": [
+        ""
+      ],
+      "Template Name Already Exists": [
+        ""
+      ],
+      "Unable to save template mapping": [
+        ""
+      ],
+      "Unauthorized access.": [
+        ""
+      ],
+      "Invalid input.": [
+        ""
+      ],
+      "Upload directory not found.": [
+        ""
+      ],
+      "Invalid file path.": [
+        ""
+      ],
+      "Import your user records available in the CSV/XML file with custom fields, Woocommerce Shipping and Billing details.": [
+        ""
+      ],
+      "Import your WooCommerce Products records with attributes, categories, tags, and images available in the CSV/XML file.": [
+        "رکوردهای محصولات ووکامرس خود را با ویژگی‌ها، دسته‌ها، برچسب‌ها و تصاویر موجود در فایل CSV/XML وارد کنید."
+      ],
+      "Export your Posts, Pages, Custom Posts, Users, Comments, and WooCommerce Products data as CSV files from the WordPress.": [
+        "داده‌های نوشته‌ها، برگه، نوشته‌های سفارشی، کاربران، دیدگاه‌ها و محصولات ووکامرس خود را به عنوان فایل‌های CSV از وردپرس صادر کنید."
+      ],
+      "Install & Activate All": [
+        "نصب و فعال‌سازی همه"
+      ],
+      "Invalid file extension": [
+        ""
+      ],
+      "CSV headers do not match the expected format.": [
+        ""
+      ],
+      "Template already exists": [
+        ""
+      ],
+      "Unable to open the file": [
+        ""
+      ],
+      "Invalid mapping payload. Template mapping was not saved.": [
+        ""
+      ],
+      "Generate a short description.": [
+        ""
+      ],
+      "ID is a mandatory field for Update mode. Please map ID in WordPress Core Fields.": [
+        ""
+      ],
+      "File upload error.": [
+        ""
+      ],
+      "Invalid file type. Only CSV files are allowed.": [
+        ""
+      ],
+      "Invalid or unpublished post ID.": [
+        ""
+      ],
+      "Upgrade Notice:": [
+        ""
+      ],
+      "Download and replace the latest version of": [
+        ""
+      ],
+      "for 10x faster import performance with easy user interface.": [
+        ""
+      ],
+      "Features Of Ultimate CSV Importer": [
+        ""
+      ],
+      "All-in-One SEO": [
+        ""
+      ],
+      "WP Customer Reviews": [
+        ""
+      ],
+      "Import from Google Sheets & Dropbox": [
+        ""
+      ],
+      "Update/Schedule": [
+        ""
+      ],
+      "Data Export": [
+        ""
+      ],
+      "Rank Math": [
+        ""
+      ],
+      "WooCommerce:Variations, Orders, Coupons": [
+        ""
+      ],
+      "5 Woocommerce Add-ons": [
+        ""
+      ],
+      "Events Manager, NextGEN Gallery": [
+        ""
+      ],
+      "Invalid file type.": [
+        ""
+      ],
+      "Loving WP Ultimate CSV Importer? 💙": [
+        ""
+      ],
+      "We’d be so grateful if you could share your experience in a quick review. It only takes a minute, and it really helps us reach more WordPress users like you.": [
+        ""
+      ],
+      "⭐ Sure, I’ll Rate It": [
+        ""
+      ],
+      "Maybe Later": [
+        ""
+      ],
+      "No, Thanks": [
+        ""
+      ],
+      "Maintenance Mode": [
+        ""
+      ],
+      "Site is under maintenance mode. Please wait a few minutes!": [
+        ""
+      ],
+      "Ultimate CSV Importer Free": [
+        "Ultimate CSV Importer Free"
+      ],
+      "Manage Addons": [
+        "مدیریت افزودنی‌ها"
+      ],
+      "SureCartMigrationSubtitle": [
+        "اطلاعات فروشگاه خود را به راحتی با یکپارچگی بالا و بدون قطعی منتقل کنید."
+      ],
+      "ConnectionWooActive": [
+        "اتصال: WooCommerce فعال است"
+      ],
+      "ConnectionWooInactive": [
+        "اتصال: WooCommerce غیرفعال است"
+      ],
+      "ApiConfiguration": [
+        "پیکربندی API"
+      ],
+      "SurecartApiToken": [
+        "توکن API SURECART"
+      ],
+      "EnterSurecartApiTokenPlaceholder": [
+        "توکن API SureCart خود را وارد کنید"
+      ],
+      "SaveToken": [
+        "ذخیره توکن"
+      ],
+      "SelectModule": [
+        "انتخاب ماژول"
+      ],
+      "ModuleProducts": [
+        "محصولات"
+      ],
+      "ModuleCustomers": [
+        "مشتریان"
+      ],
+      "ModuleCoupons": [
+        "کدهای تخفیف"
+      ],
+      "ModuleOrders": [
+        "سفارشات"
+      ],
+      "Scheduling": [
+        "زمان‌بندی"
+      ],
+      "RunImmediately": [
+        "اجرای فوری"
+      ],
+      "ScheduleForLater": [
+        "زمان‌بندی برای بعد"
+      ],
+      "StartMigration": [
+        "شروع مهاجرت"
+      ],
+      "FieldMappingPreview": [
+        "پیش‌نمایش نگاشت فیلدها"
+      ],
+      "FieldMappingPreviewDesc": [
+        "نحوه تبدیل داده‌ها بین پلتفرم‌ها را بررسی کنید."
+      ],
+      "WooCommerceFields": [
+        "فیلدهای WOOCOMMERCE"
+      ],
+      "SurecartFields": [
+        "فیلدهای SURECART"
+      ],
+      "MigrationFieldProductName": [
+        "نام محصول"
+      ],
+      "MigrationFieldProductTitle": [
+        "عنوان محصول"
+      ],
+      "MigrationFieldSku": [
+        "شناسه محصول (SKU)"
+      ],
+      "MigrationFieldSkuCode": [
+        "کد SKU"
+      ],
+      "MigrationFieldPrice": [
+        "قیمت"
+      ],
+      "MigrationFieldRegularPrice": [
+        "قیمت معمولی"
+      ],
+      "MigrationFieldStockStatus": [
+        "وضعیت موجودی"
+      ],
+      "MigrationFieldInventoryAvailability": [
+        "موجودی انبار"
+      ],
+      "FieldMappingViewOnlyNote": [
+        "حالت فقط خواندنی: نگاشت فیلدها به طور خودکار برای SureCart بهینه‌سازی شده است."
+      ],
+      "CurrentMigrationProgress": [
+        "پیشرفت فعلی مهاجرت"
+      ],
+      "StatusStartingMigration": [
+        "در حال شروع مهاجرت {module}"
+      ],
+      "StatusProcessingModule": [
+        "در حال پردازش {module}..."
+      ],
+      "StatusMigrationCompleted": [
+        "مهاجرت تکمیل شد"
+      ],
+      "StatusMigrationFailed": [
+        "مهاجرت ناموفق بود"
+      ],
+      "StatusErrorOccurred": [
+        "خطایی رخ داد"
+      ],
+      "StatusIdle": [
+        "بیکار"
+      ],
+      "RecordsLabel": [
+        "رکورد"
+      ],
+      "StartedMinutesAgo": [
+        "۵ دقیقه پیش شروع شد"
+      ],
+      "EstimatedTimeRemaining": [
+        "زمان تقریبی باقی‌مانده:"
+      ],
+      "ImportControls": [
+        "کنترل‌های واردکردن"
+      ],
+      "StartPauseStopSub": [
+        "شروع، توقف یا لغو فرآیند واردسازی"
+      ],
+      "ImportError": [
+        "Import Error"
+      ],
+      "ImportComplete": [
+        "واردات تکمیل شد"
+      ],
+      "ImportProgress": [
+        "پیشرفت واردسازی"
+      ],
+      "Pause": [
+        "توقف کوتاه"
+      ],
+      "Resume": [
+        "ادامه"
+      ],
+      "rows": [
+        "سطر"
+      ],
+      "done": [
+        "انجام شد"
+      ],
+      "error": [
+        "خطا"
+      ],
+      "Ready": [
+        "آماده"
+      ],
+      "Elapsed": [
+        "زمان سپری شده"
+      ],
+      "Processed": [
+        "پردازش شده"
+      ],
+      "TotalRecords": [
+        "کل رکوردها"
+      ],
+      "Imported": [
+        "وارد شده"
+      ],
+      "Remaining": [
+        "باقیمانده"
+      ],
+      "LiveActivityLog": [
+        "گزارش فعالیت"
+      ],
+      "events": [
+        "رویداد"
+      ],
+      "ErrorsOnly": [
+        "فقط خطاها"
+      ],
+      "CSV": [
+        "CSV"
+      ],
+      "WaitingForEvents": [
+        "در انتظار رویدادها..."
+      ],
+      "View": [
+        "View"
+      ],
+      "Edit": [
+        "Edit"
+      ],
+      "ClickToFixError": [
+        "Click to fix error"
+      ],
+      "RollbackNow": [
+        "Rollback now"
+      ],
+      "GoDashboard": [
+        "رفتن به داشبورد"
+      ],
+      "NewImport": [
+        "واردات جدید"
+      ],
+      "NewMediaImport": [
+        "واردات جدید رسانه"
+      ],
+      "ImagePrefix": [
+        "Image:"
+      ],
+      "CategoryPrefix": [
+        "Category:"
+      ],
+      "FilePrefix": [
+        "File:"
+      ],
+      "RecordProcessed": [
+        "Record processed"
+      ],
+      "DueToDuplicateFound": [
+        "به دلیل یافتن مورد تکراری!"
+      ],
+      "SkippedNoMatching": [
+        "Skipped. No matching record found."
+      ],
+      "Export_InstallExporterMessage": [
+        "Install Ultimate Exporter to export all your WordPress data as CSV."
+      ],
+      "Export_ClickToInstall": [
+        "CLICK HERE TO INSTALL"
+      ],
+      "Export_CompletedSuccessfully": [
+        "صادرات با موفقیت انجام شد"
+      ],
+      "Export_InProgress": [
+        "Exporting in progress"
+      ],
+      "Export_DownloadFile": [
+        "دانلود فایل"
+      ],
+      "Common_Cancel": [
+        "Cancel"
+      ],
+      "Export_Rows": [
+        "rows"
+      ],
+      "Export_Done": [
+        "done"
+      ],
+      "Export_ExportingProgress": [
+        "exporting..."
+      ],
+      "Export_Date": [
+        "Date"
+      ],
+      "Export_Elapsed": [
+        "Elapsed"
+      ],
+      "Export_StatExported": [
+        "صادر شده"
+      ],
+      "Export_StatTotalRecords": [
+        "کل رکوردهای صادر شده"
+      ],
+      "Export_StatRemaining": [
+        "باقیمانده"
+      ],
+      "Export_StatFormat": [
+        "فرمت"
+      ],
+      "Export_StatErrors": [
+        "ERRORS"
+      ],
+      "Export_At": [
+        "در"
+      ],
+      "Export_ExportingPrefix": [
+        "در حال صادرات"
+      ],
+      "Export_To": [
+        "به"
+      ],
+      "Support_UsefulResources": [
+        "منابع مفید"
+      ],
+      "Support_UserGuideDoc": [
+        "راهنمای کاربر و مستندات"
+      ],
+      "Support_TroubleshootingGuide": [
+        "راهنمای عیب‌یابی"
+      ],
+      "Support_EnterEmailPlaceholder": [
+        "آدرس ایمیل خود را وارد کنید"
+      ],
+      "UnlockProFeature": [
+        "باز کردن نسخه Pro"
+      ],
+      "PluginBrandTitle": [
+        "ایمپورتر نهایی CSV"
+      ],
+      "PluginBrandSubtitle": [
+        "رایگان"
+      ],
+      "WooToSureTab": [
+        "از Woo به Sure"
+      ],
+      "ImportUpdateHeaderTitle": [
+        "وارد کردن و به‌روزرسانی داده‌ها"
+      ],
+      "ImportUpdateHeaderDesc": [
+        "داده‌های جدید وارد کنید یا محتوای موجود وردپرس را از فایل‌های CSV، XML، XLSX، TXT، ZIP یا TSV به‌روزرسانی کنید."
+      ],
+      "ImportMediaHeaderTitle": [
+        "وارد کردن فایل‌های رسانه‌ای"
+      ],
+      "ImportMediaHeaderDesc": [
+        "فایل‌های رسانه‌ای و داده‌های CSV مورد نیاز را برای وارد کردن به سایت وردپرس خود بارگذاری کنید."
+      ],
+      "ExportDataHeaderTitle": [
+        "برون‌بری داده‌های وردپرس"
+      ],
+      "ExportDataHeaderDesc": [
+        "محتوایی را که می‌خواهید برون‌بری کنید انتخاب کرده و فایلی برای پشتیبان‌گیری، مهاجرت، تحلیل یا استفاده مجدد ایجاد کنید."
+      ],
+      "ConfigureSettingsHeaderTitle": [
+        "پیکربندی تنظیمات"
+      ],
+      "ConfigureSettingsHeaderDesc": [
+        "نحوه مدیریت داده‌ها، عملکرد، ادغام‌ها و ویژگی‌های پیشرفته واردکننده را سفارشی کنید."
+      ],
+      "SupportHeaderTitle": [
+        "راهنما و پشتیبانی"
+      ],
+      "SupportHeaderDesc": [
+        "مستندات را مرور کنید، مشکلات رایج را عیب‌یابی کنید و با تیم پشتیبانی تماس بگیرید."
+      ],
+      "UploadfromRESTAPI": [
+        "وارد کردن از طریق REST API"
+      ],
+      "UploadfromDatabase": [
+        "وارد کردن از پایگاه داده"
+      ],
+      "UploadfromExternal": [
+        "بارگذاری از منبع خارجی"
+      ],
+      "AiNaturalLanguage": [
+        "وارد کردن با زبان طبیعی هوش مصنوعی"
+      ],
+      "ToastTemplateSaved": [
+        "Template saved successfully"
+      ],
+      "ToastChooseAnotherName": [
+        "Please Choose Another Name"
+      ],
+      "ToastSaveFailed": [
+        "Save failed"
+      ],
+      "SaveMappingAs": [
+        "ذخیره این نگاشت به عنوان"
+      ],
+      "HIN": [
+        "HIN"
+      ],
+      "Media_UseExistingDesc": [
+        "Use existing media images if they are already available in the media library"
+      ],
+      "Media_OverwriteDesc": [
+        "Replace existing images with new ones during import"
+      ],
+      "Media_AlwaysCreateDesc": [
+        "Always upload and create a new image record"
+      ],
+      "Media_PostContentDesc": [
+        "دانلود تصاویر ارجاع شده در محتوای نوشته به کتابخانه رسانه محلی"
+      ],
+      "ToastTemplateLoadFailed": [
+        "Unable to load template. Please try again."
+      ],
+      "ToastTemplateDeleted": [
+        "Template Deleted Successfully"
+      ],
+      "AreYouSure": [
+        "آیا مطمئن هستید؟"
+      ],
+      "ConfirmDeleteTemplate": [
+        "آیا می‌خواهید این قالب را حذف کنید؟"
+      ],
+      "NotNow": [
+        "الان نه"
+      ],
+      "NeedHelp": [
+        "به کمک نیاز دارید؟"
+      ],
+      "Searching": [
+        "Searching..."
+      ],
+      "ClearSearch": [
+        "پاک کردن جستجو"
+      ],
+      "Prev": [
+        "Prev"
+      ],
+      "Next": [
+        "Next"
+      ],
+      "Validation_Status": [
+        "Validation Status"
+      ],
+      "MediaUpdate": [
+        "Media Update"
+      ],
+      "ImportMode": [
+        "حالت واردکردن"
+      ],
+      "ImportModeDesc": [
+        "نحوه مدیریت رکورد‌های موجود در طول وارد کردن را انتخاب کنید"
+      ],
+      "PostType": [
+        "نوع نوشته"
+      ],
+      "Taxonomy": [
+        "طبقه‌بندی"
+      ],
+      "Import_AdvancedOptions": [
+        "گزینه‌های پیشرفته"
+      ],
+      "Validation_RunningScan": [
+        "Validating CSV file, please wait..."
+      ],
+      "Feedback_MaybeLater": [
+        "Maybe Later"
+      ],
+      "locale": [
+        "it-IT"
+      ],
+      "FOR_ALREADY_EXISTING_RECORDS": [
+        "FOR_ALREADY_EXISTING_RECORDS"
+      ],
+      "Type": [
+        "Type"
+      ],
+      "SureCartMigrationTitle": [
+        "SureCart Migration"
+      ],
+      "Export_WPQueryTitle": [
+        "خروجی WP_Query"
+      ],
+      "Export_QueryTypeLabel": [
+        "نوع کوئری را انتخاب کنید"
+      ],
+      "Export_QueryArgsLabel": [
+        "آرگومان‌های WP_Query"
+      ],
+      "Export_Available": [
+        "Available"
+      ],
+      "Export_FileSettings": [
+        "File Settings"
+      ],
+      "Export_Format": [
+        "فرمت صادرات"
+      ],
+      "Export_SpecificPeriodDesc": [
+        "فیلتر موارد صادرشده بر اساس بازه تاریخ"
+      ],
+      "Export_IterationIdDesc": [
+        "صادرات موارد از اجرای دسته‌ای مشخص"
+      ],
+      "Export_SpecificAuthorsDesc": [
+        "فیلتر موارد صادرشده بر اساس نویسندگان انتخاب‌شده"
+      ],
+      "Export_SplitRecordDesc": [
+        "صادرات داده به چندین فایل با اندازه سفارشی"
+      ],
+      "Export_SpecificStatusDesc": [
+        "صادرات موارد با وضعیت نوشته مشخص"
+      ],
+      "Export_AutoDelimitersDesc": [
+        "صادرات داده با جداکننده‌های خودکار سفارشی"
+      ],
+      "Export_SpecificInclusionsDesc": [
+        "صادرات داده بر اساس فیلدهای ستون انتخاب‌شده"
+      ],
+      "Export_ScheduleDesc": [
+        "زمان‌بندی صادرات خودکار در بازه‌های پیکربندی‌شده"
+      ],
+      "Export_GoogleSheetDesc": [
+        "ارسال خودکار نتایج صادرات به صفحه گسترده گوگل"
+      ],
+      "Export_ClientModeDesc": [
+        "مجوز اجرای این صادرات را به نقش‌های غیرمدیر بدهید"
+      ],
+      "Export_ByLanguageDesc": [
+        "فیلتر نوشته‌ها/صفحات چندزبانه بر اساس کد زبان"
+      ],
+      "Export_ByPostIdDesc": [
+        "فقط نوشته‌ها/محصولات انتخاب‌شده را بر اساس شناسه صادر کنید"
+      ],
+      "Export_SpecificCategoryDesc": [
+        "صادرات رکوردهای متعلق به دسته‌بندی‌های انتخاب‌شده"
+      ],
+      "Export_ByPostTitleDesc": [
+        "جستجو و صادرات عناوین نوشته/محصول مطابق"
+      ],
+      "Export_CustomersPurchasedDesc": [
+        "Export customers with purchase records"
+      ],
+      "Export_CustomersRoleDesc": [
+        "Export WordPress users based on user role"
+      ],
+      "Export_CustomersByProductDesc": [
+        "Export users who purchased a specific product ID"
+      ],
+      "Export_EnableRollbackDesc": [
+        "Allow rolling back to original user state after export"
+      ],
+      "Export_OrdersByProductDesc": [
+        "Export orders matching a specific product ID"
+      ],
+      "Export_OrderByPaymentDesc": [
+        "Export orders matching selected gateway methods"
+      ],
+      "Exportdatabyspecificcategory": [
+        "صادرات داده بر اساس دسته‌بندی مشخص"
+      ],
+      "Dashboard_ActivityLogs": [
+        "آخرین فعالیت‌های واردات داده"
+      ],
+      "Dashboard_ImportVolumeSubtitle": [
+        "رکوردهای وارد شده در هر {periodLabelText}، همه منابع ترکیب شده‌اند."
+      ],
+      "Dashboard_RecordTypeShare": [
+        "توزیع بین رکوردها"
+      ],
+      "Dashboard_NoDistributionData": [
+        "هنوز داده توزیع رکوردی وجود ندارد."
+      ],
+      "There": [
+        "آنجا"
+      ],
+      "Dashboard_NoCompletedRecordVolume": [
+        "هنوز هیچ حجم رکورد تکمیل‌شده‌ای وجود ندارد. برای دیدن روندها یک واردات را شروع کنید."
+      ],
+      "Dashboard_SameCompletedVolume": [
+        "تقریباً همان حجم تکمیل شده در دوره قبل."
+      ],
+      "Dashboard_JumpInImports": [
+        "این یک جهش {growthPercent} درصدی در واردات است — همگام‌سازی داده‌های شما عالی پیش می‌رود!"
+      ],
+      "Dashboard_DecreaseInImports": [
+        "این کاهش {growthPercent} درصدی در حجم رکوردهای تکمیل شده در مقایسه با دوره قبلی است."
+      ],
+      "YouImported": [
+        "شما وارد کردید"
+      ],
+      "Records": [
+        "رکورد"
+      ],
+      "InTotal": [
+        "در مجموع."
+      ],
+      "Dashboard_StartNewImport": [
+        "شروع واردات جدید"
+      ],
+      "Dashboard_BrowseTemplates": [
+        "مرور قالب‌ها"
+      ],
+      "Dashboard_RecordsTotal": [
+        "مجموع رکوردها"
+      ],
+      "ToastSelectRevision": [
+        "Please Select any Revision"
+      ],
+      "AutomationLoadError": [
+        "Could not load API settings."
+      ],
+      "SaveAutomationSettings": [
+        "Save automation settings"
+      ],
+      "Copied": [
+        "Copied"
+      ],
+      "CopyTemplateId": [
+        "Copy ID"
+      ],
+      "SearchTemplatesOrModules": [
+        "Search templates or modules..."
+      ],
+      "TemplatesCount": [
+        "Templates"
+      ],
+      "TemplateId": [
+        "Template ID"
+      ],
+      "AutomationTemplateSettings": [
+        "API / Webhook Settings"
+      ],
+      "TemplateIdHelp": [
+        "Copy Template ID from Manager → Templates, then use it in the URL."
+      ],
+      "AutomationApiTriggerUrl": [
+        "API trigger URL"
+      ],
+      "AutomationWebhookUrl": [
+        "Webhook URL"
+      ],
+      "EnableApiTrigger": [
+        "Enable API trigger"
+      ],
+      "EnableWebhook": [
+        "Enable webhook"
+      ],
+      "WebhookSecret": [
+        "Webhook secret"
+      ],
+      "AllowedIps": [
+        "Allowed IPs"
+      ],
+      "ManageImportsHeaderTitle": [
+        "مدیریت واردات و زمان‌بندی‌ها"
+      ],
+      "ManageImportsHeaderDesc": [
+        "تاریخچه واردات را ببینید، فایل‌ها و قالب‌ها را مدیریت کنید، واردات/صادرات دوره‌ای زمان‌بندی‌شده را تنظیم کنید و گزارش‌های واردات را بررسی کنید."
+      ],
+      "ToastInstallPhpZip": [
+        "Please install php-zip extension"
+      ],
+      "ToastTemplateUploadMissingFile": [
+        "Uploaded file details are missing. Please upload the template CSV again."
+      ],
+      "ToastTemplateUploadCsvOnly": [
+        "Only CSV template files are supported."
+      ],
+      "ToastTemplateUploaded": [
+        "Template uploaded successfully."
+      ],
+      "ToastTemplateUploadFailed": [
+        "Template upload failed."
+      ],
+      "UploadTemplate": [
+        "Upload Template"
+      ],
+      "Support_ForumLinkText": [
+        "WordPress.org support forum"
+      ],
+      "MinimumrequiredphpinivaluesIniconconfiguredvalues": [
+        "Minimum required php.ini values (Ini configured values)"
+      ],
+      "AiImportSettings": [
+        "واردات هوش مصنوعی"
+      ],
+      "AutomationApiTitle": [
+        "API واردات و وب‌هوک‌ها"
+      ],
+      "MediaDownloadSettingsTitle": [
+        "تنظیمات دانلود رسانه"
+      ],
+      "FeatureModulesTitle": [
+        "ماژول‌های ویژگی"
+      ],
+      "UsersCustomers": [
+        "UsersCustomers"
+      ],
+      "CustomPostTypes": [
+        "CustomPostTypes"
+      ],
+      "Dashboard_Last5Years": [
+        "Dashboard_Last5Years"
+      ],
+      "Dashboard_Last12Weeks": [
+        "Dashboard_Last12Weeks"
+      ],
+      "Dashboard_ThisMonthPlus": [
+        "+{num} این ماه"
+      ],
+      "SupportedFileTypesWithZipTxt": [
+        "انواع فایل های پشتیبانی شده .csv .xml .xlsx .txt .zip .tsv"
+      ],
+      "Dashboard_ImporterTag": [
+        "واردکننده"
+      ],
+      "GoodMorning": [
+        "صبح بخیر"
+      ],
+      "GoodAfternoon": [
+        "عصر بخیر"
+      ],
+      "GoodEvening": [
+        "عصر بخیر"
+      ],
+      "Uploading": [
+        "در حال بارگذاری"
+      ],
+      "SelectHowToHandleRecords": [
+        "نحوه مدیریت رکوردهای موجود در طول واردکردن را انتخاب کنید"
+      ],
+      "POSTTYPE": [
+        "نوع پست"
+      ],
+      "TAXONOMY": [
+        "طبقه‌بندی"
+      ],
+      "CSVValidationResults": [
+        "نتایج اعتبارسنجی CSV"
+      ],
+      "StartPauseOrStopImportProcess": [
+        "شروع، مکث یا توقف فرآیند واردکردن"
+      ],
+      "AreYouSureDeleteLog": [
+        "آیا مطمئن هستید؟"
+      ],
+      "DoYouReallyWantToDeleteThisLog": [
+        "آیا واقعاً می‌خواهید این گزارش را حذف کنید؟ این عمل قابل بازگشت نیست."
+      ],
+      "DeleteLog": [
+        "حذف گزارش"
+      ],
+      "Cancel": [
+        "لغو"
+      ],
+      "Module_WooCommerceRefunds": [
+        "استردادها"
+      ],
+      "Module_WooCommerceCoupons": [
+        "کوپن‌ها"
+      ],
+      "Module_WooCommerce": [
+        "محصولات"
+      ],
+      "Images": [
+        "تصاویر"
+      ],
+      "SelectFile": [
+        "انتخاب فایل"
+      ],
+      "SelectProvider": [
+        "انتخاب ارائه‌دهنده"
+      ],
+      "SelectProviderPlaceholder": [
+        "--انتخاب ارائه‌دهنده--"
+      ],
+      "Model": [
+        "مدل"
+      ],
+      "SelectModelPlaceholder": [
+        "--انتخاب مدل--"
+      ],
+      "EnterYourPrompt": [
+        "اعلامیه خود را وارد کنید"
+      ],
+      "AiPromptFormattingNote": [
+        "توجه: برای فیلدهای ACF، JetEngine یا Meta Box دستورالعمل‌های دقیق بدهید."
+      ],
+      "TypeInstructionsPlaceholder": [
+        "دستورالعمل‌های خود را اینجا بنویسید..."
+      ],
+      "ChooseFromFileServer": [
+        "انتخاب از سرور فایل"
+      ],
+      "ChooseFromFileServerDesc": [
+        "مرور پوشه‌های مجاز سرور — CSV، TSV، JSON، XML، XLS، XLSX"
+      ],
+      "BrowseRoots": [
+        "مرور ریشه‌ها"
+      ],
+      "SearchPlaceholder": [
+        "جستجو..."
+      ],
+      "ExternalSources": [
+        "منابع خارجی"
+      ],
+      "AppKeyPlaceholder": [
+        "کلید برنامه"
+      ],
+      "AppSecretPlaceholder": [
+        "رمز برنامه"
+      ],
+      "RedirectURLPlaceholder": [
+        "نشانی هدایت مجدد"
+      ],
+      "RestApiEndpoint": [
+        "نشانی API"
+      ],
+      "RestApiRequiredField": [
+        "الزامی"
+      ],
+      "RestApiEndpointHint": [
+        "نشانی کامل شامل رشته استعلام. متغیرهای {page}، {limit}، {offset} پشتیبانی می‌شوند."
+      ],
+      "RestApiRequiredLegend": [
+        "* فقط فیلد الزامی. سایر ورودی‌ها اختیاری هستند."
+      ],
+      "RestApiHttpMethod": [
+        "روش"
+      ],
+      "RestApiRecordsPath": [
+        "مسیر رکوردها"
+      ],
+      "RestApiRecordsPathHint": [
+        "مسیر نقطه‌ای اختیاری در JSON (مثال: data.items). برای ریشه خالی بگذارید."
+      ],
+      "RestApiPageSize": [
+        "اندازه صفحه"
+      ],
+      "RestApiPageSizeHint": [
+        "برای متغیرهای {limit} / {offset} (پیش‌فرض 100). همراه با {page} در نشانی صفحات را دریافت می‌کند."
+      ],
+      "RestApiBearer": [
+        "توکن Bearer"
+      ],
+      "RestApiApiKeyHeader": [
+        "سربرگ کلید API"
+      ],
+      "RestApiApiKeyValue": [
+        "کلید API"
+      ],
+      "RestApiExtraHeaders": [
+        "سربرگ‌های اضافی (JSON)"
+      ],
+      "RestApiTestConnection": [
+        "آزمایش اتصال"
+      ],
+      "RestApiContinueImport": [
+        "ادامه"
+      ],
+      "DbMigrationSavedConnections": [
+        "اتصال‌های ذخیره‌شده"
+      ],
+      "DbMigrationNewConnection": [
+        "— اتصال جدید —"
+      ],
+      "DbMigrationConnectionName": [
+        "نام اتصال"
+      ],
+      "DbMigrationDbType": [
+        "نوع پایگاه داده"
+      ],
+      "DbMigrationHost": [
+        "میزبان"
+      ],
+      "DbMigrationPort": [
+        "درگاه"
+      ],
+      "DbMigrationDatabase": [
+        "پایگاه داده"
+      ],
+      "DbMigrationUsername": [
+        "نام کاربر"
+      ],
+      "DbMigrationPassword": [
+        "رمز عبور"
+      ],
+      "DbMigrationSsl": [
+        "استفاده از SSL"
+      ],
+      "DbMigrationTestConnection": [
+        "آزمایش اتصال"
+      ],
+      "DbMigrationSaveConnection": [
+        "ذخیره اتصال"
+      ],
+      "DbMigrationBrowseTables": [
+        "مرور جدول‌ها"
+      ],
+      "AppKey": [
+        "کلید برنامه"
+      ],
+      "AppSecretkey": [
+        "رمز برنامه"
+      ],
+      "RedirectURL": [
+        "نشانی هدایت مجدد"
+      ],
+      "RememberMe": [
+        "مرا به خاطر بسپار"
+      ],
+      "ConnectDropbox": [
+        "اتصال به دراپ‌باکس"
+      ],
+      "LastRun": [
+        "آخرین اجرا"
+      ],
+      "NextRun": [
+        "اجرای بعدی"
+      ],
+      "DragDropTemplateZip": [
+        "فایل CSV یا ZIP قالب را اینجا بکشید و رها کنید، یا برای مرور کلیک کنید"
+      ],
+      "ConfirmDeleteLog": [
+        "آیا واقعاً می‌خواهید این گزارش را حذف کنید؟ این عمل قابل بازگشت نیست."
+      ],
+      "LogNotExists": [
+        "Log Doesn't Exist"
+      ],
+      "FailedLogNotExists": [
+        "Failed Log Doesn't Exist"
+      ],
+      "MediaLogNotExists": [
+        "Media Log Doesn't Exist"
+      ],
+      "DownloadSummaryLog": [
+        "Download the summary log"
+      ],
+      "DownloadFailedCsvFile": [
+        "Download the failed csv file"
+      ],
+      "DownloadMediaFile": [
+        "Download the media file"
+      ],
+      "YesDeleteIt": [
+        "بله، حذف کن!"
+      ],
+      "ChooseCSVFile": [
+        "انتخاب فایل CSV"
+      ],
+      "Upload": [
+        "Upload"
+      ],
+      "SaveFailed": [
+        "Save failed"
+      ],
+      "LeaveBlankKeepExisting": [
+        "Leave blank to keep existing"
+      ],
+      "EVENTINFO": [
+        "اطلاعات رویداد"
+      ],
+      "EVENTSTATUS": [
+        "Status"
+      ],
+      "EVENTDATE": [
+        "تاریخ رویداد"
+      ],
+      "COMPLETED": [
+        "تکمیل شده"
+      ],
+      "PENDING": [
+        "در انتظار"
+      ],
+      "Mapping_SourceFields": [
+        "فیلدهای مبدأ"
+      ],
+      "Mapping_SearchSourceFields": [
+        "جستجوی فیلدهای مبدأ..."
+      ],
+      "ImportFailed": [
+        "Import Failed"
+      ],
+      "ImportConfig_HighSpeedSmallFile": [
+        "High Speed Small File Processing"
+      ],
+      "Validation_DataReady": [
+        "Data Ready for Import"
+      ],
+      "Validation_DataNotReady": [
+        "Data Not Ready"
+      ],
+      "Validation_Excellent": [
+        "EXCELLENT"
+      ],
+      "Validation_PerfectMatch": [
+        "Your data structure matches the destination requirements perfectly."
+      ],
+      "Validation_AllFieldsVerified": [
+        "All fields have been mapped and verified against the current system schema."
+      ],
+      "Settings_GeneralDesc": [
+        "رفتارهای اصلی و گزینه‌های سراسری افزونه CSV Importer را پیکربندی کنید."
+      ],
+      "SettingsNav_General": [
+        "عمومی"
+      ],
+      "SettingsNav_Performance": [
+        "عملکرد"
+      ],
+      "SettingsNav_Connectors": [
+        "اتصال‌دهنده‌ها"
+      ],
+      "SettingsNav_Features": [
+        "ویژگی‌ها"
+      ],
+      "MediaImportPathDesc": [
+        "Retaining the original file path instead of current month folder"
+      ],
+      "EmailPrefix": [
+        "Email:"
+      ],
+      "IDPrefix": [
+        "ID:"
+      ],
+      "Toast_UpgradeToProSchedule": [
+        "Please upgrade to PRO for Schedule your Import"
+      ],
+      "FAILED": [
+        "FAILED"
+      ],
+      "Settings_SecurityPerfDesc": [
+        "تنظیمات پیکربندی سرور، نیازمندی‌های سیستم و جزئیات محیط را بررسی کنید."
+      ],
+      "Settings_StatusConfig": [
+        "وضعیت / پیکربندی"
+      ],
+      "Settings_Required": [
+        "الزامی"
+      ],
+      "Settings_On": [
+        "روشن"
+      ],
+      "Settings_EnvVariable": [
+        "متغیر محیطی"
+      ],
+      "Settings_SystemValue": [
+        "مقدار سیستم"
+      ],
+      "Settings_WordPressVersion": [
+        "نسخه WordPress"
+      ],
+      "Settings_PHPVersion": [
+        "نسخه PHP"
+      ],
+      "Settings_MySQLVersion": [
+        "نسخه MySQL"
+      ],
+      "Settings_ServerSoftware": [
+        "نرم‌افزار سرور"
+      ],
+      "Settings_UserAgent": [
+        "عامل کاربری شما"
+      ],
+      "Settings_WPDBPrefix": [
+        "پیشوند WPDB"
+      ],
+      "Settings_WPMultisiteMode": [
+        "حالت چندسایته WP"
+      ],
+      "Settings_WPMemoryLimit": [
+        "محدودیت حافظه WP"
+      ],
+      "Export_DataPreviewDesc": [
+        "پیش‌نمایش ساختار مجموعه داده صادر شده"
+      ],
+      "Settings_DocumentationDesc": [
+        "دسترسی به راهنماها، آموزش‌های ویدیویی و مستندات مرجع ما."
+      ],
+      "FilePond_TapToCancel": [
+        "برای لغو ضربه بزنید"
+      ],
+      "FilePond_UploadComplete": [
+        "بارگذاری کامل شد"
+      ],
+      "FilePond_UploadCancelled": [
+        "بارگذاری لغو شد"
+      ],
+      "FilePond_UploadError": [
+        "خطا در حین بارگذاری"
+      ],
+      "FilePond_TapToRetry": [
+        "برای تلاش مجدد ضربه بزنید"
+      ],
+      "Addons_Description": [
+        "عملکرد WP Ultimate CSV Importer را با افزونه‌های رایگان و پریمیوم گسترش دهید."
+      ],
+      "AiImportSettingsDesc": [
+        "پیشنهادها و ترجمه اختیاری هوش مصنوعی. تا زمان تأیید در مرحله بازبینی چیزی اعمال نمی‌شود."
+      ],
+      "AiMasterEnable": [
+        "فعال‌سازی ویژگی‌های واردات هوش مصنوعی"
+      ],
+      "AiFeatureHintConnectors": [
+        "Category, tags, SEO, meta description, and translation use WordPress Connectors (same as media AI)."
+      ],
+      "AiCategorySuggestions": [
+        "Category suggestions"
+      ],
+      "AiTaxonomySuggestions": [
+        "Tag / taxonomy suggestions"
+      ],
+      "AiSeoTitle": [
+        "SEO title suggestions"
+      ],
+      "AiMetaDescription": [
+        "Meta description suggestions"
+      ],
+      "AiTranslation": [
+        "Translation (via WordPress AI)"
+      ],
+      "AiTargetLanguage": [
+        "Translation target language"
+      ],
+      "AiBatchSize": [
+        "Batch size"
+      ],
+      "AiRequestTimeout": [
+        "Request timeout (seconds)"
+      ],
+      "AiMetaLimit": [
+        "Meta description character limit"
+      ],
+      "FeatureModulesDisclaimer": [
+        "ماژول‌های اختیاری را غیرفعال کنید تا بار هنگام واردات کاهش یابد. پس از ذخیره صفحه به‌صورت خودکار بارگذاری مجدد می‌شود."
+      ],
+      "Feature_AIImport": [
+        "AI Import Features"
+      ],
+      "Feature_AIImportDesc": [
+        "AI natural language import, field mapping, governance, and related AIBootstrap modules."
+      ],
+      "Feature_WPBakery": [
+        "WPBakery Page Builder"
+      ],
+      "Feature_WPBakeryDesc": [
+        "WPBakery import and export field extensions."
+      ],
+      "Feature_Bricks": [
+        "Bricks Builder"
+      ],
+      "Feature_BricksDesc": [
+        "Bricks Builder import and export field extensions."
+      ],
+      "Feature_Oxygen": [
+        "Oxygen Builder"
+      ],
+      "Feature_OxygenDesc": [
+        "Oxygen Builder import and export field extensions."
+      ],
+      "Feature_DBMigration": [
+        "External Database Migration"
+      ],
+      "Feature_DBMigrationDesc": [
+        "Import from external database sources via DatabaseMigrationBootstrap."
+      ],
+      "Feature_GoogleSheets": [
+        "بارگذاری گوگل شیت"
+      ],
+      "Feature_GoogleSheetsDesc": [
+        "انتقال HTTP گوگل شیت و گردش کار بارگذاری صفحه گسترده."
+      ],
+      "Feature_AutomationAPI": [
+        "REST API & Webhooks"
+      ],
+      "Feature_AutomationAPIDesc": [
+        "Automation API (uci-pro/v1), webhooks, and REST import endpoints."
+      ],
+      "Feature_ExtendedHooks": [
+        "Extended Import/Export Hooks"
+      ],
+      "Feature_ExtendedHooksDesc": [
+        "Expanded HooksHandler import/export action and filter surface added in 8.16."
+      ],
+      "GSheet_ConnectDesc": [
+        "حساب گوگل خود را متصل کنید تا داده‌ها را مستقیماً از Google Sheets وارد کنید."
+      ],
+      "ClientID": [
+        "شناسه کلاینت"
+      ],
+      "ClientSecret": [
+        "رمز کلاینت"
+      ],
+      "GSheet_ClientIdDesc": [
+        "شناسه کلاینت Google OAuth شما از کنسول Google Cloud."
+      ],
+      "GSheet_ClientSecretDesc": [
+        "رمز کلاینت Google OAuth شما از کنسول Google Cloud."
+      ],
+      "GSheet_RedirectDesc": [
+        "نشانی URI تغییر مسیر مجاز پیکربندی شده در پروژه Google Cloud شما."
+      ],
+      "EnterRedirectUrlPlaceholder": [
+        "Enter Redirect URL"
+      ],
+      "EnterClientIdPlaceholder": [
+        "Enter Client ID"
+      ],
+      "EnterClientSecretPlaceholder": [
+        "Enter Client Secret"
+      ],
+      "MediaDownloadSettingsDescription": [
+        "موتور رسانه پیشرفته: دانلود صف‌بندی‌شده، تلاش مجدد، تشخیص تکراری و تصویر شاخص جایگزین."
+      ],
+      "EnableQueueProcessing": [
+        "فعال‌سازی پردازش صف"
+      ],
+      "EnableQueueProcessingDesc": [
+        "Process media downloads in background batches instead of inline."
+      ],
+      "RetryFailedDownloads": [
+        "Retry failed downloads (automatic)"
+      ],
+      "RetryFailedDownloadsDesc": [
+        "Automatically retry media downloads that failed on the first attempt."
+      ],
+      "QueueBatchSize": [
+        "Downloads per batch"
+      ],
+      "QueueBatchSizeDesc": [
+        "Number of media files to download in each background batch."
+      ],
+      "MaximumRetryCount": [
+        "Maximum retry count"
+      ],
+      "MaximumRetryCountDesc": [
+        "Maximum number of retry attempts before marking a download as permanently failed."
+      ],
+      "ConnectionTimeout": [
+        "Connection timeout (seconds)"
+      ],
+      "ConnectionTimeoutDesc": [
+        "How long to wait when establishing a connection to the remote server."
+      ],
+      "DownloadTimeout": [
+        "Download timeout (seconds)"
+      ],
+      "DownloadTimeoutDesc": [
+        "Maximum time allowed for a single file download to complete."
+      ],
+      "DuplicateHandling": [
+        "Duplicate handling"
+      ],
+      "DuplicateHandlingDesc": [
+        "How to handle media files that already exist in the library."
+      ],
+      "ReuseExisting": [
+        "Reuse existing"
+      ],
+      "SkipDuplicate": [
+        "Skip duplicate"
+      ],
+      "ForceNew": [
+        "Force new"
+      ],
+      "FeaturedImageFallback": [
+        "Featured image fallback"
+      ],
+      "FeaturedImageFallbackDesc": [
+        "What to use as the featured image when the primary image download fails."
+      ],
+      "FallbackNone": [
+        "None"
+      ],
+      "FallbackFirstGallery": [
+        "First gallery image"
+      ],
+      "FallbackPlaceholder": [
+        "Placeholder"
+      ],
+      "ManualRetryFailedMedia": [
+        "Retry failed media now"
+      ],
+      "AutomationApiDescription": [
+        "از REST API برای اجرای قالب‌های واردات ذخیره‌شده استفاده کنید. در مدیر ← قالب‌ها پیکربندی کنید."
+      ],
+      "AutomationApiKey": [
+        "کلید API سایت"
+      ],
+      "RegenerateApiKey": [
+        "تولید مجدد"
+      ],
+      "AutomationNoKey": [
+        "هنوز کلیدی تولید نشده است"
+      ],
+      "AutomationTriggerEndpoint": [
+        "Trigger endpoint (replace {template_id})"
+      ],
+      "AutomationApiKeyUsage": [
+        "Send the key as JSON {\"api_key\":\"...\"}, query ?api_key=, header X-UCI-API-Key, or Authorization: Bearer ..."
+      ],
+      "AutomationWebhookHeader": [
+        "Webhooks: POST /wp-json/uci-pro/v1/webhook/{template_id} with header X-UCI-Signature (HMAC-SHA256 of raw body)."
+      ],
+      "MetaBoxRelationFields": [
+        "Meta Box Relation Fields"
+      ],
+      "MetaBoxGroupFields": [
+        "Meta Box Group Fields"
+      ],
+      "SureCartOrdersFields": [
+        "SureCart Orders Fields"
+      ],
+      "SureCartSubscriptionsFields": [
+        "SureCart Subscriptions Fields"
+      ],
+      "SureCartReportsFields": [
+        "SureCart Reports Fields"
+      ],
+      "SureCartCoreFields": [
+        "SureCart Core Fields"
+      ],
+      "SureCartProductMetaFields": [
+        "SureCart Product Meta Fields"
+      ],
+      "SureCartOrderMetaFields": [
+        "SureCart Order Meta Fields"
+      ],
+      "SureCartCustomerMetaFields": [
+        "SureCart Customer Meta Fields"
+      ],
+      "WooCommerce": [
+        "ووکامرس"
+      ],
+      "Banner_OfferText": [
+        "تا ۲۲٪ تخفیف در حراج پانزدهمین سالگرد ما دریافت کنید"
+      ],
+      "Banner_ViewDeals": [
+        "مشاهده تخفیف‌ها"
+      ],
+      "Banner_Dismiss": [
+        "بستن بنر ارتقا"
+      ],
+      "Category": [
+        "Category"
+      ],
+      "posts": [
+        "posts"
+      ],
+      "DownloadFile": [
+        "DownloadFile"
+      ],
+      "AuditlogsandTools": [
+        "Audit logs and Tools"
+      ],
+      "Toast_NoFailedMediaRecords": [
+        "No failed media records found for this import."
+      ],
+      "SCHEDULED": [
+        "SCHEDULED"
+      ],
+      "Export_FormatLabel": [
+        "Export_FormatLabel"
+      ],
+      "Dashboard_Period_Weekly": [
+        "Dashboard_Period_Weekly"
+      ],
+      "Every2hours": [
+        "Every2hours"
+      ],
+      "ProductImageMetaFields": [
+        "ProductImageMetaFields"
+      ],
+      "Getsample": [
+        "Getsample"
+      ],
+      "PROCESSING": [
+        "PROCESSING"
+      ],
+      "Letsyougetonlyrequireddatawiththedifferentadvancedfilters": [
+        "Letsyougetonlyrequireddatawiththedifferentadvancedfilters"
+      ],
+      "DirectoryProFields": [
+        "DirectoryProFields"
+      ],
+      "ACFImageMetaFields": [
+        "ACFImageMetaFields"
+      ],
+      "ExportCompletedSuccessfully": [
+        "ExportCompletedSuccessfully"
+      ],
+      "TypesImageMetaFields": [
+        "TypesImageMetaFields"
+      ],
+      "Dashboard_Period_Monthly": [
+        "Dashboard_Period_Monthly"
+      ],
+      "Importer": [
+        "Importer"
+      ],
+      "Exported": [
+        "Exported"
+      ],
+      "Export_Remaining": [
+        "Export_Remaining"
+      ],
+      "Dashboard_Period_monthly": [
+        "Dashboard_Period_monthly"
+      ],
+      "jetEngineRelationsFields": [
+        "jetEngineRelationsFields"
+      ],
+      "Dashboard_Period_Yearly": [
+        "Dashboard_Period_Yearly"
+      ],
+      "NextGENGalleryFields": [
+        "NextGENGalleryFields"
+      ],
+      "WooCommerceProduct": [
+        "WooCommerce Product"
+      ],
+      "Dashboard_Period_weekly": [
+        "Dashboard_Period_weekly"
+      ],
+      "Export_TotalRecords": [
+        "Export_TotalRecords"
+      ],
+      "Scheduled": [
+        "Scheduled"
+      ],
+      "Posttags": [
+        "Posttags"
+      ],
+      "Every4hours": [
+        "Every4hours"
+      ],
+      "Export_Exported": [
+        "Export_Exported"
+      ],
+      "Dashboard_Period_yearly": [
+        "Dashboard_Period_yearly"
+      ],
+      "PodsImageMetaFields": [
+        "PodsImageMetaFields"
+      ],
+      "Import-Update": [
+        "Import-Update"
+      ],
+      "Manage": [
+        "Manage"
+      ],
+      "EnterTheURLOfYourCSVXMLFile": [
+        "Enter the URL of your CSV/XML file"
+      ],
+      "Common_Continue": [
+        "ادامه"
+      ],
+      "Modal_ChooseAFile": [
+        "انتخاب یک فایل"
+      ],
+      "GoogleSheet": [
+        "صفحه گسترده Google"
+      ],
+      "OneDrive": [
+        "وان درایو"
+      ],
+      "DropBox": [
+        "دراپ باکس"
+      ],
+      "GoogleDrive": [
+        "گوگل درایو"
+      ],
+      "Dashboard_Year": [
+        "year"
+      ],
+      "Dashboard_Week": [
+        "week"
+      ],
+      "Dashboard_Month": [
+        "month"
+      ],
+      "Do you want adaptive file processing of record": [
+        "آیا می‌خواهید پردازش تطبیقی فایل به صورت رکورد به رکورد انجام شود؟"
+      ],
+      "Do you want to import data filtered by category?": [
+        "آیا می‌خواهید داده‌های فیلتر شده بر اساس دسته‌بندی را وارد کنید؟"
+      ],
+      "Download images referenced in post content to local media library": [
+        "دانلود تصاویر ارجاع شده در محتوای نوشته به کتابخانه رسانه محلی"
+      ],
+      "Due to duplicate found!.": [
+        "به دلیل یافتن مورد تکراری!"
+      ],
+      "New Import": [
+        "واردات جدید"
+      ],
+      "Are you sure?": [
+        "آیا مطمئن هستید؟"
+      ],
+      "Do you really want to delete this log? This action cannot be undone.": [
+        "آیا واقعاً می‌خواهید این گزارش را حذف کنید؟ این عمل قابل بازگشت نیست."
+      ],
+      "You want to delete this template?": [
+        "آیا می‌خواهید این قالب را حذف کنید؟"
+      ],
+      "Not Now": [
+        "الان نه"
+      ],
+      "ExportCompletedsuccessfully": [
+        "صادرات با موفقیت انجام شد"
+      ],
+      "Export completed successfully": [
+        "صادرات با موفقیت انجام شد"
+      ],
+      "Bundle": [
+        "بسته"
+      ],
+      "Download File": [
+        "دانلود فایل"
+      ],
+      "EXPORTED": [
+        "صادر شده"
+      ],
+      "TOTAL RECORDS": [
+        "کل رکوردهای صادر شده"
+      ],
+      "REMAINING": [
+        "باقیمانده"
+      ],
+      "FORMAT": [
+        "فرمت"
+      ],
+      "Exporting": [
+        "در حال صادرات"
+      ],
+      "to": [
+        "به"
+      ],
+      "at": [
+        "در"
+      ],
+      "Yes, Delete it!": [
+        "بله، حذف کن!"
+      ],
+      "Delete Log": [
+        "حذف گزارش"
+      ],
+      "Extend the core functionalities of Ultimate CSV Importer Free by activating specialized addons.": [
+        "قابلیت‌های اصلی Ultimate CSV Importer Free را با فعال کردن افزودنی‌های تخصصی گسترش دهید."
+      ],
+      "Import Users": [
+        "وارد کردن کاربران"
+      ],
+      "Import your user records available in the CSV/XML file with custom fields, WooCommerce Shipping and Billing details.": [
+        "رکوردهای کاربر موجود در فایل CSV/XML را با فیلدهای سفارشی، جزئیات حمل و نقل و صورتحساب ووکامرس وارد کنید."
+      ],
+      "Install & Activate": [
+        "نصب و فعال‌سازی"
+      ],
+      "Activated": [
+        "فعال شد"
+      ],
+      "Import WooCommerce": [
+        "وارد کردن ووکامرس"
+      ],
+      "Export Wordpress Data": [
+        "صادر کردن داده‌های وردپرس"
+      ],
+      "Back to Our Plugin": [
+        "بازگشت به افزونه ما"
+      ],
+      "Manage Add-ons": [
+        "مدیریت افزودنی‌ها"
+      ],
+      "Preview": [
+        "پیش‌نمایش"
+      ]
+    }
+  }
+}

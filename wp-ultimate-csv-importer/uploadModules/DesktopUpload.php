@@ -95,7 +95,7 @@ class DesktopUpload implements Uploads{
 					$extract_path = $upload_dir . $event_key;
 
 					if(move_uploaded_file($_FILES['csvFile']['tmp_name'], $path)){
-						chmod($path, 0777);
+						SecurityHelper::secure_file($path);
 
 						$zip_result = $zip_instance->zip_upload($path , $extract_path,$event_key);
 						if($zip_result == 'UnSupported File Format'){
@@ -278,10 +278,7 @@ class DesktopUpload implements Uploads{
 				}
 
 				$upload_dir_path = $upload_dir. $event_key;
-				if (!is_dir($upload_dir_path)) {
-					wp_mkdir_p( $upload_dir_path);
-				}
-				chmod($upload_dir_path, 0777);	
+				SecurityHelper::ensure_secure_directory($upload_dir_path);
 				$wpdb->insert( $file_table_name , array('file_name' => $file_name , 'hash_key' => $event_key , 'status' => 'Downloading', 'lock' => true) );
 				$last_id = $wpdb->get_results("SELECT id FROM $file_table_name ORDER BY id DESC LIMIT 1",ARRAY_A);
 				$lastid = $last_id[0]['id'];

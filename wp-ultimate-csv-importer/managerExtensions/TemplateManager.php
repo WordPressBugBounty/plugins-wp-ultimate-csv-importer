@@ -268,9 +268,7 @@ class TemplateManager {
 		$upload       = wp_upload_dir();
 		$upload_dir   = $upload['baseurl'];
 
-		if ( ! file_exists( $upload['basedir'] . '/smack_uci_uploads/exports/' ) ) {
-			wp_mkdir_p( $upload['basedir'] . '/smack_uci_uploads/exports/' );
-		}
+		SecurityHelper::ensure_secure_directory( $upload['basedir'] . '/smack_uci_uploads/exports/' );
 
 		$get_event_key = $wpdb->get_results(
 			$wpdb->prepare(

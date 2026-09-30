@@ -62,15 +62,12 @@ class ZipHandler {
     public function wp_csv_importer_generate_content($zip, $dir,$event_key=''){
         $get_upload_dir = wp_upload_dir();
         $supported_formats = array('csv', 'xml', 'txt', 'json');
-        $image_extensions = array('jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'bmp', 'avif', 'ico');
+		// Do not allow svg: WordPress core rejects SVG uploads; extracting raw SVG
+		// into a public uploads path enables stored XSS (esp. Multisite admins).
+        $image_extensions = array('jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'avif', 'ico');
         $check_for_extracted_files = false;
 
-        if (!is_dir($dir)) {
-            wp_mkdir_p($dir);
-        }
-        if (is_dir($dir)) {
-            chmod($dir, 0777);
-        }
+        SecurityHelper::ensure_secure_directory($dir);
 
         for($i = 0; $i < $zip->numFiles; $i++)
         {
@@ -90,14 +87,12 @@ class ZipHandler {
 
             if (in_array($file_extension, $supported_formats, true)){
                 $zip->extractTo($dir,$filterfiles);
-                chmod($dir , 0777);
                 $check_for_extracted_files = true;
             }
 
             if (in_array($file_extension, $image_extensions, true)) {
                 if (stripos($filterfiles, '__MACOSX/') !== 0) {
-                    $sanitized_filename = str_replace(' ', '-', basename($filterfiles));
-                    $sanitized_filename = preg_replace('/[^a-zA-Z0-9._\-]/', '', $sanitized_filename);
+                    $sanitized_filename = sanitize_file_name( basename( str_replace( ' ', '-', str_replace( '\\', '/', $filterfiles ) ) ) );
                     if ($sanitized_filename !== '' && $sanitized_filename !== '.' && $sanitized_filename !== '..') {
                         $full_path = $dir . '/' . $sanitized_filename;
                         $stream_in = $zip->getStream($filterfiles);

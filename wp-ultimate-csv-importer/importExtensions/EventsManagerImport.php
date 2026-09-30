@@ -28,6 +28,10 @@ class EventsManagerImport
 
 	public function set_events_values($header_array, $value_array, $map, $post_id, $type, $mode, $term_map, $gmode)
 	{
+		// Rows skipped by the core import (e.g. duplicates) have no post to attach event data to.
+		if (empty($post_id)) {
+			return;
+		}
 		$post_values = [];
 		$helpers_instance = ImportHelpers::getInstance();
 		$post_values = $helpers_instance->get_header_values($map, $header_array, $value_array);
@@ -38,8 +42,17 @@ class EventsManagerImport
 	public function events_manager_import($data_array, $pID, $mode, $type, $header_array, $value_array, $term_map, $gmode)
 	{
 		global $wpdb;
-		$data_array['event_start_time'] = date('H:i:s',strtotime($data_array['event_start_time']));
-		$data_array['event_end_time'] = date('H:i:s',strtotime($data_array['event_end_time']));
+		if ($type == 'Events' || $type == 'Recurring Events') {
+			$data_array = $this->fill_unmapped_event_fields($data_array, $pID);
+		} elseif ($type == 'Event Locations') {
+			$data_array = $this->fill_unmapped_location_fields($data_array, $pID);
+		}
+		if(isset($data_array['event_start_time'])){
+			$data_array['event_start_time'] = date('H:i:s',strtotime($data_array['event_start_time']));
+		}
+		if(isset($data_array['event_end_time'])){
+			$data_array['event_end_time'] = date('H:i:s',strtotime($data_array['event_end_time']));
+		}
 		if(isset($data_array['start_time'])){
 			$data_array['start_time'] = date('H:i:s',strtotime($data_array['start_time']));
 		}
@@ -110,14 +123,12 @@ class EventsManagerImport
 			$event_rsvp_spaces = isset($data_array['event_rsvp_spaces']) ? $data_array['event_rsvp_spaces'] : '00:00:00';
 			$event_spaces = isset($data_array['event_spaces']) ? $data_array['event_spaces'] : '';
 			$locname = isset($data_array['location_name']) ? $data_array['location_name'] : '';
-			$locslug = strtolower($locname);
 			$locadd = isset($data_array['location_address']) ? $data_array['location_address'] : '';
 			$loctown = isset($data_array['location_town']) ? $data_array['location_town'] : '';
 			$locstate = isset($data_array['location_state']) ? $data_array['location_state'] : '';
 			$loccode = isset($data_array['location_postcode']) ? $data_array['location_postcode'] : '';
 			$locregion = isset($data_array['location_region']) ? $data_array['location_region'] : '';
 			$loccountry = isset($data_array['location_country']) ? $data_array['location_country'] : '';
-			$loc_owner = isset($data_array['post_author']) ? $data_array['post_author'] : '';
 			$ticket_type=isset($data_array['ticket_type'])?$data_array['ticket_type']:'';
 			//Tickets Import - By Anto
 			//if($ticket_type=='multi'){
@@ -236,6 +247,11 @@ class EventsManagerImport
 			//}
 			//Process if single ticket
 			else {
+				foreach (array('ticket_name', 'ticket_price', 'ticket_start_date', 'ticket_start_time', 'ticket_end_date', 'ticket_end_time', 'ticket_min', 'ticket_max') as $ticket_key) {
+					if (!isset($data_array[$ticket_key])) {
+						$data_array[$ticket_key] = '';
+					}
+				}
 				$final_ticket_arr[0]['ticket_name'] = $data_array['ticket_name'];
 				$data_array['ticket_description']=isset($data_array['ticket_description'])?$data_array['ticket_description']:'';
 				$final_ticket_arr[0]['ticket_description'] = $data_array['ticket_description'];
@@ -310,62 +326,8 @@ class EventsManagerImport
 			}
 			//Ends Ticket process
 
-			$loclat = $loclong = '';
-			$address = $locadd . ',' . $loctown . ',' . $locregion . ',' . $locstate . ',' . $loccountry;
-			if (!empty($locadd)) {
-				$get_lot_long = $this->get_latitude_longitude($locadd);
-				$lat_long = explode(',', $get_lot_long);
-				$lat_long[0]=isset($lat_long[0])?$lat_long[0]:'';
-				$lat_long[1]=isset($lat_long[1])?$lat_long[1]:'';
-				$loclat = $lat_long[0];
-				$loclong = $lat_long[1];
-			}
-
-			if (!empty($locname)) {
-				global $wpdb;
-				$data_arr['post_type'] = 'location';
-				$data_arr['post_status'] = 'publish';
-				$data_arr['post_title'] = $locname;
-				$data_arr['post_name'] = $locname;
-				
-				$location_query = "select location_id from {$wpdb->prefix}em_locations where (location_name = '{$locname}') order by location_id DESC";
-				$location_result = $wpdb->get_results($location_query);
-			
-				$location_id = $location_result[0]->location_id;
-				if(empty($location_id)){
-					if ($mode == 'Insert') {
-						$loca_post_id = wp_insert_post($data_arr);
-						$wpdb->insert("{$wpdb->prefix}em_locations", array('post_id' => $loca_post_id, 'location_name' => $locname, 'location_slug' => $locslug, 'location_address' => $locadd, 'location_town' => $loctown, 'location_state' => $locstate, 'location_postcode' => $loccode, 'location_region' => $locregion, 'location_country' => $loccountry, 'location_latitude' => $loclat, 'location_longitude' => $loclong, 'post_content' => $post_content, 'location_status' => '1', 'location_owner' => $loc_owner));
-					}
-					if ($mode == 'Update') {
-						$loca_post_id = $wpdb->get_var($wpdb->prepare("select post_id from {$wpdb->prefix}em_locations where location_name=%s order by post_id DESC limit 1", $locname));
-						if (!empty($loca_post_id)) {
-							$wpdb->update("{$wpdb->prefix}em_locations", array('location_name' => $locname, 'location_slug' => $locslug, 'location_address' => $locadd, 'location_town' => $loctown, 'location_state' => $locstate, 'location_postcode' => $loccode, 'location_region' => $locregion, 'location_country' => $loccountry, 'location_latitude' => $loclat, 'location_longitude' => $loclong, 'post_content' => $post_content, 'location_status' => '1', 'location_owner' => $loc_owner), array('post_id' => $loca_post_id, 'location_name' => $locname));
-						} 
-					}
-					$location_query = "select location_id from {$wpdb->prefix}em_locations where (post_id = '{$loca_post_id}') order by location_id DESC";
-					$location_result = $wpdb->get_results($location_query);
-					$location_ID = '';
-					if (!empty($location_result)) {
-						$location_ID = $location_result[0]->location_id;
-					}
-				}
-				else{
-					$location_ID  = $location_id;
-				}
-			
-				$location_array = array('_location_address' => $locadd, '_location_town' => $loctown, '_location_state' => $locstate, '_location_postcode' => $loccode, '_location_region' => $locregion, '_location_country' => $loccountry, '_location_latitude' => $loclat, '_location_longitude' => $loclong, '_location_id' => $location_ID);
-				foreach ($location_array as $key => $value) {
-					if(isset($loca_post_id)){
-						update_post_meta($loca_post_id, $key, $value);
-					}	
-				}
-			}
-			if (!empty($location_ID)) {
-				$location_id = $location_ID;
-			} else {
-				$location_id = null;
-			}
+			$location_fields = array('name' => trim($locname), 'address' => $locadd, 'town' => $loctown, 'state' => $locstate, 'postcode' => $loccode, 'region' => $locregion, 'country' => $loccountry, 'content' => $post_content);
+			$location_id = $this->resolve_event_location($data_array, $pID, $mode, $location_fields);
 			$recurr_int = isset($data_array['recurrence_interval']) ? $data_array['recurrence_interval'] : null;
 			$recurr_freq = isset($data_array['recurrence_freq']) ? $data_array['recurrence_freq'] : null;
 			$recurr_days = isset($data_array['recurrence_days']) ? $data_array['recurrence_days'] : 0;
@@ -391,21 +353,29 @@ class EventsManagerImport
 			else{
 				$event_end_time1 = $event_end_date . ' ' . $event_end_time;
 			}
+			$event_id = '';
 			if ($type == 'Events' || $type == 'Recurring Events') {
 				$date = date('Y-m-d H:i:s');
-				if ($mode == 'Insert') { 
-					$wpdb->insert("{$wpdb->prefix}em_events", array('post_id' => $pID, 'event_name' => $event_name, 'event_slug' => $event_slug, 'event_owner' => $event_owner, 'event_start_date' => $event_start_date, 'event_end_date' => $event_end_date, 'event_all_day' => $eventday, 'event_start_time' => $event_start_time, 'event_end_time' => $event_end_time, 'event_start' => $event_start_time1, 'event_end' => $event_end_time1, 'event_rsvp_date' => $event_rsvp_date, 'event_rsvp_time' => $event_rsvp_time, 'event_rsvp_spaces' => $event_rsvp_spaces, 'event_spaces' => $event_spaces, 'post_content' => $post_content, 'event_rsvp' => 1, 'location_id' => $location_id, 'event_date_created' => $data_array['post_date'], 'event_date_modified' => $date, 'recurrence' => $recurrence, 'recurrence_interval' => $recurr_int, 'recurrence_freq' => $recurr_freq, 'recurrence_byday' => $recurr_byday, 'recurrence_byweekno' => $recurr_byweek, 'recurrence_days' => $recurr_days, 'recurrence_rsvp_days' => $recurr_rsvp_days, 'event_status' => 1, 'blog_id' => null, 'group_id' => 0));
+				$event_row = array('post_id' => $pID, 'event_name' => $event_name, 'event_slug' => $event_slug, 'event_owner' => $event_owner, 'event_start_date' => $event_start_date, 'event_end_date' => $event_end_date, 'event_all_day' => $eventday, 'event_start_time' => $event_start_time, 'event_end_time' => $event_end_time, 'event_start' => $event_start_time1, 'event_end' => $event_end_time1, 'event_rsvp_date' => $event_rsvp_date, 'event_rsvp_time' => $event_rsvp_time, 'event_rsvp_spaces' => $event_rsvp_spaces, 'event_spaces' => $event_spaces, 'post_content' => $post_content, 'event_rsvp' => 1, 'location_id' => $location_id, 'event_date_modified' => $date, 'recurrence' => $recurrence, 'recurrence_interval' => $recurr_int, 'recurrence_freq' => $recurr_freq, 'recurrence_byday' => $recurr_byday, 'recurrence_byweekno' => $recurr_byweek, 'recurrence_days' => $recurr_days, 'recurrence_rsvp_days' => $recurr_rsvp_days, 'event_status' => 1, 'blog_id' => null, 'group_id' => 0);
+				if (!empty($data_array['post_date'])) {
+					$event_row['event_date_created'] = $data_array['post_date'];
 				}
-				if ($mode == 'Update') {
-					$wpdb->update("{$wpdb->prefix}em_events", array('event_name' => $event_name, 'event_slug' => $event_slug, 'event_owner' => $event_owner, 'event_start_date' => $event_start_date, 'event_end_date' => $event_end_date, 'event_all_day' => $eventday, 'event_start' => $event_start_time1, 'event_end' => $event_end_time1, 'event_start_time' => $event_start_time, 'event_end_time' => $event_end_time, 'event_rsvp_date' => $event_rsvp_date, 'event_rsvp_time' => $event_rsvp_time, 'event_rsvp_spaces' => $event_rsvp_spaces, 'event_spaces' => $event_spaces, 'post_content' => $post_content, 'event_rsvp' => 1, 'location_id' => $location_id, 'event_date_created' => $data_array['post_date'], 'recurrence' => $recurrence, 'recurrence_interval' => $recurr_int, 'recurrence_freq' => $recurr_freq, 'recurrence_byday' => $recurr_byday, 'recurrence_byweekno' => $recurr_byweek, 'recurrence_days' => $recurr_days, 'recurrence_rsvp_days' => $recurr_rsvp_days, 'event_status' => 1, 'blog_id' => null, 'group_id' => 0), array('post_id' => $pID));
+				// Events Manager 7 moved the legacy recurrence columns out of em_events.
+				$event_row = array_intersect_key($event_row, array_flip($this->get_table_columns('em_events')));
+				$event_id = (int) $wpdb->get_var($wpdb->prepare("SELECT event_id FROM {$wpdb->prefix}em_events WHERE post_id = %d ORDER BY event_id ASC LIMIT 1", $pID));
+				if ($event_id) {
+					$wpdb->update("{$wpdb->prefix}em_events", $event_row, array('event_id' => $event_id));
+				} else {
+					if (!isset($event_row['event_date_created'])) {
+						$event_row['event_date_created'] = $date;
+					}
+					if ($wpdb->insert("{$wpdb->prefix}em_events", $event_row)) {
+						$event_id = (int) $wpdb->insert_id;
+					} else {
+						$this->log_events_manager_issue(sprintf('Could not save event data for post %d: %s', $pID, $wpdb->last_error));
+						$event_id = '';
+					}
 				}
-			}
-			$event_query = "select event_id from {$wpdb->prefix}em_events where (post_id = '{$pID}')";
-			  
-			$event_result = $wpdb->get_results($event_query);
-			$event_id = '';
-			if ($event_result) {
-				$event_id = $event_result[0]->event_id;
 			}
 			$event_array = array('_event_rsvp_time' => $event_rsvp_time, '_event_rsvp_date' => $event_rsvp_date, '_event_end_date' => $event_end_date, '_event_start_date' => $event_start_date, '_event_all_day' => $eventday, '_event_end_time' => $event_end_time, '_event_start_time' => $event_start_time, '_recurrence_byweekno' => $recurr_byweek, '_recurrence_byday' => $recurr_byday, '_event_start_local' => $event_start_time1, '_event_end_local' => $event_end_time1, '_event_start' => $event_start_time1, '_event_end' => $event_end_time1, '_recurrence_freq' => $recurr_freq, '_recurrence_freq' => $recurr_freq, '_recurrence_days' => $recurr_days, '_event_rsvp_date' => $event_rsvp_date, '_event_rsvp_time' => $event_rsvp_time, '_event_rsvp_spaces' => $event_rsvp_spaces, '_event_spaces' => $event_spaces, '_event_id' => $event_id, '_location_id' => $location_id, '_event_rsvp' => $event_rsvp, '_event_status' => 1, '_recurrence' => $recurrence, '_recurrence_id' => null, '_event_private' => 0, '_blog_id' => null, '_group_id' => 0, '_start_ts' => $time_start_ts_info, '_end_ts' => $time_end_ts_info, '_recurrence_interval' => $recurr_int, '_recurrence_rsvp_days' => $recurr_rsvp_days);
 			foreach ($event_array as $key => $value) {
@@ -1572,14 +1542,12 @@ class EventsManagerImport
 
 		if ($type == 'Event Locations') {
 			$locname = isset($data_array['post_title']) ? $data_array['post_title'] : '';
-			$locslug = strtolower($locname);
 			$locadd = isset($data_array['location_address']) ? $data_array['location_address'] : '';
 			$loctown = isset($data_array['location_town']) ? $data_array['location_town'] : '';
 			$locstate = isset($data_array['location_state']) ? $data_array['location_state'] : '';
 			$loccode = isset($data_array['location_postcode']) ? $data_array['location_postcode'] : '';
 			$locregion = isset($data_array['location_region']) ? $data_array['location_region'] : '';
 			$loccountry = isset($data_array['location_country']) ? $data_array['location_country'] : '';
-			$loc_owner = isset($data_array['post_author']) ? $data_array['post_author'] : '';
 			$loclat = $loclong = '';
 			if (!empty($locadd)) {
 				$get_lot_long = $this->get_latitude_longitude($locadd);
@@ -1589,25 +1557,263 @@ class EventsManagerImport
 				$loclat = $lat_long[0];
 				$loclong = $lat_long[1];
 			}
-			$location_ID = '';
-			if ($mode == 'Insert') {
-				$wpdb->insert("{$wpdb->prefix}em_locations", array('post_id' => $pID, 'location_name' => $locname, 'location_slug' => $locslug, 'location_address' => $locadd, 'location_town' => $loctown, 'location_state' => $locstate, 'location_postcode' => $loccode, 'location_region' => $locregion, 'location_country' => $loccountry, 'location_latitude' => $loclat, 'location_longitude' => $loclong, 'post_content' => $post_content, 'location_status' => '1', 'location_owner' => $loc_owner));
+			if ($locname === '') {
+				$locname = get_post_field('post_title', $pID);
 			}
-			if ($mode == 'Update') {
-				$check_location_exist = $wpdb->get_results($wpdb->prepare("select * from {$wpdb->prefix}em_locations where location_name=%s and post_id=%d", $locname, $pID));
-				if (!empty($check_location_exist)) {
-					$wpdb->update("{$wpdb->prefix}em_locations", array('location_name' => $locname, 'location_slug' => $locslug, 'location_address' => $locadd, 'location_town' => $loctown, 'location_state' => $locstate, 'location_postcode' => $loccode, 'location_region' => $locregion, 'location_country' => $loccountry, 'location_latitude' => $loclat, 'location_longitude' => $loclong, 'post_content' => $post_content, 'location_status' => '1', 'location_owner' => $loc_owner), array('post_id' => $pID, 'location_name' => $locname));
-				} 
-			}
-			$location_query = "select location_id from {$wpdb->prefix}em_locations where (post_id = '{$pID}') order by location_id DESC";
-			$location_result = $wpdb->get_results($location_query);
-			if ($location_result) {
-				$location_ID = $location_result[0]->location_id;
+			$location_row = array('post_id' => $pID, 'location_name' => $locname, 'location_slug' => get_post_field('post_name', $pID), 'location_address' => $locadd, 'location_town' => $loctown, 'location_state' => $locstate, 'location_postcode' => $loccode, 'location_region' => $locregion, 'location_country' => $loccountry, 'location_latitude' => $loclat, 'location_longitude' => $loclong, 'post_content' => $post_content, 'location_status' => '1', 'location_owner' => (int) get_post_field('post_author', $pID));
+			// Events Manager creates its own em_locations row when the location post is saved; reuse it.
+			$location_ID = $this->get_location_id_for_post($pID);
+			if ($location_ID) {
+				$wpdb->update("{$wpdb->prefix}em_locations", $location_row, array('location_id' => $location_ID));
+			} elseif ($wpdb->insert("{$wpdb->prefix}em_locations", $location_row)) {
+				$location_ID = (int) $wpdb->insert_id;
+			} else {
+				$location_ID = '';
 			}
 			$location_array = array('_location_address' => $locadd, '_location_town' => $loctown, '_location_state' => $locstate, '_location_postcode' => $loccode, '_location_region' => $locregion, '_location_country' => $loccountry, '_location_latitude' => $loclat, '_location_longitude' => $loclong, '_location_id' => $location_ID);
 			foreach ($location_array as $key => $value) {
 				update_post_meta($pID, $key, $value);
 			}
+		}
+	}
+
+	/**
+	 * Fill fields that are not mapped in the CSV from the post and its current em_events row,
+	 * so updating an existing event only changes the mapped columns.
+	 */
+	private function fill_unmapped_event_fields($data_array, $pID)
+	{
+		global $wpdb;
+		foreach (array('post_title', 'post_content', 'post_author') as $post_field) {
+			if (!isset($data_array[$post_field])) {
+				$data_array[$post_field] = get_post_field($post_field, $pID);
+			}
+		}
+		$event = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->prefix}em_events WHERE post_id = %d ORDER BY event_id ASC LIMIT 1", $pID), ARRAY_A);
+		if (empty($event)) {
+			return $data_array;
+		}
+		foreach (array('event_start_date', 'event_end_date', 'event_start_time', 'event_end_time', 'event_all_day', 'event_rsvp_date', 'event_rsvp_time', 'event_rsvp_spaces', 'event_spaces') as $key) {
+			if (!isset($data_array[$key]) && isset($event[$key])) {
+				$data_array[$key] = $event[$key];
+			}
+		}
+		if (!isset($data_array['_event_rsvp']) && isset($event['event_rsvp'])) {
+			$data_array['_event_rsvp'] = $event['event_rsvp'];
+		}
+		foreach (array('recurrence_interval', 'recurrence_freq', 'recurrence_byday', 'recurrence_byweekno', 'recurrence_days', 'recurrence_rsvp_days') as $key) {
+			if (isset($data_array[$key])) {
+				continue;
+			}
+			if (isset($event[$key])) {
+				$data_array[$key] = $event[$key];
+			} elseif (metadata_exists('post', $pID, '_' . $key)) {
+				$data_array[$key] = get_post_meta($pID, '_' . $key, true);
+			}
+		}
+		return $data_array;
+	}
+
+	private function fill_unmapped_location_fields($data_array, $pID)
+	{
+		foreach (array('post_title', 'post_content') as $post_field) {
+			if (!isset($data_array[$post_field])) {
+				$data_array[$post_field] = get_post_field($post_field, $pID);
+			}
+		}
+		$location_id = $this->get_location_id_for_post($pID);
+		if (!$location_id) {
+			return $data_array;
+		}
+		global $wpdb;
+		$location = $wpdb->get_row($wpdb->prepare("SELECT * FROM {$wpdb->prefix}em_locations WHERE location_id = %d", $location_id), ARRAY_A);
+		foreach (array('location_address', 'location_town', 'location_state', 'location_postcode', 'location_region', 'location_country') as $key) {
+			if (!isset($data_array[$key]) && isset($location[$key])) {
+				$data_array[$key] = $location[$key];
+			}
+		}
+		return $data_array;
+	}
+
+	/**
+	 * Resolve the Events Manager location_id for an imported event.
+	 * Lookup order: location_id, location_slug, location_name (narrowed by address, town and postcode).
+	 * Ambiguous or unknown references are not linked; an existing event keeps its current link.
+	 */
+	private function resolve_event_location($data_array, $pID, $mode, $location_fields)
+	{
+		global $wpdb;
+		$ref_id = isset($data_array['location_id']) ? trim((string) $data_array['location_id']) : '';
+		$ref_slug = isset($data_array['location_slug']) ? trim((string) $data_array['location_slug']) : '';
+		$name = $location_fields['name'];
+		// Existing events can also arrive in Insert mode (duplicate handling), so always fall back to the current link.
+		$unresolved = $this->get_current_event_location_id($pID);
+
+		if ($ref_id === '' && $ref_slug === '' && $name === '') {
+			return $unresolved;
+		}
+
+		if ($ref_id !== '') {
+			$row = ctype_digit($ref_id) ? $wpdb->get_row($wpdb->prepare("SELECT l.location_id, l.post_id, l.location_slug, l.location_name FROM {$wpdb->prefix}em_locations l INNER JOIN {$wpdb->posts} p ON p.ID = l.post_id WHERE l.location_id = %d AND p.post_type = 'location' AND p.post_status NOT IN ('trash', 'auto-draft')", $ref_id)) : null;
+			if ($row) {
+				// A location_id exported from another site may point to a different location here.
+				if ($ref_slug !== '') {
+					$matches = ($row->location_slug === $ref_slug || get_post_field('post_name', $row->post_id) === sanitize_title($ref_slug));
+				} else {
+					$matches = ($name === '' || strcasecmp(trim($row->location_name), $name) === 0);
+				}
+				if ($matches) {
+					return (int) $row->location_id;
+				}
+				$this->log_events_manager_issue(sprintf('Event post %d: location_id %s does not match the given location slug/name.', $pID, $ref_id));
+			} else {
+				$this->log_events_manager_issue(sprintf('Event post %d: location_id %s was not found.', $pID, $ref_id));
+			}
+			if ($ref_slug === '' && $name === '') {
+				return $unresolved;
+			}
+		}
+
+		if ($ref_slug !== '') {
+			$candidates = $this->find_location_candidates('(p.post_name = %s OR l.location_slug = %s)', array(sanitize_title($ref_slug), $ref_slug));
+			if (count($candidates) > 1) {
+				$candidates = $this->narrow_location_candidates($candidates, $location_fields);
+				if (count($candidates) != 1) {
+					$this->log_events_manager_issue(sprintf('Event post %d: location slug "%s" matches more than one location; not linked.', $pID, $ref_slug));
+					return $unresolved;
+				}
+			}
+			if (count($candidates) == 1) {
+				return (int) key($candidates);
+			}
+			$this->log_events_manager_issue(sprintf('Event post %d: location slug "%s" was not found.', $pID, $ref_slug));
+			if ($name === '') {
+				return $unresolved;
+			}
+		}
+
+		$candidates = $this->find_location_candidates('l.location_name = %s', array($name));
+		if (count($candidates) > 1) {
+			$candidates = $this->narrow_location_candidates($candidates, $location_fields);
+			if (count($candidates) != 1) {
+				$this->log_events_manager_issue(sprintf('Event post %d: location name "%s" matches more than one location; add location_id, location_slug or address details. Not linked.', $pID, $name));
+				return $unresolved;
+			}
+		}
+		if (count($candidates) == 1) {
+			return (int) key($candidates);
+		}
+		if ($mode == 'Insert') {
+			return $this->create_event_location($location_fields);
+		}
+		$this->log_events_manager_issue(sprintf('Event post %d: location name "%s" was not found.', $pID, $name));
+		return $unresolved;
+	}
+
+	/**
+	 * Locations (keyed by location_id) whose em_locations row matches the condition, one per non-trashed location post.
+	 */
+	private function find_location_candidates($where, $args)
+	{
+		global $wpdb;
+		$post_ids = $wpdb->get_col($wpdb->prepare("SELECT DISTINCT l.post_id FROM {$wpdb->prefix}em_locations l INNER JOIN {$wpdb->posts} p ON p.ID = l.post_id WHERE p.post_type = 'location' AND p.post_status NOT IN ('trash', 'auto-draft') AND {$where}", $args));
+		$candidates = array();
+		foreach ($post_ids as $location_post_id) {
+			$location_id = $this->get_location_id_for_post($location_post_id);
+			if ($location_id) {
+				$candidates[$location_id] = $wpdb->get_row($wpdb->prepare("SELECT location_id, location_address, location_town, location_postcode FROM {$wpdb->prefix}em_locations WHERE location_id = %d", $location_id));
+			}
+		}
+		return $candidates;
+	}
+
+	private function narrow_location_candidates($candidates, $location_fields)
+	{
+		foreach (array('address', 'town', 'postcode') as $field) {
+			$value = trim((string) $location_fields[$field]);
+			if ($value === '') {
+				continue;
+			}
+			foreach ($candidates as $location_id => $candidate) {
+				if (strcasecmp(trim((string) $candidate->{'location_' . $field}), $value) !== 0) {
+					unset($candidates[$location_id]);
+				}
+			}
+		}
+		return $candidates;
+	}
+
+	/**
+	 * Events Manager uses the location post's _location_id meta when a post has more than one em_locations row.
+	 */
+	private function get_location_id_for_post($location_post_id)
+	{
+		global $wpdb;
+		$location_ids = array_map('intval', $wpdb->get_col($wpdb->prepare("SELECT location_id FROM {$wpdb->prefix}em_locations WHERE post_id = %d ORDER BY location_id ASC", $location_post_id)));
+		if (empty($location_ids)) {
+			return 0;
+		}
+		$meta_location_id = (int) get_post_meta($location_post_id, '_location_id', true);
+		return in_array($meta_location_id, $location_ids, true) ? $meta_location_id : $location_ids[0];
+	}
+
+	private function get_current_event_location_id($pID)
+	{
+		global $wpdb;
+		$location_id = $wpdb->get_var($wpdb->prepare("SELECT location_id FROM {$wpdb->prefix}em_events WHERE post_id = %d ORDER BY event_id ASC LIMIT 1", $pID));
+		if (empty($location_id)) {
+			$location_id = get_post_meta($pID, '_location_id', true);
+		}
+		return !empty($location_id) ? (int) $location_id : null;
+	}
+
+	private function create_event_location($location_fields)
+	{
+		global $wpdb;
+		$location_post_id = wp_insert_post(array('post_type' => 'location', 'post_status' => 'publish', 'post_title' => $location_fields['name'], 'post_name' => $location_fields['name']));
+		if (empty($location_post_id) || is_wp_error($location_post_id)) {
+			$this->log_events_manager_issue(sprintf('Could not create location "%s".', $location_fields['name']));
+			return null;
+		}
+		$loclat = $loclong = '';
+		if (!empty($location_fields['address'])) {
+			$lat_long = explode(',', (string) $this->get_latitude_longitude($location_fields['address']));
+			$loclat = isset($lat_long[0]) ? $lat_long[0] : '';
+			$loclong = isset($lat_long[1]) ? $lat_long[1] : '';
+		}
+		$location_row = array('post_id' => $location_post_id, 'location_name' => $location_fields['name'], 'location_slug' => get_post_field('post_name', $location_post_id), 'location_address' => $location_fields['address'], 'location_town' => $location_fields['town'], 'location_state' => $location_fields['state'], 'location_postcode' => $location_fields['postcode'], 'location_region' => $location_fields['region'], 'location_country' => $location_fields['country'], 'location_latitude' => $loclat, 'location_longitude' => $loclong, 'post_content' => $location_fields['content'], 'location_status' => '1', 'location_owner' => (int) get_post_field('post_author', $location_post_id));
+		// Events Manager creates its own em_locations row when the location post is saved; reuse it.
+		$location_id = $this->get_location_id_for_post($location_post_id);
+		if ($location_id) {
+			$wpdb->update("{$wpdb->prefix}em_locations", $location_row, array('location_id' => $location_id));
+		} elseif ($wpdb->insert("{$wpdb->prefix}em_locations", $location_row)) {
+			$location_id = (int) $wpdb->insert_id;
+		}
+		if (empty($location_id)) {
+			$this->log_events_manager_issue(sprintf('Could not save location data for location post %d: %s', $location_post_id, $wpdb->last_error));
+			return null;
+		}
+		$location_meta = array('_location_address' => $location_fields['address'], '_location_town' => $location_fields['town'], '_location_state' => $location_fields['state'], '_location_postcode' => $location_fields['postcode'], '_location_region' => $location_fields['region'], '_location_country' => $location_fields['country'], '_location_latitude' => $loclat, '_location_longitude' => $loclong, '_location_id' => $location_id);
+		foreach ($location_meta as $key => $value) {
+			update_post_meta($location_post_id, $key, $value);
+		}
+		return $location_id;
+	}
+
+	private function get_table_columns($table)
+	{
+		global $wpdb;
+		static $columns = array();
+		if (!isset($columns[$table])) {
+			$columns[$table] = $wpdb->get_col("SHOW COLUMNS FROM {$wpdb->prefix}{$table}");
+		}
+		return $columns[$table];
+	}
+
+	private function log_events_manager_issue($message)
+	{
+		if (defined('WP_DEBUG') && WP_DEBUG) {
+			error_log('WP Ultimate CSV Importer (Events Manager): ' . $message);
 		}
 	}
 

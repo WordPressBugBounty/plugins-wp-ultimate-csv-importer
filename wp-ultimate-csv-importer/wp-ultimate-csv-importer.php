@@ -10,7 +10,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: WP Ultimate CSV Importer
- * Version:     9.1
+ * Version:     9.2
  * Plugin URI:  https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
  * Description: Seamlessly create posts, custom posts, pages, media, SEO and more from your CSV data with ease.
  * Author:      Smackcoders
@@ -86,6 +86,8 @@ foreach ($import_extensions as $import_extension_value) {
 }
 
 require_once __DIR__ . '/includes/SecurityHelper.php';
+add_action( 'admin_init', array( SecurityHelper::class, 'maybe_harden_existing_upload_tree' ) );
+add_action( 'init', array( SecurityHelper::class, 'maybe_protect_existing_log_directories' ) );
 require_once __DIR__ . '/includes/SafeExpressionEvaluator.php';
 require_once __DIR__ . '/includes/AjaxAuthorization.php';
 AjaxAuthorization::register();
@@ -107,16 +109,16 @@ $export_extensions = glob( __DIR__ . '/exportExtensions/*.php');
 foreach ($export_extensions as $export_extension_value) {
 	include_once($export_extension_value);
 }
-include_once('SaveMapping.php');
-include_once('MediaHandling.php');
-include_once('ImportConfiguration.php');
-include_once('Dashboard.php');
-include_once('DragandDropExtension.php');
-include_once('controllers/SendPassword.php');
-include_once('controllers/SupportMail.php');
-include_once('controllers/HelperExtension.php');
-include_once('controllers/NeedHelperExtension.php');
-include_once('controllers/Security.php');
+include_once __DIR__ . '/SaveMapping.php';
+include_once __DIR__ . '/MediaHandling.php';
+include_once __DIR__ . '/ImportConfiguration.php';
+include_once __DIR__ . '/Dashboard.php';
+include_once __DIR__ . '/DragandDropExtension.php';
+include_once __DIR__ . '/controllers/SendPassword.php';
+include_once __DIR__ . '/controllers/SupportMail.php';
+include_once __DIR__ . '/controllers/HelperExtension.php';
+include_once __DIR__ . '/controllers/NeedHelperExtension.php';
+include_once __DIR__ . '/controllers/Security.php';
 
 class UCICore{
 
@@ -147,29 +149,8 @@ class UCICore{
 	private static $uninstall = null ;
 	private static $install = null ;
 	private static $export_instance = null ;
-	public static $en_instance = null ;
-	public static $en_CA_instance = null ;
-	public static $en_GB_instance = null ;
-	public static $italy_instance = null ;
-	public static $france_instance = null ;
-	public static $german_instance = null ;
-	public static $spanish_instance = null;
-	public static $russian_instance = null;
-	public static $portuguese_instance = null;
-	public static $turkish_instance = null;
-	public static $nz_instance = null;
-	public static $pl_instance = null;
-	public static $aus_instance = null;
-	public static $enpi_instance = null;
-	public static $japanese_instance = null;
-	public static $dutch_instance = null;
-	public static $en_ZA_instance = null;
-	public static $tamil_instance = null;
-	public static $arabic_instance = null;
-	public static $persian_instance = null;
-	public static $chinese_instance = null;
 	private static $addon_instance = null;
-	public $version = '9.1';
+	public $version = '9.2';
 
 	/**
 	 * UCICore Instance
@@ -433,20 +414,6 @@ class UCICore{
 		do_action('sm_uci_register_addon_schedulers');
 		add_filter('admin_body_class', array(__CLASS__, 'admin_body_class'));
 		$this->init_review_notice();
-
-		self::$en_instance = \Smackcoders\UCI\Core\LangEN::getInstance();
-		self::$italy_instance = \Smackcoders\UCI\Core\LangIT::getInstance();
-		self::$france_instance = \Smackcoders\UCI\Core\LangFR::getInstance();
-		self::$german_instance = \Smackcoders\UCI\Core\LangGE::getInstance();
-		self::$spanish_instance = \Smackcoders\UCI\Core\LangES::getInstance();
-		self::$japanese_instance = \Smackcoders\UCI\Core\LangJA::getInstance();
-		self::$dutch_instance = \Smackcoders\UCI\Core\LangNL::getInstance();
-		self::$russian_instance = \Smackcoders\UCI\Core\LangRU::getInstance();
-		self::$portuguese_instance = \Smackcoders\UCI\Core\LangPT::getInstance();
-		self::$turkish_instance = \Smackcoders\UCI\Core\LangTR::getInstance();
-		self::$en_CA_instance = \Smackcoders\UCI\Core\LangEN_CA::getInstance();
-		self::$en_GB_instance = \Smackcoders\UCI\Core\LangEN_GB::getInstance();
-		self::$en_ZA_instance = \Smackcoders\UCI\Core\LangEN_ZA::getInstance();
 		self::$validate_file = \Smackcoders\UCI\Core\ValidateFile::getInstance();
 	}
 
@@ -618,55 +585,40 @@ public function handle_review_notice_actions() {
         wp_enqueue_style(wp_unique_handle($plugin_slug . '_react-confirm-alert-css'), plugins_url('assets/css/deps/react-confirm-alert.css', __FILE__));
 
         // Language localization script
-        // Use the admin/user locale for admin UI.
-        $language = function_exists( 'determine_locale' ) ? determine_locale() : get_locale();
-        $user_id = get_current_user_id();
-        $contents = array();
-        if($language == 'it_IT'){
-            $contents = \Smackcoders\UCI\Core\LangIT::getInstance()->contents();
-        } elseif($language == 'fr_FR' || $language == 'fr_BE'){
-            $contents = \Smackcoders\UCI\Core\LangFR::getInstance()->contents();
-        } elseif($language == 'de_DE' || $language == 'de_AT'){
-            $contents = \Smackcoders\UCI\Core\LangGE::getInstance()->contents();
-        } elseif ($language == 'es_ES') {
-            $contents = \Smackcoders\UCI\Core\LangES::getInstance()->contents();
-        } elseif ($language == 'en_CA') {
-            $contents = \Smackcoders\UCI\Core\LangEN_CA::getInstance()->contents();
-        } elseif ($language == 'en_GB') {
-            $contents = \Smackcoders\UCI\Core\LangEN_GB::getInstance()->contents();
-        } elseif ($language == 'tr_TR') {
-            $contents = \Smackcoders\UCI\Core\LangTR::getInstance()->contents();
-        } elseif ($language == 'en_NZ') {
-            $contents = \Smackcoders\UCI\Core\LangNZ::getInstance()->contents();
-        } elseif ($language == 'pl_PL') {
-            $contents = \Smackcoders\UCI\Core\LangPL::getInstance()->contents();
-        } elseif ($language == 'en_AU') {
-            $contents = \Smackcoders\UCI\Core\LangAUS::getInstance()->contents();
-        } elseif ($language == 'art_xpirate') {
-            $contents = \Smackcoders\UCI\Core\LangPI::getInstance()->contents();
-        } elseif ($language == 'en_ZA') {
-            $contents = \Smackcoders\UCI\Core\LangEN_ZA::getInstance()->contents();
-        } elseif ($language == 'ru_RU') {
-            $contents = \Smackcoders\UCI\Core\LangRU::getInstance()->contents();
-        } elseif($language == 'pt_BR') {
-            $contents = \Smackcoders\UCI\Core\LangPT::getInstance()->contents();
-        } elseif (strpos($language, 'ja') === 0) {
-            $contents = \Smackcoders\UCI\Core\LangJA::getInstance()->contents();
-        } elseif ($language == 'nl_NL') {
-            $contents = \Smackcoders\UCI\Core\LangNL::getInstance()->contents();
-        } elseif ($language == 'ta_IN') {
-            $contents = \Smackcoders\UCI\Core\LangTA::getInstance()->contents();
-        } elseif ($language == 'ar') {
-            $contents = \Smackcoders\UCI\Core\LangAR::getInstance()->contents();
-        } elseif ($language == 'fa_IR') {
-            $contents = \Smackcoders\UCI\Core\LangFA::getInstance()->contents();
-        } elseif ($language == 'zh_CN') {
-            $contents = \Smackcoders\UCI\Core\LangZH::getInstance()->contents();
-        } else {
-            $contents = \Smackcoders\UCI\Core\LangEN::getInstance()->contents();
+        // Register standard WordPress JS script translations from /languages directory
+        if ( function_exists( 'wp_set_script_translations' ) ) {
+            wp_set_script_translations( 'react-js', 'wp-ultimate-csv-importer', plugin_dir_path( __FILE__ ) . 'languages' );
         }
-        
-        $response = wp_json_encode($contents);
+
+        $language = function_exists( 'determine_locale' ) ? determine_locale() : get_locale();
+        $json_file = plugin_dir_path( __FILE__ ) . "languages/wp-ultimate-csv-importer-{$language}.json";
+        if ( ! file_exists( $json_file ) ) {
+            $base_lang = strtok( $language, '_' );
+            $possible_files = glob( plugin_dir_path( __FILE__ ) . "languages/wp-ultimate-csv-importer-{$base_lang}*.json" );
+            if ( ! empty( $possible_files ) ) {
+                usort( $possible_files, function( $a, $b ) {
+                    return filesize( $b ) - filesize( $a );
+                });
+                $json_file = $possible_files[0];
+            } else {
+                $json_file = plugin_dir_path( __FILE__ ) . 'languages/wp-ultimate-csv-importer-en_US.json';
+            }
+        }
+
+        $contents = array();
+        if ( file_exists( $json_file ) ) {
+            $raw_json = file_get_contents( $json_file );
+            $parsed = json_decode( $raw_json, true );
+            if ( isset( $parsed['locale_data']['wp-ultimate-csv-importer'] ) ) {
+                foreach ( $parsed['locale_data']['wp-ultimate-csv-importer'] as $k => $v ) {
+                    if ( $k !== '' && is_array( $v ) && isset( $v[0] ) ) {
+                        $contents[$k] = $v[0];
+                    }
+                }
+            }
+        }
+
+        $response = wp_json_encode( $contents );
 
         wp_enqueue_style('font-awesome-all', plugins_url('assets/css/deps/font-awesome-all.css', __FILE__));
 
@@ -700,13 +652,17 @@ public function handle_review_notice_actions() {
 	}
 
 	/**
-	 * Generates unique key for each file.
-	 * @param string $value - filename
-	 * @return string hashkey
+	 * Generates a unique opaque key for each import event/file storage path.
+	 *
+	 * $value is accepted for backward compatibility with callers but is intentionally
+	 * ignored — keys must not be derived from filename, time(), or a hardcoded secret.
+	 *
+	 * @param string $value Unused legacy filename argument.
+	 * @return string Cryptographically secure hex event key.
 	 */
 	public function convert_string2hash_key($value) {
-		$file_name = hash_hmac('md5', "$value" . time() , 'secret');
-		return $file_name;
+		unset( $value );
+		return SecurityHelper::generate_secure_event_key();
 	}
 
 
@@ -722,20 +678,10 @@ public function handle_review_notice_actions() {
 			return false;
         } else {
 			$upload_dir = $upload_dir . '/smack_uci_uploads/imports/';
-			if (!is_dir($upload_dir)) {
-				wp_mkdir_p($upload_dir);
-				chmod($upload_dir, 0755);
-
-				$index_php_file = $upload_dir . 'index.php';
-				if (!file_exists($index_php_file)) {
-					$file_content = '<?php' . PHP_EOL . '?>';
-					file_put_contents($index_php_file, $file_content);
-				}
-			}
-			if($mode != 'CLI')
-            {
-				chmod($upload_dir, 0777);
-			}
+			SecurityHelper::maybe_harden_existing_upload_tree();
+			SecurityHelper::ensure_secure_directory( $upload_dir );
+			// Always (re)apply deny rules; do not leave import payloads world-readable over HTTP.
+			SecurityHelper::protect_import_directory( $upload_dir );
 			return $upload_dir;
 		}
 	}
@@ -825,34 +771,13 @@ public function handle_review_notice_actions() {
 // class_alias('Smackcoders\UCI\Core\UCICore', 'Smackcoders\UCI\Core\SmackCSV');
 // class_alias('Smackcoders\UCI\Core\UCICore', 'Smackcoders\UCI\Core\SmackCSV');
 
-include_once('Plugin.php');
+include_once __DIR__ . '/Plugin.php';
 // class_alias('Smackcoders\UCI\Core\Plugin', 'Smackcoders\UCI\Core\Plugin');
-include_once('extensionModules/MappingExtension.php');
-include_once('SmackCSVImporterInstall.php');
-include_once('languages/LangIT.php');
-include_once('languages/LangEN.php');
-include_once('languages/LangGE.php');
-include_once('languages/LangFR.php');
-include_once('languages/LangRU.php');
-include_once('languages/LangPT.php');
-include_once('languages/LangTR.php');
-include_once('languages/LangNZ.php');
-include_once('languages/LangPL.php');
-include_once('languages/LangAUS.php');
-include_once('languages/LangPI.php');
-include_once('languages/LangES.php');
-include_once('languages/LangJA.php');
-include_once('languages/LangNL.php');
-include_once('languages/LangenGB.php');
-include_once('languages/LangenCA.php');
-include_once('languages/LangenZA.php');
-include_once('languages/LangTA.php');
-include_once('languages/LangAR.php');
-include_once('languages/LangFA.php');
-include_once('languages/LangZH.php');
-include_once('Tables.php');
-include_once('SmackCSVImporterUninstall.php');
-include_once('InstallAddons.php');
+include_once __DIR__ . '/extensionModules/MappingExtension.php';
+include_once __DIR__ . '/SmackCSVImporterInstall.php';
+include_once __DIR__ . '/Tables.php';
+include_once __DIR__ . '/SmackCSVImporterUninstall.php';
+include_once __DIR__ . '/InstallAddons.php';
 if ( ! function_exists( 'is_plugin_active' ) ) {
 	include_once ABSPATH . 'wp-admin/includes/plugin.php';
 }
@@ -860,8 +785,8 @@ if (is_plugin_active('wp-ultimate-csv-importer/wp-ultimate-csv-importer.php')) {
 	global $csv_class;
 	$csv_class = new UCICore();
 	// For CLI
-	include_once('SingleImportExport.php');
-	include_once('SmackcliHandler.php');
+	include_once __DIR__ . '/SingleImportExport.php';
+	include_once __DIR__ . '/SmackcliHandler.php';
 	$singlecsv_class = new \Smackcoders\UCI\Core\SingleImportExport();
 																
 }

@@ -58,6 +58,7 @@ class AjaxAuthorization {
 			'download_log',
 			'download_media_log',
 			'download_failed_log',
+			'stream_uci_log',
 			'delete_log',
 			'security_performance',
 			'active_addons',
@@ -69,6 +70,7 @@ class AjaxAuthorization {
 			'install_plugins',
 			'install_addon',
 			'handle_export_csv',
+			'download_single_export_csv',
 			'handle_import_csv',
 			'displayCSV',
 			'LineChart',
@@ -136,13 +138,13 @@ class AjaxAuthorization {
 
 		if ( in_array( $action, self::admin_only_actions(), true ) ) {
 			$capability = SecurityHelper::can_import();
-			if ( in_array( $action, array( 'total_records', 'check_export', 'handle_export_csv' ), true ) ) {
+			if ( in_array( $action, array( 'total_records', 'check_export', 'handle_export_csv', 'download_single_export_csv' ), true ) ) {
 				$capability = SecurityHelper::can_export();
 			}
 			if ( in_array( $action, array( 'settings_options', 'security_performance', 'active_addons', 'get_options', 'get_setting' ), true ) ) {
 				$capability = SecurityHelper::can_manage_settings();
 			}
-			if ( in_array( $action, array( 'display_log', 'download_log', 'download_media_log', 'download_failed_log', 'delete_log' ), true ) ) {
+			if ( in_array( $action, array( 'display_log', 'download_log', 'download_media_log', 'download_failed_log', 'stream_uci_log', 'delete_log' ), true ) ) {
 				$capability = SecurityHelper::can_download_logs();
 			}
 

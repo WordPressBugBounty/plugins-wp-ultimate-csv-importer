@@ -22,7 +22,168 @@ class LogManager {
 		add_action('wp_ajax_download_log',array($this,'download_log'));
 		add_action('wp_ajax_download_media_log',array($this,'download_media_log'));
 		add_action('wp_ajax_download_failed_log',array($this,'download_failed_log'));		
-		add_action('wp_ajax_delete_log',array($this,'delete_log'));	
+		add_action('wp_ajax_delete_log',array($this,'delete_log'));
+		add_action('wp_ajax_stream_uci_log', array( $this, 'stream_uci_log' ));
+	}
+
+	/**
+	 * Allowed log types for protected storage + authenticated streaming.
+	 *
+	 * @return array<string, array{subdir:string, filename:string}>
+	 */
+	public static function log_type_map() {
+		return array(
+			'summary'              => array(
+				'subdir'   => 'smack_uci_uploads/summary_logs',
+				'filename' => 'summary.csv',
+			),
+			'media'                => array(
+				'subdir'   => 'smack_uci_uploads/media_log',
+				'filename' => 'Media_log.csv',
+			),
+			'failed_media'         => array(
+				'subdir'   => 'smack_uci_uploads/failed_media_logs',
+				'filename' => 'FailedMedia.csv',
+			),
+			'import_summary'       => array(
+				'subdir'   => 'smack_uci_uploads/imports/import_logs',
+				'filename' => 'summary_log.csv',
+			),
+			'import_failed_media'  => array(
+				'subdir'   => 'smack_uci_uploads/imports/failed_media_logs',
+				'filename' => 'failed_media_log.csv',
+			),
+			'import_media'         => array(
+				'subdir'   => 'smack_uci_uploads/imports/media_logs',
+				'filename' => 'media_log.csv',
+			),
+		);
+	}
+
+	/**
+	 * Create (if needed) and harden a log directory against direct HTTP access.
+	 *
+	 * @param string $directory Absolute directory path.
+	 * @return string|false Directory path or false on failure.
+	 */
+	public static function ensure_protected_log_directory( $directory ) {
+		$directory = trailingslashit( wp_normalize_path( (string) $directory ) );
+		if ( $directory === '/' || $directory === '' ) {
+			return false;
+		}
+		if ( ! SecurityHelper::ensure_secure_directory( untrailingslashit( $directory ) ) ) {
+			return false;
+		}
+		SecurityHelper::protect_log_directory( $directory );
+		// Sibling folders from earlier versions have no rules of their own.
+		SecurityHelper::protect_log_directory( dirname( untrailingslashit( $directory ) ) );
+		return $directory;
+	}
+
+	/**
+	 * Resolve a validated absolute path for a log file.
+	 *
+	 * @param string $log_type  Key from log_type_map().
+	 * @param string $event_key Opaque event / hash key.
+	 * @return string|false
+	 */
+	public static function resolve_log_file_path( $log_type, $event_key ) {
+		$map = self::log_type_map();
+		if ( ! isset( $map[ $log_type ] ) ) {
+			return false;
+		}
+
+		$event_key = sanitize_key( (string) $event_key );
+		if ( $event_key === '' || ! preg_match( '/^[a-f0-9]+$/i', $event_key ) ) {
+			return false;
+		}
+
+		$upload = wp_upload_dir();
+		if ( empty( $upload['basedir'] ) ) {
+			return false;
+		}
+
+		$base_dir = trailingslashit( $upload['basedir'] ) . trailingslashit( $map[ $log_type ]['subdir'] ) . $event_key;
+		$dir      = self::ensure_protected_log_directory( $base_dir );
+		if ( false === $dir ) {
+			return false;
+		}
+
+		$file_path = trailingslashit( $dir ) . $map[ $log_type ]['filename'];
+		if ( ! SecurityHelper::is_path_inside_directory( $file_path, $dir ) ) {
+			return false;
+		}
+
+		return $file_path;
+	}
+
+	/**
+	 * Build an authenticated admin-ajax URL that streams a protected log file.
+	 *
+	 * @param string $log_type  Key from log_type_map().
+	 * @param string $event_key Opaque event / hash key.
+	 * @return string
+	 */
+	public static function get_authenticated_log_url( $log_type, $event_key ) {
+		return add_query_arg(
+			array(
+				'action'    => 'stream_uci_log',
+				'log_type'  => sanitize_key( $log_type ),
+				'event_key' => sanitize_key( $event_key ),
+				'securekey' => wp_create_nonce( 'smack-ultimate-csv-importer' ),
+			),
+			admin_url( 'admin-ajax.php' )
+		);
+	}
+
+	/**
+	 * Stream a protected log CSV after login, capability, and path validation.
+	 *
+	 * @return void
+	 */
+	public function stream_uci_log() {
+		if ( ! is_user_logged_in() ) {
+			status_header( 403 );
+			wp_die( esc_html__( 'Unauthorized access.', 'wp-ultimate-csv-importer' ), 403 );
+		}
+
+		SecurityHelper::verify_ajax_nonce();
+
+		if ( ! SecurityHelper::check_capability( SecurityHelper::can_download_logs() ) ) {
+			status_header( 403 );
+			wp_die( esc_html__( 'You do not have sufficient permissions to download this file.', 'wp-ultimate-csv-importer' ), 403 );
+		}
+
+		$log_type  = isset( $_REQUEST['log_type'] ) ? sanitize_key( wp_unslash( $_REQUEST['log_type'] ) ) : '';
+		$event_key = isset( $_REQUEST['event_key'] ) ? sanitize_key( wp_unslash( $_REQUEST['event_key'] ) ) : '';
+		$file_path = self::resolve_log_file_path( $log_type, $event_key );
+
+		if ( false === $file_path || ! is_file( $file_path ) || ! is_readable( $file_path ) ) {
+			status_header( 404 );
+			wp_die( esc_html__( 'Log file not found.', 'wp-ultimate-csv-importer' ), 404 );
+		}
+
+		$map      = self::log_type_map();
+		$filename = isset( $map[ $log_type ]['filename'] ) ? $map[ $log_type ]['filename'] : 'log.csv';
+		$filesize = filesize( $file_path );
+
+		while ( ob_get_level() > 0 ) {
+			ob_end_clean();
+		}
+
+		nocache_headers();
+		header( 'Content-Type: text/csv; charset=utf-8' );
+		header( 'Content-Disposition: attachment; filename="' . $filename . '"' );
+		header( 'X-Content-Type-Options: nosniff' );
+		header( 'Cache-Control: no-store, no-cache, must-revalidate, max-age=0' );
+		header( 'Pragma: no-cache' );
+		if ( false !== $filesize ) {
+			header( 'Content-Length: ' . (int) $filesize );
+		}
+
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_readfile
+		readfile( $file_path );
+		exit;
 	}
 
     public static function getInstance() {
@@ -233,31 +394,21 @@ class LogManager {
 			wp_die();
 		} else {
 
-			$upload_dir = WP_CONTENT_DIR . '/uploads/smack_uci_uploads/media_log/' . $get_event_key . '/';
-
-			if (!is_dir($upload_dir)) {
-				if (!wp_mkdir_p($upload_dir)) {
-					return null;
-				}
+			$file_path = self::resolve_log_file_path( 'media', $get_event_key );
+			if ( false === $file_path ) {
+				$response['success'] = false;
+				$response['message'] = 'Log not exists';
+				echo wp_json_encode($response);
+				wp_die();
 			}
-			chmod($upload_dir, 0777);
+			$upload_dir = trailingslashit( dirname( $file_path ) );
+			$file_url   = self::get_authenticated_log_url( 'media', $get_event_key );
 
-			$index_file = $upload_dir . 'index.php';
-			if (!file_exists($index_file)) {
-				$index_content = '<?php' . PHP_EOL . '?>';
-				file_put_contents($index_file, $index_content);
-				chmod($index_file, 0644);
-			}
-
-			$baseFileName = 'Media_log';
-			$export_type = 'csv';
-			$file_path = $upload_dir . $baseFileName . '.' . $export_type;
-			$file_url = network_home_url() . '/wp-content/uploads/smack_uci_uploads/media_log/' . $get_event_key . '/' . $baseFileName . '.' . $export_type;
 
 
 
 			if (file_exists($file_path)) {
-				// If the file already exists, return the file URL
+				// If the file already exists, return the authenticated download URL
 				$response['success'] = true;
 				$response['file_url'] = $file_url;
 				echo wp_json_encode($response);
@@ -414,29 +565,17 @@ class LogManager {
 			wp_die();
 		} else {
 
-			$upload_dir = WP_CONTENT_DIR . '/uploads/smack_uci_uploads/summary_logs/' . $get_event_key . '/';
-
-			if (!is_dir($upload_dir)) {
-				if (!wp_mkdir_p($upload_dir)) {
-					return null;
-				}
+			$file_path = self::resolve_log_file_path( 'summary', $get_event_key );
+			if ( false === $file_path ) {
+				$response['success'] = false;
+				$response['message'] = 'Log not exists';
+				echo wp_json_encode($response);
+				wp_die();
 			}
-			chmod($upload_dir, 0777);
-
-			$index_file = $upload_dir . 'index.php';
-			if (!file_exists($index_file)) {
-				$index_content = '<?php' . PHP_EOL . '?>';
-				file_put_contents($index_file, $index_content);
-				chmod($index_file, 0644);
-			}
-
-			$baseFileName = 'summary';
-			$export_type = 'csv';
-			$file_path = $upload_dir . $baseFileName . '.' . $export_type;
-			$file_url = network_home_url() . '/wp-content/uploads/smack_uci_uploads/summary_logs/' . $get_event_key . '/' . $baseFileName . '.' . $export_type;
+			$file_url = self::get_authenticated_log_url( 'summary', $get_event_key );
 
 			if (file_exists($file_path)) {
-				// If the file already exists, return the file URL
+				// If the file already exists, return the authenticated download URL
 				$response['success'] = true;
 				$response['file_url'] = $file_url;
 				echo wp_json_encode($response);
@@ -658,29 +797,17 @@ class LogManager {
 			wp_die();
 		} else {
 
-			$upload_dir = WP_CONTENT_DIR . '/uploads/smack_uci_uploads/failed_media_logs/' . $get_event_key . '/';
-
-			if (!is_dir($upload_dir)) {
-				if (!wp_mkdir_p($upload_dir)) {
-					return null;
-				}
+			$file_path = self::resolve_log_file_path( 'failed_media', $get_event_key );
+			if ( false === $file_path ) {
+				$response['success'] = false;
+				$response['message'] = 'Log not exists';
+				echo wp_json_encode($response);
+				wp_die();
 			}
-			chmod($upload_dir, 0777);
-
-			$index_file = $upload_dir . 'index.php';
-			if (!file_exists($index_file)) {
-				$index_content = '<?php' . PHP_EOL . '?>';
-				file_put_contents($index_file, $index_content);
-				chmod($index_file, 0644);
-			}
-
-			$baseFileName = 'FailedMedia';
-			$export_type = 'csv';
-			$file_path = $upload_dir . $baseFileName . '.' . $export_type;
-			$file_url = network_home_url() . '/wp-content/uploads/smack_uci_uploads/failed_media_logs/' . $get_event_key . '/' . $baseFileName . '.' . $export_type;
+			$file_url = self::get_authenticated_log_url( 'failed_media', $get_event_key );
 
 			if (file_exists($file_path)) {
-				// If the file already exists, return the file URL
+				// If the file already exists, return the authenticated download URL
 				$response['success'] = true;
 				$response['file_url'] = $file_url;
 				echo wp_json_encode($response);
@@ -867,25 +994,15 @@ class LogManager {
 
 		$upload_dir = WP_CONTENT_DIR . '/uploads/smack_uci_uploads/imports/import_logs/' . $hash_key . '/';
 
-		if (!is_dir($upload_dir)) {
-			if (!wp_mkdir_p($upload_dir)) {
-				return null;
-			}
+		if ( false === self::ensure_protected_log_directory( $upload_dir ) ) {
+			return null;
 		}
 
-		chmod($upload_dir, 0777);
-
-		$index_file = $upload_dir . 'index.php';
-		if (!file_exists($index_file)) {
-			$index_content = '<?php' . PHP_EOL . '?>';
-			file_put_contents($index_file, $index_content);
-			chmod($index_file, 0644);
+		$filePath = self::resolve_log_file_path( 'import_summary', $hash_key );
+		if ( false === $filePath ) {
+			return null;
 		}
-
-		$baseFileName = 'summary_log';
-		$export_type = 'csv';
-		$filePath = $upload_dir . $baseFileName . '.' . $export_type;
-		$fileURL = network_home_url() . '/wp-content/uploads/smack_uci_uploads/imports/import_logs/' . $hash_key . '/' . $baseFileName . '.' . $export_type;
+		$fileURL = self::get_authenticated_log_url( 'import_summary', $hash_key );
 
 		$headers = array_keys($data[$line_number]);
 
@@ -929,18 +1046,15 @@ class LogManager {
 	 */
 	public function failedMediaExport($data, $line_number, $hash_key)
 	{
-		$baseFileName = 'failed_media_log';
-		$export_type = 'csv';
-		$upload_dir = WP_CONTENT_DIR . '/uploads/smack_uci_uploads/imports/failed_media_logs/' . $hash_key . '/';
-		$file_path = $upload_dir . $baseFileName . '.' . $export_type;
-		$file_url = network_home_url() . '/wp-content/uploads/smack_uci_uploads/imports/failed_media_logs/' . $hash_key . '/' . $baseFileName . '.' . $export_type;
+		$file_path = self::resolve_log_file_path( 'import_failed_media', $hash_key );
+		if ( false === $file_path ) {
+			return null;
+		}
+		$upload_dir = trailingslashit( dirname( $file_path ) );
+		$file_url   = self::get_authenticated_log_url( 'import_failed_media', $hash_key );
 		$headers = ['post_id', 'title', 'media_id', 'actual_url'];
 
 		if (empty($data)) {
-			if (!is_dir($upload_dir) && !wp_mkdir_p($upload_dir)) {
-				return null;
-			}
-
 			if (!file_exists($file_path) || !is_readable($file_path)) {
 				return null;
 			}
@@ -962,16 +1076,8 @@ class LogManager {
 			return $data_found ? $file_url : null;
 		}
 
-		if (!is_dir($upload_dir) && !wp_mkdir_p($upload_dir)) {
+		if ( false === self::ensure_protected_log_directory( $upload_dir ) ) {
 			return null;
-		}
-
-		chmod($upload_dir, 0777);
-
-		$index_file = $upload_dir . 'index.php';
-		if (!file_exists($index_file)) {
-			file_put_contents($index_file, "<?php\n?>");
-			chmod($index_file, 0644);
 		}
 
 		$lines = [];
@@ -1018,27 +1124,11 @@ class LogManager {
 				return null;
 			}
 		}
-		$upload_dir = WP_CONTENT_DIR . '/uploads/smack_uci_uploads/imports/media_logs/' . $hash_key . '/';
-
-		if (!is_dir($upload_dir)) {
-			if (!wp_mkdir_p($upload_dir)) {
-				return null;
-			}
+		$filePath = self::resolve_log_file_path( 'import_media', $hash_key );
+		if ( false === $filePath ) {
+			return null;
 		}
-
-		chmod($upload_dir, 0777);
-
-		$index_file = $upload_dir . 'index.php';
-		if (!file_exists($index_file)) {
-			$index_content = '<?php' . PHP_EOL . '?>';
-			file_put_contents($index_file, $index_content);
-			chmod($index_file, 0644);
-		}
-
-		$baseFileName = 'media_log';
-		$export_type = 'csv';
-		$filePath = $upload_dir . $baseFileName . '.' . $export_type;
-		$fileURL = network_home_url() . '/wp-content/uploads/smack_uci_uploads/imports/media_logs/' . $hash_key . '/' . $baseFileName . '.' . $export_type;
+		$fileURL = self::get_authenticated_log_url( 'import_media', $hash_key );
 		$headers = array_keys($data[$line_number]);
 
 		// Read existing CSV file and store lines

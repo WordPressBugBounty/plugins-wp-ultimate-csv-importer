@@ -143,7 +143,7 @@ class ValidateFile {
                 if (($f_handle = fopen($file_path, 'r')) !== FALSE){
                     $temp=$file_path.'temp';
                     $temphandle =fopen($temp, 'w+');
-                    chmod($temp, 0777);
+                    SecurityHelper::secure_file($temp);
                
                     while (($line = fgets($f_handle)) !== false) {
                         $line= str_replace("\t", '~', $line);

@@ -1,21 +1,25 @@
-=== WP Ultimate CSV Importer – WordPress CSV, XML & Excel Import ===
+=== WP Ultimate CSV Importer – WordPress CSV, XML & Excel Import Export ===
 Contributors: smackcoders, premairuthayarajan, fenzik, smackmarketing
 Donate link: https://www.smackcoders.com/contact-us.html
-Tags: csv importer, wordpress importer, woocommerce product import, xml import, excel import
+Tags: csv importer, wordpress importer, woocommerce product import, import export, xml import
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 9.1
-Version: 9.1
+Stable tag: 9.2
+Version: 9.2
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Import CSV, XML and Excel files into WordPress. Bulk import posts, pages, WooCommerce products, users, ACF fields, images, custom post types and more.
+The best WordPress Import Export plugin. Easily import and export posts, pages, CPTs, WooCommerce products, users and more using CSV, XML and Excel.
 
 == Description ==
 
-**WP Ultimate CSV Importer** is a powerful WordPress import plugin for importing data from **CSV, XML and Excel files into WordPress**.
+**WP Ultimate CSV Importer** is a powerful WordPress import export plugin. You can import and export data using **CSV, XML and Excel files**.
+
+To use export feature, you require our export add-on. That'll will be shown inside the Export section or Manage Add-ons page to install and activate inside the add-on. 
+
+##The Best WordPress Import plugin 
 
 Bulk import posts, pages, custom post types, users, WooCommerce products, images, taxonomies, custom fields, ACF fields and other WordPress data without manually creating records one by one.
 
@@ -91,11 +95,7 @@ The WooCommerce add-on extends the importer for:
 * Product variations
 * Grouped products
 * External / affiliate products
-* WooCommerce orders
 * WooCommerce customers
-* WooCommerce coupons
-* WooCommerce reviews
-* WooCommerce refunds
 * Additional WooCommerce data
 
 Advanced operations, record updates and other resource-intensive WooCommerce workflows are available in WP Ultimate CSV Importer Pro.
@@ -206,9 +206,7 @@ Map your source data to post fields, custom fields, taxonomies and supported thi
 
 ### Import JetEngine Data
 
-WP Ultimate CSV Importer supports JetEngine fields and **JetEngine Custom Content Types (CCTs)**.
-
-JetEngine CCT import and export compatibility is included in the free ecosystem.
+WP Ultimate CSV Importer supports JetEngine fields**.
 
 Advanced JetEngine operations, record updates and scheduled workflows are available in Pro.
 
@@ -853,6 +851,26 @@ Documentation is available here:
 
 == Changelog ==
 
+= 9.2 =
+
+* Security: Remove SVG from ZIP/archive extraction allow-list to prevent stored XSS via inline SVG scripts (especially Multisite admin privilege boundary).
+* Security: Protect summary/media/failed-media log directories from direct web access; serve log downloads only through authenticated admin-ajax handlers.
+* Security: Import/event storage keys remain cryptographically random (no hard-coded HMAC secret for path prediction).
+* Security: Upload, import, export, and log directories under smack_uci_uploads are no longer created world-writable (0777); they now use 0755 directories and 0644 files.
+* Security: Script execution (PHP and similar) is blocked inside smack_uci_uploads, and existing 0777 directories from earlier versions are repaired automatically.
+* Security: Media imports reject files with executable extensions.
+* Fixed: Events Manager events are now linked to their Locations on import, including Locations that were created beforehand.
+* Fixed: Events Manager event import on Events Manager 7, and Event Locations imported with the wrong post type.
+* Fixed: Update imports of Events Manager events no longer reset unmapped dates or remove the existing Location.
+* Improved: Events Manager Locations can be matched by Location ID or slug, with address details used when several Locations share the same name. No duplicate Location records are created.
+
+= 9.1.1 =
+
+* Added: Complete UI Localization & internationalization (i18n) support for 16+ languages across dashboard tabs, export/import modules, and settings.
+* Added: Real-time language switching with the uciContextT translation context provider.
+* Fixed: Localization issues with UI notice banners and export completion progress cards.
+* Fixed: Localization issues on the Support page, including Useful Resources, User Guide, and Troubleshooting Guide.
+
 = 9.1 =
 
 * Fixed: Infinite loop occurring on some WordPress instances during update operations.
@@ -920,6 +938,10 @@ Documentation is available here:
 
 == Upgrade Notice ==
 
-= 9.1 =
+= 9.2 =
 
-Upgrade to 9.1 for improved stability and reliability, including a fix for an infinite-loop issue affecting update operations and a restored Single Import/Export workflow in the post editor.
+Security update: SVG files are no longer extracted from ZIP imports (stored XSS), summary/media logs are protected from direct download and served only through authenticated handlers, upload directories are no longer world-writable, and script execution is blocked inside smack_uci_uploads. Also fixes Events Manager events not being linked to their Locations on import. Recommended for all users.
+
+= 9.1.1 =
+
+Upgrade to 9.1.1 for improved localization and multilingual support, with UI translation enhancements across 16+ languages, import/export modules, settings, and support resources.

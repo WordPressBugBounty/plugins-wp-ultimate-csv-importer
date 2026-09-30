@@ -2,7 +2,25 @@
 
 Full version history for WP Ultimate CSV Importer. Releases 8.0 and later are listed in readme.txt.
 
-= 7.41 =
+= 9.2 =
+Security: Remove SVG from ZIP/archive extraction allow-list to prevent stored XSS via inline SVG scripts (Multisite admin boundary)
+Security: Protect summary/media/failed-media log directories from direct web access and serve downloads only through authenticated admin-ajax handlers
+Security: Event/import storage keys remain cryptographically random (no hard-coded HMAC secret)
+Security: Upload, import, export, and log directories under smack_uci_uploads are no longer created world-writable (0777); they now use 0755 directories and 0644 files
+Security: Script execution (PHP and similar) is blocked inside smack_uci_uploads, and existing 0777 directories from earlier versions are repaired automatically
+Security: Media imports reject files with executable extensions
+Fixed: Events Manager events are now linked to their Locations on import, including Locations that were created beforehand
+Fixed: Events Manager event import on Events Manager 7, and Event Locations imported with the wrong post type
+Fixed: Update imports of Events Manager events no longer reset unmapped dates or remove the existing Location
+Improved: Events Manager Locations can be matched by Location ID or slug, with address details used when several Locations share the same name. No duplicate Location records are created
+
+= 9.1.1 =
+Added: Complete 16+ Language UI Localization & i18n support across all dashboard tabs, export/import modules, and settings
+Added: Dynamic uciContextT translation context provider for real-time locale switching
+Fixed: UI notice banner conditional rendering and export completion progress cards localization
+Fixed: Support page Useful Resources, User Guide, and Troubleshooting Guide localization
+
+
 Fixed: Category import mapping issue causing posts to fall back to "Uncategorized" during taxonomy imports
 Improved: Restructured plugin bootstrap architecture with a dedicated core namespace for better maintainability
 Improved: Optimized internal file loading for improved performance and third-party plugin compatibility

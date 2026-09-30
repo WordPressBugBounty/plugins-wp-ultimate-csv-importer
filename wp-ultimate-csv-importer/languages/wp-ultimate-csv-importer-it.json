@@ -1,0 +1,4124 @@
+{
+  "translation-revision-date": "2026-08-21 00:00:00+0000",
+  "generator": "WP-CLI/2.12.0",
+  "domain": "wp-ultimate-csv-importer",
+  "locale_data": {
+    "wp-ultimate-csv-importer": {
+      "": {
+        "domain": "wp-ultimate-csv-importer",
+        "lang": "it_IT",
+        "plural-forms": "nplurals=2; plural=(n != 1);"
+      },
+      "ImportControls": [
+        "Controlli di importazione"
+      ],
+      "StartPauseStopSub": [
+        "Avvia, metti in pausa o interrompi il processo"
+      ],
+      "ImportError": [
+        "Errore di importazione"
+      ],
+      "ImportComplete": [
+        "Importazione completata"
+      ],
+      "ImportProgress": [
+        "Avanzamento importazione"
+      ],
+      "Pause": [
+        "Pausa"
+      ],
+      "Resume": [
+        "Riprendi"
+      ],
+      "Summary": [
+        "Riepilogo"
+      ],
+      "FailedMedia": [
+        "Media falliti"
+      ],
+      "rows": [
+        "righe"
+      ],
+      "done": [
+        "fatto"
+      ],
+      "error": [
+        "errore"
+      ],
+      "Ready": [
+        "Pronto"
+      ],
+      "Elapsed": [
+        "Trascorso"
+      ],
+      "Processed": [
+        "Elaborato"
+      ],
+      "TotalRecords": [
+        "Record totali"
+      ],
+      "Imported": [
+        "Importati"
+      ],
+      "Updated": [
+        "Aggiornati"
+      ],
+      "Skipped": [
+        "Ignorati"
+      ],
+      "Remaining": [
+        "Rimanenti"
+      ],
+      "LiveActivityLog": [
+        "Registro attività"
+      ],
+      "events": [
+        "eventi"
+      ],
+      "ErrorsOnly": [
+        "Solo errori"
+      ],
+      "CSV": [
+        "CSV"
+      ],
+      "WaitingForEvents": [
+        "In attesa di eventi..."
+      ],
+      "View": [
+        "Visualizza"
+      ],
+      "Edit": [
+        "Modifica"
+      ],
+      "ClickToFixError": [
+        "Fai clic qui per correggere questo errore"
+      ],
+      "Back": [
+        "Indietro"
+      ],
+      "RollbackNow": [
+        "Esegui rollback ora"
+      ],
+      "GoDashboard": [
+        "Vai alla dashboard"
+      ],
+      "NewImport": [
+        "Nuova importazione"
+      ],
+      "NewMediaImport": [
+        "Nuova importazione media"
+      ],
+      "ImportLog": [
+        "Registro di importazione"
+      ],
+      "Inserted": [
+        "inserito"
+      ],
+      "Failed": [
+        "Fallito"
+      ],
+      "ImagePrefix": [
+        "Immagine:"
+      ],
+      "CategoryPrefix": [
+        "Categoria:"
+      ],
+      "FilePrefix": [
+        "File:"
+      ],
+      "RecordProcessed": [
+        "Record elaborato"
+      ],
+      "ImportUpdate": [
+        "Importa / Aggiorna"
+      ],
+      "SelectAllImages": [
+        "Seleziona tutte le immagini nel file di importazione per evitare errori di importazione"
+      ],
+      "ChooseImagesToImport": [
+        "Scegli le immagini da importare. Utilizza la casella di controllo qui sotto per selezionare tutte le immagini."
+      ],
+      "FileName": [
+        "Nome del file"
+      ],
+      "OK": [
+        "OK"
+      ],
+      "Exportfiltereddata": [
+        "Esporta i dati filtrati"
+      ],
+      "Exportfiltereddatadesc": [
+        "Consente di ottenere solo i dati richiesti con i diversi filtri avanzati"
+      ],
+      "Backupineditableformat": [
+        "Backup in formato modificabile"
+      ],
+      "Backupineditableformatdesc": [
+        "Backup in 4 diversi formati di file come CSV, XML, JSON, XLS."
+      ],
+      "AutoScheduledBackups": [
+        "Backup programmati automaticamente"
+      ],
+      "AutoScheduledBackupsdesc": [
+        "L esportazione pianificata consente di eseguire il backup come formato di file di testo modificabile a intervalli regolari."
+      ],
+      "AutoSchedulewithreusabletemplates": [
+        "Pianificazione automatica con modelli riutilizzabili"
+      ],
+      "Dashboard": [
+        "Bacheca"
+      ],
+      "Manager": [
+        "Gestisci"
+      ],
+      "GoodMorning": [
+        "Buongiorno"
+      ],
+      "GoodAfternoon": [
+        "Buon pomeriggio"
+      ],
+      "GoodEvening": [
+        "Buonasera"
+      ],
+      "There": [
+        "lì"
+      ],
+      "Dashboard_NoCompletedRecordVolume": [
+        "Nessun volume di record completato ancora. Avvia un'importazione per visualizzare le tendenze qui."
+      ],
+      "Dashboard_JumpInImports": [
+        "Questo è un aumento del {growthPercent}% nelle importazioni: la sincronizzazione dei dati sta andando alla grande!"
+      ],
+      "Dashboard_DecreaseInImports": [
+        "Si tratta di una diminuzione del {growthPercent}% nel volume dei record completati rispetto al periodo precedente."
+      ],
+      "YouImported": [
+        "Hai importato"
+      ],
+      "Records": [
+        "record"
+      ],
+      "InTotal": [
+        "in totale."
+      ],
+      "Dashboard_StartNewImport": [
+        "Avvia una nuova importazione"
+      ],
+      "Dashboard_BrowseTemplates": [
+        "Sfoglia i modelli"
+      ],
+      "Dashboard_RecordsTotal": [
+        "record totali"
+      ],
+      "Dashboard_Period_Weekly": [
+        "Settimanalmente"
+      ],
+      "Dashboard_Period_Monthly": [
+        "Mensilmente"
+      ],
+      "Dashboard_Period_Yearly": [
+        "Annualmente"
+      ],
+      "Dashboard_ImportVolumeSubtitle": [
+        "Record importati per {period}, tutte le fonti combinate."
+      ],
+      "csv_importlink": [
+        "click here"
+      ],
+      "Export": [
+        "Esporta"
+      ],
+      "Settings": [
+        "Impostazioni"
+      ],
+      "Support": [
+        "Supporto"
+      ],
+      "OrderMetaFields": [
+        "Campi meta ordine WooCommerce"
+      ],
+      "UploadfromDesktop": [
+        "Carica dal desktop"
+      ],
+      "UploadfromFTPSFTP": [
+        "Carica tramite FTP / SFTP"
+      ],
+      "UploadfromFTP": [
+        "Upload from FTP"
+      ],
+      "UploadfromURL": [
+        "Carica tramite URL"
+      ],
+      "DragDropyourfilesor": [
+        "Trascina e rilascia i tuoi file o"
+      ],
+      "Browse": [
+        "Sfoglia"
+      ],
+      "NewItem": [
+        "Nuovo oggetto"
+      ],
+      "ExistingItems": [
+        "Articoli esistenti"
+      ],
+      "ImportEachRecordAs": [
+        "Importa ogni record come"
+      ],
+      "Continue": [
+        "Continua"
+      ],
+      "Search": [
+        "Ricerca"
+      ],
+      "FromDate": [
+        "Dalla data"
+      ],
+      "ToDate": [
+        "Ad oggi"
+      ],
+      "SEARCH": [
+        "RICERCA"
+      ],
+      "AccessKey": [
+        "AccessKey"
+      ],
+      "SavedTemplate": [
+        "Template salvato"
+      ],
+      "TEMPLATES": [
+        "MODELLI"
+      ],
+      "MATCHEDCOLUMNSCOUNT": [
+        "CONTEGGIO COLONNE CORRISPONDENTI"
+      ],
+      "MODULE": [
+        "MODULO"
+      ],
+      "CREATEDTIME": [
+        "TEMPO CREATO"
+      ],
+      "ACTION": [
+        "AZIONE"
+      ],
+      "USETEMPLATE": [
+        "MODELLO DI UTILIZZO"
+      ],
+      "CREATENEWMAPPING": [
+        "CREA NUOVA MAPPATURA"
+      ],
+      "BACK": [
+        "INDIETRO"
+      ],
+      "ADVANCEDMODE": [
+        "MODALITÀ AVANZATA"
+      ],
+      "DRAGDROPMODE": [
+        "MODALITÀ TRASCINA E RILASCIA"
+      ],
+      "WordpressFields": [
+        "Campi Wordpress"
+      ],
+      "WPFIELDS": [
+        "CAMPI WP"
+      ],
+      "CSVHEADER": [
+        "INTESTAZIONE CSV"
+      ],
+      "Action": [
+        "Azione"
+      ],
+      "Name": [
+        "Nome"
+      ],
+      "HINT": [
+        "SUGGERIMENTO"
+      ],
+      "Example": [
+        "Esempio"
+      ],
+      "newtabfailedMedia": [
+        "Media"
+      ],
+      "CouponMetaFields": [
+        "Campi meta coupon WooCommerce"
+      ],
+      "MediaFields": [
+        "Campi Media"
+      ],
+      "WordPressCoreFields": [
+        "Campi di base WordPress"
+      ],
+      "FeaturedFields": [
+        "Campi in evidenza"
+      ],
+      "ACFFreeFields": [
+        "Campi liberi ACF"
+      ],
+      "ACFFields": [
+        "Campi personalizzati avanzati (ACF)"
+      ],
+      "ACFGroupFields": [
+        "Campi di gruppo avanzati (ACF)"
+      ],
+      "ACFProFields": [
+        "Campi personalizzati avanzati (ACF)"
+      ],
+      "ACFRepeaterFields": [
+        "Campi ripetitori avanzati (ACF)"
+      ],
+      "ACFFlexibleFields": [
+        "Campi flessibili avanzati (ACF)"
+      ],
+      "TypesCustomFields": [
+        "Types Custom Fields"
+      ],
+      "PodsFields": [
+        "Pods Fields"
+      ],
+      "JobListingFields": [
+        "Job Listing Fields"
+      ],
+      "CustomFieldSuite": [
+        "Custom Field Suite"
+      ],
+      "AllInOneSeoFields": [
+        "Campi All In One SEO"
+      ],
+      "MetaBoxFields": [
+        "Campi Meta Box"
+      ],
+      "YoastSeoFields": [
+        "Campi Yoast SEO"
+      ],
+      "SlimSeoFields": [
+        "Slim SEO Fields"
+      ],
+      "EDDDownloadsFields": [
+        "EDD Downloads Fields"
+      ],
+      "EDDCustomersFields": [
+        "EDD Customers Fields"
+      ],
+      "EDDDiscountsFields": [
+        "EDD Discounts Fields"
+      ],
+      "SureCartProductsFields": [
+        "SureCart Products Fields"
+      ],
+      "SureCartCustomersFields": [
+        "SureCart Customers Fields"
+      ],
+      "SureCartCouponsFields": [
+        "SureCart Coupons Fields"
+      ],
+      "ListeoFields": [
+        "Listeo Fields"
+      ],
+      "WPMLFields": [
+        "Campi WPML"
+      ],
+      "JetEngineFields": [
+        "Campi JetEngine"
+      ],
+      "JetEngineRFFields": [
+        "Jet Engine RF Fields"
+      ],
+      "JetEngineCPTFields": [
+        "Jet Engine CPT Fields"
+      ],
+      "jetEngineCPTRFFields": [
+        "Jet Engine CPT RF Fields"
+      ],
+      "JetEngineCCTFields": [
+        "Jet Engine CCT Fields"
+      ],
+      "JetEngineCCTRFFields": [
+        "Jet Engine CCT RF Fields"
+      ],
+      "jetEngineTaxonomyFields": [
+        "Campi Tassonomia Jet Engine"
+      ],
+      "jetEngineTaxonomyRFFields": [
+        "Campi Ripetitore Tassonomia Jet Engine"
+      ],
+      "JetEngineRelationsFields": [
+        "Jet Engine Relations Fields"
+      ],
+      "JetEngineBookingFields": [
+        "Jet Engine Booking Fields"
+      ],
+      "RankMathFields": [
+        "Campi Rank Math"
+      ],
+      "RankMathProFields": [
+        "Rank Math Pro Fields"
+      ],
+      "SeoPressFields": [
+        "SEOPress Fields"
+      ],
+      "ElementorFields": [
+        "Campi Elementor"
+      ],
+      "TotalPressFields": [
+        "TotalPress Fields"
+      ],
+      "replyattributesfields": [
+        "Reply Attributes Fields"
+      ],
+      "forumattributesfields": [
+        "Forum Attributes Fields"
+      ],
+      "topicattributesfields": [
+        "Topic Attributes Fields"
+      ],
+      "BillingAndShippingInformation": [
+        "Informazioni di fatturazione e spedizione"
+      ],
+      "CustomFieldsWPMemberFields": [
+        "Custom Fields WP Member Fields"
+      ],
+      "CustomFieldsMemberFields": [
+        "Custom Fields Member Fields"
+      ],
+      "ProductMetaFields": [
+        "Campi meta prodotto WooCommerce"
+      ],
+      "ProductAttrFields": [
+        "WooCommerce Product Attribute Fields"
+      ],
+      "ProductBundleMetaFields": [
+        "WooCommerce Product Bundle Meta Fields"
+      ],
+      "PPOMMetaFields": [
+        "PPOM Meta Fields"
+      ],
+      "EventCalendarMetaFields": [
+        "EventCalendar Meta Fields"
+      ],
+      "EPOMetaFields": [
+        "EPO Meta Fields"
+      ],
+      "WCPAMetaFields": [
+        "WCPA Meta Fields"
+      ],
+      "ListingMetaFields": [
+        "Listing Fields"
+      ],
+      "WPECommerceCustomFields": [
+        "WP ECommerce Custom Fields"
+      ],
+      "EventsManagerFields": [
+        "Events Manager Fields"
+      ],
+      "CMB2CustomFields": [
+        "CMB2 Custom Fields"
+      ],
+      "CourseSettingsFields": [
+        "Course Settings Fields"
+      ],
+      "CurriculumSettingsFields": [
+        "Curriculum Settings Fields"
+      ],
+      "QuizSettingsFields": [
+        "Quiz Settings Fields"
+      ],
+      "LessonSettingsFields": [
+        "Lesson Settings Fields"
+      ],
+      "QuestionSettingsFields": [
+        "Question Settings Fields"
+      ],
+      "OrderSettingsFields": [
+        "Order Settings Fields"
+      ],
+      "WordPressCustomFields": [
+        "Campi personalizzati WordPress"
+      ],
+      "TermsandTaxonomies": [
+        "Termini e Tassonomie"
+      ],
+      "IsSerialized": [
+        "È serializzato"
+      ],
+      "NoCustomFieldsFound": [
+        "Nessun campo personalizzato trovato"
+      ],
+      "MediaUploadFields": [
+        "Campi di caricamento dei media"
+      ],
+      "UploadMedia": [
+        "Carica media"
+      ],
+      "UploadedListofFiles": [
+        "Elenco dei file caricati"
+      ],
+      "UploadedMediaFileLists": [
+        "Elenchi di file multimediali caricati"
+      ],
+      "SavethismappingasTemplate": [
+        "Salva questa mappatura come modello"
+      ],
+      "Save": [
+        "Salvare"
+      ],
+      "Doyouneedtoupdatethecurrentmapping": [
+        "Hai bisogno di aggiornare la mappatura corrente?"
+      ],
+      "Savethecurrentmappingasnewtemplate": [
+        "Salva la mappatura corrente come nuovo modello"
+      ],
+      "Size": [
+        "Taglia"
+      ],
+      "MediaHandling": [
+        "Gestione dei media"
+      ],
+      "Downloadexternalimagestoyourmedia": [
+        "Scarica immagini esterne sul tuo media"
+      ],
+      "ImageHandling": [
+        "Gestione delle immagini"
+      ],
+      "Usemediaimagesifalreadyavailable": [
+        "Usa le immagini multimediali se già disponibili"
+      ],
+      "Overwritetheavailableimages": [
+        "Sovrascrivi le immagini disponibili"
+      ],
+      "ImageSizes": [
+        "Dimensioni immagine"
+      ],
+      "Thumbnail": [
+        "Miniatura"
+      ],
+      "Medium": [
+        "medio"
+      ],
+      "MediumLarge": [
+        "Medio grande"
+      ],
+      "Large": [
+        "Grande"
+      ],
+      "Custom": [
+        "costume"
+      ],
+      "Slug": [
+        "lumaca"
+      ],
+      "Width": [
+        "Larghezza"
+      ],
+      "Height": [
+        "Altezza"
+      ],
+      "SIMPLEMODE": [
+        "MODALITÀ SEMPLICE"
+      ],
+      "CustomerReviews": [
+        "Recensioni dei clienti"
+      ],
+      "WooCommerceReviews": [
+        "Recensioni WooCommerce"
+      ],
+      "Buynow": [
+        "Acquista ora!"
+      ],
+      "Addons": [
+        "Componenti aggiuntivi"
+      ],
+      "Posts": [
+        "Articoli"
+      ],
+      "Found": [
+        "Trovati"
+      ],
+      "Pages": [
+        "Pagine"
+      ],
+      "CustomPosts": [
+        "Articoli personalizzati"
+      ],
+      "PostCategories": [
+        "Categorie degli articoli"
+      ],
+      "PostTags": [
+        "Tag degli articoli"
+      ],
+      "Comments": [
+        "Commenti"
+      ],
+      "WooCommerceProducts": [
+        "Prodotti WooCommerce"
+      ],
+      "Taxonomies": [
+        "Tassonomie"
+      ],
+      "PremiumVersion": [
+        "Versione Premium"
+      ],
+      "ContactusforPresaleEnquiry": [
+        "Contattaci per la richiesta di prevendita"
+      ],
+      "Thisfeatureisavailable": [
+        "Questa funzione è disponibile in"
+      ],
+      "UltimateCSVImporterPro": [
+        "Ultimate CSV Importer Pro"
+      ],
+      "Exporterwithadvancedfilters": [
+        "Esportatore con filtri avanzati"
+      ],
+      "Updateolderpostsfromsingleimport": [
+        "Aggiorna i post più vecchi da una singola importazione"
+      ],
+      "JetEngineMetaboxToolsetTypesACFproFreeandPodsFieldPostPluginsImporter": [
+        "JetEngine, Metabox, Toolset Types, ACF pro / Free and Pods Field/Post Importatore di plug-in"
+      ],
+      "SEOPluginsDataImporterRankMathYoastandAllinOneSEO": [
+        "Importatore dati plug-in SEO - RankMath, SEOPress, Yoast and All in One SEO"
+      ],
+      "WarningImportforsomedataaredisabledInstallandactivatebelowpluginsfirst": [
+        "Avvertenza: mancano alcuni componenti aggiuntivi, si consiglia di farlo"
+      ],
+      "AIOWooCommerceImportSuit": [
+        "Tuta di importazione AIO WooCommerce"
+      ],
+      "PostContentImageOption": [
+        "Opzioni immagine del contenuto"
+      ],
+      "installactivate": [
+        "per installare e attivare ora"
+      ],
+      "EnabletodeletetheitemsnotpresentinCSVXMLfile": [
+        "Abilita per eliminare gli elementi non presenti nel file CSV/XML"
+      ],
+      "EnableSingleImportOption": [
+        "Abilita opzione import/export singolo"
+      ],
+      "subcribe": [
+        "Iscriviti"
+      ],
+      "DeletedatafromWordPress": [
+        "Elimina dati da WordPress"
+      ],
+      "EnableSingleImport": [
+        "Abilita import/export singolo"
+      ],
+      "GetSupport": [
+        "Ottieni supporto"
+      ],
+      "SampleCSVXML": [
+        "Campione CSV&XML"
+      ],
+      "Scheduledexporthelpsbackupaseditabletextfileformat": [
+        "L'esportazione pianificata consente di eseguire il backup in formato di testo modificabile."
+      ],
+      "Gotoaddons": [
+        "Vai ai componenti aggiuntivi"
+      ],
+      "toaform": [
+        "per supportare il forum"
+      ],
+      "Learnfrom": [
+        "Impara dai nostri post sul blog"
+      ],
+      "TechnicalDocumentation": [
+        "Documentazione tecnica"
+      ],
+      "Getsampleandexamplefiles": [
+        "Ottieni esempi e file di esempio"
+      ],
+      "instruction": [
+        "(N. di record per file)"
+      ],
+      "Createasupport": [
+        "Crea un argomento di supporto qui per ricevere aiuto"
+      ],
+      "CreateTopic": [
+        "Crea argomento"
+      ],
+      "WPMLImporter": [
+        "Importatore WPML"
+      ],
+      "DownloadPostContentExternalImagestoMedia": [
+        "Scarica immagini esterne nel contenuto nella libreria media"
+      ],
+      "Addcustomsizes": [
+        "Aggiungi dimensioni personalizzate"
+      ],
+      "backupineditableformat": [
+        "copia di backup in formato modificabile"
+      ],
+      "Letsyougetonlyrequireddataw    iththedifferentadvancedfilters": [
+        "Ti consente di ottenere solo i dati richiesti con i diversi filtri avanzati"
+      ],
+      "MediaSEOAdvancedOptions": [
+        "Media SEO e opzioni avanzate"
+      ],
+      "SetimageTitle": [
+        "Imposta il titolo dell'immagine"
+      ],
+      "SetimageCaption": [
+        "Imposta didascalia immagine"
+      ],
+      "WooCommerceOrders": [
+        "Ordini WooCommerce"
+      ],
+      "WooCommerceCoupons": [
+        "Coupon WooCommerce"
+      ],
+      "UltimateExporterPro": [
+        "Ultimate Exporter Pro"
+      ],
+      "SetimageAltText": [
+        "Imposta immagine Alt Text"
+      ],
+      "WooCommerceVariations": [
+        "Variazioni di WooCommerce"
+      ],
+      "WooCommerceRefunds": [
+        "Rimborsi WooCommerce"
+      ],
+      "SetimageDescription": [
+        "Imposta la descrizione dell'immagine"
+      ],
+      "ImportconfigurationSection": [
+        "Importa sezione di configurazione"
+      ],
+      "EnablesafeprestateRollback": [
+        "Abilita il ripristino sicuro dello stato precedente (Backup prima dell'importazione)"
+      ],
+      "Backupbeforeimport": [
+        "Backup prima dell'importazione"
+      ],
+      "Mentionthefieldswhichyouwanttohandleduplicates": [
+        "Citare i campi che si desidera gestire i duplicati"
+      ],
+      "DoyouwanttoUpdateanexistingrecords": [
+        "Vuoi aggiornare un record esistente"
+      ],
+      "Updaterecordsbasedon": [
+        "Aggiorna i record in base a"
+      ],
+      "DoyouwanttoSchedulethisImport": [
+        "Vuoi pianificare questa importazione"
+      ],
+      "ScheduleDate": [
+        "Data del programma"
+      ],
+      "ScheduleFrequency": [
+        "Pianificare la frequenza"
+      ],
+      "TimeZone": [
+        "Fuso orario"
+      ],
+      "ScheduleTime": [
+        "Orario"
+      ],
+      "Schedule": [
+        "Programma"
+      ],
+      "Import": [
+        "Importare"
+      ],
+      "Update": [
+        "Aggiorna"
+      ],
+      "Format": [
+        "Formato"
+      ],
+      "OneTime": [
+        "Una volta"
+      ],
+      "Daily": [
+        "Quotidiano"
+      ],
+      "Weekly": [
+        "settimanalmente"
+      ],
+      "Monthly": [
+        "Mensile"
+      ],
+      "Hourly": [
+        "ogni ora"
+      ],
+      "Every30mins": [
+        "Ogni 30 minuti"
+      ],
+      "Every15mins": [
+        "Ogni 15 minuti"
+      ],
+      "Every10mins": [
+        "Ogni 10 minuti"
+      ],
+      "Every5mins": [
+        "Ogni 5 minuti"
+      ],
+      "FileSize": [
+        "Dimensione del file"
+      ],
+      "Process": [
+        "Processi"
+      ],
+      "Totalnoofrecords": [
+        "Numero totale di record"
+      ],
+      "CurrentProcessingRecord": [
+        "Record di Elaborazione Corrente"
+      ],
+      "RemainingRecord": [
+        "Record rimanente"
+      ],
+      "Completed": [
+        "Completato"
+      ],
+      "TimeElapsed": [
+        "Tempo trascorso"
+      ],
+      "approximate": [
+        "approssimativo"
+      ],
+      "DownloadLog": [
+        "Scarica registro"
+      ],
+      "NoRecord": [
+        "Nessuna registrazione"
+      ],
+      "UploadedCSVFileLists": [
+        "Elenchi di file CSV caricati"
+      ],
+      "Hostname": [
+        "Nome host"
+      ],
+      "HostPort": [
+        "Porta ospite"
+      ],
+      "HostUsername": [
+        "Nome utente host"
+      ],
+      "HostPassword": [
+        "Password host"
+      ],
+      "HostPath": [
+        "Percorso host"
+      ],
+      "DefaultPort": [
+        "Porta predefinita"
+      ],
+      "FTPUsername": [
+        "Nome utente FTP"
+      ],
+      "FTPPassword": [
+        "Password FTP"
+      ],
+      "ConnectionType": [
+        "Tipo di connessione"
+      ],
+      "ImportersActivity": [
+        "Attività degli importatori"
+      ],
+      "ImportStatistics": [
+        "Statistiche di importazione"
+      ],
+      "Dashboard_ImportsRun": [
+        "Importazioni eseguite"
+      ],
+      "Dashboard_RecordsCreated": [
+        "Record creati"
+      ],
+      "Dashboard_RecordsExported": [
+        "Record esportati"
+      ],
+      "Dashboard_AIAssists": [
+        "Assistenze AI"
+      ],
+      "Dashboard_TotalTemplates": [
+        "Modelli totali"
+      ],
+      "Dashboard_SavedTemplates": [
+        "Modelli di mappatura salvati"
+      ],
+      "Dashboard_TotalInserted": [
+        "Totale record inseriti"
+      ],
+      "Dashboard_ExportVolume": [
+        "Volume di esportazione"
+      ],
+      "Dashboard_ValidationFixes": [
+        "Correzioni di convalida"
+      ],
+      "Dashboard_AIDetail": [
+        "Auto / Correzioni / Convalida"
+      ],
+      "Dashboard_ImportVolume": [
+        "Volume di importazione"
+      ],
+      "Dashboard_Last12Months": [
+        "ultimi 12 mesi"
+      ],
+      "Dashboard_MonthlyImports": [
+        "Importazioni Mensili"
+      ],
+      "Dashboard_NoChartData": [
+        "Nessun dato di importazione ancora disponibile."
+      ],
+      "Dashboard_ContentDistribution": [
+        "Distribuzione dei contenuti"
+      ],
+      "Dashboard_RecentActivity": [
+        "Attività recente"
+      ],
+      "Dashboard_ViewAllLogs": [
+        "Visualizza tutti i log"
+      ],
+      "Dashboard_Activity": [
+        "Attività"
+      ],
+      "Dashboard_Records": [
+        "Record"
+      ],
+      "Dashboard_QuickStats": [
+        "Statistiche Rapide"
+      ],
+      "Dashboard_TotalImports": [
+        "Importazioni Totali"
+      ],
+      "Dashboard_TotalExports": [
+        "Esportazioni Totali"
+      ],
+      "Dashboard_ScheduledJobs": [
+        "Lavori Pianificati"
+      ],
+      "Dashboard_FailedJobs": [
+        "Lavori Falliti"
+      ],
+      "Dashboard_TemplatesSaved": [
+        "Modelli Salvati"
+      ],
+      "Dashboard_MediaImported": [
+        "Media importati"
+      ],
+      "FileManager": [
+        "Gestore file"
+      ],
+      "SmartSchedule": [
+        "Pianificazione intelligente"
+      ],
+      "ScheduledExport": [
+        "Esportazione programmata"
+      ],
+      "Templates": [
+        "Modelli"
+      ],
+      "LogManager": [
+        "Gestore registri"
+      ],
+      "NotSelectedAnyTab": [
+        "Non selezionato alcuna scheda"
+      ],
+      "EventInfo": [
+        "Informazioni sull'evento"
+      ],
+      "Actions": [
+        "Azioni"
+      ],
+      "Date": [
+        "Data"
+      ],
+      "Purpose": [
+        "Scopo"
+      ],
+      "Revision": [
+        "Revisione"
+      ],
+      "Select": [
+        "Selezionare"
+      ],
+      "SelectField": [
+        "Seleziona Campo"
+      ],
+      "Delete": [
+        "Elimina"
+      ],
+      "Noeventsfound": [
+        "Nessun evento trovato"
+      ],
+      "ScheduleInfo": [
+        "Informazioni sulla pianificazione"
+      ],
+      "ScheduledDate": [
+        "Data programmata"
+      ],
+      "ScheduledTime": [
+        "Orario pianificato"
+      ],
+      "Youhavenotscheduledanyevent": [
+        "Non hai programmato nessun evento"
+      ],
+      "Frequency": [
+        "Frequenza"
+      ],
+      "Time": [
+        "Tempo"
+      ],
+      "EditSchedule": [
+        "Modifica programma"
+      ],
+      "SaveChanges": [
+        "Salva I Cambiamenti"
+      ],
+      "TemplateInfo": [
+        "Informazioni sul modello"
+      ],
+      "TemplateName": [
+        "Nome modello"
+      ],
+      "Module": [
+        "Modulo"
+      ],
+      "CreatedTime": [
+        "Tempo creato"
+      ],
+      "NoTemplateFound": [
+        "Nessun modello trovato"
+      ],
+      "Download": [
+        "Scaricare"
+      ],
+      "NoLogRecordFound": [
+        "Nessun record di registro trovato"
+      ],
+      "GeneralSettings": [
+        "Impostazioni generali"
+      ],
+      "DatabaseOptimization": [
+        "Ottimizzazione database"
+      ],
+      "SecurityandPerformance": [
+        "Sicurezza e prestazioni"
+      ],
+      "Documentation": [
+        "Documentazione"
+      ],
+      "MediaReport": [
+        "Rapporto Media"
+      ],
+      "DropTable": [
+        "Elimina tabella"
+      ],
+      "Ifenabledplugindeactivationwillremoveplugindatathiscannotberestored": [
+        "Se abilitato, la disattivazione del plugin rimuoverà i dati del plugin e non potranno essere ripristinati."
+      ],
+      "Scheduledlogmails": [
+        "Email di log programmate"
+      ],
+      "Enabletogetscheduledlogmails": [
+        "Abilita per ricevere email di log programmate."
+      ],
+      "Sendpasswordtouser": [
+        "Invia password all'utente"
+      ],
+      "Enablestoregisterwoocommercecustomattribute": [
+        "Consente di registrare attributi personalizzati WooCommerce."
+      ],
+      "Deleteallunassignedtags": [
+        "Elimina tutti i tag non assegnati"
+      ],
+      "DeleteallPostPagerevisions": [
+        "Elimina tutte le revisioni Post / Pagina"
+      ],
+      "DeleteallautodraftedPostPage": [
+        "Elimina tutto il post / pagina auto-elaborato"
+      ],
+      "DeleteallPostPageintrash": [
+        "Elimina tutti i Post / Pagina nel cestino"
+      ],
+      "DeleteallCommentsintrash": [
+        "Elimina tutti i commenti nel cestino"
+      ],
+      "DeleteallUnapprovedComments": [
+        "Elimina tutti i commenti non approvati"
+      ],
+      "DeleteallPingbackComments": [
+        "Elimina tutti i commenti Pingback"
+      ],
+      "DeleteallTrackbackComments": [
+        "Elimina tutti i commenti di Trackback"
+      ],
+      "DeleteallSpamComments": [
+        "Elimina tutti i commenti spam"
+      ],
+      "RunDBOptimizer": [
+        "Esegui DB Optimizer"
+      ],
+      "Hire_us": [
+        "Assumi noi"
+      ],
+      "DatabaseOptimizationLog": [
+        "Registro di ottimizzazione del database"
+      ],
+      "noofOrphanedPostPagemetahasbeenremoved": [
+        "il numero di meta Post / Pagina orfana è stato rimosso."
+      ],
+      "noofUnassignedtagshasbeenremoved": [
+        "il numero di tag non assegnati è stato rimosso."
+      ],
+      "noofPostPagerevisionhasbeenremoved": [
+        "il numero di revisioni Post / Pagina è stato rimosso."
+      ],
+      "noofAutodraftedPostPagehasbeenremoved": [
+        "il numero di Post / Pagina redatti automaticamente è stato rimosso."
+      ],
+      "noofPostPageintrashhasbeenremoved": [
+        "il numero di Post / Pagina nel cestino è stato rimosso."
+      ],
+      "noofSpamcommentshasbeenremoved": [
+        "il numero di commenti spam è stato rimosso."
+      ],
+      "noofCommentsintrashhasbeenremoved": [
+        "il numero di commenti nel cestino è stato rimosso."
+      ],
+      "noofUnapprovedcommentshasbeenremoved": [
+        "il numero di commenti non approvati è stato rimosso."
+      ],
+      "noofPingbackcommentshasbeenremoved": [
+        "il numero di commenti Pingback è stato rimosso."
+      ],
+      "noofTrackbackcommentshasbeenremoved": [
+        "il numero di commenti di Trackback è stato rimosso."
+      ],
+      "Allowauthorseditorstoimport": [
+        "Consenti agli autori / editori di importare"
+      ],
+      "Thisenablesauthorseditorstoimport": [
+        "Ciò consente agli autori / editori di importare."
+      ],
+      "MinimumrequiredphpinivaluesIniconfiguredvalues": [
+        "Valori php.ini minimi richiesti (valori Ini configurati)"
+      ],
+      "Variables": [
+        "Variabili"
+      ],
+      "SystemValues": [
+        "Valori di sistema"
+      ],
+      "MinimumRequirements": [
+        "Requisiti minimi"
+      ],
+      "RequiredtoenabledisableLoadersExtentionsandmodules": [
+        "Richiesto per abilitare/disabilitare loader, estensioni e moduli:"
+      ],
+      "DebugInformation": [
+        "Informazioni di debug:"
+      ],
+      "SmackcodersGuidelines": [
+        "Linee guida Smackcoders"
+      ],
+      "DevelopmentNews": [
+        "Notizie di sviluppo"
+      ],
+      "WhatsNew": [
+        "Cosa c'è di nuovo?"
+      ],
+      "OtherWordPressPlugins": [
+        "Altri plugin WordPress"
+      ],
+      "Count": [
+        "Contare"
+      ],
+      "ImageType": [
+        "Tipo di immagine"
+      ],
+      "Status": [
+        "Stato"
+      ],
+      "Loading": [
+        "Caricamento in corso"
+      ],
+      "LoveWPUltimateCSVImporterGivea5starreviewon": [
+        "Love WP Ultimate CSV Importer, Give a 5 star review on"
+      ],
+      "ContactSupport": [
+        "Contatta il supporto"
+      ],
+      "Email": [
+        "E-mail"
+      ],
+      "Supporttype": [
+        "Tipo di supporto"
+      ],
+      "BugReporting": [
+        "Segnalazione di bug"
+      ],
+      "FeatureEnhancement": [
+        "Miglioramento delle funzionalità"
+      ],
+      "Message": [
+        "Messaggio"
+      ],
+      "Send": [
+        "Inviare"
+      ],
+      "NewsletterSubscription": [
+        "Iscrizione alla Newsletter"
+      ],
+      "Subscribe": [
+        "sottoscrivi"
+      ],
+      "Note": [
+        "Nota"
+      ],
+      "SubscribetoSmackcodersMailinglistafewmessagesayear": [
+        "Iscriviti alla mailing list di Smackcoders (alcuni messaggi all'anno)"
+      ],
+      "Ifyoudoesnotgetanyacknowledgementwithinanhour": [
+        "Se non ricevi alcuna conferma entro un'ora!"
+      ],
+      "Toexportdatabasedonthefilters": [
+        "Per esportare i dati in base ai filtri"
+      ],
+      "ExportFileName": [
+        "Esporta nome file"
+      ],
+      "AdvancedSettings": [
+        "Impostazioni avanzate"
+      ],
+      "ExportType": [
+        "Tipo di esportazione"
+      ],
+      "SplittheRecord": [
+        "Dividi il record"
+      ],
+      "AdvancedFilters": [
+        "Filtri avanzati"
+      ],
+      "Exportdatawithautodelimiters": [
+        "Esportare i dati con delimitatori automatici"
+      ],
+      "Delimiters": [
+        "Delimitatori"
+      ],
+      "OtherDelimiters": [
+        "Altri delimitatori"
+      ],
+      "Exportdataforthespecificperiod": [
+        "Esportare i dati per il periodo specifico"
+      ],
+      "StartFrom": [
+        "Inizia da"
+      ],
+      "EndTo": [
+        "Fine A"
+      ],
+      "Exportdatawiththespecificstatus": [
+        "Esportare i dati con lo stato specifico"
+      ],
+      "All": [
+        "Tutti"
+      ],
+      "Publish": [
+        "Pubblicare"
+      ],
+      "Sticky": [
+        "Appiccicoso"
+      ],
+      "Private": [
+        "Privato"
+      ],
+      "Protected": [
+        "protetta"
+      ],
+      "Draft": [
+        "Bozza"
+      ],
+      "Pending": [
+        "In attesa"
+      ],
+      "Exportdatabyspecificauthors": [
+        "Esportare dati da autori specifici"
+      ],
+      "Authors": [
+        "autori"
+      ],
+      "ExportdatabasedonspecificInclusions": [
+        "Esportare i dati in base a inclusioni specifiche"
+      ],
+      "DoyouwanttoSchedulethisExport": [
+        "Vuoi pianificare questa esportazione"
+      ],
+      "SelectTimeZone": [
+        "Seleziona TimeZone"
+      ],
+      "ScheduleExport": [
+        "Pianifica esportazione"
+      ],
+      "DataExported": [
+        "Dati esportati"
+      ],
+      "FilePath": [
+        "Percorso del file"
+      ],
+      "WPUltimateCSVImporter": [
+        "Importatore CSV definitivo di WP"
+      ],
+      "importwoocommerce": [
+        "importa woocommerce"
+      ],
+      "ImportanybulkWooCommerceProductsdatainCSV": [
+        "Importa tutti i dati dei prodotti WooCommerce in blocco in CSV."
+      ],
+      "Highlights": [
+        "Punti salienti"
+      ],
+      "ProductTypessimplegroupedvariableexternaltypeimport": [
+        "Tipi di prodotto semplice, raggruppato, variabile, importazione di tipo esterno."
+      ],
+      "FeaturedProductImportfromURL": [
+        "Prodotto in vetrina Importazione da URL"
+      ],
+      "Galleryimageimport": [
+        "Importazione di immagini della galleria"
+      ],
+      "Duplicatedetection": [
+        "Rilevamento duplicati"
+      ],
+      "FileType": [
+        "Tipo di file"
+      ],
+      "SupportsUTF_8CSVfile": [
+        "Supporta file CSV UTF-8"
+      ],
+      "AlreadyInstalled": [
+        "Già installato"
+      ],
+      "Install": [
+        "Installare"
+      ],
+      "ImportUsers": [
+        "Importa utenti"
+      ],
+      "ImportUserinfointoWordPressinbulk": [
+        "Importa le informazioni utente in WordPress in blocco"
+      ],
+      "WPMembersaddonsupport": [
+        "Supporto per i componenti aggiuntivi di WP-Members"
+      ],
+      "Defaultcustomfieldsimport": [
+        "Importazione di campi personalizzati predefiniti"
+      ],
+      "Sendsautomatedpasswordnotificationemailoptional": [
+        "Invia email di notifica automatica della password (facoltativo)"
+      ],
+      "WPUltimateExporter": [
+        "WP ultimo esportatore"
+      ],
+      "ExportallyourWordPressdataasCSVfileforbackup": [
+        "Esporta tutti i tuoi dati WordPress come file CSV per il backup"
+      ],
+      "Supportsdefaultcustomfields": [
+        "Supporta i campi personalizzati predefiniti"
+      ],
+      "UTF8encodedCSVfile": [
+        "File CSV con codifica UTF-8"
+      ],
+      "SupportPostPageCustomPost": [
+        "Post di supporto, pagina e post personalizzato"
+      ],
+      "Filteredexportbasedonperiodoftimeauthors": [
+        "Esportazione filtrata in base al periodo di tempo e agli autori"
+      ],
+      "Users": [
+        "Utenti"
+      ],
+      "PleaseinstalltheUltimateExportertoexportallyourWordPressdataasCSV": [
+        "Installa Ultimate Exporter per esportare tutti i tuoi dati WordPress come CSV"
+      ],
+      "Clickheretoinstall": [
+        "Fare clic qui per installare"
+      ],
+      "PluginVersion": [
+        "Versione del plugin"
+      ],
+      "LifterCourseSettingsFields": [
+        "Lifter Course Settings Fields"
+      ],
+      "LifterReviewSettingsFields": [
+        "Lifter Review Settings Fields"
+      ],
+      "LifterCouponSettingsFields": [
+        "Lifter Coupon Settings Fields"
+      ],
+      "LifterLessonSettingsFields": [
+        "Lifter Lesson Settings Fields"
+      ],
+      "FifuPostFields": [
+        "Fifu Post Fields"
+      ],
+      "FifuPageFields": [
+        "Fifu Page Fields"
+      ],
+      "FifuCustomPostFields": [
+        "Fifu Custom Post Fields"
+      ],
+      "polylangfields": [
+        "Polylang Settings Fields"
+      ],
+      "BuddyFields": [
+        "Campi BuddyPress"
+      ],
+      "WPCompleteFields": [
+        "WPComplete Fields"
+      ],
+      "Iteration": [
+        "Iterazione"
+      ],
+      "Exportiteration_id": [
+        "Elaborazione export in iterazioni"
+      ],
+      "importHasFinished": [
+        "La tua importazione è stata completata con successo. Clicca il pulsante qui sotto per scaricare e accedere a un registro dettagliato dell'importazione."
+      ],
+      "UseTheFailedImages": [
+        "Usa il CSV delle immagini fallite per correggere gli URL e reimportare le immagini"
+      ],
+      "Toast_PleaseChooseHeaderManipulation": [
+        "Si prega di scegliere la Manipolazione dell'intestazione"
+      ],
+      "Toast_MandatoryField": [
+        "{field} è un campo obbligatorio"
+      ],
+      "Toast_UpgradeToProFeature": [
+        "Aggiorna alla versione PRO per questa funzionalità"
+      ],
+      "Toast_SettingsUpdated": [
+        "Impostazioni aggiornate con successo"
+      ],
+      "Toast_AdminOnlyOption": [
+        "Solo l'amministratore può eseguire questa azione."
+      ],
+      "Toast_NewsletterSubscribed": [
+        "Iscrizione alla newsletter effettuata con successo"
+      ],
+      "Toast_InvalidEmail": [
+        "L'indirizzo email inserito non è valido."
+      ],
+      "Toast_LogDoesNotExist": [
+        "Il registro non esiste."
+      ],
+      "Toast_NoFailedMediaLog": [
+        "Nessun registro di media falliti disponibile per questa importazione."
+      ],
+      "Toast_SelectModuleToExport": [
+        "Seleziona un modulo da esportare"
+      ],
+      "Toast_FilePathMissing": [
+        "Il percorso del file è mancante!"
+      ],
+      "Toast_TypeExportFileName": [
+        "Digita il nome del file di esportazione"
+      ],
+      "Support_RateUsPrefix": [
+        "Ti piace WP Ultimate CSV Importer? Valutaci su"
+      ],
+      "Support_RateUsLinkText": [
+        "wordpress.org!"
+      ],
+      "Support_NeedHelp": [
+        "Serve aiuto?"
+      ],
+      "Support_ThanksForUsing": [
+        "Grazie per aver utilizzato il nostro plugin!"
+      ],
+      "Support_FreeSupportPrefix": [
+        "Se stai usando la versione gratuita, per favore crea un argomento di supporto sul nostro"
+      ],
+      "Support_ForumLinkText": [
+        "Forum di supporto di WordPress.org"
+      ],
+      "Support_ForumSuffix": [
+        ". Il nostro team monitora attivamente il forum e sarà felice di aiutarti lì."
+      ],
+      "Support_PreSalePrefix": [
+        "Hai una domanda prima della vendita o stai pensando di passare alla versione Pro? Sentiti libero di inviarci un'e-mail."
+      ],
+      "Support_ThanksAgain": [
+        "Grazie ancora per aver scelto Smackcoders!"
+      ],
+      "Support_SubmitQuery": [
+        "Invia richiesta"
+      ],
+      "Banner_MaintenanceEnabled": [
+        "La modalità di manutenzione è abilitata"
+      ],
+      "Common_Disable": [
+        "Disabilita"
+      ],
+      "ImportResumeDetected": [
+        "È stata rilevata un'importazione interrotta."
+      ],
+      "ImportResumeProgress": [
+        "Progresso"
+      ],
+      "ImportResumeButton": [
+        "Riprendi"
+      ],
+      "ImportResumeDiscard": [
+        "Scarta"
+      ],
+      "ImportResumeDiscarding": [
+        "Scartando…"
+      ],
+      "ImportResumePreparing": [
+        "Preparazione ripresa…"
+      ],
+      "ImportResumeFailed": [
+        "Impossibile riprendere questa importazione."
+      ],
+      "ImportResumeDiscardFailed": [
+        "Impossibile scartare questa sessione di importazione."
+      ],
+      "Banner_UpgradeMessage": [
+        "Sblocca aggiornamenti, pianificazione, campi avanzati e funzionalità avanzate di importazione ed esportazione con Pro. Ottieni fino al 22% di SCONTO per la vendita del nostro 15° compleanno"
+      ],
+      "Modal_ProOnlyMessage": [
+        "Questa funzionalità è disponibile solo nella versione Pro. Aggiorna ora per accedervi!"
+      ],
+      "Help_ButtonLabel": [
+        "Aiuto"
+      ],
+      "Help_MenuTitle": [
+        "Menu Aiuto"
+      ],
+      "Help_FetchingData": [
+        "Recupero Dati in corso..."
+      ],
+      "Help_NoResults": [
+        "Nessun risultato trovato"
+      ],
+      "Help_SearchPlaceholder": [
+        "Cerca qui..."
+      ],
+      "Common_NeedHelp": [
+        "Hai bisogno di aiuto?"
+      ],
+      "Month_January": [
+        "Gennaio"
+      ],
+      "Month_February": [
+        "Febbraio"
+      ],
+      "Month_March": [
+        "Marzo"
+      ],
+      "Month_April": [
+        "Aprile"
+      ],
+      "Month_May": [
+        "Maggio"
+      ],
+      "Month_June": [
+        "Giugno"
+      ],
+      "Month_July": [
+        "Luglio"
+      ],
+      "Month_August": [
+        "Agosto"
+      ],
+      "Month_September": [
+        "Settembre"
+      ],
+      "Month_October": [
+        "Ottobre"
+      ],
+      "Month_November": [
+        "Novembre"
+      ],
+      "Month_December": [
+        "Dicembre"
+      ],
+      "Toast_SelectFileToUpload": [
+        "Si prega di selezionare un file da caricare."
+      ],
+      "Toast_MissingRequiredFields": [
+        "Mancano alcuni campi obbligatori. Controlla il file e riprova."
+      ],
+      "Toast_FailedImportTryAgain": [
+        "Impossibile importare il CSV. Si prega di riprovare."
+      ],
+      "Toast_ErrorOccurredTryAgain": [
+        "Si è verificato un errore durante l'elaborazione. Riprova."
+      ],
+      "Link_FixThisError": [
+        "Clicca qui per correggere questo errore"
+      ],
+      "Toast_UpdateUrlToProcess": [
+        "Aggiorna l'URL da elaborare."
+      ],
+      "Toast_SelectMatchField": [
+        "Seleziona un campo di corrispondenza."
+      ],
+      "Toast_MatchFieldNotMapped": [
+        "Il campo {field} non è mappato nella sezione di mappatura. Si prega di mapparlo nei Campi Core di WordPress."
+      ],
+      "Common_AdminOnly": [
+        "Questo è solo per l'amministratore."
+      ],
+      "Common_ContentGenerator": [
+        "Generatore di contenuti"
+      ],
+      "Common_CustomFunction": [
+        "Funzione personalizzata"
+      ],
+      "Common_SearchField": [
+        "Cerca campo..."
+      ],
+      "Common_HeaderManipulation": [
+        "Manipolazione dell'intestazione"
+      ],
+      "Common_ImportConfigurationSection": [
+        "Sezione configurazione importazione"
+      ],
+      "MediaImportPath": [
+        "Media Import Path"
+      ],
+      "MediaImportPath_RetainOriginal": [
+        "Mantieni il percorso originale del file invece della cartella del mese corrente"
+      ],
+      "Module_WooCommerceReviews": [
+        "Recensioni"
+      ],
+      "Module_WooCommerceProducts": [
+        "Prodotti"
+      ],
+      "Module_WooCommerceOrders": [
+        "Ordini"
+      ],
+      "Module_WooCommerceCustomers": [
+        "Clienti"
+      ],
+      "Common_Images": [
+        "Immagini"
+      ],
+      "Common_Data": [
+        "Dati"
+      ],
+      "Common_PRO": [
+        "PRO"
+      ],
+      "Common_SupportedFileTypes": [
+        "Tipi di file supportati"
+      ],
+      "Common_UploadTemplates": [
+        "Modelli di caricamento"
+      ],
+      "Common_SmartSchedule": [
+        "Pianificazione intelligente"
+      ],
+      "Common_ScheduleExport": [
+        "Programma esportazione"
+      ],
+      "Common_GoogleSheet": [
+        "Foglio Google"
+      ],
+      "Common_DragDropFilesFor": [
+        "Trascina e rilascia i tuoi file per"
+      ],
+      "Pro_UpsellLong": [
+        "Sblocca tutto il potenziale di questa funzionalità con la nostra versione PRO! Aggiorna la tua esperienza e accedi subito a vantaggi esclusivi."
+      ],
+      "Pro_UpgradeNow": [
+        "Aggiorna a PRO ora!"
+      ],
+      "Label_WhenDuplicateFound": [
+        "Quando viene trovato un duplicato:"
+      ],
+      "DuplicateAction_Skip": [
+        "Salta"
+      ],
+      "DuplicateAction_UpdateExisting": [
+        "Aggiorna esistente"
+      ],
+      "DuplicateAction_CreateNew": [
+        "Crea nuovo"
+      ],
+      "ImportConfig_NoCreateNewIfNoMatch": [
+        "Non creare nuovi post se non viene trovato alcun record corrispondente"
+      ],
+      "ImportConfig_AdaptiveFileProcessing": [
+        "Vuoi l'elaborazione adattiva del file record per record?"
+      ],
+      "ImportConfig_RecordsPerIteration": [
+        "In each iteration how many records need to process"
+      ],
+      "ImportConfig_FilterByCategory": [
+        "Vuoi importare i dati filtrati per categoria?"
+      ],
+      "Mapping_CreateWpCustomFields": [
+        "Crea campi personalizzati WP"
+      ],
+      "Mapping_ManageFilteringOptions": [
+        "Gestisci opzioni di filtraggio"
+      ],
+      "Mapping_AddCustomField": [
+        "AGGIUNGI CAMPO PERSONALIZZO"
+      ],
+      "Mapping_AddRule": [
+        "AGGIUNGI REGOLA"
+      ],
+      "Mapping_NoWpCustomFields": [
+        "Nessun campo personalizzato WP"
+      ],
+      "Mapping_ProductAttribute": [
+        "ATTRIBUTO PRODOTTO {n}"
+      ],
+      "Common_Of": [
+        "di"
+      ],
+      "Common_Add": [
+        "Aggiungi"
+      ],
+      "Filter_AND": [
+        "E"
+      ],
+      "Filter_OR": [
+        "O"
+      ],
+      "Export_WPQuery": [
+        "Query WP"
+      ],
+      "Export_QueryPostType": [
+        "Query tipo di post"
+      ],
+      "Export_QueryUser": [
+        "Query utente"
+      ],
+      "Export_QueryComment": [
+        "Query commento"
+      ],
+      "Export_QueryArgsHint": [
+        "Inserisci gli argomenti WP_Query come oggetto simile a JSON."
+      ],
+      "Export_QueryArgsTooltipTitle": [
+        "Puoi inserire argomenti come:"
+      ],
+      "Export_GoogleSheetCsv": [
+        "Esporta i dati CSV nel Foglio Google"
+      ],
+      "Export_ClientMode": [
+        "Consenti ai non admin di eseguire questa esportazione in modalità client"
+      ],
+      "Export_ByLanguageCode": [
+        "Esporta dati in base al codice lingua"
+      ],
+      "Export_ByPostId": [
+        "Esporta dati per ID articolo specifico"
+      ],
+      "Export_ByPostTitle": [
+        "Esporta dati per titolo articolo specifico"
+      ],
+      "Export_CustomersPurchased": [
+        "Esporta i clienti in base all'indirizzo/acquisto."
+      ],
+      "Export_CustomersByProduct": [
+        "Esporta i clienti in base al prodotto acquistato"
+      ],
+      "Export_EnableRollback": [
+        "Abilita il Ripristino (Rollback)"
+      ],
+      "Export_OrdersByProduct": [
+        "Esporta Ordini in base al Prodotto su cui è stato effettuato l'ordine."
+      ],
+      "Export_Bundle": [
+        "Pacchetto"
+      ],
+      "Export_DataPreview": [
+        "Anteprima dati"
+      ],
+      "Export_WithIteration": [
+        "Esporta con Iterazione"
+      ],
+      "Export_EnterIterationId": [
+        "Inserisci ID Iterazione"
+      ],
+      "Module_JetBooking": [
+        "Jet Booking"
+      ],
+      "Module_JetReviews": [
+        "Jet Reviews"
+      ],
+      "Export_SplitRecord": [
+        "Dividi record"
+      ],
+      "Export_AvailableRecords": [
+        "Record disponibili"
+      ],
+      "Export_ZeroRecordsHint": [
+        "Se il conteggio dei record è zero, modifica le impostazioni del filtro e fai clic su Esporta."
+      ],
+      "Common_Preview": [
+        "Anteprima"
+      ],
+      "Export_Migrate": [
+        "Migrare"
+      ],
+      "Feedback_Title": [
+        "Com'è andata la tua esperienza?"
+      ],
+      "Feedback_RateOnWpOrg": [
+        "Valuta il nostro plugin su WordPress.org"
+      ],
+      "Feedback_RatingHelps": [
+        "La tua valutazione aiuta altri utenti a scoprire il nostro plugin"
+      ],
+      "Feedback_RateButton": [
+        "Valuta su WordPress.org"
+      ],
+      "Common_Or": [
+        "o"
+      ],
+      "Feedback_UnlockPremium": [
+        "Sblocca Funzionalità Premium"
+      ],
+      "Feedback_FeatureMapping": [
+        "Mappatura dei campi avanzata"
+      ],
+      "Feedback_FeatureScheduled": [
+        "Importazioni programmate"
+      ],
+      "Feedback_FeatureCPT": [
+        "Supporto per tipi di post personalizzati"
+      ],
+      "Feedback_FeatureSupport": [
+        "Supporto prioritario"
+      ],
+      "Feedback_UpgradePremium": [
+        "Aggiorna a Premium"
+      ],
+      "Feedback_DontShowAgain": [
+        "Non mostrare più"
+      ],
+      "Feedback_MaybeLater": [
+        "Forse più tardi"
+      ],
+      "Mapping_AddedRules": [
+        "Regole aggiunte:"
+      ],
+      "Mapping_DelimiterDetected": [
+        "Delimitatore rilevato dal file caricato :"
+      ],
+      "Common_SelectOption": [
+        "--seleziona--"
+      ],
+      "Common_SelectDash": [
+        "-- Seleziona --"
+      ],
+      "Common_CsvFields": [
+        "Campi CSV"
+      ],
+      "Filter_Elements": [
+        "Elementi"
+      ],
+      "Filter_Rule": [
+        "Regola"
+      ],
+      "Filter_Value": [
+        "Valore"
+      ],
+      "Filter_Rules": [
+        "Regole"
+      ],
+      "Filter_Values": [
+        "Valori"
+      ],
+      "Filter_Condition": [
+        "Condizione"
+      ],
+      "Filter_Actions": [
+        "Azioni"
+      ],
+      "Filter_EnterValue": [
+        "Inserisci valore"
+      ],
+      "FilterRule_Equals": [
+        "Uguale a"
+      ],
+      "FilterRule_NotEquals": [
+        "Diverso da"
+      ],
+      "FilterRule_GreaterThan": [
+        "Maggiore di"
+      ],
+      "FilterRule_EqualsOrGreaterThan": [
+        "Uguale o maggiore di"
+      ],
+      "FilterRule_LessThan": [
+        "Minore di"
+      ],
+      "FilterRule_EqualsOrLessThan": [
+        "Uguale o minore di"
+      ],
+      "FilterRule_Contains": [
+        "Contiene"
+      ],
+      "FilterRule_NotContains": [
+        "Non contiene"
+      ],
+      "FilterRule_IsEmpty": [
+        "È vuoto"
+      ],
+      "FilterRule_IsNotEmpty": [
+        "Non è vuoto"
+      ],
+      "DelimiterName_Comma": [
+        "virgola"
+      ],
+      "DelimiterName_Semicolon": [
+        "punto e virgola"
+      ],
+      "DelimiterName_Tab": [
+        "tabulazione"
+      ],
+      "DelimiterName_Pipe": [
+        "pipe"
+      ],
+      "DelimiterName_Unknown": [
+        "sconosciuto"
+      ],
+      "FieldLabel_Title": [
+        "Titolo"
+      ],
+      "FieldLabel_ID": [
+        "ID"
+      ],
+      "FieldLabel_Content": [
+        "Contenuto"
+      ],
+      "FieldLabel_ShortDescription": [
+        "Breve descrizione"
+      ],
+      "FieldLabel_PublishDate": [
+        "Data di pubblicazione"
+      ],
+      "FieldLabel_Slug": [
+        "Slug"
+      ],
+      "FieldLabel_Author": [
+        "Autore"
+      ],
+      "FieldLabel_Status": [
+        "Stato"
+      ],
+      "FieldLabel_FeaturedImage": [
+        "Immagine in evidenza"
+      ],
+      "FieldLabel_Format": [
+        "Formato"
+      ],
+      "FieldLabel_CommentStatus": [
+        "Stato del commento"
+      ],
+      "FieldLabel_PingStatus": [
+        "Stato del ping"
+      ],
+      "FieldLabel_Parent": [
+        "Genitore"
+      ],
+      "FieldLabel_Order": [
+        "Ordine"
+      ],
+      "FieldLabel_PageTemplate": [
+        "Modello di pagina"
+      ],
+      "FieldLabel_LanguageCode": [
+        "Codice della lingua"
+      ],
+      "FieldLabel_PostExpirator": [
+        "Post Expirator"
+      ],
+      "FieldLabel_PostExpiratorStatus": [
+        "Stato di Post Expirator"
+      ],
+      "FieldLabel_TemplateTitle": [
+        "Titolo del modello"
+      ],
+      "FieldLabel_TemplateContent": [
+        "Contenuto del modello"
+      ],
+      "FieldLabel_Style": [
+        "Stile"
+      ],
+      "FieldLabel_TemplateType": [
+        "Tipo di modello"
+      ],
+      "FieldLabel_CreatedTime": [
+        "Tempo di creazione"
+      ],
+      "FieldLabel_CreatedBy": [
+        "Creato da"
+      ],
+      "FieldLabel_TemplateStatus": [
+        "Stato del modello"
+      ],
+      "FieldLabel_Category": [
+        "Categoria"
+      ],
+      "AlwaysCreateAsNewImage": [
+        "Crea sempre come nuova immagine"
+      ],
+      "ChooseUploadMethod": [
+        "Scegli il metodo di caricamento"
+      ],
+      "CsvUploadFields": [
+        "Carica file"
+      ],
+      "Device": [
+        "Dispositivo"
+      ],
+      "Media": [
+        "Media"
+      ],
+      "Remote": [
+        "Remoto"
+      ],
+      "SelectDeviceZIPfile": [
+        "Seleziona Dispositivo per caricare immagini direttamente dal tuo dispositivo come file ZIP."
+      ],
+      "SelectDeviceCSVfile": [
+        "Scegli Remoto per importare immagini dagli URL di siti web remoti."
+      ],
+      "MediaContinue": [
+        "Continua"
+      ],
+      "FreshImport": [
+        "Nuova importazione"
+      ],
+      "UpdateContent": [
+        "Aggiorna contenuto"
+      ],
+      "UpdateThisMappingAs": [
+        "Aggiorna questa mappatura come"
+      ],
+      "Validation_ValidateCsv": [
+        "Valida CSV"
+      ],
+      "Validation_ResultsTitle": [
+        "CSV Validation Results"
+      ],
+      "Validation_ScanMode": [
+        "Modalità di scansione"
+      ],
+      "Validation_Quick10": [
+        "Scansione rapida (10 righe)"
+      ],
+      "Validation_Quick50": [
+        "Scansione rapida (50 righe)"
+      ],
+      "Validation_FullScan": [
+        "Scansione completa"
+      ],
+      "Validation_HealthScore": [
+        "Punteggio di salute"
+      ],
+      "Validation_Warnings": [
+        "Avvisi"
+      ],
+      "Validation_Critical": [
+        "Errori Critici"
+      ],
+      "Validation_CanImport": [
+        "Può Importare"
+      ],
+      "Validation_ScannedSummary": [
+        "Scansionate {scanned} di {total} righe."
+      ],
+      "Validation_Row": [
+        "Row"
+      ],
+      "Validation_Column": [
+        "Column"
+      ],
+      "Validation_Field": [
+        "Field"
+      ],
+      "Validation_Severity": [
+        "Severity"
+      ],
+      "Validation_Message": [
+        "Message"
+      ],
+      "Validation_NoIssues": [
+        "Nessun problema di convalida trovato."
+      ],
+      "Common_Yes": [
+        "Sì"
+      ],
+      "Common_No": [
+        "No"
+      ],
+      "Common_Close": [
+        "Chiudi"
+      ],
+      "Toast_ValidationBlocked": [
+        "L'elaborazione dell'importazione è bloccata a causa di errori."
+      ],
+      "Toast_ValidationPassed": [
+        "Convalida CSV superata."
+      ],
+      "Toast_ValidationFailed": [
+        "Richiesta di convalida CSV fallita."
+      ],
+      "UpgradetoPROusingcode": [
+        "Passa a PREMIUM usando il codice"
+      ],
+      "Unlockfeatureslikebulkimportadvanced exportschedulingcontentupdatemorepluslifetimesupport": [
+        "Sblocca le funzionalità come importazione sfuso, esportazione avanzata, programmazione, aggiornamento dei contenuti, e più, oltre al supporto a vita"
+      ],
+      "upgradenow": [
+        "aggiorna ora"
+      ],
+      "WP Ultimate CSV Importer": [
+        ""
+      ],
+      "https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html": [
+        ""
+      ],
+      "Seamlessly create posts, custom posts, pages, media, SEO and more from your CSV data with ease.": [
+        ""
+      ],
+      "Smackcoders": [
+        ""
+      ],
+      "https://www.smackcoders.com/wordpress.html": [
+        ""
+      ],
+      "Quick Feedback": [
+        ""
+      ],
+      "If you have a moment, please share why you are deactivating WP Ultimate CSV Importer.": [
+        ""
+      ],
+      "Please tell us more (optional)": [
+        ""
+      ],
+      "Submit & Deactivate": [
+        ""
+      ],
+      "Skip & Deactivate": [
+        ""
+      ],
+      "Sending feedback…": [
+        ""
+      ],
+      "Thank you for your feedback! Deactivating the plugin…": [
+        ""
+      ],
+      "Could not send feedback. You can skip deactivation or try again.": [
+        ""
+      ],
+      "This is a temporary deactivation for testing.": [
+        ""
+      ],
+      "Something isn't working properly.": [
+        ""
+      ],
+      "I found a better alternative.": [
+        ""
+      ],
+      "It's missing a specific feature.": [
+        ""
+      ],
+      "I no longer need the plugin.": [
+        ""
+      ],
+      "Other": [
+        ""
+      ],
+      "Close": [
+        "Chiudi"
+      ],
+      "Deactivation reason": [
+        ""
+      ],
+      "Share additional details…": [
+        ""
+      ],
+      "You do not have permission to perform this action.": [
+        ""
+      ],
+      "Invalid feedback reason.": [
+        ""
+      ],
+      "Plugin Deactivation Feedback": [
+        ""
+      ],
+      "Feedback Reason:": [
+        ""
+      ],
+      "Not specified": [
+        ""
+      ],
+      "Additional Comment:": [
+        ""
+      ],
+      "None": [
+        ""
+      ],
+      "Site URL:": [
+        ""
+      ],
+      "Plugin Version:": [
+        ""
+      ],
+      "WordPress Version:": [
+        ""
+      ],
+      "PHP Version:": [
+        ""
+      ],
+      "User ID:": [
+        ""
+      ],
+      "User Name:": [
+        ""
+      ],
+      "User Email:": [
+        ""
+      ],
+      "Date & Time:": [
+        ""
+      ],
+      "Permission denied.": [
+        ""
+      ],
+      "Invalid import session.": [
+        ""
+      ],
+      "You do not have sufficient permissions to access this page.": [
+        ""
+      ],
+      "No data found.": [
+        ""
+      ],
+      "Unable to resume import.": [
+        ""
+      ],
+      "Invalid ID passing.": [
+        ""
+      ],
+      "Security check failed.": [
+        ""
+      ],
+      "Uncategorized": [
+        ""
+      ],
+      "Can't insert this %1$s. %2$s": [
+        ""
+      ],
+      "Can't insert this %s": [
+        ""
+      ],
+      "Inserted %1$s ID: %2$d, %3$s": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create content. Invalid API key provided. Please check your API key.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create content. Rate limit reached for requests or you exceeded your current quota.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create content. Please check your inputs.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create content. The server had an error while processing your request.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create content. The engine is currently overloaded, please try again later.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create short description. Invalid API key provided. Please check your API key.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create short description. Rate limit reached for requests or you exceeded your current quota.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create short description. Please check your inputs.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create short description. The server had an error while processing your request.": [
+        ""
+      ],
+      "<b style='color: red;'>Notice:</b> Cannot create short description. The engine is currently overloaded, please try again later.": [
+        ""
+      ],
+      "Updated %1$s ID: %2$d, %3$s": [
+        ""
+      ],
+      "Skipped. No matching record found.": [
+        ""
+      ],
+      "WooCommerce Products": [
+        ""
+      ],
+      "Users / Customers": [
+        "Utenti / Clienti"
+      ],
+      "Custom Post Types": [
+        ""
+      ],
+      "Media Imported": [
+        "Media importati"
+      ],
+      "Import Failed": [
+        ""
+      ],
+      "Import Completed": [
+        ""
+      ],
+      "+%d this month": [
+        ""
+      ],
+      "No resumable import session found.": [
+        ""
+      ],
+      "This import is already completed.": [
+        ""
+      ],
+      "Import file metadata is missing. Cannot resume.": [
+        ""
+      ],
+      "Mapping template is missing. Cannot resume.": [
+        ""
+      ],
+      "Import file no longer exists on the server.": [
+        ""
+      ],
+      "You do not have sufficient permissions to download this file.": [
+        ""
+      ],
+      "CSV file is missing or not readable.": [
+        ""
+      ],
+      "CSV file is empty.": [
+        ""
+      ],
+      "Unable to read CSV file.": [
+        ""
+      ],
+      "CSV file is not valid UTF-8 encoding.": [
+        ""
+      ],
+      "Unable to open CSV file.": [
+        ""
+      ],
+      "CSV reader is not open.": [
+        ""
+      ],
+      "CSV header row is missing or corrupt.": [
+        ""
+      ],
+      "CSV header row is empty.": [
+        ""
+      ],
+      "CSV validation failed.": [
+        ""
+      ],
+      "CSV header is invalid.": [
+        ""
+      ],
+      "CSV file contains no data rows.": [
+        ""
+      ],
+      "CSV row %d is corrupt or malformed.": [
+        ""
+      ],
+      "Row %1$d has %3$d columns but %2$d were expected.": [
+        ""
+      ],
+      "Row %d has an empty post title.": [
+        ""
+      ],
+      "Row %1$d is missing required value for %2$s.": [
+        ""
+      ],
+      "Row %1$d has invalid date value \\": [
+        ""
+      ],
+      "Row %1$d has invalid post status \\": [
+        ""
+      ],
+      "Row %1$d has invalid numeric value for %2$s: \\": [
+        ""
+      ],
+      "Import is blocked due to critical validation errors.": [
+        ""
+      ],
+      "Post title is not mapped in WordPress Core Fields.": [
+        ""
+      ],
+      "Required field %s is not mapped.": [
+        ""
+      ],
+      "Template not found": [
+        ""
+      ],
+      "Invalid mapping payload. Existing template mapping was not changed.": [
+        ""
+      ],
+      "Template Name Already Exists": [
+        ""
+      ],
+      "Unable to save template mapping": [
+        ""
+      ],
+      "Unauthorized access.": [
+        ""
+      ],
+      "Invalid input.": [
+        ""
+      ],
+      "Upload directory not found.": [
+        ""
+      ],
+      "Invalid file path.": [
+        ""
+      ],
+      "Import your user records available in the CSV/XML file with custom fields, Woocommerce Shipping and Billing details.": [
+        ""
+      ],
+      "Import your WooCommerce Products records with attributes, categories, tags, and images available in the CSV/XML file.": [
+        "Importa i tuoi record di prodotti WooCommerce con attributi, categorie, tag e immagini disponibili nel file CSV/XML."
+      ],
+      "Export your Posts, Pages, Custom Posts, Users, Comments, and WooCommerce Products data as CSV files from the WordPress.": [
+        "Esporta i dati di articoli, pagine, post personalizzati, utenti, commenti e prodotti WooCommerce come file CSV da WordPress."
+      ],
+      "Install & Activate All": [
+        "Installa e attiva tutto"
+      ],
+      "Invalid file extension": [
+        ""
+      ],
+      "CSV headers do not match the expected format.": [
+        ""
+      ],
+      "Template already exists": [
+        ""
+      ],
+      "Unable to open the file": [
+        ""
+      ],
+      "Invalid mapping payload. Template mapping was not saved.": [
+        ""
+      ],
+      "Generate a short description.": [
+        ""
+      ],
+      "ID is a mandatory field for Update mode. Please map ID in WordPress Core Fields.": [
+        ""
+      ],
+      "File upload error.": [
+        ""
+      ],
+      "Invalid file type. Only CSV files are allowed.": [
+        ""
+      ],
+      "Invalid or unpublished post ID.": [
+        ""
+      ],
+      "Upgrade Notice:": [
+        ""
+      ],
+      "Download and replace the latest version of": [
+        ""
+      ],
+      "for 10x faster import performance with easy user interface.": [
+        ""
+      ],
+      "Features Of Ultimate CSV Importer": [
+        ""
+      ],
+      "All-in-One SEO": [
+        ""
+      ],
+      "WP Customer Reviews": [
+        ""
+      ],
+      "Import from Google Sheets & Dropbox": [
+        ""
+      ],
+      "Update/Schedule": [
+        ""
+      ],
+      "Data Export": [
+        ""
+      ],
+      "Rank Math": [
+        ""
+      ],
+      "WooCommerce:Variations, Orders, Coupons": [
+        ""
+      ],
+      "5 Woocommerce Add-ons": [
+        ""
+      ],
+      "Events Manager, NextGEN Gallery": [
+        ""
+      ],
+      "Invalid file type.": [
+        ""
+      ],
+      "Loving WP Ultimate CSV Importer? 💙": [
+        ""
+      ],
+      "We’d be so grateful if you could share your experience in a quick review. It only takes a minute, and it really helps us reach more WordPress users like you.": [
+        ""
+      ],
+      "⭐ Sure, I’ll Rate It": [
+        ""
+      ],
+      "Maybe Later": [
+        ""
+      ],
+      "No, Thanks": [
+        ""
+      ],
+      "Maintenance Mode": [
+        ""
+      ],
+      "Site is under maintenance mode. Please wait a few minutes!": [
+        ""
+      ],
+      "Ultimate CSV Importer Free": [
+        "Ultimate CSV Importer Free"
+      ],
+      "Manage Addons": [
+        "Gestisci i moduli"
+      ],
+      "SureCartMigrationSubtitle": [
+        "Trasferisci facilmente i dati del tuo negozio con un'elevata integrità e zero tempi di inattività."
+      ],
+      "ConnectionWooActive": [
+        "Connessione: WooCommerce Attivo"
+      ],
+      "ConnectionWooInactive": [
+        "Connessione: WooCommerce Inattivo"
+      ],
+      "ApiConfiguration": [
+        "Configurazione API"
+      ],
+      "SurecartApiToken": [
+        "TOKEN API SURECART"
+      ],
+      "EnterSurecartApiTokenPlaceholder": [
+        "Inserisci il tuo token API SureCart"
+      ],
+      "SaveToken": [
+        "Salva token"
+      ],
+      "SelectModule": [
+        "Seleziona modulo"
+      ],
+      "ModuleProducts": [
+        "Prodotti"
+      ],
+      "ModuleCustomers": [
+        "Clienti"
+      ],
+      "ModuleCoupons": [
+        "Coupon"
+      ],
+      "ModuleOrders": [
+        "Ordini"
+      ],
+      "Scheduling": [
+        "Pianificazione"
+      ],
+      "RunImmediately": [
+        "Esegui immediatamente"
+      ],
+      "ScheduleForLater": [
+        "Pianifica per più tardi"
+      ],
+      "StartMigration": [
+        "Avvia migrazione"
+      ],
+      "FieldMappingPreview": [
+        "Anteprima mappatura campi"
+      ],
+      "FieldMappingPreviewDesc": [
+        "Rivedi come i dati verranno trasformati tra le piattaforme."
+      ],
+      "WooCommerceFields": [
+        "CAMPI WOOCOMMERCE"
+      ],
+      "SurecartFields": [
+        "CAMPI SURECART"
+      ],
+      "MigrationFieldProductName": [
+        "Nome prodotto"
+      ],
+      "MigrationFieldProductTitle": [
+        "TITOLO PRODOTTO"
+      ],
+      "MigrationFieldSku": [
+        "SKU"
+      ],
+      "MigrationFieldSkuCode": [
+        "CODICE SKU"
+      ],
+      "MigrationFieldPrice": [
+        "Prezzo"
+      ],
+      "MigrationFieldRegularPrice": [
+        "PREZZO REGOLARE"
+      ],
+      "MigrationFieldStockStatus": [
+        "Stato del magazzino"
+      ],
+      "MigrationFieldInventoryAvailability": [
+        "DISPONIBILITÀ DI MAGAZZINO"
+      ],
+      "FieldMappingViewOnlyNote": [
+        "Modalità solo lettura: La mappatura dei campi è ottimizzata automaticamente per SureCart."
+      ],
+      "CurrentMigrationProgress": [
+        "Avanzamento attuale della migrazione"
+      ],
+      "StatusStartingMigration": [
+        "Avvio della migrazione di {module}"
+      ],
+      "StatusProcessingModule": [
+        "Elaborazione di {module}..."
+      ],
+      "StatusMigrationCompleted": [
+        "Migrazione completata"
+      ],
+      "StatusMigrationFailed": [
+        "Migrazione non riuscita"
+      ],
+      "StatusErrorOccurred": [
+        "Si è verificato un errore"
+      ],
+      "StatusIdle": [
+        "Inattivo"
+      ],
+      "RecordsLabel": [
+        "record"
+      ],
+      "StartedMinutesAgo": [
+        "Avviato 5 minuti fa"
+      ],
+      "EstimatedTimeRemaining": [
+        "Tempo rimanente stimato:"
+      ],
+      "AiImportSettings": [
+        "Importazione AI"
+      ],
+      "AiNaturalLanguage": [
+        "Importazione IA in linguaggio naturale"
+      ],
+      "AllowedIps": [
+        "IP consentiti"
+      ],
+      "AreYouSure": [
+        "Sei sicuro?"
+      ],
+      "AutomationApiTitle": [
+        "API di importazione e Webhook"
+      ],
+      "AutomationApiTriggerUrl": [
+        "URL di attivazione API"
+      ],
+      "AutomationLoadError": [
+        "Errore durante il caricamento delle impostazioni di automazione"
+      ],
+      "AutomationTemplateSettings": [
+        "Impostazioni Modello Automazione"
+      ],
+      "AutomationWebhookUrl": [
+        "URL Webhook Automazione"
+      ],
+      "ChoosFileintheServer": [
+        "Scegli file nel server"
+      ],
+      "ClearSearch": [
+        "Cancella ricerca"
+      ],
+      "Common_Cancel": [
+        "Annulla"
+      ],
+      "Common_ProFeatureTooltip": [
+        "Funzionalità esclusiva Pro"
+      ],
+      "Common_UpgradeToPro": [
+        "Passa a Pro"
+      ],
+      "ConfigureSettingsHeaderDesc": [
+        "Personalizza il modo in cui l'importatore gestisce dati, prestazioni, integrazioni e funzionalità avanzate."
+      ],
+      "ConfigureSettingsHeaderTitle": [
+        "Configura impostazioni"
+      ],
+      "ConfirmDeleteTemplate": [
+        "Vuoi eliminare questo modello?"
+      ],
+      "Copied": [
+        "Copiato!"
+      ],
+      "CopyTemplateId": [
+        "Copia ID Modello"
+      ],
+      "Dashboard_ActivityLogs": [
+        "Ultime attività di importazione dati"
+      ],
+      "Dashboard_NoDistributionData": [
+        "Nessun dato di distribuzione dei record per il momento."
+      ],
+      "Dashboard_RecordTypeShare": [
+        "Distribuzione su tutti i record"
+      ],
+      "Dashboard_SameCompletedVolume": [
+        "Circa lo stesso volume completato rispetto al periodo precedente."
+      ],
+      "DoyouwanttoSWITCHONMaintenancemodewhileimport": [
+        "Vuoi attivare la modalità manutenzione durante l'importazione?"
+      ],
+      "Doyouwanttohandletheduplicateonexistingrecords": [
+        "Vuoi gestire i duplicati sui record esistenti?"
+      ],
+      "EnableApiTrigger": [
+        "Abilita attivazione API"
+      ],
+      "EnableWebhook": [
+        "Abilita Webhook"
+      ],
+      "Enabletosendpasswordinformationthroughemail": [
+        "Abilita l'invio delle informazioni sulla password tramite email."
+      ],
+      "Error_ServerTimeout": [
+        "Timeout del server scaduto"
+      ],
+      "EventStatus": [
+        "Stato dell'evento"
+      ],
+      "ExportDataHeaderDesc": [
+        "Seleziona i contenuti che desideri esportare e crea un file per backup, migrazione, analisi o riutilizzo."
+      ],
+      "ExportDataHeaderTitle": [
+        "Esporta dati WordPress"
+      ],
+      "Export_AutoDelimitersDesc": [
+        "Esporta dati con separatori automatici personalizzati"
+      ],
+      "Export_Available": [
+        "Disponibile per l'esportazione"
+      ],
+      "Export_ByLanguageDesc": [
+        "Filtra articoli/pagine multilingue per codice lingua"
+      ],
+      "Export_ByPostIdDesc": [
+        "Esporta solo articoli/prodotti selezionati per ID"
+      ],
+      "Export_ByPostTitleDesc": [
+        "Cerca ed esporta titoli di articoli/prodotti corrispondenti"
+      ],
+      "Export_ClientModeDesc": [
+        "Autorizza i ruoli non admin a eseguire questa esportazione"
+      ],
+      "Export_CustomersByProductDesc": [
+        "Esporta i clienti in base ai prodotti acquistati."
+      ],
+      "Export_CustomersPurchasedDesc": [
+        "Esporta i clienti in base alla cronologia degli acquisti."
+      ],
+      "Export_CustomersRole": [
+        "Ruolo cliente"
+      ],
+      "Export_CustomersRoleDesc": [
+        "Filtra l'esportazione dei clienti per ruoli utente specifici."
+      ],
+      "Export_EnableRollbackDesc": [
+        "Consente il ripristino sicuro se l'esportazione viene interrotta."
+      ],
+      "Export_FileSettings": [
+        "File Settings"
+      ],
+      "Export_Format": [
+        "Formato di esportazione"
+      ],
+      "Export_GoogleSheetDesc": [
+        "Invia automaticamente i risultati dell'esportazione a un Foglio Google"
+      ],
+      "Export_IterationIdDesc": [
+        "Esporta elementi da un'esecuzione batch specifica"
+      ],
+      "Export_OrderByPayment": [
+        "Ordina per metodo di pagamento"
+      ],
+      "Export_OrderByPaymentDesc": [
+        "Filtra ed esporta ordini in base al metodo di pagamento."
+      ],
+      "Export_OrdersByProductDesc": [
+        "Esporta ordini in base a prodotti specifici ordinati."
+      ],
+      "Export_QueryArgsLabel": [
+        "Argomenti WP_Query"
+      ],
+      "Export_QueryTypeLabel": [
+        "Seleziona tipo di query"
+      ],
+      "Export_ScheduleDesc": [
+        "Pianifica export automatici a intervalli configurati"
+      ],
+      "Export_SpecificAuthorsDesc": [
+        "Filtra gli elementi esportati per autori selezionati"
+      ],
+      "Export_SpecificCategoryDesc": [
+        "Esporta i record appartenenti alle categorie selezionate"
+      ],
+      "Export_SpecificInclusionsDesc": [
+        "Esporta dati in base ai campi colonna selezionati"
+      ],
+      "Export_SpecificPeriodDesc": [
+        "Filtra gli elementi esportati per intervallo di date"
+      ],
+      "Export_SpecificStatusDesc": [
+        "Esporta elementi con stato articolo specifico"
+      ],
+      "Export_SplitRecordDesc": [
+        "Esporta dati in più file di dimensione personalizzata"
+      ],
+      "Export_WPQueryTitle": [
+        "Esportazione WP_Query"
+      ],
+      "Exportdatabyspecificcategory": [
+        "Esporta dati per categoria specifica"
+      ],
+      "FOR_ALREADY_EXISTING_RECORDS": [
+        "PER I RECORD GIÀ ESISTENTI"
+      ],
+      "FeatureModulesTitle": [
+        "Moduli funzionalità"
+      ],
+      "Feedback_Subtitle": [
+        "Invia il tuo riscontro per aiutarci a migliorare"
+      ],
+      "HIN": [
+        "SUGGERIMENTO"
+      ],
+      "ImportConfig_IterativePieceByPiece": [
+        "Iterative, Piece-by-Piece Processing"
+      ],
+      "ImportMediaHeaderDesc": [
+        "Carica file multimediali e i dati CSV richiesti da importare nel tuo sito WordPress."
+      ],
+      "ImportMediaHeaderTitle": [
+        "Importa file multimediali"
+      ],
+      "ImportMode": [
+        "Modalità di importazione"
+      ],
+      "ImportModeDesc": [
+        "Seleziona come gestire i record esistenti durante l'importazione"
+      ],
+      "ImportResumeFile": [
+        "Riprendi file di importazione"
+      ],
+      "ImportUpdateHeaderDesc": [
+        "Importa nuovi dati o aggiorna i contenuti WordPress esistenti da file CSV, XML, XLSX, TXT, ZIP o TSV."
+      ],
+      "ImportUpdateHeaderTitle": [
+        "Importa e aggiorna dati"
+      ],
+      "Import_AdvancedOptions": [
+        "Opzioni avanzate"
+      ],
+      "Label_MatchBy": [
+        "Confronta per"
+      ],
+      "ManageImportsHeaderDesc": [
+        "Visualizza la cronologia delle importazioni, gestisci file e modelli, importazioni/esportazioni ricorrenti programmate e rivedi i registri di importazione."
+      ],
+      "ManageImportsHeaderTitle": [
+        "Gestisci importazioni e pianificazioni"
+      ],
+      "MediaDownloadSettingsTitle": [
+        "Impostazioni download media"
+      ],
+      "MediaUpdate": [
+        "Aggiorna media"
+      ],
+      "Media_AlwaysCreateDesc": [
+        "Crea sempre un nuovo elemento multimediale anche se l'immagine esiste già."
+      ],
+      "Media_OverwriteDesc": [
+        "Sovrascrivi l'immagine esistente nella libreria media con quella nuova."
+      ],
+      "Media_PostContentDesc": [
+        "Scarica le immagini citate nel contenuto dell'articolo nella libreria media locale"
+      ],
+      "Media_UseExistingDesc": [
+        "Usa l'immagine già presente nella libreria media se disponibile."
+      ],
+      "MinimumrequiredphpinivaluesIniconconfiguredvalues": [
+        "Minimum required php.ini values (Ini configured values)"
+      ],
+      "NeedHelp": [
+        "Serve aiuto?"
+      ],
+      "Next": [
+        "Avanti"
+      ],
+      "NotNow": [
+        "Non ora"
+      ],
+      "Pleasedraftamailto": [
+        "Invia un'email a"
+      ],
+      "PostType": [
+        "Tipo di articolo"
+      ],
+      "Prev": [
+        "Precedente"
+      ],
+      "SampleCSV": [
+        "CSV di Esempio"
+      ],
+      "SaveAutomationSettings": [
+        "Salva impostazioni automazione"
+      ],
+      "SaveMappingAs": [
+        "Salva questa mappatura come"
+      ],
+      "SearchTemplatesOrModules": [
+        "Cerca modelli o moduli..."
+      ],
+      "Searching": [
+        "Ricerca in corso..."
+      ],
+      "Selectyourmoduletoexportthedata": [
+        "Seleziona il tuo modulo per esportare i dati"
+      ],
+      "SupportHeaderDesc": [
+        "Sfoglia la documentazione, risolvi i problemi comuni e contatta il team di supporto."
+      ],
+      "SupportHeaderTitle": [
+        "Guida e supporto"
+      ],
+      "Support_PreSaleSuffix": [
+        "Risponderemo al tuo messaggio il prima possibile."
+      ],
+      "SureCartMigrationTitle": [
+        "Migrazione SureCart"
+      ],
+      "Taxonomy": [
+        "Tassonomia"
+      ],
+      "TemplateId": [
+        "ID Modello"
+      ],
+      "TemplateIdHelp": [
+        "Copia l'ID modello da Gestione → Modelli e usalo nell'URL."
+      ],
+      "TemplatesCount": [
+        "Conteggio modelli"
+      ],
+      "ToastChooseAnotherName": [
+        "Scegli un altro nome per il modello."
+      ],
+      "ToastInstallPhpZip": [
+        "Si prega di installare l'estensione php-zip per utilizzare questa funzione."
+      ],
+      "ToastSaveFailed": [
+        "Impossibile salvare le impostazioni."
+      ],
+      "ToastSelectRevision": [
+        "Seleziona una revisione da ripristinare."
+      ],
+      "ToastTemplateDeleted": [
+        "Modello eliminato con successo."
+      ],
+      "ToastTemplateLoadFailed": [
+        "Impossibile caricare il modello selezionato."
+      ],
+      "ToastTemplateSaved": [
+        "Modello salvato con successo."
+      ],
+      "ToastTemplateUploadCsvOnly": [
+        "Sono supportati solo file modello CSV."
+      ],
+      "ToastTemplateUploadFailed": [
+        "Caricamento del modello non riuscito."
+      ],
+      "ToastTemplateUploadMissingFile": [
+        "Dettagli del file mancanti. Ricarica il CSV del modello."
+      ],
+      "ToastTemplateUploaded": [
+        "Modello caricato con successo."
+      ],
+      "Toast_BucketSelected": [
+        "Bucket selezionato con successo."
+      ],
+      "Toast_ConfigureAISettingsConnectors": [
+        "Configura le tue chiavi API nelle impostazioni AI prima di continuare."
+      ],
+      "Toast_InstallPhpZip": [
+        "Installa l'estensione PHP zip."
+      ],
+      "Toast_MailSent": [
+        "Email inviata con successo."
+      ],
+      "Toast_ValidationWarnings": [
+        "L'analisi del file ha rilevato alcuni avvisi."
+      ],
+      "Type": [
+        "Tipo"
+      ],
+      "UnlockProFeature": [
+        "Sblocca la versione Pro"
+      ],
+      "UploadTemplate": [
+        "Carica modello"
+      ],
+      "UploadfromDatabase": [
+        "Importa da database"
+      ],
+      "UploadfromExternal": [
+        "Carica da fonte esterna"
+      ],
+      "UploadfromRESTAPI": [
+        "Importa tramite REST API"
+      ],
+      "Validation_RunningScan": [
+        "Scansione e convalida del file in corso..."
+      ],
+      "Validation_Status": [
+        "Stato convalida"
+      ],
+      "WebhookSecret": [
+        "Segreto Webhook"
+      ],
+      "WooToSureTab": [
+        "Da Woo a Sure"
+      ],
+      "WoocommerceCustomattribute": [
+        "Attributo personalizzato WooCommerce"
+      ],
+      "YoutubeChannel": [
+        "Canale YouTube"
+      ],
+      "loginfo": [
+        "Gestore registri"
+      ],
+      "PluginBrandTitle": [
+        "Importatore CSV Definitivo"
+      ],
+      "PluginBrandSubtitle": [
+        "Gratis"
+      ],
+      "SureCartOrdersFields": [
+        "SureCart Orders Fields"
+      ],
+      "SureCartSubscriptionsFields": [
+        "SureCart Subscriptions Fields"
+      ],
+      "SureCartReportsFields": [
+        "SureCart Reports Fields"
+      ],
+      "SureCartCoreFields": [
+        "SureCart Core Fields"
+      ],
+      "SureCartProductMetaFields": [
+        "SureCart Product Meta Fields"
+      ],
+      "SureCartOrderMetaFields": [
+        "SureCart Order Meta Fields"
+      ],
+      "SureCartCustomerMetaFields": [
+        "SureCart Customer Meta Fields"
+      ],
+      "JetEngineCPTRFFields": [
+        "Jet Engine CPT RF Fields"
+      ],
+      "JetEngineTaxonomyFields": [
+        "Jet Engine Taxonomy Fields"
+      ],
+      "JetEngineTaxonomyRFFields": [
+        "Jet Engine Taxonomy RF Fields"
+      ],
+      "RefundMetaFields": [
+        "Refund Meta Fields"
+      ],
+      "MetaBoxRelationFields": [
+        "Meta Box Relation Fields"
+      ],
+      "MetaBoxGroupFields": [
+        "Meta Box Group Fields"
+      ],
+      "DueToDuplicateFound": [
+        "A causa di un duplicato trovato!"
+      ],
+      "SkippedNoMatching": [
+        "Skipped. No matching record found."
+      ],
+      "Export_InstallExporterMessage": [
+        "Installa Ultimate Exporter per esportare tutti i tuoi dati WordPress come CSV."
+      ],
+      "Export_ClickToInstall": [
+        "FARE CLIC QUI PER INSTALLARE"
+      ],
+      "Export_CompletedSuccessfully": [
+        "Esportazione completata con successo"
+      ],
+      "Export_InProgress": [
+        "Esportazione in corso"
+      ],
+      "Export_DownloadFile": [
+        "Scarica file"
+      ],
+      "Export_Rows": [
+        "righe"
+      ],
+      "Export_Done": [
+        "fatto"
+      ],
+      "Export_ExportingProgress": [
+        "esportazione..."
+      ],
+      "Export_Date": [
+        "Data"
+      ],
+      "Export_Elapsed": [
+        "Tempo trascorso"
+      ],
+      "Export_StatExported": [
+        "ESPORTATO"
+      ],
+      "Export_StatTotalRecords": [
+        "RECORD TOTALI"
+      ],
+      "Export_StatRemaining": [
+        "RIMANENTI"
+      ],
+      "Export_StatFormat": [
+        "FORMATO"
+      ],
+      "Export_StatErrors": [
+        "ERRORS"
+      ],
+      "Export_At": [
+        "alle"
+      ],
+      "Export_ExportingPrefix": [
+        "Esportazione"
+      ],
+      "Export_To": [
+        "in"
+      ],
+      "Support_UsefulResources": [
+        "Risorse utili"
+      ],
+      "Support_UserGuideDoc": [
+        "Guida per l'utente e documentazione"
+      ],
+      "Support_TroubleshootingGuide": [
+        "Guida alla risoluzione dei problemi"
+      ],
+      "Support_EnterEmailPlaceholder": [
+        "Inserisci il tuo indirizzo email"
+      ],
+      "locale": [
+        "it-IT"
+      ],
+      "UsersCustomers": [
+        "Utenti / Clienti"
+      ],
+      "CustomPostTypes": [
+        "Tipi di articolo personalizzati"
+      ],
+      "Dashboard_Last5Years": [
+        "ultimi 5 anni"
+      ],
+      "Dashboard_Last12Weeks": [
+        "ultime 12 settimane"
+      ],
+      "Dashboard_ThisMonthPlus": [
+        "+{num} questo mese"
+      ],
+      "SupportedFileTypesWithZipTxt": [
+        "Tipi di file supportati .csv .xml .xlsx .txt .zip .tsv"
+      ],
+      "Dashboard_ImporterTag": [
+        "IMPORTATORE"
+      ],
+      "Uploading": [
+        "Caricamento"
+      ],
+      "SelectHowToHandleRecords": [
+        "Scegli come gestire i record esistenti durante l'importazione"
+      ],
+      "POSTTYPE": [
+        "TIPO DI ARTICOLO"
+      ],
+      "TAXONOMY": [
+        "TASSONOMIA"
+      ],
+      "CSVValidationResults": [
+        "Risultati di validazione CSV"
+      ],
+      "StartPauseOrStopImportProcess": [
+        "Avvia, metti in pausa o interrompi il processo di importazione"
+      ],
+      "AreYouSureDeleteLog": [
+        "Sei sicuro?"
+      ],
+      "DoYouReallyWantToDeleteThisLog": [
+        "Vuoi davvero eliminare questo registro? Questa azione non può essere annullata."
+      ],
+      "DeleteLog": [
+        "Elimina registro"
+      ],
+      "Cancel": [
+        "Annulla"
+      ],
+      "Module_WooCommerceRefunds": [
+        "Rimborsi"
+      ],
+      "Module_WooCommerceCoupons": [
+        "Coupon"
+      ],
+      "Module_WooCommerce": [
+        "Prodotti"
+      ],
+      "Poweredby": [
+        "Offerto da"
+      ],
+      "Images": [
+        "Immagini"
+      ],
+      "SelectFile": [
+        "Seleziona file"
+      ],
+      "SelectProvider": [
+        "Seleziona provider"
+      ],
+      "SelectProviderPlaceholder": [
+        "--Seleziona provider--"
+      ],
+      "Model": [
+        "Modello"
+      ],
+      "SelectModelPlaceholder": [
+        "--Seleziona modello--"
+      ],
+      "EnterYourPrompt": [
+        "Inserisci il tuo prompt"
+      ],
+      "AiPromptFormattingNote": [
+        "Nota: Per i campi ACF, JetEngine o Meta Box, fornisci istruzioni dettagliate sulla struttura dei dati."
+      ],
+      "TypeInstructionsPlaceholder": [
+        "Digita le tue istruzioni qui..."
+      ],
+      "ChooseFromFileServer": [
+        "Scegli dal server file"
+      ],
+      "ChooseFromFileServerDesc": [
+        "Sfoglia le cartelle del server consentite — CSV, TSV, JSON, XML, XLS, XLSX"
+      ],
+      "BrowseRoots": [
+        "Sfoglia radici"
+      ],
+      "SearchPlaceholder": [
+        "Cerca..."
+      ],
+      "ExternalSources": [
+        "Fonti esterne"
+      ],
+      "AppKeyPlaceholder": [
+        "Chiave app"
+      ],
+      "AppSecretPlaceholder": [
+        "Segreto app"
+      ],
+      "RedirectURLPlaceholder": [
+        "URL di reindirizzamento"
+      ],
+      "RestApiEndpoint": [
+        "URL dell'API"
+      ],
+      "RestApiRequiredField": [
+        "obbligatorio"
+      ],
+      "RestApiEndpointHint": [
+        "URL completo, inclusa la stringa di query. I segnaposto {page}, {limit}, {offset} sono supportati."
+      ],
+      "RestApiRequiredLegend": [
+        "* Solo campo obbligatorio. Altri input sono opzionali."
+      ],
+      "RestApiHttpMethod": [
+        "Metodo"
+      ],
+      "RestApiRecordsPath": [
+        "Percorso record"
+      ],
+      "RestApiRecordsPathHint": [
+        "Percorso puntato opzionale in JSON (esempio: data.items). Lascia vuoto per la radice."
+      ],
+      "RestApiPageSize": [
+        "Dimensione pagina"
+      ],
+      "RestApiPageSizeHint": [
+        "Per i segnaposto {limit} / {offset} (predefinito 100). Con {page} nell'URL recupera le pagine."
+      ],
+      "RestApiBearer": [
+        "Token Bearer"
+      ],
+      "RestApiApiKeyHeader": [
+        "Intestazione chiave API"
+      ],
+      "RestApiApiKeyValue": [
+        "Chiave API"
+      ],
+      "RestApiExtraHeaders": [
+        "Intestazioni extra (JSON)"
+      ],
+      "RestApiTestConnection": [
+        "Testa connessione"
+      ],
+      "RestApiContinueImport": [
+        "Continua"
+      ],
+      "DbMigrationSavedConnections": [
+        "Connessioni salvate"
+      ],
+      "DbMigrationNewConnection": [
+        "— Nuova connessione —"
+      ],
+      "DbMigrationConnectionName": [
+        "Nome connessione"
+      ],
+      "DbMigrationDbType": [
+        "Tipo database"
+      ],
+      "DbMigrationHost": [
+        "Host"
+      ],
+      "DbMigrationPort": [
+        "Porta"
+      ],
+      "DbMigrationDatabase": [
+        "Database"
+      ],
+      "DbMigrationUsername": [
+        "Nome utente"
+      ],
+      "DbMigrationPassword": [
+        "Password"
+      ],
+      "DbMigrationSsl": [
+        "Usa SSL"
+      ],
+      "DbMigrationTestConnection": [
+        "Testa connessione"
+      ],
+      "DbMigrationSaveConnection": [
+        "Salva connessione"
+      ],
+      "DbMigrationBrowseTables": [
+        "Sfoglia tabelle"
+      ],
+      "AppKey": [
+        "Chiave app"
+      ],
+      "AppSecretkey": [
+        "Segreto app"
+      ],
+      "RedirectURL": [
+        "URL di reindirizzamento"
+      ],
+      "RememberMe": [
+        "Ricordami"
+      ],
+      "ConnectDropbox": [
+        "Connetti a Dropbox"
+      ],
+      "LastRun": [
+        "Ultima esecuzione"
+      ],
+      "NextRun": [
+        "Prossima esecuzione"
+      ],
+      "DragDropTemplateZip": [
+        "Trascina e rilascia qui un file CSV o ZIP di modello, oppure fai clic per sfogliare"
+      ],
+      "ConfirmDeleteLog": [
+        "Vuoi davvero eliminare questo registro? Questa azione non può essere annullata."
+      ],
+      "LogNotExists": [
+        "Il registro non esiste"
+      ],
+      "FailedLogNotExists": [
+        "Il registro dei fallimenti non esiste"
+      ],
+      "MediaLogNotExists": [
+        "Il registro dei media non existe"
+      ],
+      "DownloadSummaryLog": [
+        "Scarica il registro riassuntivo"
+      ],
+      "DownloadFailedCsvFile": [
+        "Scarica il file CSV non riuscito"
+      ],
+      "DownloadMediaFile": [
+        "Scarica il file media"
+      ],
+      "YesDeleteIt": [
+        "Sì, eliminalo!"
+      ],
+      "EventDate": [
+        "Data dell'evento"
+      ],
+      "ChooseCSVFile": [
+        "Scegli file CSV"
+      ],
+      "Upload": [
+        "Carica"
+      ],
+      "SaveFailed": [
+        "Salvataggio non riuscito"
+      ],
+      "LeaveBlankKeepExisting": [
+        "Lascia vuoto per mantenere quello esistente"
+      ],
+      "EVENTINFO": [
+        "Informazioni sull'evento"
+      ],
+      "EVENTSTATUS": [
+        "Status"
+      ],
+      "EVENTDATE": [
+        "Data dell'evento"
+      ],
+      "COMPLETED": [
+        "Completato"
+      ],
+      "PENDING": [
+        "In attesa"
+      ],
+      "Mapping_SourceFields": [
+        "Campi sorgente"
+      ],
+      "Mapping_SearchSourceFields": [
+        "Cerca campi sorgente..."
+      ],
+      "ImportFailed": [
+        "Import Failed"
+      ],
+      "ImportConfig_HighSpeedSmallFile": [
+        "High Speed Small File Processing"
+      ],
+      "Validation_DataReady": [
+        "Data Ready for Import"
+      ],
+      "Validation_DataNotReady": [
+        "Data Not Ready"
+      ],
+      "Validation_Excellent": [
+        "EXCELLENT"
+      ],
+      "Validation_PerfectMatch": [
+        "Your data structure matches the destination requirements perfectly."
+      ],
+      "Validation_AllFieldsVerified": [
+        "All fields have been mapped and verified against the current system schema."
+      ],
+      "Settings_GeneralDesc": [
+        "Configura i comportamenti principali e le opzioni globali del plugin CSV Importer."
+      ],
+      "SettingsNav_General": [
+        "Generale"
+      ],
+      "SettingsNav_Performance": [
+        "Prestazioni"
+      ],
+      "SettingsNav_Connectors": [
+        "Connettori"
+      ],
+      "SettingsNav_Features": [
+        "Funzionalità"
+      ],
+      "MediaImportPathDesc": [
+        "Retaining the original file path instead of current month folder"
+      ],
+      "EmailPrefix": [
+        "Email:"
+      ],
+      "IDPrefix": [
+        "ID:"
+      ],
+      "Toast_UpgradeToProSchedule": [
+        "Please upgrade to PRO for Schedule your Import"
+      ],
+      "FAILED": [
+        "FAILED"
+      ],
+      "Settings_SecurityPerfDesc": [
+        "Rivedi configurazione server, requisiti di sistema e dettagli dell'ambiente."
+      ],
+      "Settings_StatusConfig": [
+        "Stato / Config"
+      ],
+      "Settings_Required": [
+        "Richiesto"
+      ],
+      "Settings_On": [
+        "Attivo"
+      ],
+      "Settings_EnvVariable": [
+        "Variabile d'ambiente"
+      ],
+      "Settings_SystemValue": [
+        "Valore di sistema"
+      ],
+      "Settings_WordPressVersion": [
+        "Versione WordPress"
+      ],
+      "Settings_PHPVersion": [
+        "Versione PHP"
+      ],
+      "Settings_MySQLVersion": [
+        "Versione MySQL"
+      ],
+      "Settings_ServerSoftware": [
+        "Software server"
+      ],
+      "Settings_UserAgent": [
+        "Il tuo user agent"
+      ],
+      "Settings_WPDBPrefix": [
+        "Prefisso WPDB"
+      ],
+      "Settings_WPMultisiteMode": [
+        "Modalità multisito WP"
+      ],
+      "Settings_WPMemoryLimit": [
+        "Limite memoria WP"
+      ],
+      "Export_DataPreviewDesc": [
+        "Anteprima della struttura del dataset esportato"
+      ],
+      "Settings_DocumentationDesc": [
+        "Accedi alle nostre guide, ai tutorial video e alla documentazione di riferimento."
+      ],
+      "FilePond_TapToCancel": [
+        "tocca per annullare"
+      ],
+      "FilePond_UploadComplete": [
+        "Caricamento completato"
+      ],
+      "FilePond_UploadCancelled": [
+        "Caricamento annullato"
+      ],
+      "FilePond_UploadError": [
+        "Errore durante il caricamento"
+      ],
+      "FilePond_TapToRetry": [
+        "tocca per riprovare"
+      ],
+      "Addons_Description": [
+        "Estendi le funzionalità di WP Ultimate CSV Importer con componenti aggiuntivi gratuiti e premium."
+      ],
+      "AiImportSettingsDesc": [
+        "Suggerimenti e traduzione AI opzionali. Nulla viene applicato finché non approvi nel passaggio di revisione."
+      ],
+      "AiMasterEnable": [
+        "Abilita funzioni di importazione AI"
+      ],
+      "AiFeatureHintConnectors": [
+        "Categoria, tag, SEO, meta descrizione e traduzione usano i connettori WordPress."
+      ],
+      "AiCategorySuggestions": [
+        "Suggerimenti categoria"
+      ],
+      "AiTaxonomySuggestions": [
+        "Suggerimenti tag / tassonomia"
+      ],
+      "AiSeoTitle": [
+        "Suggerimenti titolo SEO"
+      ],
+      "AiMetaDescription": [
+        "Suggerimenti meta descrizione"
+      ],
+      "AiTranslation": [
+        "Traduzione (tramite WordPress AI)"
+      ],
+      "AiTargetLanguage": [
+        "Lingua di destinazione della traduzione"
+      ],
+      "AiBatchSize": [
+        "Dimensione batch"
+      ],
+      "AiRequestTimeout": [
+        "Timeout richiesta (secondi)"
+      ],
+      "AiMetaLimit": [
+        "Limite caratteri meta descrizione"
+      ],
+      "FeatureModulesDisclaimer": [
+        "Disabilita i moduli opzionali per ridurre il carico durante l'importazione. La pagina si ricarica automaticamente dopo il salvataggio."
+      ],
+      "Feature_AIImport": [
+        "Funzioni di importazione AI"
+      ],
+      "Feature_AIImportDesc": [
+        "Importazione in linguaggio naturale AI, mappatura campi, governance e moduli AIBootstrap correlati."
+      ],
+      "Feature_WPBakery": [
+        "WPBakery Page Builder"
+      ],
+      "Feature_WPBakeryDesc": [
+        "Estensioni campi import/export WPBakery."
+      ],
+      "Feature_Bricks": [
+        "Bricks Builder"
+      ],
+      "Feature_BricksDesc": [
+        "Estensioni campi import/export Bricks Builder."
+      ],
+      "Feature_Oxygen": [
+        "Oxygen Builder"
+      ],
+      "Feature_OxygenDesc": [
+        "Estensioni campi import/export Oxygen Builder."
+      ],
+      "Feature_DBMigration": [
+        "Migrazione database esterno"
+      ],
+      "Feature_DBMigrationDesc": [
+        "Importa da fonti database esterne tramite DatabaseMigrationBootstrap."
+      ],
+      "Feature_GoogleSheets": [
+        "Caricamento Google Sheets"
+      ],
+      "Feature_GoogleSheetsDesc": [
+        "Trasporto HTTP Google Sheets e flusso di lavoro di caricamento dei fogli di calcolo."
+      ],
+      "Feature_AutomationAPI": [
+        "API REST e Webhook"
+      ],
+      "Feature_AutomationAPIDesc": [
+        "API di automazione (uci-pro/v1), webhook ed endpoint REST di importazione."
+      ],
+      "Feature_ExtendedHooks": [
+        "Hook di importazione/esportazione estesi"
+      ],
+      "Feature_ExtendedHooksDesc": [
+        "Superficie ampliata di azioni e filtri HooksHandler aggiunta in 8.16."
+      ],
+      "GSheet_ConnectDesc": [
+        "Collega il tuo account Google per importare i dati direttamente da Google Sheets."
+      ],
+      "ClientID": [
+        "ID client"
+      ],
+      "ClientSecret": [
+        "Segreto client"
+      ],
+      "GSheet_ClientIdDesc": [
+        "Il tuo ID client OAuth Google dalla Console Google Cloud."
+      ],
+      "GSheet_ClientSecretDesc": [
+        "Il tuo segreto client OAuth Google dalla Console Google Cloud."
+      ],
+      "GSheet_RedirectDesc": [
+        "L'URI di reindirizzamento autorizzato configurato nel tuo progetto Google Cloud."
+      ],
+      "EnterRedirectUrlPlaceholder": [
+        "Inserisci URL di reindirizzamento"
+      ],
+      "EnterClientIdPlaceholder": [
+        "Inserisci ID client"
+      ],
+      "EnterClientSecretPlaceholder": [
+        "Inserisci segreto client"
+      ],
+      "MediaDownloadSettingsDescription": [
+        "Motore media avanzato: download in coda, nuovi tentativi, rilevamento duplicati e fallback immagine in evidenza."
+      ],
+      "EnableQueueProcessing": [
+        "Abilita elaborazione in coda"
+      ],
+      "EnableQueueProcessingDesc": [
+        "Elabora i download media in batch in background invece che in linea."
+      ],
+      "RetryFailedDownloads": [
+        "Riprova download non riusciti (automatico)"
+      ],
+      "RetryFailedDownloadsDesc": [
+        "Riprova automaticamente i download media falliti al primo tentativo."
+      ],
+      "QueueBatchSize": [
+        "Download per batch"
+      ],
+      "QueueBatchSizeDesc": [
+        "Numero di file media da scaricare in ogni batch in background."
+      ],
+      "MaximumRetryCount": [
+        "Numero massimo di tentativi"
+      ],
+      "MaximumRetryCountDesc": [
+        "Numero massimo di tentativi prima di segnare un download come fallito definitivamente."
+      ],
+      "ConnectionTimeout": [
+        "Timeout connessione (secondi)"
+      ],
+      "ConnectionTimeoutDesc": [
+        "Quanto attendere per stabilire una connessione al server remoto."
+      ],
+      "DownloadTimeout": [
+        "Timeout download (secondi)"
+      ],
+      "DownloadTimeoutDesc": [
+        "Tempo massimo consentito per completare il download di un singolo file."
+      ],
+      "DuplicateHandling": [
+        "Gestione duplicati"
+      ],
+      "DuplicateHandlingDesc": [
+        "Come gestire i file media già presenti nella libreria."
+      ],
+      "ReuseExisting": [
+        "Riusa esistente"
+      ],
+      "SkipDuplicate": [
+        "Salta duplicato"
+      ],
+      "ForceNew": [
+        "Forza nuovo"
+      ],
+      "FeaturedImageFallback": [
+        "Fallback immagine in evidenza"
+      ],
+      "FeaturedImageFallbackDesc": [
+        "Cosa usare come immagine in evidenza quando il download principale fallisce."
+      ],
+      "FallbackNone": [
+        "Nessuno"
+      ],
+      "FallbackFirstGallery": [
+        "Prima immagine della galleria"
+      ],
+      "FallbackPlaceholder": [
+        "Segnaposto"
+      ],
+      "ManualRetryFailedMedia": [
+        "Riprova media non riusciti ora"
+      ],
+      "AutomationApiDescription": [
+        "Usa l'API REST per avviare modelli di importazione salvati. Configura in Gestione → Modelli."
+      ],
+      "AutomationApiKey": [
+        "Chiave API del sito"
+      ],
+      "RegenerateApiKey": [
+        "Rigenera"
+      ],
+      "AutomationNoKey": [
+        "Nessuna chiave generata ancora"
+      ],
+      "AutomationTriggerEndpoint": [
+        "Endpoint di attivazione (sostituisci {template_id})"
+      ],
+      "AutomationApiKeyUsage": [
+        "Invia la chiave come JSON {\"api_key\":\"...\"}, query ?api_key=, header X-UCI-API-Key o Authorization: Bearer ..."
+      ],
+      "AutomationWebhookHeader": [
+        "Webhook: POST /wp-json/uci-pro/v1/webhook/{template_id} con header X-UCI-Signature."
+      ],
+      "WooCommerce": [
+        "WooCommerce"
+      ],
+      "Banner_OfferText": [
+        "Ottieni fino al 22% di sconto nei saldi del nostro 15º anniversario"
+      ],
+      "Banner_ViewDeals": [
+        "Vedi le offerte"
+      ],
+      "Banner_Dismiss": [
+        "Chiudi banner di aggiornamento"
+      ],
+      "Category": [
+        "Category"
+      ],
+      "Common_FieldSettings": [
+        "Field Settings"
+      ],
+      "posts": [
+        "posts"
+      ],
+      "DownloadFile": [
+        "DownloadFile"
+      ],
+      "AuditlogsandTools": [
+        "Audit logs and Tools"
+      ],
+      "Toast_NoFailedMediaRecords": [
+        "No failed media records found for this import."
+      ],
+      "SCHEDULED": [
+        "SCHEDULED"
+      ],
+      "Backupin4differentfileformatslikeCSV": [
+        "Backup in 4 different file formats like CSV, XML, JSON, XLS."
+      ],
+      "Export_FormatLabel": [
+        "Export_FormatLabel"
+      ],
+      "Every2hours": [
+        "Every2hours"
+      ],
+      "ProductImageMetaFields": [
+        "ProductImageMetaFields"
+      ],
+      "Getsample": [
+        "Getsample"
+      ],
+      "PROCESSING": [
+        "PROCESSING"
+      ],
+      "ImportCompleted": [
+        "Import Completed!"
+      ],
+      "Letsyougetonlyrequireddatawiththedifferentadvancedfilters": [
+        "Letsyougetonlyrequireddatawiththedifferentadvancedfilters"
+      ],
+      "DirectoryProFields": [
+        "DirectoryProFields"
+      ],
+      "ACFImageMetaFields": [
+        "ACFImageMetaFields"
+      ],
+      "Thisfeatureisavailablein": [
+        "Thisfeatureisavailablein"
+      ],
+      "ExportCompletedSuccessfully": [
+        "ExportCompletedSuccessfully"
+      ],
+      "TypesImageMetaFields": [
+        "TypesImageMetaFields"
+      ],
+      "DeleteallorphanedPostPageMeta": [
+        "Delete all orphaned Post/Page Meta"
+      ],
+      "Importer": [
+        "Importer"
+      ],
+      "Exported": [
+        "Exported"
+      ],
+      "Export_Remaining": [
+        "Export_Remaining"
+      ],
+      "poweredBy": [
+        "poweredBy"
+      ],
+      "Drag&Dropyourfilesor": [
+        "Drag&Dropyourfilesor"
+      ],
+      "Dashboard_Period_monthly": [
+        "Mensile"
+      ],
+      "Toast_NoImagesInZip": [
+        "There is no image files in the uploaded zip file"
+      ],
+      "Common_ChooseCsvFile": [
+        "Choose CSV File"
+      ],
+      "IterationId": [
+        "Interation Limit"
+      ],
+      "jetEngineRelationsFields": [
+        "jetEngineRelationsFields"
+      ],
+      "NextGENGalleryFields": [
+        "NextGENGalleryFields"
+      ],
+      "ExportfeatureisdisabledInstallandactivatetheaddonpluginfirst": [
+        "Warning: the export function is disabled. Install and activate the additional plugin first"
+      ],
+      "WooCommerceProduct": [
+        "WooCommerce Product"
+      ],
+      "Dashboard_Period_weekly": [
+        "Settimanale"
+      ],
+      "Export_TotalRecords": [
+        "Export_TotalRecords"
+      ],
+      "Scheduled": [
+        "Scheduled"
+      ],
+      "Posttags": [
+        "Posttags"
+      ],
+      "Every4hours": [
+        "Every4hours"
+      ],
+      "Export_Exported": [
+        "Export_Exported"
+      ],
+      "Doyouwanttooverwritetheexistingimages": [
+        "Doyouwanttooverwritetheexistingimages"
+      ],
+      "PleasemakesurethatyoutakenecessarybackupbeforeproceedingwithdatabaseoptimizationThedatalostcantbereverted": [
+        "Please make sure that you take necessary backup before proceeding with database optimization. The data lost cannot be reverted."
+      ],
+      "Dashboard_Period_yearly": [
+        "Annuale"
+      ],
+      "PodsImageMetaFields": [
+        "PodsImageMetaFields"
+      ],
+      "Import-Update": [
+        "Import-Update"
+      ],
+      "Changeimagefilenameto": [
+        "Change image file name to"
+      ],
+      "Manage": [
+        "Manage"
+      ],
+      "EnterTheURLOfYourCSVXMLFile": [
+        "Enter the URL of your CSV/XML file"
+      ],
+      "Common_Continue": [
+        "Continua"
+      ],
+      "Modal_ChooseAFile": [
+        "Scegli un file"
+      ],
+      "GoogleSheet": [
+        "Foglio Google"
+      ],
+      "OneDrive": [
+        "OneDrive"
+      ],
+      "DropBox": [
+        "Dropbox"
+      ],
+      "GoogleDrive": [
+        "Google Drive"
+      ],
+      "Dashboard_Year": [
+        "anno"
+      ],
+      "Dashboard_Week": [
+        "settimana"
+      ],
+      "Dashboard_Month": [
+        "mese"
+      ],
+      "Do you want adaptive file processing of record": [
+        "Vuoi l'elaborazione adattiva del file record per record?"
+      ],
+      "Do you want to import data filtered by category?": [
+        "Vuoi importare i dati filtrati per categoria?"
+      ],
+      "Download images referenced in post content to local media library": [
+        "Scarica le immagini citate nel contenuto dell'articolo nella libreria media locale"
+      ],
+      "Due to duplicate found!.": [
+        "A causa di un duplicato trovato!"
+      ],
+      "New Import": [
+        "Nuova importazione"
+      ],
+      "Are you sure?": [
+        "Sei sicuro?"
+      ],
+      "Do you really want to delete this log? This action cannot be undone.": [
+        "Vuoi davvero eliminare questo registro? Questa azione non può essere annullata."
+      ],
+      "You want to delete this template?": [
+        "Vuoi eliminare questo modello?"
+      ],
+      "Not Now": [
+        "Non ora"
+      ],
+      "ExportCompletedsuccessfully": [
+        "Esportazione completata con successo"
+      ],
+      "Export completed successfully": [
+        "Esportazione completata con successo"
+      ],
+      "Bundle": [
+        "Pacchetto"
+      ],
+      "Download File": [
+        "Scarica file"
+      ],
+      "EXPORTED": [
+        "ESPORTATO"
+      ],
+      "TOTAL RECORDS": [
+        "RECORD TOTALI"
+      ],
+      "REMAINING": [
+        "RIMANENTI"
+      ],
+      "FORMAT": [
+        "FORMATO"
+      ],
+      "Exporting": [
+        "Esportazione"
+      ],
+      "to": [
+        "in"
+      ],
+      "at": [
+        "alle"
+      ],
+      "Yes, Delete it!": [
+        "Sì, eliminalo!"
+      ],
+      "Delete Log": [
+        "Elimina registro"
+      ],
+      "Extend the core functionalities of Ultimate CSV Importer Free by activating specialized addons.": [
+        "Estendi le funzionalità principali di Ultimate CSV Importer Free attivando add-on specializzati."
+      ],
+      "Import Users": [
+        "Importa utenti"
+      ],
+      "Import your user records available in the CSV/XML file with custom fields, WooCommerce Shipping and Billing details.": [
+        "Importa i tuoi record utente disponibili nel file CSV/XML con campi personalizzati e dettagli di spedizione e fatturazione WooCommerce."
+      ],
+      "Install & Activate": [
+        "Installa e attiva"
+      ],
+      "Activated": [
+        "Attivato"
+      ],
+      "Import WooCommerce": [
+        "Importa WooCommerce"
+      ],
+      "Import your WooCommerce Products records with attributes, categories, tag, and images available in the CSV/XML file.": [
+        "Importa i tuoi record di prodotti WooCommerce con attributi, categorie, tag e immagini disponibili nel file CSV/XML."
+      ],
+      "Export Wordpress Data": [
+        "Esporta dati WordPress"
+      ],
+      "Back to Our Plugin": [
+        "Torna al nostro plugin"
+      ],
+      "Manage Add-ons": [
+        "Gestisci i moduli"
+      ],
+      "Preview": [
+        "Anteprima"
+      ]
+    }
+  }
+}

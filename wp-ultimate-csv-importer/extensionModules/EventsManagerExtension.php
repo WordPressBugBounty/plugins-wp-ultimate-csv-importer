@@ -46,6 +46,8 @@ class EventsManagerExtension extends ExtensionHandler{
 					'Recurrence_byweekno'=>'recurrence_byweekno',
 					'Recurrence_days' => 'recurrence_days',
 					'Recurrence_rsvp_days' => 'recurrence_rsvp_days',
+					'Location_id' => 'location_id',
+					'Location_slug' => 'location_slug',
 					'Location_name' => 'location_name',
 					'Location_address' => 'location_address',
 					'Location_town' =>'location_town',
@@ -83,20 +85,29 @@ class EventsManagerExtension extends ExtensionHandler{
 	* @return boolean
 	*/
     public function extensionSupportedImportType($import_type){
-		
-		if(is_plugin_active('events-manager/events-manager.php')){
-			if($import_type == 'nav_menu_item'){
-				return false;
-			}
-
-			$import_type = $this->import_name_as($import_type);
-			
-			if($import_type =='event' || $import_type =='location' || $import_type == 'event-recurring' || $import_type == 'ticket') {				
-				return true;
-			}
-			else{
-				return false;
-			}
+		if ( ! is_plugin_active( 'events-manager/events-manager.php' ) ) {
+			return false;
 		}
+		if ( $import_type === 'nav_menu_item' ) {
+			return false;
+		}
+
+		// Accept UI labels and CPT slugs. import_name_as('event'|'location') becomes CustomPosts.
+		$allowed = array(
+			'Events',
+			'Event Locations',
+			'Recurring Events',
+			'Tickets',
+			'event',
+			'location',
+			'event-recurring',
+			'ticket',
+		);
+		if ( in_array( $import_type, $allowed, true ) ) {
+			return true;
+		}
+
+		$normalized = $this->import_name_as( $import_type );
+		return in_array( $normalized, array( 'event', 'location', 'event-recurring', 'ticket' ), true );
 	}
 }

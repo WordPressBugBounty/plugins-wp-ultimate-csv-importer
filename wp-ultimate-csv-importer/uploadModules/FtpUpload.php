@@ -64,29 +64,47 @@ class FtpUpload implements Uploads{
     public function upload_function(){
         $this->check_ftp_security();
         
-        $host_name = sanitize_text_field($_POST['HostName']);
-        $host_port = isset($_POST['HostPort']) ? intval(sanitize_text_field($_POST['HostPort'])) : 0;
-        $host_username = sanitize_text_field($_POST['HostUserName']);
-        $host_password = sanitize_text_field($_POST['HostPassword']);
-        $host_path = sanitize_text_field($_POST['HostPath']);
-        $action = sanitize_text_field($_POST['action']);
-        update_option('sm_ftp_hostname', $host_name);
-        update_option('sm_ftp_hostport', $host_port);
+        $host_name = sanitize_text_field( wp_unslash( $_POST['HostName'] ?? '' ) );
+        $host_port = isset($_POST['HostPort']) ? absint( $_POST['HostPort'] ) : 0;
+        $host_username = sanitize_text_field( wp_unslash( $_POST['HostUserName'] ?? '' ) );
+        // Passwords may contain characters sanitize_text_field would strip; keep raw unslashed string.
+        $host_password = isset( $_POST['HostPassword'] ) ? (string) wp_unslash( $_POST['HostPassword'] ) : '';
+        $host_path = sanitize_text_field( wp_unslash( $_POST['HostPath'] ?? '' ) );
+        $action = sanitize_text_field( wp_unslash( $_POST['action'] ?? '' ) );
+
+        $destination = SecurityHelper::validate_ftp_destination( $host_name, $host_port );
+        if ( ! $destination ) {
+            $response = array(
+                'success' => false,
+                'message' => __( 'FTP connection failed. The host or port is not allowed.', 'wp-ultimate-csv-importer' ),
+            );
+            echo wp_json_encode( $response );
+            wp_die();
+        }
+
+        // Persist only the validated hostname/port (never connect using raw unvalidated input).
+        update_option('sm_ftp_hostname', $destination['host']);
+        update_option('sm_ftp_hostport', $destination['port']);
         update_option('sm_ftp_hostusername', $host_username);
         update_option('sm_ftp_hostpath', $host_path);
         update_option('sm_ftp_hostpassword', $host_password);
         update_option('action', $action);
         global $wpdb;
 
-        $file_table_name = $wpdb->prefix ."smackcsv_file_events";    
-        // set up basic connection
-        $conn_id = ftp_connect($host_name , $host_port);
+        $file_table_name = $wpdb->prefix ."smackcsv_file_events";
+        // Connect by validated IP to avoid DNS rebinding between resolve and connect.
+        $connect_host = $destination['connect_ip'];
+        $conn_id = @ftp_connect( $connect_host, (int) $destination['port'], 15 );
         $response = [];
         if(!$conn_id){
             $response['success'] = false;
             $response['message'] = 'FTP connection failed';
             echo wp_json_encode($response);
         }else{
+            // Prefer control-connection IP for PASV data channel (mitigates malicious PASV replies).
+            if ( defined( 'FTP_USEPASVADDRESS' ) && function_exists( 'ftp_set_option' ) ) {
+                @ftp_set_option( $conn_id, FTP_USEPASVADDRESS, false );
+            }
             // login with username and password
             $login_result = ftp_login($conn_id, $host_username, $host_password);
             $ftp_file_name = basename($host_path);
@@ -133,7 +151,7 @@ $ftp_mode = in_array($file_extension, ['csv', 'txt']) ? FTP_ASCII : FTP_BINARY;
 $ret = ftp_nb_get($conn_id, $local_file, $server_file, $ftp_mode);
                         $ret = ftp_nb_continue($conn_id);
                         if($ret == FTP_FINISHED){
-                            chmod($path, 0777);
+                            chmod( $path, 0640 );
                             $zip_response['success'] = true;
                             $zip_response['filename'] = $ftp_file_name;
                             $zip_response['file_type'] = 'zip';
@@ -152,7 +170,8 @@ $ret = ftp_nb_get($conn_id, $local_file, $server_file, $ftp_mode);
                     if (!is_dir($upload_dir_path)) {
                         wp_mkdir_p( $upload_dir_path);
                     }
-                    chmod($upload_dir_path, 0777);
+                    chmod( $upload_dir_path, 0755 );
+                    SecurityHelper::protect_import_directory( $upload_dir_path );
 
                     $wpdb->insert( $file_table_name , array( 'file_name' => $ftp_file_name , 'hash_key' => $event_key , 'status' => 'Downloading' , 'lock' => true  ) );
                     $last_id = $wpdb->get_results("SELECT id FROM $file_table_name ORDER BY id DESC LIMIT 1",ARRAY_A);
@@ -191,7 +210,7 @@ $ret = ftp_nb_get($conn_id, $local_file, $server_file, $ftp_mode);
 							$this->convertXlsxToCsv($local_file ,$upload_dir_path, $event_key);				
                             $file_extension = 'csv';
                         }
-                        chmod($local_file, 0777);
+                        chmod( $local_file, 0640 );
                         $validate_file = $validate_instance->file_validation($local_file , $file_extension);
 
                         $file_size = filesize($local_file);

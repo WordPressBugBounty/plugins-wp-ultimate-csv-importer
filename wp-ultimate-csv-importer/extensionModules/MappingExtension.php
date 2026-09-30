@@ -270,10 +270,7 @@ class MappingExtension {
 		if($file_extension == 'xml'){
 			$xml_class = new XmlHandler();
 			$upload_dir_path = $upload_dir. $hash_key;
-			if (!is_dir($upload_dir_path)) {
-				wp_mkdir_p( $upload_dir_path);
-			}
-			chmod($upload_dir_path, 0777);   
+			SecurityHelper::ensure_secure_directory($upload_dir_path);
 			$path = $upload_dir . $hash_key . '/' . $hash_key;   
 
 			$xml = simplexml_load_file($path);
@@ -741,10 +738,7 @@ class MappingExtension {
 			$xml_class = new XmlHandler();
 			
 			$upload_dir_path = $upload_dir. $hash_key;
-			if (!is_dir($upload_dir_path)) {
-				wp_mkdir_p( $upload_dir_path);
-			}
-			chmod($upload_dir_path, 0777);   
+			SecurityHelper::ensure_secure_directory($upload_dir_path);
 			$path = $upload_dir . $hash_key . '/' . $hash_key; 
 			$xml = simplexml_load_file($path);
 			$xml_arr = json_decode( json_encode($xml) , 1);	

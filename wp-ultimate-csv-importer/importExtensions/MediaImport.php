@@ -98,15 +98,21 @@ class MediaImport {
 			$mode_of_affect = 'Inserted';
 			if(!empty($img)){
 				$attach_id = MediaImport::$media_instance->image_meta_table_entry($line_number,$data_array, '', '',$img, $hash_key, 'Media', 'Media','','','','','','','',$media_type);
-				$attachment_id = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_type = 'attachment' AND post_title = 'image-failed' AND ID ={$attach_id}", ARRAY_A);
 			}else{
 				$core_instance->detailed_log[$line_number]['Message'] = "The provided image file is empty. Double-check your import file and retry";
 				$wpdb->query( "UPDATE $import_detail_table_name SET failed = $failed_count WHERE $unikey_name = '$unikey'");
 				return array('MODE' => $mode, 'ERROR_MSG' =>"Can't insert this Image" );
-			}		
-			if(!empty($attachment_id)) {
+			}
+
+			$import_failed = empty( $attach_id ) || ! MediaHandling::attachment_has_physical_file( $attach_id );
+
+			if ( $import_failed ) {
+				if ( ! empty( $attach_id ) ) {
+					wp_delete_attachment( (int) $attach_id, true );
+					$attach_id = 0;
+				}
 				if($media_type == 'Local'){
-					$data = array('media_id'   => $attach_id,'file_url'   => wp_get_attachment_url($attach_id),'file_name' => $file_name,'title' => $title,'caption' => $caption,'alt_text'=> $alt_text,'description' => $description,'status' => 'failed');
+					$data = array('media_id'   => $attach_id,'file_url'   => '','file_name' => $file_name,'title' => $title,'caption' => $caption,'alt_text'=> $alt_text,'description' => $description,'status' => 'failed');
 					$detail = MediaHandling::get_last_image_import_failure();
 					$msg = "Unable to detect the image in your import file. Please check and try again.";
 					if ($detail !== '') {
@@ -114,7 +120,7 @@ class MediaImport {
 					}
 					$core_instance->detailed_log[$line_number]['Message'] = $msg;
 				}else if($media_type == 'External'){
-					$data = array('media_id'   => $attach_id,'file_url'   => wp_get_attachment_url($attach_id),'actual_url'  => $actual_url,'file_name' => $file_name,'title' => $title,'caption' => $caption,'alt_text'=> $alt_text,'description' => $description,'status' => 'failed');
+					$data = array('media_id'   => $attach_id,'file_url'   => '','actual_url'  => $actual_url,'file_name' => $file_name,'title' => $title,'caption' => $caption,'alt_text'=> $alt_text,'description' => $description,'status' => 'failed');
 					$detail = MediaHandling::get_last_image_import_failure();
 					$msg = "The provided image file URL is invalid. Please verify the URL and try again";
 					if ($detail !== '') {

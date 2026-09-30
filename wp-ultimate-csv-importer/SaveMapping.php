@@ -40,8 +40,8 @@ class SaveMapping
 		add_action('wp_ajax_PauseImport', array($this, 'pause_import'));
 		add_action('wp_ajax_ResumeImport', array($this, 'resume_import'));
 		add_action('wp_ajax_smackuci_check_review_popup', array($this, 'smackuci_check_review_popup'));
-
-
+		add_action('wp_ajax_get_plugin_notice', array($this, 'get_plugin_notice'));
+		add_action('wp_ajax_dismiss_notice', array($this, 'dismiss_notice'));
 	}
 
 	public static function getInstance()
@@ -110,6 +110,54 @@ class SaveMapping
 		echo wp_json_encode(array('success' => true));
 		wp_die();
 	}
+
+	public function get_plugin_notice()
+	{
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
+
+		$dismissed = get_option('smackuci_plugin_notice_dismissed', false);
+		if ($dismissed) {
+			echo wp_json_encode(array(
+				'message' => '',
+				'notice_display' => false
+			));
+			wp_die();
+		}
+
+		$message = $this->updateMessage();
+		if (!empty($message)) {
+			echo wp_json_encode(array(
+				'message' => $message,
+				'notice_display' => true
+			));
+		} else {
+			echo wp_json_encode(array(
+				'message' => '',
+				'notice_display' => false
+			));
+		}
+		wp_die();
+	}
+
+	public function dismiss_notice()
+	{
+		SecurityHelper::verify_ajax_nonce();
+		if (!SecurityHelper::check_capability(SecurityHelper::can_import())) {
+			wp_die(__('You do not have sufficient permissions to access this page.'));
+		}
+
+		update_option('smackuci_plugin_notice_dismissed', true);
+		echo wp_json_encode(array(
+			'success' => true,
+			'message' => '',
+			'notice_display' => false
+		));
+		wp_die();
+	}
+
 	public function checkmain_mode()
 	{
 		SecurityHelper::verify_ajax_nonce();
@@ -150,10 +198,14 @@ class SaveMapping
 		if (is_wp_error($response)) {
 			return $message;
 		}
-		$response = json_decode($response);
+		$body = wp_remote_retrieve_body($response);
+		if (empty($body)) {
+			return $message;
+		}
+		$data = json_decode($body);
 		$current_plugin_version = UCICore::getInstance()->version;
-		if ( isset( $response->version[0] ) && version_compare( $current_plugin_version, $response->version[0], '<' ) ) {
-			$message = $response->message[0];
+		if ( isset( $data->version[0] ) && version_compare( $current_plugin_version, $data->version[0], '<' ) ) {
+			$message = $data->message[0];
 		}
 		return $message;
 	}
@@ -687,7 +739,7 @@ class SaveMapping
 
 		$import_txt_path = $upload_dir . 'import_state.txt';
 		if (file_exists($import_txt_path)) {
-			chmod($import_txt_path, 0777);
+			SecurityHelper::secure_file($import_txt_path);
 		}
 		$import_state_arr = array();
 
@@ -740,7 +792,7 @@ class SaveMapping
 		if (sanitize_text_field($_POST['Stop']) == 'false') {
 			$import_txt_path = $upload_dir . 'import_state.txt';
 			if (file_exists($import_txt_path)) {
-				chmod($import_txt_path, 0777);
+				SecurityHelper::secure_file($import_txt_path);
 			}
 			$import_state_arr = array();
 
@@ -785,9 +837,6 @@ class SaveMapping
 		if (function_exists('wp_raise_memory_limit')) {
 			@wp_raise_memory_limit('image');
 		}
-
-		$wpml_bench_start = microtime( true );
-		$bench_log_file   = apply_filters( 'uci_free_import_benchmark_log', '/var/www/html/antony.log' );
 
 		global $wpdb, $core_instance, $uci_woocomm_meta, $uci_woocomm_bundle_meta, $product_attr_instance, $wpmlimp_class;
 		$header_array = [];
@@ -856,20 +905,6 @@ class SaveMapping
 		$file_size = filesize($upload_dir . $hash_key . '/' . $hash_key);
 		$filesize = $helpers_instance->formatSizeUnits($file_size);
 		update_option('sm_bulk_import_page_number', $page_number);
-
-		$this->log_bulk_import_benchmark(
-			$bench_log_file,
-			'START',
-			array(
-				'hash_key' => $hash_key,
-				'page'     => $page_number,
-				'module'   => $user_selected_type,
-				'check'    => $check,
-				'rows'     => (int) $total_rows,
-				'batch'    => (int) $file_iteration,
-			),
-			$wpml_bench_start
-		);
 
 		if ($resume_svc && 1 === $page_number && empty($_POST['uci_resume_session'])) {
 			$started = $resume_svc->start_checkpoint(
@@ -2050,23 +2085,6 @@ class SaveMapping
 		$response['page_number']    = (int) $page_number;
 		$response['total_pages']    = (int) $total_pages;
 
-		$bench_counts = ! empty( $import_log_row ) ? $import_log_row : array();
-		$this->log_bulk_import_benchmark(
-			$bench_log_file,
-			'COMPLETE',
-			array(
-				'hash_key' => $hash_key,
-				'page'     => $page_number,
-				'module'   => $user_selected_type,
-				'status'   => ! empty( $import_log_row['status'] ) ? $import_log_row['status'] : '',
-				'created'  => isset( $bench_counts['created'] ) ? (int) $bench_counts['created'] : 0,
-				'updated'  => isset( $bench_counts['updated'] ) ? (int) $bench_counts['updated'] : 0,
-				'skipped'  => isset( $bench_counts['skipped'] ) ? (int) $bench_counts['skipped'] : 0,
-				'failed'   => isset( $bench_counts['failed'] ) ? (int) $bench_counts['failed'] : 0,
-			),
-			$wpml_bench_start
-		);
-
 		echo wp_json_encode($response);
 
 
@@ -2117,7 +2135,7 @@ class SaveMapping
 		$upload_dir = SaveMapping::$smackcsv_instance->create_upload_dir();
 		$import_txt_path = $upload_dir . 'import_state.txt';
 		if (file_exists($import_txt_path)) {
-			chmod($import_txt_path, 0777);
+			SecurityHelper::secure_file($import_txt_path);
 		}
 		$import_state_arr = array();
 
@@ -2787,12 +2805,13 @@ class SaveMapping
 						break;
 
 					case 'EVENTS':
-						if (is_plugin_active('events-manager/events-manager.php') && $selected_type == 'event') {
+						$events_manager_types = array('Events' => 'Events', 'event' => 'Events', 'Event Locations' => 'Event Locations', 'location' => 'Event Locations');
+						if (is_plugin_active('events-manager/events-manager.php') && isset($events_manager_types[$selected_type])) {
 							$merge = [];
 							$merge = array_merge($map['CORE'], $map['EVENTS']);
 							$map['TERMS'] = isset($map['TERMS']) ? $map['TERMS'] : '';
 							$events_instance = EventsManagerImport::getInstance();
-							$events_instance->set_events_values($header_array, $value_array, $merge, $post_id, $selected_type, $get_mode, $map['TERMS'], $gmode);
+							$events_instance->set_events_values($header_array, $value_array, $merge, $post_id, $events_manager_types[$selected_type], $get_mode, $map['TERMS'], $gmode);
 							break;
 						} elseif (is_plugin_active('the-events-calendar/the-events-calendar.php') && $selected_type == 'tribe_events') {
 							$merge = [];
@@ -2802,6 +2821,7 @@ class SaveMapping
 							$events_instance->set_events_values($header_array, $value_array, $merge, $post_id, $selected_type, $get_mode, $map['TERMS'], $gmode);
 							break;
 						}
+						break;
 
 					case 'JECCT':
 						$jet_engine_cct_instance = JetEngineCCTImport::getInstance();
@@ -3366,31 +3386,6 @@ class SaveMapping
 		}
 
 		return CsvValidationController::import_gate_response($hash_key, $config);
-	}
-
-	/**
-	 * Write bulk_import benchmark lines to antony.log (or filtered path).
-	 *
-	 * @param string $log_file Log file path.
-	 * @param string $event    START|COMPLETE|ERROR.
-	 * @param array  $data     Benchmark fields.
-	 * @param float  $started  microtime(true) at batch start.
-	 */
-	private function log_bulk_import_benchmark( $log_file, $event, array $data, $started = 0 ) {
-		$payload = array_merge(
-			$data,
-			array(
-				'event'          => $event,
-				'duration_sec'   => $started ? round( microtime( true ) - $started, 3 ) : 0,
-				'memory_peak_mb' => (int) round( memory_get_peak_usage( true ) / 1048576 ),
-				'logged_at'      => gmdate( 'Y-m-d H:i:s' ),
-			)
-		);
-		error_log(
-			print_r( array( 'uci_free_import_benchmark' => $payload ), true ),
-			3,
-			$log_file
-		);
 	}
 
 	/**

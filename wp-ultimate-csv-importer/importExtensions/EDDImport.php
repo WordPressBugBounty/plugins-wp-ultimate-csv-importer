@@ -689,9 +689,6 @@ class EDDImport
         $line_number
     ) {
         global $wpdb;
-        $log_file = '/var/www/html/test/wordpress/wp-content/plugins/wp-ultimate-csv-importer-pro/edd_debug_log.txt';
-        file_put_contents($log_file, "--- Import Discounts Start (Row $line_number) ---\n", FILE_APPEND);
-        file_put_contents($log_file, "is_edd_3_0_plus: " . ($this->is_edd_3_0_plus() ? 'YES' : 'NO') . "\n", FILE_APPEND);
 
         if (!class_exists('Easy_Digital_Downloads')) {
             return array('ID' => 0);
@@ -704,11 +701,6 @@ class EDDImport
         // Get mapped values
         $discount_map = isset($map['EDD_DISCOUNTS']) ? $map['EDD_DISCOUNTS'] : $map;
         $discount_data = $helpers_instance->get_header_values($discount_map, $header_array, $value_array);
-
-        file_put_contents($log_file, "Map Type: " . (isset($map['EDD_DISCOUNTS']) ? 'Nested' : 'Flat') . "\n", FILE_APPEND);
-        file_put_contents($log_file, "Discount Data: " . print_r($discount_data, true) . "\n", FILE_APPEND);
-
-        file_put_contents('/var/www/html/test/wordpress/wp-content/plugins/wp-ultimate-csv-importer-pro/edd_debug_log.txt', "User Discount Data: " . print_r($discount_data, true) . "\n", FILE_APPEND);
 
         // Extract discount fields
         $code = isset($discount_data['code']) ? sanitize_text_field($discount_data['code']) : '';
@@ -778,8 +770,6 @@ class EDDImport
             // Check if discount exists
             $existing_discount = edd_get_discount_by('code', $code);
 
-            file_put_contents('/var/www/html/test/wordpress/wp-content/plugins/wp-ultimate-csv-importer-pro/edd_debug_log.txt', "Existing Discount: " . ($existing_discount ? $existing_discount->id : 'None') . "\n", FILE_APPEND);
-
             $discount_args = array(
                 'code' => $code,
                 'name' => $name,
@@ -835,17 +825,12 @@ class EDDImport
             // Note: once_per_customer is already set above in the main args
             // max_uses_per_user is not a direct EDD 3.0+ field, it's stored as once_per_customer (boolean)
 
-            file_put_contents('/var/www/html/test/wordpress/wp-content/plugins/wp-ultimate-csv-importer-pro/edd_debug_log.txt', "Discount Args: " . print_r($discount_args, true) . "\n", FILE_APPEND);
-
             if ($existing_discount) {
-                file_put_contents($log_file, "Attempting Update (ID: " . $existing_discount->id . ")\n", FILE_APPEND);
                 $result = edd_update_discount($existing_discount->id, $discount_args);
                 if ($result) {
                     $discount_id = $existing_discount->id;
                     $mode = 'Updated';
-                    file_put_contents($log_file, "Update SUCCESS\n", FILE_APPEND);
                 } else {
-                    file_put_contents($log_file, "Update FAILED\n", FILE_APPEND);
                     $core_instance->detailed_log[$line_number]['Message'] = "Failed to update discount: " . $code;
                     $core_instance->detailed_log[$line_number]['state'] = 'Skipped';
                     $skipped_count = $helpers_instance->update_count($hash_key, 'hash_key')['skipped'];
@@ -853,13 +838,10 @@ class EDDImport
                     return array('ID' => 0);
                 }
             } else {
-                file_put_contents($log_file, "Attempting Insert\n", FILE_APPEND);
                 $discount_id = edd_add_discount($discount_args);
                 if ($discount_id) {
                     $mode = 'Inserted';
-                    file_put_contents($log_file, "Insert SUCCESS (ID: $discount_id)\n", FILE_APPEND);
                 } else {
-                    file_put_contents($log_file, "Insert FAILED\n", FILE_APPEND);
                     $core_instance->detailed_log[$line_number]['Message'] = "Failed to create discount: " . $code;
                     $core_instance->detailed_log[$line_number]['state'] = 'Skipped';
                     $skipped_count = $helpers_instance->update_count($hash_key, 'hash_key')['skipped'];

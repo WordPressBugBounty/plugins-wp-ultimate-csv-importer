@@ -95,12 +95,12 @@ jQuery(document).ready(function ($) {
                 closeSingleImportPanel();
             });
 
-            $('.tab').on('click', function () {
-                $('.tab').css('border-bottom', '2px solid transparent');
+            slider.find('.tab').on('click', function () {
+                slider.find('.tab').css('border-bottom', '2px solid transparent');
                 $(this).css('border-bottom', '2px solid #007cba');
-                const index = $(this).index();
-                $('.tab-content').hide();
-                $('.tab-content').eq(index).show();
+                const index = slider.find('.tab').index(this);
+                slider.find('.tab-content').hide();
+                slider.find('.tab-content').eq(index).show();
             });
 
             $('#import-file').on('change', function () {
@@ -232,14 +232,33 @@ jQuery(document).ready(function ($) {
                             const data = (typeof response === 'string') ? JSON.parse(response) : response;
 
                             if (data.success) {
-                                const filePath = data.file_path;
-                                const fileName = filePath.split('/').pop();
-                                const downloadLink = document.createElement('a');
-                                downloadLink.href = filePath;
-                                downloadLink.download = fileName;
-                                document.body.appendChild(downloadLink);
-                                downloadLink.click();
-                                document.body.removeChild(downloadLink);
+                                // Authenticated download endpoint (not a public uploads URL).
+                                const separator = data.file_path.indexOf('?') === -1 ? '?' : '&';
+                                const downloadUrl = data.file_path + separator + 'securekey=' + encodeURIComponent(smack_nonce_object.nonce);
+                                const fileName = data.file_name || ('post-' + postId + '.csv');
+                                fetch(downloadUrl, {
+                                    method: 'GET',
+                                    credentials: 'same-origin',
+                                    headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                                }).then(function (res) {
+                                    if (!res.ok) {
+                                        throw new Error('Download failed');
+                                    }
+                                    return res.blob();
+                                }).then(function (blob) {
+                                    const objectUrl = window.URL.createObjectURL(blob);
+                                    const downloadLink = document.createElement('a');
+                                    downloadLink.href = objectUrl;
+                                    downloadLink.download = fileName;
+                                    document.body.appendChild(downloadLink);
+                                    downloadLink.click();
+                                    document.body.removeChild(downloadLink);
+                                    window.setTimeout(function () {
+                                        window.URL.revokeObjectURL(objectUrl);
+                                    }, 1000);
+                                }).catch(function () {
+                                    window.location.href = downloadUrl;
+                                });
                             } else if (!data.success) {
                                 $('#smack-exp-message').show().text(response.data.message || data.message).css('color', '#FFFFF');
                             } else {

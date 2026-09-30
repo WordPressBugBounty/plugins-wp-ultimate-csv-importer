@@ -100,21 +100,23 @@ class MediaHandling{
 				echo wp_json_encode($result);
 				wp_die();
 			}
-			if (!is_dir($extract_base)) {
-				wp_mkdir_p($extract_base);
-			}
+			SecurityHelper::ensure_secure_directory($extract_base);
 			$index_php = trailingslashit($extract_base) . 'index.php';
 			if (!file_exists($index_php)) {
 				file_put_contents($index_php, "<?php\n");
 			}
-			@chmod($extract_base, 0755);
 			$extract_path = trailingslashit($extract_base);
 
 			if (file_exists($path)) {
-				chmod($path, 0777);
+				SecurityHelper::secure_file($path);
 			}
 
-			move_uploaded_file($_FILES['zipFile']['tmp_name'], $path);
+			if ( ! move_uploaded_file( $_FILES['zipFile']['tmp_name'], $path ) ) {
+				$result['success'] = false;
+				$result['message'] = 'Cannot save uploaded zip file.';
+				echo wp_json_encode( $result );
+				wp_die();
+			}
 			$zip = new \ZipArchive;
 			$res = $zip->open($path);
 
@@ -122,6 +124,7 @@ class MediaHandling{
 				$filename = [];
 				$size = [];
 				$kbsize = [];
+				$extracted_count = 0;
 
 				for ($i = 0; $i < $zip->numFiles; $i++) {
 
@@ -129,28 +132,58 @@ class MediaHandling{
 					if (substr($zip->getNameIndex($i), -1) == '/' || !$this->isValidImageFile($filename[$i])) {
 						continue;
 					}
-					$sanitized_filename = str_replace(' ', '-', basename($filename[$i]));
-					$sanitized_filename = preg_replace('/[^a-zA-Z0-9._\-\s]/', '', $sanitized_filename);
+					if ( stripos( $filename[$i], '__MACOSX/' ) === 0 ) {
+						continue;
+					}
+					$member_name = str_replace( '\\', '/', $filename[$i] );
+					$sanitized_filename = sanitize_file_name( basename( str_replace( ' ', '-', $member_name ) ) );
+					if ( $sanitized_filename === '' || $sanitized_filename === '.' || $sanitized_filename === '..' ) {
+						continue;
+					}
 					$full_extract_path = $extract_path . $sanitized_filename;
 					$fp = $zip->getStream($filename[$i]);
-					$size[$i] = $zip->statIndex($i)['size'];
+					if ( ! $fp ) {
+						continue;
+					}
+					$stat = $zip->statIndex($i);
+					$size[$i] = isset( $stat['size'] ) ? $stat['size'] : 0;
 					$kbsize[$i] = $this->convertToReadableSize($size[$i]);
-					$ofp = fopen($full_extract_path, 'w');
-					while (!feof($fp)) {
-						fwrite($ofp, fread($fp, 8192));
+					$ofp = @fopen( $full_extract_path, 'wb' );
+					if ( ! $ofp ) {
+						fclose( $fp );
+						continue;
+					}
+					while ( ! feof( $fp ) ) {
+						$chunk = fread( $fp, 8192 );
+						if ( $chunk === false ) {
+							break;
+						}
+						fwrite( $ofp, $chunk );
 					}
 
 					fclose($fp);
 					fclose($ofp);
+					if ( is_file( $full_extract_path ) && filesize( $full_extract_path ) > 0 ) {
+						chmod( $full_extract_path, 0644 );
+						$filename[$i] = $sanitized_filename;
+						$extracted_count++;
+					} else {
+						@unlink( $full_extract_path );
+					}
 				}
 				$filename = $this->ValidImageFileAdded($filename);
 				$kbsize = $this->ImageFileSizeAdded($filename, $kbsize);
 				$zip->close();
-				$result['success'] = true;
-				$result['zip_file_name'] = $zip_file_name;
-				$result['count'] = count($filename);
-				$result['filename'] = $filename;
-				$result['size'] = $kbsize;
+				if ( $extracted_count === 0 ) {
+					$result['success'] = false;
+					$result['message'] = 'No valid images could be extracted from the zip file.';
+				} else {
+					$result['success'] = true;
+					$result['zip_file_name'] = $zip_file_name;
+					$result['count'] = count($filename);
+					$result['filename'] = $filename;
+					$result['size'] = $kbsize;
+				}
 			} else {
 				$result['success'] = false;
 				$result['message'] = 'Failed to open the zip file.';
@@ -183,7 +216,7 @@ class MediaHandling{
 	}
 	public function ValidImageFileAdded($filename)
 	{
-		$validExtensions = ['jpg', 'jpeg', 'png', 'svg','webp','bmp'];
+		$validExtensions = ['jpg', 'jpeg', 'png', 'webp', 'bmp'];
 		$filteredFiles = [];
 		for ($i = 0; $i < count($filename); $i++) {
 			$fileInfo = pathinfo($filename[$i]);
@@ -201,7 +234,7 @@ class MediaHandling{
 	public function isValidImageFile($filename)
 	{
 		$ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-		if (in_array($ext, ['jpg', 'jpeg', 'png', 'svg','webp', 'bmp'])) {
+		if (in_array($ext, ['jpg', 'jpeg', 'png', 'webp', 'bmp'])) {
 			return true;
 		} else {
 			return false;
@@ -479,6 +512,21 @@ class MediaHandling{
 		return self::$last_image_import_failure;
 	}
 
+	/**
+	 * Whether an attachment has a readable non-empty file on disk.
+	 *
+	 * @param int|string|null $attach_id Attachment post ID.
+	 * @return bool
+	 */
+	public static function attachment_has_physical_file( $attach_id )
+	{
+		if ( empty( $attach_id ) || ! is_numeric( $attach_id ) ) {
+			return false;
+		}
+		$path = get_attached_file( (int) $attach_id );
+		return ( $path && is_file( $path ) && filesize( $path ) > 0 );
+	}
+
 	private static function set_last_image_import_failure($message)
 	{
 		self::$last_image_import_failure = (string) $message;
@@ -524,7 +572,7 @@ class MediaHandling{
 		} elseif (!preg_match('#^https?://#i', $url)) {
 			// Use ~ delimiter: a literal # in the pattern must not close a #-delimited regex.
 			$no_path = (strpos($url, '/') === false && strpos($url, '?') === false && strpos($url, '#') === false);
-			$looks_like_filename = $no_path && preg_match('~\.(jpe?g|png|gif|webp|svg|bmp|ico|avif|tiff?|pdf|mp4|mp3|zip)$~i', $url);
+			$looks_like_filename = $no_path && preg_match('~\.(jpe?g|png|gif|webp|bmp|ico|avif|tiff?|pdf|mp4|mp3|zip)$~i', $url);
 			if (!$looks_like_filename && preg_match('~^[a-z0-9][a-z0-9.-]*\.[a-z]{2,}(/|\?|#|$)~i', $url)) {
 				$url = 'https://' . $url;
 			}
@@ -728,10 +776,19 @@ class MediaHandling{
 	{
 		$source_abs = wp_normalize_path($source_abs);
 		$dest_abs = wp_normalize_path($dest_abs);
-		if ($source_abs === $dest_abs && is_file($source_abs)) {
+		if (!is_file($source_abs) || !is_readable($source_abs)) {
+			return '';
+		}
+		$safe_name = SecurityHelper::get_safe_media_filename(basename($dest_abs), (string) @file_get_contents($source_abs, false, null, 0, 8192));
+		if ($safe_name === '') {
+			self::set_last_image_import_failure('Refusing to attach media: the file name or content is not an allowed media type (SVG, HTML and XML are blocked): ' . basename($dest_abs));
+			return '';
+		}
+		$dest_abs = wp_normalize_path(trailingslashit(dirname($dest_abs)) . $safe_name);
+		if ($source_abs === $dest_abs) {
 			return $dest_abs;
 		}
-		if (!is_file($source_abs) || !is_readable($source_abs)) {
+		if (SecurityHelper::is_executable_filename($dest_abs)) {
 			return '';
 		}
 		$dir = dirname($dest_abs);
@@ -1035,7 +1092,7 @@ class MediaHandling{
 		$uploads_for_local = wp_upload_dir();
 		$uploads_baseurl = isset($uploads_for_local['baseurl']) ? $uploads_for_local['baseurl'] : '';
 
-		$allowed_extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'pdf', 'mp4', 'mp3', 'zip', 'svg');
+		$allowed_extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'pdf', 'mp4', 'mp3', 'zip');
 		$file_ext = strtolower(pathinfo($f_img, PATHINFO_EXTENSION));
 		if (!empty($file_ext) && !in_array($file_ext, $allowed_extensions)) {
 			self::set_last_image_import_failure('Unsupported file extension: ' . $file_ext);
@@ -1184,7 +1241,10 @@ class MediaHandling{
 			}
 			if (!empty($attachment_ids[0]['ID'])) {
 				if (($media_type == 'Local' || $media_type == 'External') && empty($media_id) && empty($post_id)) {
-					return $attachment_ids[0]['ID'];
+					$existing_id = (int) $attachment_ids[0]['ID'];
+					if ( self::attachment_has_physical_file( $existing_id ) ) {
+						return $existing_id;
+					}
 				} else if ($plugin == 'Featured') {
 					return $attachment_ids[0]['ID'];
 				} else if (empty($media_id) && empty($media_type)) {
@@ -1468,6 +1528,23 @@ class MediaHandling{
 			self::set_last_image_import_failure('Empty response body when downloading image.');
 			return null;
 		} else {
+			if (SecurityHelper::is_executable_filename(isset($uploaddir_path) ? $uploaddir_path : '')) {
+				self::set_last_image_import_failure('Refusing to save media with an executable file name: ' . (isset($fimg_name) ? $fimg_name : ''));
+				return null;
+			}
+			$safe_fimg_name = SecurityHelper::get_safe_media_filename(isset($fimg_name) ? $fimg_name : '', $rawdata);
+			if ($safe_fimg_name === '') {
+				self::set_last_image_import_failure('Refusing to save media: the file name or downloaded content is not an allowed media type (SVG, HTML and XML are blocked): ' . (isset($fimg_name) ? $fimg_name : ''));
+				return null;
+			}
+			if ($safe_fimg_name !== $fimg_name) {
+				$fimg_name = $safe_fimg_name;
+				$uploaddir_path = $uploaddir_paths . "/" . $fimg_name;
+			}
+			$safe_file_type = wp_check_filetype($fimg_name, null);
+			if (!empty($safe_file_type['type'])) {
+				$file_type = $safe_file_type;
+			}
 			if ($plugin == 'Media' && !empty($media_id)) {
 				$old_file_path = get_attached_file($media_id);
 				if (file_exists($old_file_path)) {
@@ -1844,10 +1921,9 @@ class MediaHandling{
 			}
 			return true;
 		}
-		$original_file_perms = file_exists($current_file) ? (fileperms($current_file) & 0777) : 0644;
-		$this->emr_delete_current_files($current_file, $post_id, $current_metadata);
-		//	$new_filename = wp_unique_filename( $current_path, $new_filename );
-		$new_file = $current_path . "/" . $new_filename;
+		if (SecurityHelper::is_executable_filename($new_filename)) {
+			return false;
+		}
 
 		$validated_url = SecurityHelper::validate_remote_url($img_url);
 		if (!$validated_url) {
@@ -1865,6 +1941,22 @@ class MediaHandling{
 		if ($data === '' || $data === null) {
 			return false;
 		}
+		$safe_filename = SecurityHelper::get_safe_media_filename($new_filename, $data);
+		if ($safe_filename === '') {
+			return false;
+		}
+		if ($safe_filename !== $new_filename) {
+			$new_filename = $safe_filename;
+			$safe_file_type = wp_check_filetype($new_filename, null);
+			if (!empty($safe_file_type['type'])) {
+				$new_filetype = $safe_file_type['type'];
+			}
+		}
+
+		$original_file_perms = file_exists($current_file) ? (fileperms($current_file) & 0777) : 0644;
+		$this->emr_delete_current_files($current_file, $post_id, $current_metadata);
+		//	$new_filename = wp_unique_filename( $current_path, $new_filename );
+		$new_file = $current_path . "/" . $new_filename;
 		file_put_contents($new_file, $data);
 		@chmod($current_file, $original_file_perms);
 		$new_filetitle = preg_replace('/\.[^.]+$/', '', basename($new_file));
@@ -2110,30 +2202,17 @@ class MediaHandling{
 
 	public function handle_media_image($acf_csv_name, $post_id, $post_values, $plugin, $get_import_type, $acf_wpname_element, $hash_key, $header_array, $value_array, $line_number, $indexs, $media_type, $uploaddir_url, $fimg_name, $file_type, $uploaddir_path)
 	{
-		$media_handle = get_option('smack_image_options');
 		self::set_last_image_import_failure('');
 		$attach_id = $this->media_handling($acf_csv_name, $post_id, $post_values, $plugin, $get_import_type, $acf_wpname_element, $hash_key, '', '', $header_array, $value_array, '', '', $line_number, $indexs, '', $media_type);
-		if (!empty($attach_id)) {
+		if ( ! empty( $attach_id ) && self::attachment_has_physical_file( $attach_id ) ) {
 			return $attach_id;
 		}
 
-		if (self::get_last_image_import_failure() === '') {
-			self::set_last_image_import_failure('No attachment was created. Verify the file exists under Media uploads or the URL is reachable.');
+		if ( self::get_last_image_import_failure() === '' ) {
+			self::set_last_image_import_failure( 'No attachment was created. Verify the image exists in the uploaded ZIP (Device) or the URL is reachable (Remote).' );
 		}
 
-		$post_info = array(
-			'guid' => $uploaddir_url . "/" . $fimg_name,
-			'post_mime_type' => $file_type,
-			'post_title' => 'image-failed',
-			'post_content' => '',
-			'post_status' => 'inherit',
-			'post_author' => $post_values['author'] ?? ''
-		);
-		$attach_id = wp_insert_attachment($post_info, $uploaddir_path, $post_id);
-		if (!empty($media_handle)) {
-			$this->imageMetaImport($attach_id, $media_handle, $header_array, $value_array, '', $media_type);
-		}
-		return $attach_id;
+		return null;
 	}
 
 	public function handle_inline_image($acf_csv_name, $post_id, $post_values, $plugin, $get_import_type, $acf_wpname_element, $hash_key, $header_array, $value_array, $line_number, $indexs, $uploaddir_url, $fimg_name, $file_type, $uploaddir_path, $shortcode_table, $post_title, $file_name)

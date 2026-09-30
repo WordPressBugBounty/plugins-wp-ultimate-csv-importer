@@ -731,9 +731,7 @@ class ImportHelpers {
 		// Prepare upload directory
 		$upload = wp_upload_dir();
 		$upload_base_dir = $upload['basedir'] . '/smack_uci_uploads';
-		if (!file_exists($upload_base_dir)) {
-			wp_mkdir_p($upload_base_dir); // creates directory safely
-		}
+		SecurityHelper::ensure_secure_directory($upload_base_dir);
 
 		$custom_file_path = $upload_base_dir . '/custom_data.json';
 

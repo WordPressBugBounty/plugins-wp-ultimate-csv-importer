@@ -39,10 +39,7 @@ class XmlHandler {
 		$upload_dir = $smack_csv_instance->create_upload_dir();
 
 		$upload_dir_path = $upload_dir. $hash_key;
-		if (!is_dir($upload_dir_path)) {
-			wp_mkdir_p( $upload_dir_path);
-		}
-		chmod($upload_dir_path, 0777);   
+		SecurityHelper::ensure_secure_directory($upload_dir_path);
 		$path = $upload_dir . $hash_key . '/' . $hash_key;    
 
 		$response = [];
@@ -76,10 +73,7 @@ class XmlHandler {
 		$upload_dir = $smack_csv_instance->create_upload_dir();
 
 		$upload_dir_path = $upload_dir. $hash_key;
-		if (!is_dir($upload_dir_path)) {
-			wp_mkdir_p( $upload_dir_path);
-		}
-		chmod($upload_dir_path, 0777);   
+		SecurityHelper::ensure_secure_directory($upload_dir_path);
 		$path = $upload_dir . $hash_key . '/' . $hash_key;  
 	}  
 
@@ -136,10 +130,7 @@ class XmlHandler {
 		$upload_dir = $smack_csv_instance->create_upload_dir();
 
 		$upload_dir_path = $upload_dir. $hash_key;
-		if (!is_dir($upload_dir_path)) {
-			wp_mkdir_p( $upload_dir_path);
-		}
-		chmod($upload_dir_path, 0777);
+		SecurityHelper::ensure_secure_directory($upload_dir_path);
 
 		$file = $upload_dir . $hash_key . '/' . $hash_key;    
 		$id = "item";

@@ -556,7 +556,7 @@
   background-color: #64605e;
 }
 [data-filepond-item-state="processing-complete"] .filepond--item-panel {
-  background-color: #369763;
+  background-color: #3d4fdb;
 }
 [data-filepond-item-state*="error"] .filepond--item-panel,
 [data-filepond-item-state*="invalid"] .filepond--item-panel {
