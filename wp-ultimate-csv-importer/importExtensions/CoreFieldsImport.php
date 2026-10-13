@@ -392,10 +392,10 @@ class CoreFieldsImport
 				$table_name = 'jet_cct_' . $type;
 				$value_status = empty($post_values['cct_status']) ? "publish" : $post_values['cct_status'];
 				if ($author_id)
-					$wpdb->query( "INSERT INTO {$wpdb->prefix}$table_name(cct_status,cct_author_id) values('$value_status',$author_id)");
+					$wpdb->query( $wpdb->prepare( "INSERT INTO {$wpdb->prefix}$table_name(cct_status,cct_author_id) values(%s,%d)", $value_status, $author_id ) );
 				else
-					$wpdb->query( "INSERT INTO {$wpdb->prefix}$table_name(cct_status) values('$value_status')");
-				$get_result = $wpdb->get_results("SELECT _ID FROM {$wpdb->prefix}$table_name WHERE  cct_status = '$value_status' order by _ID DESC ");
+					$wpdb->query( $wpdb->prepare( "INSERT INTO {$wpdb->prefix}$table_name(cct_status) values(%s)", $value_status ) );
+				$get_result = $wpdb->get_results( $wpdb->prepare( "SELECT _ID FROM {$wpdb->prefix}$table_name WHERE  cct_status = %s order by _ID DESC ", $value_status ) );
 				$id = $get_result[0];
 				$post_id = $id->_ID;
 
@@ -418,7 +418,7 @@ class CoreFieldsImport
 					$file_table_name = $wpdb->prefix . "smackcsv_file_events";
 					$get_id = $wpdb->get_results("SELECT file_name  FROM $file_table_name WHERE `hash_key` = '$hash_key'");
 					$file_name = $get_id[0]->file_name;
-					$wpdb->query( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Inserted')");
+					$wpdb->query( $wpdb->prepare( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( %s,%s, %s,'Inserted')", $post_id, $type, $file_name ) );
 				}
 				return $post_id;
 			}
@@ -712,7 +712,7 @@ class CoreFieldsImport
 							$file_table_name = $wpdb->prefix . "smackcsv_file_events";
 							$get_id = $wpdb->get_results("SELECT file_name  FROM $file_table_name WHERE `hash_key` = '$hash_key'");
 							$file_name = $get_id[0]->file_name;
-							$wpdb->query( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Inserted')");
+							$wpdb->query( $wpdb->prepare( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( %s,%s, %s,'Inserted')", $post_id, $type, $file_name ) );
 						}
 						if (isset($post_values['post_format'])) {
 							$format = str_replace("post-format-", "", $post_values['post_format']);
@@ -985,7 +985,7 @@ class CoreFieldsImport
 							$file_table_name = $wpdb->prefix . "smackcsv_file_events";
 							$get_id = $wpdb->get_results("SELECT file_name  FROM $file_table_name WHERE `hash_key` = '$hash_key'");
 							$file_name = $get_id[0]->file_name;
-							$wpdb->query( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Updated')");
+							$wpdb->query( $wpdb->prepare( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( %s,%s, %s,'Updated')", $post_id, $type, $file_name ) );
 						}
 
 						$fields = $wpdb->query( "UPDATE $log_table_name SET updated = $updated_count WHERE $unikey_name = '$unikey_value'");
@@ -1081,9 +1081,9 @@ class CoreFieldsImport
 								// }
 								$wp_content_url = content_url();
 								if (strpos($f_image, $wp_content_url) !== FALSE) {
-									$attachment_id = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_type = 'attachment' AND guid = '$f_image' ", ARRAY_A);
+									$attachment_id = $wpdb->get_results($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE post_type = 'attachment' AND guid = %s ", $f_image), ARRAY_A);
 								} else {
-									$attachment_id = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_type = 'attachment' AND guid LIKE '%$fimg_name%'", ARRAY_A);
+									$attachment_id = $wpdb->get_results($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE post_type = 'attachment' AND guid LIKE %s", '%' . $wpdb->esc_like($fimg_name) . '%'), ARRAY_A);
 								}
 								if (!empty($attachment_id[0]['ID'])) {
 									$table_name = $wpdb->prefix . 'smackcsv_file_events';
@@ -1155,7 +1155,7 @@ class CoreFieldsImport
 		}
 		$lang_code = $post_values['lang_code'];
 		$post_id = wp_insert_post($post_values);
-		$wpdb->query( "INSERT INTO {$wpdb->prefix}mltlngg_translate (post_ID , post_content , post_excerpt, post_title,`language`) VALUES ( $post_id, '{$lang_content}', '{$lang_excerpt}' , '{$lang_title}', '{$lang_code}')");
+		$wpdb->query( $wpdb->prepare( "INSERT INTO {$wpdb->prefix}mltlngg_translate (post_ID , post_content , post_excerpt, post_title,`language`) VALUES ( %d, %s, %s , %s, %s)", $post_id, $lang_content, $lang_excerpt, $lang_title, $lang_code ) );
 		return $post_id;
 	}
 

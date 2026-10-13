@@ -344,7 +344,7 @@ class MediaHandling{
 					$attach_id = $img_url;
 					if (!empty($data_array)) {
 						foreach ($data_array as $values) {
-							$attachment = $wpdb->get_var("SELECT meta_value FROM " . $wpdb->prefix . "postmeta WHERE meta_key='$values'");
+							$attachment = $wpdb->get_var($wpdb->prepare("SELECT meta_value FROM " . $wpdb->prefix . "postmeta WHERE meta_key=%s", $values));
 
 							if ($attachment) {
 								delete_post_thumbnail($post_id);
@@ -370,7 +370,7 @@ class MediaHandling{
 					$this->imageMetaImport($attach_id, $media_handle, $header_array, $value_array,$featured, $media_type);
 					return $attach_id;
 				} else {
-					$attachment_id = $wpdb->get_results("select ID from {$wpdb->prefix}posts where post_title='$image_title'", ARRAY_A);
+					$attachment_id = $wpdb->get_results($wpdb->prepare("select ID from {$wpdb->prefix}posts where post_title=%s", $image_title), ARRAY_A);
 				}
 				if (!empty($attachment_id) && empty($media_mode)) {
 					$wpml_multi_lang_mode = true;
@@ -378,7 +378,7 @@ class MediaHandling{
 						if (!empty($wpml_array['language_code'])) {
 							$attached_id = $value['ID'];
 							$lang_code = $wpml_array['language_code'];
-							$get_image_element_id = $wpdb->get_results("SELECT element_id FROM {$wpdb->prefix}icl_translations WHERE element_type = 'post_attachment' AND element_id = $attached_id AND language_code = '$lang_code' ", ARRAY_A);
+							$get_image_element_id = $wpdb->get_results($wpdb->prepare("SELECT element_id FROM {$wpdb->prefix}icl_translations WHERE element_type = 'post_attachment' AND element_id = %d AND language_code = %s ", $attached_id, $lang_code), ARRAY_A);
 							if (!empty($get_image_element_id[0]['element_id'])) {
 								$wpml_multi_lang_mode = false;
 								$get_lang_image_id = $get_image_element_id[0]['element_id'];
@@ -441,7 +441,7 @@ class MediaHandling{
 		} else { // Use local url if available, leave the post as attachment free 
 
 			$guid_url = $img_url;
-			$attachment_id = $wpdb->get_results("select ID from {$wpdb->prefix}posts where guid = '$guid_url'", ARRAY_A);
+			$attachment_id = $wpdb->get_results($wpdb->prepare("select ID from {$wpdb->prefix}posts where guid = %s", $guid_url), ARRAY_A);
 
 			if (!empty($attachment_id)) {
 
@@ -1230,14 +1230,14 @@ class MediaHandling{
 
 			$wp_content_url = content_url();
 			if ((!empty($media_mode) || $media_mode == 'MediaUpdate')) {
-				$attachment_ids = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_type = 'attachment' AND post_title != 'image-failed' AND guid LIKE '%$f_img_check%'", ARRAY_A);
+				$attachment_ids = $wpdb->get_results($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE post_type = 'attachment' AND post_title != 'image-failed' AND guid LIKE %s", '%' . $wpdb->esc_like($f_img_check) . '%'), ARRAY_A);
 				if (!empty($attachment_ids[0]['ID'])) {
 					return $attachment_ids[0]['ID'];
 				}
 			} else if (strpos($f_img, $wp_content_url) !== FALSE) {
-				$attachment_ids = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_type = 'attachment' AND guid = '$f_img' ", ARRAY_A);
+				$attachment_ids = $wpdb->get_results($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE post_type = 'attachment' AND guid = %s ", $f_img), ARRAY_A);
 			} else {
-				$attachment_ids = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_type = 'attachment' AND guid LIKE '%$f_img_check%'", ARRAY_A);
+				$attachment_ids = $wpdb->get_results($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE post_type = 'attachment' AND guid LIKE %s", '%' . $wpdb->esc_like($f_img_check) . '%'), ARRAY_A);
 			}
 			if (!empty($attachment_ids[0]['ID'])) {
 				if (($media_type == 'Local' || $media_type == 'External') && empty($media_id) && empty($post_id)) {
@@ -1253,7 +1253,7 @@ class MediaHandling{
 					$post_title = $wpdb->get_var("SELECT post_title FROM {$wpdb->prefix}posts WHERE ID = '{$post_id}' AND post_status != 'trash'");
 					$file_name = $wpdb->get_var("SELECT file_name FROM $table_name WHERE hash_key = '$hashkey'");
 					$shortcode_table = $wpdb->prefix . "ultimate_csv_importer_shortcode_manager";
-					$check_id = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE ID ='{$attach_id}' AND post_title ='image-failed' AND post_type = 'attachment' AND guid LIKE '%$f_img_check%'", ARRAY_A);
+					$check_id = $wpdb->get_results($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE ID =%s AND post_title ='image-failed' AND post_type = 'attachment' AND guid LIKE %s", $attach_id, '%' . $wpdb->esc_like($f_img_check) . '%'), ARRAY_A);
 					if (!empty($check_id)) {
 						$failed_ids = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}ultimate_csv_importer_shortcode_manager WHERE post_id='{$post_id}' AND media_id = '{$attach_id}'");
 						if (!empty($failed_ids) && $failed_ids[0]->post_id != $post_id) {
@@ -1309,7 +1309,7 @@ class MediaHandling{
 					if (!empty($wpml_array['language_code'])) {
 						$lang_code = $wpml_array['language_code'];
 						$image_trid_id = $wpdb->get_var("SELECT trid FROM {$wpdb->prefix}icl_translations WHERE element_type = 'post_attachment' AND element_id = $attachment_id ");
-						$image_lang_id = $wpdb->get_var("SELECT element_id FROM {$wpdb->prefix}icl_translations WHERE element_type = 'post_attachment' AND trid = $image_trid_id AND language_code = '$lang_code' ");
+						$image_lang_id = $wpdb->get_var($wpdb->prepare("SELECT element_id FROM {$wpdb->prefix}icl_translations WHERE element_type = 'post_attachment' AND trid = %d AND language_code = %s ", $image_trid_id, $lang_code));
 						return $image_lang_id;
 					} else {
 						return $attachment_id;
@@ -1654,7 +1654,7 @@ class MediaHandling{
 			$lang_code = $wpml_array['language_code'];
 			$image_trid_id = $wpdb->get_var("SELECT trid FROM {$wpdb->prefix}icl_translations WHERE element_type = 'post_attachment' AND element_id = $attach_id ");
 
-			$image_lang_id = $wpdb->get_var("SELECT element_id FROM {$wpdb->prefix}icl_translations WHERE element_type = 'post_attachment' AND trid = $image_trid_id AND language_code = '$lang_code' ");
+			$image_lang_id = $wpdb->get_var($wpdb->prepare("SELECT element_id FROM {$wpdb->prefix}icl_translations WHERE element_type = 'post_attachment' AND trid = %d AND language_code = %s ", $image_trid_id, $lang_code));
 			return $image_lang_id;
 		} else {
 			return $attach_id;
@@ -2185,7 +2185,7 @@ class MediaHandling{
 		if (isset($post_id) && !empty($acf_csv_name) && !empty($plugin)) {
 			$post_title = $wpdb->get_var("SELECT post_title FROM {$wpdb->prefix}posts WHERE ID = '{$post_id}' AND post_status != 'trash'");
 			$shortcode_table = $wpdb->prefix . "ultimate_csv_importer_shortcode_manager";
-			$failed_ids = $wpdb->get_results("SELECT post_title, post_id, image_shortcode, media_id, original_image FROM {$wpdb->prefix}ultimate_csv_importer_shortcode_manager WHERE image_shortcode = 'Featured_image_' AND post_id = '{$post_id}' AND original_image = '{$acf_csv_name}'");
+			$failed_ids = $wpdb->get_results($wpdb->prepare("SELECT post_title, post_id, image_shortcode, media_id, original_image FROM {$wpdb->prefix}ultimate_csv_importer_shortcode_manager WHERE image_shortcode = 'Featured_image_' AND post_id = %s AND original_image = %s", $post_id, $acf_csv_name));
 			if ($plugin == 'inline') {
 				return $this->handle_inline_image($acf_csv_name, $post_id, $post_values, $plugin, $get_import_type, $acf_wpname_element, $hash_key, $header_array, $value_array, $line_number, $indexs, $uploaddir_url, $fimg_name, $file_type, $uploaddir_path, $shortcode_table, $post_title, $file_name);
 			}
@@ -2321,7 +2321,7 @@ class MediaHandling{
 		}
 		$acf_wpname_element = isset($acf_wpname_element) ? $acf_wpname_element : '';
 		$acf_image_meta = isset($acf_image_meta) ? $acf_image_meta : '';
-		$failed_id = $wpdb->get_results("SELECT post_title, post_id, image_shortcode, media_id, original_image FROM {$wpdb->prefix}ultimate_csv_importer_shortcode_manager WHERE post_id = '{$post_id}' AND original_image = '{$acf_csv_name}' AND image_shortcode = '" . esc_sql($plugin . '_image__' . $acf_wpname_element) . "'");
+		$failed_id = $wpdb->get_results($wpdb->prepare("SELECT post_title, post_id, image_shortcode, media_id, original_image FROM {$wpdb->prefix}ultimate_csv_importer_shortcode_manager WHERE post_id = %s AND original_image = %s AND image_shortcode = %s", $post_id, $acf_csv_name, $plugin . '_image__' . $acf_wpname_element));
 		$attach_id = $this->media_handling($acf_csv_name, $post_id, $post_values, $plugin, $get_import_type, $acf_wpname_element, $hash_key, '', '', $header_array, $value_array, '', '', $line_number, $indexs, $acf_image_meta, '', '', $jet_child_object_id, $parent_object_id);
 
 		if (!empty($attach_id)) {
@@ -2360,7 +2360,7 @@ class MediaHandling{
 			}
 		} else {
 			$media_id = $failed_id[0]->media_id;
-			$attachment_id = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE ID = $media_id AND post_title = 'image-failed' AND post_type = 'attachment' AND guid LIKE '%$fimg_name%'", ARRAY_A);
+			$attachment_id = $wpdb->get_results($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE ID = %d AND post_title = 'image-failed' AND post_type = 'attachment' AND guid LIKE %s", $media_id, '%' . $wpdb->esc_like($fimg_name) . '%'), ARRAY_A);
 			$attach_id = $attachment_id[0]['ID'];
 		}
 

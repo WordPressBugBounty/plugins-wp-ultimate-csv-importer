@@ -216,7 +216,7 @@ class ACFImport {
 					foreach($bidirectional_target as $bidirectional) {
 						$field_name = $wpdb->get_results("SELECT post_excerpt FROM {$wpdb->prefix}posts WHERE post_name = '$bidirectional' AND post_status = 'publish'", ARRAY_A);						
 						$field_value = $field_name[0]['post_excerpt'];	
-						$get_relation = $wpdb->get_results("SELECT meta_value FROM {$wpdb->prefix}usermeta WHERE meta_key = '$field_value' AND user_id = '$map_acf_csv_element'", ARRAY_A);
+						$get_relation = $wpdb->get_results($wpdb->prepare("SELECT meta_value FROM {$wpdb->prefix}usermeta WHERE meta_key = %s AND user_id = %s", $field_value, $map_acf_csv_element), ARRAY_A);
 						$get_relation_field=$get_relation[0]['meta_value'];
 						$update_id = unserialize($get_relation_field);
 						$update_id[] = $post_id;
@@ -241,7 +241,7 @@ class ACFImport {
 					if (!is_numeric($map_acf_csv_elements ) ){
 						$map_acf_csv_elements = $wpdb->_real_escape($map_acf_csv_elements);
 
-						$id = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = '{$map_acf_csv_elements}' AND post_status = 'publish' order by ID DESC", ARRAY_A);
+						$id = $wpdb->get_results($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_status = 'publish' order by ID DESC", $map_acf_csv_elements), ARRAY_A);
 						$map_acf_csv_element = isset($id[0]['ID']) ? $id[0]['ID'] : '';
 					}
 					else{
@@ -252,7 +252,7 @@ class ACFImport {
 					$map_acf_csv_element = array();
 					foreach($map_acf_csv_elements as $csv_element){
 						$csv_element = $wpdb->_real_escape($csv_element);						
-						$id = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = '$csv_element' AND post_status = 'publish'", ARRAY_A);						
+						$id = $wpdb->get_results($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_status = 'publish'", $csv_element), ARRAY_A);						
 						$map_acf_csv_element[] = isset($id[0]['ID']) ? $id[0]['ID'] : '';
 					}
 				}			
@@ -309,7 +309,7 @@ class ACFImport {
 							} else {
 								$relVal = $wpdb->_real_escape($relVal);
 
-								$relation_id = $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = '$relVal' AND post_status = 'publish'", ARRAY_A);
+								$relation_id = $wpdb->get_results($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_status = 'publish'", $relVal), ARRAY_A);
 								if (!empty($relation_id)) {
 									$relations[] = $relation_id[0]['ID'];
 								}

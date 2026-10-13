@@ -74,7 +74,7 @@ class MappingExtension {
 		$info = [];
 		$filename = '';
 		$table_name = $wpdb->prefix."smackcsv_file_events";
-		$fields = $wpdb->query( "UPDATE $table_name SET mode ='$mode' WHERE hash_key = '$hash_key'");
+		$fields = $wpdb->query( $wpdb->prepare("UPDATE $table_name SET mode =%s WHERE hash_key = %s", $mode, $hash_key));
 
 		$get_result = $wpdb->get_results("SELECT file_name, total_rows FROM $table_name WHERE hash_key = '$hash_key' ");
 		$filename = $get_result[0]->file_name;

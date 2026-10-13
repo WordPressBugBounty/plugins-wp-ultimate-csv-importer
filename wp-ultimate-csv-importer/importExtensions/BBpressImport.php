@@ -70,7 +70,7 @@ class BBPressImport
 				if(isset($post_values['_bbp_forum_id'])){
 					if(!is_numeric($post_values['_bbp_forum_id'])){
 						$forum_title = $post_values['_bbp_forum_id'];
-						$forum_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = '$forum_title' AND post_type = 'forum'");
+						$forum_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_type = 'forum'", $forum_title));
 						$post_values['_bbp_forum_id'] = $forum_id;
 					}
 				}
@@ -81,7 +81,7 @@ class BBPressImport
 					$topic_status = 'publish';
 				}
 				if(!is_numeric($author)){
-				$author = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}users WHERE user_login = '$author'");
+				$author = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}users WHERE user_login = %s", $author));
 				}
 				$topics = array(
 					'ID'           => $post_id,
@@ -126,7 +126,7 @@ class BBPressImport
 				if(isset($post_values['forum_name'])){
 					if(!is_numeric($post_values['forum_name'])){
 						$forum_title = $post_values['forum_name'];
-						$forum_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = '$forum_title' AND post_type = 'forum'");
+						$forum_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_type = 'forum'", $forum_title));
 						$post_values['forum_name'] = $forum_id;
 					}
 				}
@@ -134,7 +134,7 @@ class BBPressImport
 				$forum_id = isset($post_values['_bbp_forum_id']) ? $post_values['_bbp_forum_id'] : '';
 				$author = isset($post_values['reply_author']) ? $post_values['reply_author'] : ''; 
 				if(!is_numeric($author)){
-					$author = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}users WHERE user_login = '$author'");
+					$author = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}users WHERE user_login = %s", $author));
 				}
 				$topics = array(
 					'ID'           => $post_id,
@@ -148,7 +148,7 @@ class BBPressImport
 				if(isset($post_values['_bbp_topic_id'])){
 					if(!is_numeric($post_values['_bbp_topic_id'])){
 						$topic_title = $post_values['_bbp_topic_id'];
-						$topic_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = '$topic_title' AND post_type = 'topic'");
+						$topic_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_type = 'topic'", $topic_title));
 						$post_values['_bbp_topic_id'] = $topic_id;
 					}
 				}

@@ -245,7 +245,7 @@ class JetEngineCCTImport {
 
 							//added new checkbox values
 							if(!in_array($dvalueval, $keys)){
-								$get_meta_fields = $wpdb->get_results("SELECT id, meta_fields from {$wpdb->prefix}jet_post_types where slug = '$type' and status = 'content-type'");
+								$get_meta_fields = $wpdb->get_results($wpdb->prepare("SELECT id, meta_fields from {$wpdb->prefix}jet_post_types where slug = %s and status = 'content-type'", $type));
 					
 								if(isset($get_meta_fields[0])){
 									$unserialized_meta = maybe_unserialize($get_meta_fields[0]->meta_fields);
@@ -379,7 +379,7 @@ class JetEngineCCTImport {
 			);			
 		}
 
-		$getarg = $wpdb->get_results("SELECT args from {$wpdb->prefix}jet_post_types where slug = '$type' and status = 'content-type'",ARRAY_A);		
+		$getarg = $wpdb->get_results($wpdb->prepare("SELECT args from {$wpdb->prefix}jet_post_types where slug = %s and status = 'content-type'", $type),ARRAY_A);		
 			foreach($getarg as $key => $value){				
 				$arg_data = $value['args'];				
 				break;

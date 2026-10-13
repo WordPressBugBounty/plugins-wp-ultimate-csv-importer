@@ -79,7 +79,7 @@ class LifterLmsImport
                            $arr['label'] = 'Author';
                            $arr['visibility'] = $instructor[0];
                            $user_name =$instructor[1];
-                           $user_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}users WHERE display_name='$user_name'");
+                           $user_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}users WHERE display_name=%s", $user_name));
                            $arr['id'] = $user_id;
                            $arr['name'] = $user_name;
                           
@@ -209,7 +209,7 @@ class LifterLmsImport
             
                 if($mode == 'Insert'){
                     if(in_array($question_titles, $all_questions_title)){
-                        $question_post_id = $wpdb->get_var("SELECT ID from {$wpdb->prefix}posts WHERE post_title = '$question_titles' AND post_type = 'llms_question' AND post_status = 'publish' ");       
+                        $question_post_id = $wpdb->get_var($wpdb->prepare("SELECT ID from {$wpdb->prefix}posts WHERE post_title = %s AND post_type = 'llms_question' AND post_status = 'publish' ", $question_titles));       
                         
                         $post_values['quiz_id'] = $quiz_post_id;
                         $check_assigned_to_quiz = $wpdb->get_var("SELECT quiz_question_id FROM {$wpdb->prefix}lifterlms_quiz_questions WHERE question_id = $question_post_id  ");
@@ -228,7 +228,7 @@ class LifterLmsImport
 
                 if($mode == 'Update'){  
                     if(in_array($question_titles, $all_questions_title)){
-                        $question_post_id = $wpdb->get_var("SELECT ID from {$wpdb->prefix}posts WHERE post_title = '$question_titles' AND post_type = 'llms_question' AND post_status = 'publish' ");       
+                        $question_post_id = $wpdb->get_var($wpdb->prepare("SELECT ID from {$wpdb->prefix}posts WHERE post_title = %s AND post_type = 'llms_question' AND post_status = 'publish' ", $question_titles));       
                         $post_values['quiz_id'] = $quiz_post_id;
                         $check_assigned_to_quiz = $wpdb->get_var("SELECT quiz_question_id FROM {$wpdb->prefix}lifterlms_quiz_questions WHERE question_id = $question_post_id  ");
                         if(empty($check_assigned_to_quiz)){

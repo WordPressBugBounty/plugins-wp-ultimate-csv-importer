@@ -4,8 +4,8 @@ Donate link: https://www.smackcoders.com/contact-us.html
 Tags: csv importer, wordpress importer, woocommerce product import, import export, xml import
 Requires at least: 5.0
 Tested up to: 7.0
-Stable tag: 9.2
-Version: 9.2
+Stable tag: 9.3
+Version: 9.3
 Requires PHP: 7.4
 Author URI: https://www.smackcoders.com/wp-ultimate-csv-importer-pro.html
 License: GPLv2 or later
@@ -851,6 +851,13 @@ Documentation is available here:
 
 == Changelog ==
 
+= 9.3 =
+
+* Security: Fix SQL injection in import and export queries by preparing CSV and request values with $wpdb->prepare() (#27394).
+* Security: Block SVG and HTML media file names and content to prevent script execution via media import (#1466).
+* Security: Automatically protect existing and legacy log directories from direct HTTP access on initialization (#1466).
+* Improved: Updated release packaging script to ensure clean distribution builds.
+
 = 9.2 =
 
 * Security: Remove SVG from ZIP/archive extraction allow-list to prevent stored XSS via inline SVG scripts (especially Multisite admin privilege boundary).
@@ -937,6 +944,10 @@ Documentation is available here:
 
 
 == Upgrade Notice ==
+
+= 9.3 =
+
+Security and stability update: Fixes SQL injection in import queries by preparing CSV and request values (#27394), blocks SVG/HTML media file names/content from script execution (#1466), and hardens legacy log directories against direct HTTP access (#1466). Recommended for all users.
 
 = 9.2 =
 

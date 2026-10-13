@@ -81,7 +81,7 @@ class LearnPressImport
                         foreach($individual_lesson_names as $lesson_name){
                             $lesson_names = trim($lesson_name);
                             if(in_array($lesson_names, $all_lesson_names)){
-                                $lesson_post_id = $wpdb->get_var("SELECT ID from {$wpdb->prefix}posts WHERE post_title = '$lesson_names' and post_type = 'lp_lesson' ");   
+                                $lesson_post_id = $wpdb->get_var($wpdb->prepare("SELECT ID from {$wpdb->prefix}posts WHERE post_title = %s and post_type = 'lp_lesson' ", $lesson_names));   
                             
                                 $check_assigned_to_course = $wpdb->get_var("SELECT section_id FROM {$wpdb->prefix}learnpress_section_items WHERE item_id = $lesson_post_id AND item_type = 'lp_lesson' ");
                                 if(empty($check_assigned_to_course)){
@@ -120,7 +120,7 @@ class LearnPressImport
                         $j = 0;
                         foreach($individual_quiz_names as $quiz_names){
                             if(in_array($quiz_names, $all_quiz_names)){
-                                $quiz_post_id = $wpdb->get_var("SELECT ID from {$wpdb->prefix}posts WHERE post_title = '$quiz_names' and post_type = 'lp_quiz' ");   
+                                $quiz_post_id = $wpdb->get_var($wpdb->prepare("SELECT ID from {$wpdb->prefix}posts WHERE post_title = %s and post_type = 'lp_quiz' ", $quiz_names));   
                             
                                 $check_assigned_to_course = $wpdb->get_var("SELECT section_id FROM {$wpdb->prefix}learnpress_section_items WHERE item_id = $quiz_post_id AND item_type = 'lp_quiz' ");
                                 if(empty($check_assigned_to_course)){
@@ -208,7 +208,7 @@ class LearnPressImport
             if(isset($post_values['course_id']) && $post_values['curriculum_name']){
                 $course_id = $post_values['course_id'];
                 $curriculum_name = $post_values['curriculum_name'];
-                $get_section_id = $wpdb->get_var("SELECT section_id FROM {$wpdb->prefix}learnpress_sections WHERE section_course_id = $course_id AND section_name = '$curriculum_name' ");
+                $get_section_id = $wpdb->get_var($wpdb->prepare("SELECT section_id FROM {$wpdb->prefix}learnpress_sections WHERE section_course_id = %d AND section_name = %s ", $course_id, $curriculum_name));
             }
             else{
                 $get_section_id = '';
@@ -283,7 +283,7 @@ class LearnPressImport
             $temp = 0;
             foreach($get_question_titles as $question_titles){
                 if(in_array($question_titles, $all_questions_title)){
-                    $question_post_id = $wpdb->get_var("SELECT ID from {$wpdb->prefix}posts WHERE post_title = '$question_titles' AND post_type = 'lp_question' AND post_status != 'trash' ");   
+                    $question_post_id = $wpdb->get_var($wpdb->prepare("SELECT ID from {$wpdb->prefix}posts WHERE post_title = %s AND post_type = 'lp_question' AND post_status != 'trash' ", $question_titles));   
                        
                     $post_values['quiz_id'] = $quiz_post_id;
                     $check_assigned_to_quiz = $wpdb->get_var("SELECT quiz_question_id FROM {$wpdb->prefix}learnpress_quiz_questions WHERE question_id = $question_post_id  ");

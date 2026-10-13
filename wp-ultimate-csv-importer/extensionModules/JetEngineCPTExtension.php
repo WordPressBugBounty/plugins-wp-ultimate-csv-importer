@@ -50,7 +50,7 @@ class JetEngineCPTExtension extends ExtensionHandler{
 			$import_type = 'product';
 		}
 	
-		$get_meta_fields = $wpdb->get_results("SELECT id, meta_fields FROM {$wpdb->prefix}jet_post_types WHERE slug = '$import_type' AND status IN ('publish','built-in')");
+		$get_meta_fields = $wpdb->get_results($wpdb->prepare("SELECT id, meta_fields FROM {$wpdb->prefix}jet_post_types WHERE slug = %s AND status IN ('publish','built-in')", $import_type));
 		
 		if(isset($get_meta_fields[0])){
 			$unserialized_meta = maybe_unserialize($get_meta_fields[0]->meta_fields);

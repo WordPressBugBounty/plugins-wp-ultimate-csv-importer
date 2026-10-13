@@ -538,7 +538,7 @@ class EventsManagerImport
 						}
 						$this->event_recurring_ticket($final_ticket_arr,$recur_id,$mode,$ticket_id, $recurr_date);
 						$recur_status = $data_array['post_status'];
-						$wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$recur_status' where id = $recurring_id");
+						$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->prefix}posts set post_status = %s where id = %d", $recur_status, $recurring_id ) );
 					}
 				} elseif ($recurr_freq == 'weekly') {
 					switch ($recurr_byday) {
@@ -615,7 +615,7 @@ class EventsManagerImport
 						}
 						$this->event_recurring_ticket($final_ticket_arr,$recur_id,$mode,$ticket_id, $recurr_date);
 						$recur_status = $data_array['post_status'];
-						$wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$recur_status' where id = $recurring_id");
+						$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->prefix}posts set post_status = %s where id = %d", $recur_status, $recurring_id ) );
 					}
 				} elseif($recurr_freq == 'monthly') {
 					$dateee=date('Y-m', $date_from);
@@ -948,7 +948,7 @@ class EventsManagerImport
 								}
 								$this->event_recurring_ticket($final_ticket_arr,$recur_id,$mode,$ticket_id, $recurr_date);
 								$recur_status = $data_array['post_status'];
-								$wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$recur_status' where id = $recurring_id");
+								$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->prefix}posts set post_status = %s where id = %d", $recur_status, $recurring_id ) );
 								$day=date('j',strtotime($recurr_date));
 								$month=date('m',$date_from);
 								$year=date('Y',$date_from);
@@ -1042,7 +1042,7 @@ class EventsManagerImport
 								}
 								$this->event_recurring_ticket($final_ticket_arr,$recur_id,$mode,$ticket_id, $recurr_date);
 								$recur_status = $data_array['post_status'];
-								$wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$recur_status' where id = $recurring_id");
+								$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->prefix}posts set post_status = %s where id = %d", $recur_status, $recurring_id ) );
 								$day=date('j',strtotime($recurr_date));
 								$month=date('m',$date_from);
 								$year=date('Y',$date_from);
@@ -1135,7 +1135,7 @@ class EventsManagerImport
 								}
 								$this->event_recurring_ticket($final_ticket_arr,$recur_id,$mode,$ticket_id, $recurr_date);
 								$recur_status = $data_array['post_status'];
-								$wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$recur_status' where id = $recurring_id");
+								$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->prefix}posts set post_status = %s where id = %d", $recur_status, $recurring_id ) );
 								$day=date('j',strtotime($recurr_date));	
 								$month=date('m',$date_from);	
 								$year=date('Y',$date_from);		
@@ -1231,7 +1231,7 @@ class EventsManagerImport
 								}
 								$this->event_recurring_ticket($final_ticket_arr,$recur_id,$mode,$ticket_id, $recurr_date);
 								$recur_status = $data_array['post_status'];
-								$wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$recur_status' where id = $recurring_id");
+								$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->prefix}posts set post_status = %s where id = %d", $recur_status, $recurring_id ) );
 								$day=date('j',strtotime($recurr_date));
 								$month=date('m',$date_from);
 								$year=date('Y',$date_from);
@@ -1324,7 +1324,7 @@ class EventsManagerImport
 								}
 								$this->event_recurring_ticket($final_ticket_arr,$recur_id,$mode,$ticket_id, $recurr_date);
 								$recur_status = $data_array['post_status'];
-									$wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$recur_status' where id = $recurring_id");
+									$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->prefix}posts set post_status = %s where id = %d", $recur_status, $recurring_id ) );
 							}
 						}if($order=='last'){
 							$date_from=strtotime($newdate);
@@ -1381,7 +1381,7 @@ class EventsManagerImport
 								}
 								$this->event_recurring_ticket($final_ticket_arr,$recur_id,$mode,$ticket_id, $recurr_date);
 								$recur_status = $data_array['post_status'];
-								$wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$recur_status' where id = $recurring_id");
+								$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->prefix}posts set post_status = %s where id = %d", $recur_status, $recurring_id ) );
 								$day=date('j',strtotime($recurr_date));
 								$month=date('m',$date_from);
 								$year=date('Y',$date_from);
@@ -1476,7 +1476,7 @@ class EventsManagerImport
 							}
 							$this->event_recurring_ticket($final_ticket_arr,$recur_id,$mode,$ticket_id, $recurr_date);
 							$recur_status = $data_array['post_status'];
-							$wpdb->query( "UPDATE {$wpdb->prefix}posts set post_status = '$recur_status' where id = $recurring_id");
+							$wpdb->query( $wpdb->prepare( "UPDATE {$wpdb->prefix}posts set post_status = %s where id = %d", $recur_status, $recurring_id ) );
 						}
 					}
 				}

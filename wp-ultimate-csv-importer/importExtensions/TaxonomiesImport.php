@@ -164,7 +164,7 @@ class TaxonomiesImport {
 				$file_table_name = $wpdb->prefix."smackcsv_file_events";
 				$get_id  = $wpdb->get_results( "SELECT file_name  FROM $file_table_name WHERE $unikey_name = '$unikey_value'");	
 				$file_name = $get_id[0]->file_name;
-				$wpdb->query( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$termID}','{$importType}', '{$file_name}','Inserted')");
+				$wpdb->query( $wpdb->prepare( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( %s,%s, %s,'Inserted')", $termID, $importType, $file_name ) );
 			}
 
 		if(!empty($termID) && !is_wp_error($termID)) {

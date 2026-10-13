@@ -182,7 +182,7 @@ class JetEngineCPTImport {
 
 							//added new checkbox values
 							if(!in_array($dvalueval, $keys)){
-								$get_meta_fields = $wpdb->get_results("SELECT id, meta_fields FROM {$wpdb->prefix}jet_post_types WHERE slug = '$type' AND status IN ('publish','built-in')");
+								$get_meta_fields = $wpdb->get_results($wpdb->prepare("SELECT id, meta_fields FROM {$wpdb->prefix}jet_post_types WHERE slug = %s AND status IN ('publish','built-in')", $type));
 								if(isset($get_meta_fields[0])){
 									$unserialized_meta = maybe_unserialize($get_meta_fields[0]->meta_fields);
 									$jet_engine_id = $get_meta_fields[0]->id;
@@ -252,7 +252,7 @@ class JetEngineCPTImport {
     public function JetEngineCPTFields($type){
 		global $wpdb;	
 		$jet_field = array();
-		$get_meta_fields = $wpdb->get_results("SELECT id, meta_fields FROM {$wpdb->prefix}jet_post_types WHERE slug = '$type' AND status IN ('publish','built-in')");
+		$get_meta_fields = $wpdb->get_results($wpdb->prepare("SELECT id, meta_fields FROM {$wpdb->prefix}jet_post_types WHERE slug = %s AND status IN ('publish','built-in')", $type));
 		if(isset($get_meta_fields[0])){
 			$unserialized_meta = maybe_unserialize($get_meta_fields[0]->meta_fields);
 		}

@@ -89,7 +89,7 @@ class CommentsImport {
 		$data_array['comment_approved'] = trim($data_array['comment_approved']);
 		if(!empty($data_array['user_id'])){
 			$user_login=$data_array['user_id'];
-				$u_id =  $wpdb->get_results("SELECT ID FROM {$wpdb->prefix}users WHERE  user_login = '$user_login'");		
+				$u_id =  $wpdb->get_results($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}users WHERE  user_login = %s", $user_login));
 			foreach($u_id as $user_id){
 				$users=$user_id->ID;
 				$data_array['user_id']=$users;
@@ -369,7 +369,7 @@ class CommentsImport {
 				$inserted_post_id = wp_insert_post($nav_post_arr);
 
 				if($menu_types == 'post_type'){
-					$post_title_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = '$menu_object_titles' AND post_type = '$menu_objects' AND  post_status = 'publish' ");
+					$post_title_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_type = %s AND  post_status = 'publish' ", $menu_object_titles, $menu_objects));
 				}
 				elseif($menu_types == 'taxonomy'){
 					$get_menu_term_id = get_term_by('name', $menu_object_titles, $menu_objects);

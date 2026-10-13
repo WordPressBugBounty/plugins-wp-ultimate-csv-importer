@@ -97,7 +97,7 @@ class WordpressCustomExtension extends ExtensionHandler{
         $jet_cpt = [];
         $jet_meta_field = [];
         if(is_plugin_active('jet-engine/jet-engine.php')){
-            $get_jet_cpt_fields = $wpdb->get_results("SELECT meta_fields FROM {$wpdb->prefix}jet_post_types where slug = '".$module."'");
+            $get_jet_cpt_fields = $wpdb->get_results($wpdb->prepare("SELECT meta_fields FROM {$wpdb->prefix}jet_post_types where slug = %s", $module));
             foreach($get_jet_cpt_fields as $jet_cpt_fields){
                 $jet_cpt_fields = $jet_cpt_fields->meta_fields;
                 $unserialize_jet_cpt = unserialize($jet_cpt_fields);
@@ -156,10 +156,11 @@ class WordpressCustomExtension extends ExtensionHandler{
                 $metabox_not_like_query = 'AND ' . rtrim($metabox_not_like_query, 'AND ');
             }
          
+            $post_type_clause = $wpdb->prepare( "p.post_type = %s", $module );
             $keys = $wpdb->get_col( "SELECT pm.meta_key FROM {$wpdb->prefix}posts p
                                     JOIN {$wpdb->prefix}postmeta pm
                                     ON p.ID = pm.post_id
-                                    WHERE p.post_type = '{$module}' AND NOT p.post_status = 'trash'
+                                    WHERE {$post_type_clause} AND NOT p.post_status = 'trash'
                                     GROUP BY meta_key
                                     HAVING meta_key NOT LIKE '\_%' and meta_key NOT LIKE 'rank_%'and meta_key NOT LIKE 'ywbc_%' and meta_key NOT LIKE 'field_%' and meta_key NOT LIKE 'wpcf-%' and meta_key NOT LIKE 'wpcr3_%' and meta_key NOT LIKE '%pods%' and meta_key NOT LIKE '%group_%' and meta_key NOT LIKE '%repeat_%' and meta_key NOT LIKE 'mp_%' $acf_not_like_query $pods_not_like_query $metabox_not_like_query
                                     ORDER BY meta_key" );

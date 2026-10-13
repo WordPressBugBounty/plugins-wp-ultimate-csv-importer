@@ -45,7 +45,7 @@ class WooCommerceCoreImport {
 			$variation_condition = 'insert_using_product_id';
 		} 		
 		elseif($parent_sku != '') {			
-			$get_parent_product_id = $wpdb->get_results("select id from {$wpdb->prefix}posts where post_status != 'trash' and post_type = 'product' and id in (select post_id from {$wpdb->prefix}postmeta where meta_value = '$parent_sku')");									
+			$get_parent_product_id = $wpdb->get_results($wpdb->prepare("select id from {$wpdb->prefix}posts where post_status != 'trash' and post_type = 'product' and id in (select post_id from {$wpdb->prefix}postmeta where meta_value = %s)", $parent_sku));									
 			$count = count( $get_parent_product_id );
 			$key = 0;
 			if ( ! empty( $get_parent_product_id ) ) {				
@@ -117,7 +117,7 @@ class WooCommerceCoreImport {
 				}
 				break;
 			case 'update_using_variation_sku':								
-				$variation_data = $wpdb->get_results("select post_id from {$wpdb->prefix}postmeta where meta_value = '$variation_sku' and post_id in (select id from {$wpdb->prefix}posts where post_type = 'product_variation' and post_status != 'trash' and post_parent = $product_id)");
+				$variation_data = $wpdb->get_results($wpdb->prepare("select post_id from {$wpdb->prefix}postmeta where meta_value = %s and post_id in (select id from {$wpdb->prefix}posts where post_type = 'product_variation' and post_status != 'trash' and post_parent = %d)", $variation_sku, $product_id));
 				$variation_id = !empty($variation_data) ? $variation_data[0]->post_id : "";								
 				if($variation_id)
 				$get_variation_data = $wpdb->get_results( $wpdb->prepare( "select * from {$wpdb->prefix}posts where ID = %d and post_type = %s", $variation_id, 'product_variation' ) );				
@@ -771,7 +771,7 @@ class WooCommerceCoreImport {
 			$name = $data_array['post_name'];
 			if($sitepress != null) {
 			$language_code = $wpml_values['language_code'];
-			$get_result =  $wpdb->get_results("SELECT DISTINCT p.ID FROM {$wpdb->prefix}posts p join {$wpdb->prefix}icl_translations pm ON p.ID = pm.element_id WHERE p.post_name = '$name' AND p.post_type = '$post_type' AND p.post_status != 'trash' AND pm.language_code = '{$language_code}'");
+			$get_result =  $wpdb->get_results($wpdb->prepare("SELECT DISTINCT p.ID FROM {$wpdb->prefix}posts p join {$wpdb->prefix}icl_translations pm ON p.ID = pm.element_id WHERE p.post_name = %s AND p.post_type = %s AND p.post_status != 'trash' AND pm.language_code = %s", $name, $post_type, $language_code));
 		}
 			else{
 			$get_result =  $wpdb->get_results($wpdb->prepare(
@@ -785,7 +785,7 @@ class WooCommerceCoreImport {
 			$sku = $data_array['PRODUCTSKU'];
 			if($sitepress != null) {
 				$language_code = $wpml_values['language_code'];
-				$get_result =  $wpdb->get_results("SELECT DISTINCT p.ID FROM {$wpdb->prefix}posts p join {$wpdb->prefix}postmeta pm ON p.ID = pm.post_id inner join {$wpdb->prefix}icl_translations icl ON pm.post_id = icl.element_id WHERE p.post_type = 'product' AND p.post_status != 'trash' and pm.meta_value = '$sku' and icl.language_code = '{$language_code}'");               
+				$get_result =  $wpdb->get_results($wpdb->prepare("SELECT DISTINCT p.ID FROM {$wpdb->prefix}posts p join {$wpdb->prefix}postmeta pm ON p.ID = pm.post_id inner join {$wpdb->prefix}icl_translations icl ON pm.post_id = icl.element_id WHERE p.post_type = 'product' AND p.post_status != 'trash' and pm.meta_value = %s and icl.language_code = %s", $sku, $language_code));               
 			}
 			else{
 				$get_result =  $wpdb->get_results($wpdb->prepare(
@@ -806,7 +806,7 @@ class WooCommerceCoreImport {
 							}
 							if($get_key !== false && isset($value_array[$get_key])){
 								$csv_element = $value_array[$get_key];								
-								$get_result = $wpdb->get_results("SELECT post_id FROM {$wpdb->prefix}postmeta as a join {$wpdb->prefix}posts as b on a.post_id = b.ID WHERE a.meta_key = '$check' AND a.meta_value = '$csv_element' AND b.post_status != 'trash' order by a.post_id DESC ");
+								$get_result = $wpdb->get_results($wpdb->prepare("SELECT post_id FROM {$wpdb->prefix}postmeta as a join {$wpdb->prefix}posts as b on a.post_id = b.ID WHERE a.meta_key = %s AND a.meta_value = %s AND b.post_status != 'trash' order by a.post_id DESC ", $check, $csv_element));
 							}
 						}	
 					}		
@@ -827,7 +827,7 @@ class WooCommerceCoreImport {
 								$csv_element = $value_array[$get_key];	
 							}
 							
-							$get_result = $wpdb->get_results("SELECT post_id FROM {$wpdb->prefix}postmeta as a join {$wpdb->prefix}posts as b on a.post_id = b.ID WHERE a.meta_key = '$check' AND a.meta_value = '$csv_element' AND b.post_status != 'trash' order by a.post_id DESC ");
+							$get_result = $wpdb->get_results($wpdb->prepare("SELECT post_id FROM {$wpdb->prefix}postmeta as a join {$wpdb->prefix}posts as b on a.post_id = b.ID WHERE a.meta_key = %s AND a.meta_value = %s AND b.post_status != 'trash' order by a.post_id DESC ", $check, $csv_element));
 						}	
 					}	
 					if(empty($get_result)) {
@@ -845,7 +845,7 @@ class WooCommerceCoreImport {
 							if(isset($value_array[$get_key]) && isset($get_key)){
 								$csv_element = $value_array[$get_key];
 								$key='wpcf-'.$check;
-								$get_result = $wpdb->get_results("SELECT post_id FROM {$wpdb->prefix}postmeta as a join {$wpdb->prefix}posts as b on a.post_id = b.ID WHERE a.meta_key = '$key' AND a.meta_value = '$csv_element' AND b.post_status != 'trash' order by a.post_id DESC ");	
+								$get_result = $wpdb->get_results($wpdb->prepare("SELECT post_id FROM {$wpdb->prefix}postmeta as a join {$wpdb->prefix}posts as b on a.post_id = b.ID WHERE a.meta_key = %s AND a.meta_value = %s AND b.post_status != 'trash' order by a.post_id DESC ", $key, $csv_element));	
 							}
 							
 						}	
@@ -897,7 +897,7 @@ class WooCommerceCoreImport {
 					$file_table_name = $wpdb->prefix."smackcsv_file_events";
 					$get_id  = $wpdb->get_results( "SELECT file_name  FROM $file_table_name WHERE `$unikey_name` = '$unikey'");	
 					$file_name = $get_id[0]->file_name;
-					$wpdb->query( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Inserted')");
+					$wpdb->query( $wpdb->prepare( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( %s,%s, %s,'Inserted')", $post_id, $type, $file_name ) );
 				}
 
 				$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Product ID: ' . $post_id . ', ' . $assigned_author;
@@ -931,7 +931,7 @@ class WooCommerceCoreImport {
 					$file_table_name = $wpdb->prefix."smackcsv_file_events";
 					$get_id  = $wpdb->get_results( "SELECT file_name  FROM $file_table_name WHERE `$unikey_name` = '$unikey'");	
 					$file_name = $get_id[0]->file_name;
-					$wpdb->query( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Updated')");
+					$wpdb->query( $wpdb->prepare( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( %s,%s, %s,'Updated')", $post_id, $type, $file_name ) );
 				}
 
 				$core_instance->detailed_log[$line_number]['Message'] = 'Updated Product ID: ' . $post_id . ', ' . $assigned_author;
@@ -956,7 +956,7 @@ class WooCommerceCoreImport {
 						$file_table_name = $wpdb->prefix."smackcsv_file_events";
 						$get_id  = $wpdb->get_results( "SELECT file_name  FROM $file_table_name WHERE `$unikey_name` = '$unikey'");	
 						$file_name = $get_id[0]->file_name;
-						$wpdb->query( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( '{$post_id}','{$type}', '{$file_name}','Inserted')");
+						$wpdb->query( $wpdb->prepare( "INSERT INTO $post_entries_table (`ID`,`type`, `file_name`,`status`) VALUES ( %s,%s, %s,'Inserted')", $post_id, $type, $file_name ) );
 					}
 					$core_instance->detailed_log[$line_number]['Message'] = 'Inserted Product ID: ' . $post_id . ', ' . $assigned_author;
 					$wpdb->query( "UPDATE $log_table_name SET created = $created_count WHERE $unikey_name = '$unikey'");	

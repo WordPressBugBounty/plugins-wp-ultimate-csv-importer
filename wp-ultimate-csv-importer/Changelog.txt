@@ -1,6 +1,11 @@
 == Changelog ==
 
 Full version history for WP Ultimate CSV Importer. Releases 8.0 and later are listed in readme.txt.
+= 9.3 =
+Security: Fix SQL injection in import queries by preparing CSV and request values with $wpdb->prepare() (#27394)
+Security: Block SVG and HTML media file names and content to prevent script execution during media imports (#1466)
+Security: Automatically protect existing and legacy log directories from direct HTTP access on initialization (#1466)
+Improved: Updated release packaging script to ensure clean distribution builds
 
 = 9.2 =
 Security: Remove SVG from ZIP/archive extraction allow-list to prevent stored XSS via inline SVG scripts (Multisite admin boundary)

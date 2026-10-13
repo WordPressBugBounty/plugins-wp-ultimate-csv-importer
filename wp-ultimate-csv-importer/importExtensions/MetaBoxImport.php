@@ -151,17 +151,17 @@ class MetaBoxImport {
 				}
 				else{
 					if($field_type == 'post'){
-						$get_post_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = '$data_value' AND post_status != 'trash' ");
+						$get_post_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}posts WHERE post_title = %s AND post_status != 'trash' ", $data_value));
 					}
 					elseif($field_type == 'user'){
-						$get_post_id = $wpdb->get_var("SELECT ID FROM {$wpdb->prefix}users WHERE user_login = '$data_value' ");
+						$get_post_id = $wpdb->get_var($wpdb->prepare("SELECT ID FROM {$wpdb->prefix}users WHERE user_login = %s ", $data_value));
 					}
 					elseif($field_type == 'taxonomy'){
 						//$get_post_id = $wpdb->get_var("SELECT term_id FROM {$wpdb->prefix}terms WHERE name = '$data_value' ");
 						$term_fd = explode('|',$data_value);
 						foreach($term_fd as $value){						
 							$taxonomy = $get_metabox_fields[$data_key]['taxonomy']['0'];
-							$get_post_id = $wpdb->get_var("SELECT tax.term_taxonomy_id FROM {$wpdb->prefix}terms t INNER JOIN {$wpdb->prefix}term_taxonomy tax ON t.term_id=tax.term_id WHERE t.name='$value' AND tax.taxonomy='$taxonomy'");
+							$get_post_id = $wpdb->get_var($wpdb->prepare("SELECT tax.term_taxonomy_id FROM {$wpdb->prefix}terms t INNER JOIN {$wpdb->prefix}term_taxonomy tax ON t.term_id=tax.term_id WHERE t.name=%s AND tax.taxonomy=%s", $value, $taxonomy));
 							$wpdb->query( "INSERT into {$wpdb->prefix}term_relationships (`object_id`,`term_taxonomy_id`) VALUES($pID,$get_post_id)");
 
 						}

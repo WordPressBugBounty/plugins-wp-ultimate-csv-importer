@@ -109,7 +109,7 @@ class JetEngineRELImport {
               
                if(!empty($data_value)){                
                     $get_relation_id = explode(' :: ', $data_key);
-                    $relation_id = $get_relation_id[1];
+                    $relation_id = absint($get_relation_id[1]);
                     $get_related_objects = $this->get_relation_objects($relation_id, $import_type, $pID, 'args',$mode);                    
         
                     $parent_object_id = $get_related_objects['parent_object'];
@@ -230,7 +230,7 @@ class JetEngineRELImport {
                 $get_relation_field_values = explode('|', $relation_field_value);
                 $field_name = $get_relation_name[0];
                 
-                $get_field_relation_id = $get_relation_name[1];
+                $get_field_relation_id = absint($get_relation_name[1]);
 
                 $get_related_metafields_objects = $this->get_relation_objects($get_field_relation_id, $import_type, $pID, 'metafields',$mode);
                 $relation_meta_fields = $get_related_metafields_objects['meta_fields'];

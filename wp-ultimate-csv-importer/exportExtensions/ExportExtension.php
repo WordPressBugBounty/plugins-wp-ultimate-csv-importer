@@ -116,8 +116,8 @@ class ExportExtension
 			echo wp_json_encode(count($get_all_taxonomies));
 			wp_die();
 		} elseif ($module == 'Taxonomies') {
-			$query = "SELECT * FROM {$wpdb->prefix}terms t INNER JOIN {$wpdb->prefix}term_taxonomy tax 
-				ON  `tax`.term_id = `t`.term_id WHERE `tax`.taxonomy =  '{$optionalType}'";
+			$query = $wpdb->prepare("SELECT * FROM {$wpdb->prefix}terms t INNER JOIN {$wpdb->prefix}term_taxonomy tax 
+				ON  `tax`.term_id = `t`.term_id WHERE `tax`.taxonomy =  %s", $optionalType);
 			$get_all_taxonomies = $wpdb->get_results($query);
 			echo wp_json_encode(count($get_all_taxonomies));
 			wp_die();
@@ -201,7 +201,7 @@ class ExportExtension
 			}
 		}
 		$get_post_ids = "select DISTINCT ID from {$wpdb->prefix}posts";
-		$get_post_ids .= " where post_type = '$module'";
+		$get_post_ids .= $wpdb->prepare(" where post_type = %s", $module);
 
 		/**
 		 * Check for specific status
